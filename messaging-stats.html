@@ -439,7 +439,7 @@
 
   <!-- TOP CONTACTS -->
   <div class="section">
-    <div class="section-title"><span class="emoji">👥</span> Top 15 People You Talk To</div>
+    <div class="section-title"><span class="emoji">👥</span> Top 15 People You DM (1-on-1 only)</div>
     <div class="contact-list" id="contactList"></div>
   </div>
 
@@ -496,9 +496,9 @@
       </div>
       <div class="fact-card">
         <div class="fact-emoji">💬</div>
-        <div class="fact-title">Most Messages From One Person</div>
-        <div class="fact-value">Dad — 53,214 msgs</div>
-        <div class="fact-detail">David Austin Linford is your #1 correspondent</div>
+        <div class="fact-title">Most DMs With One Person</div>
+        <div class="fact-value">Lauren — 29,909 msgs</div>
+        <div class="fact-detail">Your wife is your #1 DM correspondent across all platforms</div>
       </div>
       <div class="fact-card">
         <div class="fact-emoji">📸</div>
@@ -712,21 +712,21 @@ new Chart(document.getElementById('hourChart'), {
 
 // ── Top Contacts ──
 const contacts = [
-  {name:'Dad (David)', count:53214, color:'var(--gchat)'},
-  {name:'Mom (Sally)', count:49348, color:'var(--fb)'},
-  {name:'Sarah Beauchemin', count:40146, color:'var(--fb)'},
-  {name:'Lauren (wife)', count:30573, color:'var(--fb)'},
-  {name:'Lizzy', count:28730, color:'var(--gchat)'},
-  {name:'Nancy Gallo', count:25451, color:'var(--fb)'},
-  {name:'Lauren (Google Chat)', count:23974, color:'var(--gchat)'},
-  {name:'Sally (Mom, GChat)', count:19202, color:'var(--gchat)'},
-  {name:'Joanne', count:18133, color:'var(--fb)'},
-  {name:'Daisy', count:15083, color:'var(--gchat)'},
-  {name:'Sarah (Google Chat)', count:11030, color:'var(--gchat)'},
-  {name:'Nancy (Google Chat)', count:8038, color:'var(--gchat)'},
-  {name:'Eden', count:4881, color:'var(--gchat)'},
-  {name:'Riley Ross', count:2146, color:'var(--imessage)'},
-  {name:'Jonathan Gallo', count:1727, color:'var(--fb)'},
+  {name:'Lauren (wife)', count:29909, color:'var(--accent-2)'},
+  {name:'Lizzy', count:2649, color:'var(--imessage)'},
+  {name:'Riley Ross', count:2091, color:'var(--imessage)'},
+  {name:'Joanne', count:1414, color:'var(--gchat)'},
+  {name:'Dad (David)', count:1261, color:'var(--imessage)'},
+  {name:'Benji Dazey', count:1138, color:'var(--imessage)'},
+  {name:'Daisy', count:980, color:'var(--gchat)'},
+  {name:'Jax Ruff', count:915, color:'var(--imessage)'},
+  {name:'Nicholas Benyo', count:908, color:'var(--imessage)'},
+  {name:'Chris Blakesley', count:876, color:'var(--imessage)'},
+  {name:'Santiago Salcedo Marban', count:855, color:'var(--fb)'},
+  {name:'Nancy Gallo', count:808, color:'var(--fb)'},
+  {name:'Stephen Funk', count:729, color:'var(--imessage)'},
+  {name:'Spencer Peterson', count:707, color:'var(--imessage)'},
+  {name:'Matthew Mella', count:672, color:'var(--imessage)'},
 ];
 const maxCount = contacts[0].count;
 const list = document.getElementById('contactList');
