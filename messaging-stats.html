@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jonny's Messaging Universe</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --card-hover: #1a1a28;
+    --border: #1e1e2e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --accent-1: #6366f1;
+    --accent-2: #818cf8;
+    --accent-3: #a78bfa;
+    --fb: #1877F2;
+    --imessage: #34C759;
+    --gchat: #FBBC04;
+    --glow: rgba(99, 102, 241, 0.15);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  .bg-grid {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 20s ease-in-out infinite;
+  }
+  .bg-orb.one { width: 600px; height: 600px; background: var(--accent-1); top: -100px; left: -200px; }
+  .bg-orb.two { width: 500px; height: 500px; background: var(--fb); bottom: -100px; right: -100px; animation-delay: -7s; }
+  .bg-orb.three { width: 400px; height: 400px; background: var(--imessage); top: 50%; left: 50%; animation-delay: -14s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 0 60px;
+    animation: fadeUp 1s ease;
+  }
+  .hero-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--accent-2);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* BIG COUNTER */
+  .big-counter {
+    text-align: center;
+    padding: 40px 0 60px;
+    animation: fadeUp 1s ease 0.2s backwards;
+  }
+  .big-number {
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 900;
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .big-label {
+    font-size: 20px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  /* STAT CARDS ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeUp 0.6s ease backwards;
+  }
+  .stat-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-1);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--glow);
+  }
+  .stat-card .number {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-2);
+    margin-bottom: 4px;
+  }
+  .stat-card .label {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* PLATFORM PILLS */
+  .platform-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .platform-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeUp 0.6s ease backwards;
+  }
+  .platform-card:hover { transform: translateY(-4px); }
+  .platform-card .bar {
+    position: absolute;
+    top: 0; left: 0;
+    height: 3px;
+    border-radius: 0 0 4px 0;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+  .platform-card.visible .bar { width: 100%; }
+  .platform-card .icon { font-size: 28px; margin-bottom: 12px; }
+  .platform-card .name { font-size: 14px; color: var(--text-dim); margin-bottom: 4px; }
+  .platform-card .count { font-size: 28px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+  .platform-card .pct { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+  .platform-card.fb .bar { background: var(--fb); }
+  .platform-card.fb .count { color: var(--fb); }
+  .platform-card.im .bar { background: var(--imessage); }
+  .platform-card.im .count { color: var(--imessage); }
+  .platform-card.gc .bar { background: var(--gchat); }
+  .platform-card.gc .count { color: var(--gchat); }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease backwards;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .emoji { font-size: 28px; }
+
+  /* CHART CARD */
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .chart-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-dim);
+  }
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* TOP CONTACTS */
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact-item {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  .contact-item:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-1);
+    transform: translateX(4px);
+  }
+  .contact-rank {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  .contact-rank.gold { color: #FFD700; }
+  .contact-rank.silver { color: #C0C0C0; }
+  .contact-rank.bronze { color: #CD7F32; }
+  .contact-name { font-size: 15px; font-weight: 500; }
+  .contact-count {
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-2);
+  }
+  .contact-bar {
+    grid-column: 2 / 4;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .contact-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  /* FUN FACTS */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .fact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+  }
+  .fact-card:hover {
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+  .fact-card .fact-emoji { font-size: 32px; margin-bottom: 12px; }
+  .fact-card .fact-title { font-size: 13px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .fact-card .fact-value { font-size: 20px; font-weight: 700; }
+  .fact-card .fact-detail { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 60px 0 20px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .count-up { display: inline-block; }
+
+  @media (max-width: 768px) {
+    .platform-row, .chart-row { grid-template-columns: 1fr; }
+    .container { padding: 20px 16px 60px; }
+    .hero { padding: 40px 0 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">18 Years of Conversations</div>
+    <h1>Jonny's Messaging Universe</h1>
+    <p>Every text, chat, and message across three platforms — from December 2007 to today.</p>
+  </div>
+
+  <!-- BIG COUNTER -->
+  <div class="big-counter">
+    <div class="big-number"><span class="count-up" data-target="506114">0</span></div>
+    <div class="big-label">total messages sent & received</div>
+  </div>
+
+  <!-- TOP STATS -->
+  <div class="stat-row">
+    <div class="stat-card" style="animation-delay: 0.3s">
+      <div class="number"><span class="count-up" data-target="3999312">0</span></div>
+      <div class="label">Words Exchanged</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.4s">
+      <div class="number"><span class="count-up" data-target="3694">0</span></div>
+      <div class="label">Conversations</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.5s">
+      <div class="number"><span class="count-up" data-target="9486">0</span></div>
+      <div class="label">Contacts</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.6s">
+      <div class="number"><span class="count-up" data-target="14128">0</span></div>
+      <div class="label">Messages with Emoji</div>
+    </div>
+    <div class="stat-card" style="animation-delay: 0.7s">
+      <div class="number"><span class="count-up" data-target="67861">0</span></div>
+      <div class="label">Attachments Shared</div>
+    </div>
+  </div>
+
+  <!-- PLATFORMS -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📱</span> By Platform</div>
+    <div class="platform-row">
+      <div class="platform-card fb">
+        <div class="bar"></div>
+        <div class="icon">💬</div>
+        <div class="name">Facebook Messenger</div>
+        <div class="count"><span class="count-up" data-target="329403">0</span></div>
+        <div class="pct">65.1% of all messages</div>
+      </div>
+      <div class="platform-card im">
+        <div class="bar"></div>
+        <div class="icon">🍏</div>
+        <div class="name">iMessage</div>
+        <div class="count"><span class="count-up" data-target="98463">0</span></div>
+        <div class="pct">19.5% of all messages</div>
+      </div>
+      <div class="platform-card gc">
+        <div class="bar"></div>
+        <div class="icon">💛</div>
+        <div class="name">Google Chat</div>
+        <div class="count"><span class="count-up" data-target="78248">0</span></div>
+        <div class="pct">15.5% of all messages</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOLUME OVER TIME -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📈</span> Message Volume Over Time</div>
+    <div class="chart-card">
+      <h3>Monthly messages across all platforms</h3>
+      <canvas id="volumeChart" height="100"></canvas>
+    </div>
+  </div>
+
+  <!-- PLATFORM EVOLUTION -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">🔄</span> Platform Evolution</div>
+    <div class="chart-card">
+      <h3>How your messaging platforms shifted year by year</h3>
+      <canvas id="platformChart" height="80"></canvas>
+    </div>
+  </div>
+
+  <!-- DAY + HOUR -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">🕐</span> When Do You Message?</div>
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>By Day of Week</h3>
+        <canvas id="dowChart" height="160"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>By Hour of Day (UTC)</h3>
+        <canvas id="hourChart" height="160"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP CONTACTS -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">👥</span> Top 15 People You Talk To</div>
+    <div class="contact-list" id="contactList"></div>
+  </div>
+
+  <!-- TOP CONVERSATIONS -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">💬</span> Most Active Conversations</div>
+    <div class="chart-card">
+      <canvas id="convoChart" height="120"></canvas>
+    </div>
+  </div>
+
+  <!-- SENT VS RECEIVED -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">📊</span> Sent vs Received</div>
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Overall balance</h3>
+        <canvas id="sentRecvChart" height="200"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Average Message Length by Platform</h3>
+        <canvas id="avgLenChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUN FACTS -->
+  <div class="section">
+    <div class="section-title"><span class="emoji">✨</span> Fun Facts</div>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-emoji">📅</div>
+        <div class="fact-title">First Ever Message</div>
+        <div class="fact-value">Dec 10, 2007</div>
+        <div class="fact-detail">A Weezer album promo on Facebook Messenger</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🔥</div>
+        <div class="fact-title">Busiest Day Ever</div>
+        <div class="fact-value">Sep 1, 2023</div>
+        <div class="fact-detail">587 messages in a single day</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">📝</div>
+        <div class="fact-title">Longest Single Message</div>
+        <div class="fact-value">29,868 characters</div>
+        <div class="fact-detail">"The Asymmetry of Repair" — a clinical rebuttal (iMessage)</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">👨‍👩‍👧‍👦</div>
+        <div class="fact-title">Biggest Chat</div>
+        <div class="fact-value">LFC — 175,706 msgs</div>
+        <div class="fact-detail">Linford Family Chat on FB Messenger</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">💬</div>
+        <div class="fact-title">Most Messages From One Person</div>
+        <div class="fact-value">Dad — 53,214 msgs</div>
+        <div class="fact-detail">David Austin Linford is your #1 correspondent</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">📸</div>
+        <div class="fact-title">Attachments Shared</div>
+        <div class="fact-value">67,861 files</div>
+        <div class="fact-detail">Photos, videos, GIFs, and files across all platforms</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">⌨️</div>
+        <div class="fact-title">iMessage Avg Length</div>
+        <div class="fact-value">75.8 characters</div>
+        <div class="fact-detail">vs 45.7 on Messenger, 41.1 on Google Chat</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">📖</div>
+        <div class="fact-title">Words Exchanged</div>
+        <div class="fact-value">~4 million</div>
+        <div class="fact-detail">Equivalent to about 40 novels</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built from 506,114 messages across iMessage, Facebook Messenger, and Google Chat &bull; 2007–2026
+  </div>
+
+</div>
+
+<script>
+// ── Count-up Animation ──
+const countUpObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const duration = 2000;
+      const start = performance.now();
+      const animate = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        el.textContent = Math.floor(eased * target).toLocaleString();
+        if (progress < 1) requestAnimationFrame(animate);
+        else el.textContent = target.toLocaleString();
+      };
+      requestAnimationFrame(animate);
+      countUpObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.count-up').forEach(el => countUpObserver.observe(el));
+
+// ── Platform card bar animation ──
+const platformObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      platformObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.platform-card').forEach(el => platformObserver.observe(el));
+
+// ── Chart.js defaults ──
+Chart.defaults.color = '#8888a0';
+Chart.defaults.borderColor = '#1e1e2e';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// ── Volume Chart (monthly) ──
+const monthlyData = [
+  ['2007-12',2],['2009-07',24],['2009-08',83],['2009-09',36],
+  ['2011-07',217],['2011-08',390],['2011-09',227],['2011-10',319],['2011-11',475],['2011-12',188],
+  ['2012-01',117],['2012-08',229],['2012-09',202],['2012-10',92],['2012-11',827],['2012-12',651],
+  ['2013-01',169],['2013-02',382],
+  ['2015-04',60],['2015-05',191],['2015-06',395],['2015-07',184],['2015-08',173],['2015-09',226],['2015-10',165],['2015-11',149],['2015-12',136],
+  ['2016-01',485],['2016-02',434],['2016-03',525],['2016-04',2988],['2016-05',2945],['2016-06',2570],['2016-07',2480],['2016-08',2312],['2016-09',2216],['2016-10',2732],['2016-11',2735],['2016-12',2562],
+  ['2017-01',2615],['2017-02',2753],['2017-03',2594],['2017-04',2073],['2017-05',2702],['2017-06',2403],['2017-07',3458],['2017-08',3307],['2017-09',3034],['2017-10',2284],['2017-11',2399],['2017-12',2823],
+  ['2018-01',2788],['2018-02',2424],['2018-03',3032],['2018-04',1815],['2018-05',2909],['2018-06',2277],['2018-07',2395],['2018-08',3148],['2018-09',3445],['2018-10',3495],['2018-11',2703],['2018-12',2829],
+  ['2019-01',2871],['2019-02',3317],['2019-03',3654],['2019-04',3497],['2019-05',4069],['2019-06',2773],['2019-07',2245],['2019-08',3095],['2019-09',3518],['2019-10',3612],['2019-11',3212],['2019-12',3077],
+  ['2020-01',2835],['2020-02',2502],['2020-03',3731],['2020-04',3984],['2020-05',2775],['2020-06',3133],['2020-07',4024],['2020-08',5026],['2020-09',4754],['2020-10',4505],['2020-11',5265],['2020-12',3921],
+  ['2021-01',4478],['2021-02',4046],['2021-03',3744],['2021-04',5162],['2021-05',4966],['2021-06',4652],['2021-07',5450],['2021-08',5370],['2021-09',6046],['2021-10',4896],['2021-11',3966],['2021-12',4673],
+  ['2022-01',5418],['2022-02',3953],['2022-03',5806],['2022-04',5782],['2022-05',5370],['2022-06',5027],['2022-07',4321],['2022-08',4469],['2022-09',4113],['2022-10',4567],['2022-11',4642],['2022-12',5327],
+  ['2023-01',6088],['2023-02',3915],['2023-03',4735],['2023-04',4575],['2023-05',4429],['2023-06',5175],['2023-07',5156],['2023-08',4995],['2023-09',6534],['2023-10',5348],['2023-11',4634],['2023-12',4621],
+  ['2024-01',4614],['2024-02',3986],['2024-03',4980],['2024-04',4000],['2024-05',4580],['2024-06',5011],['2024-07',4103],['2024-08',4635],['2024-09',4970],['2024-10',5890],['2024-11',5999],['2024-12',6382],
+  ['2025-01',6558],['2025-02',5575],['2025-03',6891],['2025-04',5900],['2025-05',5545],['2025-06',4953],['2025-07',4471],['2025-08',4758],['2025-09',5390],['2025-10',6252],['2025-11',5848],['2025-12',6546],
+  ['2026-01',5928],['2026-02',5303],['2026-03',6007],['2026-04',1907]
+];
+
+new Chart(document.getElementById('volumeChart'), {
+  type: 'line',
+  data: {
+    labels: monthlyData.map(d => d[0]),
+    datasets: [{
+      data: monthlyData.map(d => d[1]),
+      borderColor: '#6366f1',
+      backgroundColor: 'rgba(99,102,241,0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 0,
+      pointHitRadius: 10,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: ctx => ctx[0].label,
+          label: ctx => ctx.parsed.y.toLocaleString() + ' messages'
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { maxTicksLimit: 12, font: { size: 11 } },
+        grid: { display: false }
+      },
+      y: {
+        ticks: { callback: v => v.toLocaleString() },
+        grid: { color: 'rgba(255,255,255,0.04)' }
+      }
+    },
+    animation: { duration: 2000, easing: 'easeOutQuart' }
+  }
+});
+
+// ── Platform by Year (stacked) ──
+const platformYearData = {
+  labels: ['2011','2012','2013','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'],
+  fb:     [1853,2220,652,1559,1254,923,10460,38798,36975,38333,41258,53706,41877,45894,13464],
+  gc:     [0,0,11,120,23730,31522,22800,7,2,4,10,0,22,10,3],
+  im:     [0,0,0,0,0,0,0,135,9478,19112,17527,6499,17251,22783,5678],
+};
+
+new Chart(document.getElementById('platformChart'), {
+  type: 'bar',
+  data: {
+    labels: platformYearData.labels,
+    datasets: [
+      { label: 'Messenger', data: platformYearData.fb, backgroundColor: '#1877F2', borderRadius: 4 },
+      { label: 'Google Chat', data: platformYearData.gc, backgroundColor: '#FBBC04', borderRadius: 4 },
+      { label: 'iMessage', data: platformYearData.im, backgroundColor: '#34C759', borderRadius: 4 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { usePointStyle: true, pointStyle: 'circle', padding: 20 } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString() } }
+    },
+    scales: {
+      x: { stacked: true, grid: { display: false } },
+      y: { stacked: true, ticks: { callback: v => (v/1000)+'k' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+    },
+    animation: { duration: 1500, easing: 'easeOutQuart' }
+  }
+});
+
+// ── Day of Week ──
+const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const dowData = [62282,71880,74699,77362,77161,76685,66045];
+const dowColors = dowData.map(v => v === Math.max(...dowData) ? '#6366f1' : 'rgba(99,102,241,0.4)');
+
+new Chart(document.getElementById('dowChart'), {
+  type: 'bar',
+  data: {
+    labels: days,
+    datasets: [{ data: dowData, backgroundColor: dowColors, borderRadius: 8 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y.toLocaleString() + ' messages' } } },
+    scales: { x: { grid: { display: false } }, y: { ticks: { callback: v => (v/1000)+'k' }, grid: { color: 'rgba(255,255,255,0.04)' } } },
+    animation: { duration: 1200, easing: 'easeOutQuart' }
+  }
+});
+
+// ── Hour of Day ──
+const hourLabels = Array.from({length:24}, (_,i) => {
+  const h = (i - 6 + 24) % 24; // shift to MDT approx
+  return h === 0 ? '12a' : h < 12 ? h+'a' : h === 12 ? '12p' : (h-12)+'p';
+});
+const hourDataRaw = [30830,27366,25441,25257,21614,16428,9350,4547,2731,1722,2004,3086,5363,11020,20777,29326,34577,36145,34424,33512,33169,32461,32209,32755];
+// Shift by -6 to approximate MDT
+const hourData = [...hourDataRaw.slice(6), ...hourDataRaw.slice(0,6)];
+
+new Chart(document.getElementById('hourChart'), {
+  type: 'bar',
+  data: {
+    labels: hourLabels,
+    datasets: [{
+      data: hourData,
+      backgroundColor: hourData.map(v => {
+        const max = Math.max(...hourData);
+        const pct = v / max;
+        return `rgba(99, 102, 241, ${0.2 + pct * 0.8})`;
+      }),
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y.toLocaleString() + ' messages' } } },
+    scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { ticks: { callback: v => (v/1000)+'k' }, grid: { color: 'rgba(255,255,255,0.04)' } } },
+    animation: { duration: 1200, easing: 'easeOutQuart' }
+  }
+});
+
+// ── Top Contacts ──
+const contacts = [
+  {name:'Dad (David)', count:53214, color:'var(--gchat)'},
+  {name:'Mom (Sally)', count:49348, color:'var(--fb)'},
+  {name:'Sarah Beauchemin', count:40146, color:'var(--fb)'},
+  {name:'Lauren (wife)', count:30573, color:'var(--fb)'},
+  {name:'Lizzy', count:28730, color:'var(--gchat)'},
+  {name:'Nancy Gallo', count:25451, color:'var(--fb)'},
+  {name:'Lauren (Google Chat)', count:23974, color:'var(--gchat)'},
+  {name:'Sally (Mom, GChat)', count:19202, color:'var(--gchat)'},
+  {name:'Joanne', count:18133, color:'var(--fb)'},
+  {name:'Daisy', count:15083, color:'var(--gchat)'},
+  {name:'Sarah (Google Chat)', count:11030, color:'var(--gchat)'},
+  {name:'Nancy (Google Chat)', count:8038, color:'var(--gchat)'},
+  {name:'Eden', count:4881, color:'var(--gchat)'},
+  {name:'Riley Ross', count:2146, color:'var(--imessage)'},
+  {name:'Jonathan Gallo', count:1727, color:'var(--fb)'},
+];
+const maxCount = contacts[0].count;
+const list = document.getElementById('contactList');
+
+contacts.forEach((c, i) => {
+  const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+  const item = document.createElement('div');
+  item.className = 'contact-item';
+  item.style.animationDelay = (i * 0.05) + 's';
+  item.innerHTML = `
+    <div class="contact-rank ${rankClass}">${i+1}</div>
+    <div class="contact-name">${c.name}</div>
+    <div class="contact-count">${c.count.toLocaleString()}</div>
+    <div class="contact-bar"><div class="contact-bar-fill" data-width="${(c.count/maxCount*100).toFixed(1)}"></div></div>
+  `;
+  list.appendChild(item);
+});
+
+// Animate contact bars on scroll
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.contact-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+      barObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+barObserver.observe(list);
+
+// ── Top Conversations ──
+const convos = [
+  { name: 'LFC (Family Chat)', count: 175706, platform: 'Messenger' },
+  { name: 'Linford Family Chat', count: 62976, platform: 'Google Chat' },
+  { name: 'LFC - Grandchildren', count: 45444, platform: 'Messenger' },
+  { name: 'Lauren (DM)', count: 21702, platform: 'Messenger' },
+  { name: 'Beauchemin Babes', count: 9784, platform: 'Messenger' },
+  { name: 'College Kidz', count: 4066, platform: 'Google Chat' },
+  { name: 'LFC - Wordle', count: 3908, platform: 'Messenger' },
+  { name: 'LFG - Revenge Bodies', count: 3680, platform: 'Messenger' },
+  { name: "Jackson's Cute Receptionists", count: 3502, platform: 'Messenger' },
+  { name: 'Dad (DM)', count: 2650, platform: 'Messenger' },
+];
+
+new Chart(document.getElementById('convoChart'), {
+  type: 'bar',
+  data: {
+    labels: convos.map(c => c.name),
+    datasets: [{
+      data: convos.map(c => c.count),
+      backgroundColor: convos.map(c => c.platform === 'Messenger' ? '#1877F2' : c.platform === 'Google Chat' ? '#FBBC04' : '#34C759'),
+      borderRadius: 8,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.parsed.x.toLocaleString() + ' messages (' + convos[ctx.dataIndex].platform + ')' } }
+    },
+    scales: {
+      x: { ticks: { callback: v => (v/1000)+'k' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    },
+    animation: { duration: 1500, easing: 'easeOutQuart' }
+  }
+});
+
+// ── Sent vs Received Donut ──
+new Chart(document.getElementById('sentRecvChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Received', 'Sent'],
+    datasets: [{
+      data: [401526, 104588],
+      backgroundColor: ['rgba(99,102,241,0.7)', 'rgba(167,139,250,0.7)'],
+      borderColor: ['#6366f1', '#a78bfa'],
+      borderWidth: 2,
+      hoverOffset: 10,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '65%',
+    plugins: {
+      legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.parsed.toLocaleString() + ' (' + ((ctx.parsed/506114)*100).toFixed(1) + '%)' } }
+    },
+    animation: { animateRotate: true, duration: 1500 }
+  }
+});
+
+// ── Avg Length ──
+new Chart(document.getElementById('avgLenChart'), {
+  type: 'bar',
+  data: {
+    labels: ['iMessage', 'Messenger', 'Google Chat'],
+    datasets: [{
+      data: [75.8, 45.7, 41.1],
+      backgroundColor: ['#34C759', '#1877F2', '#FBBC04'],
+      borderRadius: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' characters avg' } }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { ticks: { callback: v => v + ' chars' }, grid: { color: 'rgba(255,255,255,0.04)' } }
+    },
+    animation: { duration: 1200 }
+  }
+});
+</script>
+</body>
+</html>
