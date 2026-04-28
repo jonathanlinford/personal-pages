@@ -2305,16 +2305,37 @@
   }
   @media (max-width: 700px) {
     :root[data-style="mrbeast"] .hero {
+      /* Face only occupies the bottom band, so it never bleeds into the
+         title or clocks. Heavy yellow wash on top keeps text readable. */
       background:
-        linear-gradient(180deg, rgba(255,215,0,0.92) 0%, rgba(255,215,0,0.55) 35%, transparent 50%),
-        url('assets/mrbeast-face.png') center top/cover no-repeat !important;
-      min-height: 460px;
+        linear-gradient(180deg,
+          rgba(255,215,0,0.98) 0%,
+          rgba(255,215,0,0.95) 55%,
+          rgba(255,215,0,0.4) 80%,
+          transparent 100%),
+        url('assets/mrbeast-face.png') center bottom/auto 60% no-repeat,
+        #ffd700 !important;
+      min-height: auto;
+      padding: 18px 16px 110px !important;
       text-align: center;
     }
     :root[data-style="mrbeast"] .hero h1,
     :root[data-style="mrbeast"] .hero .sub,
     :root[data-style="mrbeast"] .hero-stats { max-width: 100%; }
     :root[data-style="mrbeast"] .hero-stats { justify-content: center; }
+    :root[data-style="mrbeast"] .hero h1 {
+      font-size: clamp(36px, 11vw, 56px) !important;
+    }
+    /* Move the $1,000,000 sticker out of the clocks' way and shrink it. */
+    :root[data-style="mrbeast"] .container::before {
+      top: auto !important;
+      bottom: 16px !important;
+      right: -10px !important;
+      font-size: 18px !important;
+      padding: 6px 14px !important;
+      border-width: 3px !important;
+      box-shadow: 4px 4px 0 #000 !important;
+    }
   }
   @keyframes mb-pulse {
     0%, 100% { transform: rotate(-2deg) scale(1); }
