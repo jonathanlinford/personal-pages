@@ -1260,6 +1260,29 @@
     color: #c8857a;
     font-size: 28px;
   }
+  .pv-wordperfect {
+    background: #0000aa;
+    border: 1px solid #5050ff;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+  }
+  .pv-wordperfect::before {
+    content: 'Kids @ Home';
+    position: absolute;
+    top: 8px; left: 10px;
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .pv-wordperfect::after {
+    content: 'Doc 1 Pg 1 Ln 1 Pos 12';
+    position: absolute;
+    bottom: 6px; right: 8px;
+    color: #ffff55;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+  }
   .pv-mrbeast {
     background: url('assets/mrbeast-bg.png') center/cover, #ffd700;
     border: 3px solid #000;
@@ -2468,6 +2491,256 @@
     50%      { transform: translateY(-12px); }
   }
 
+  /* ═══════════════════════════════════════════════
+     STYLE: WordPerfect 5.1 (DOS, 1989)
+     ═══════════════════════════════════════════════ */
+  :root[data-style="wordperfect"] {
+    --bg: #0000aa;
+    --bg-elev: #0000aa;
+    --bg-elev-2: #1414c8;
+    --bg-translucent: rgba(0, 0, 170, 0.95);
+    --border: #ffffff;
+    --border-bright: #ffff55;
+    --text: #ffffff;
+    --text-dim: #c8c8ff;
+    --text-faint: #8888c8;
+    --accent: #ffff55;
+    --accent-glow: rgba(255, 255, 85, 0.20);
+    --daisy: #ff55ff; --daisy-bg: rgba(255,85,255,0.10); --daisy-bg-2: rgba(255,85,255,0.20);
+    --nancy: #55ffff; --nancy-bg: rgba(85,255,255,0.10); --nancy-bg-2: rgba(85,255,255,0.20);
+    --abbie: #ffaa55; --abbie-bg: rgba(255,170,85,0.10); --abbie-bg-2: rgba(255,170,85,0.20);
+    --grandma: #55ff55; --grandma-bg: rgba(85,255,85,0.10); --grandma-bg-2: rgba(85,255,85,0.20);
+    --sally: #ffff55; --luke: #55ffff; --twins: #ff55ff; --everyone: #ffffff;
+    --grid-line: transparent;
+    --glow-1: transparent; --glow-2: transparent; --glow-3: transparent;
+  }
+  :root[data-style="wordperfect"] body {
+    font-family: 'JetBrains Mono', 'Courier New', 'Courier', monospace !important;
+    background: #0000aa !important;
+    color: #ffffff !important;
+    line-height: 1.5;
+  }
+  :root[data-style="wordperfect"] .bg-grid,
+  :root[data-style="wordperfect"] .bg-glow { display: none; }
+  /* Faint scanlines for CRT vibe */
+  :root[data-style="wordperfect"]::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.10) 0 1px, transparent 1px 3px);
+  }
+  :root[data-style="wordperfect"] .hero {
+    background: #0000aa !important;
+    border: 2px solid #fff !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 16px !important;
+    overflow: visible !important;
+  }
+  :root[data-style="wordperfect"] .hero::before {
+    /* function key bar */
+    content: 'F1 Help  F3 Save  F5 List  F7 Exit  F10 Menu';
+    display: block;
+    position: relative;
+    background: #ffffff;
+    color: #0000aa;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    margin: -16px -16px 14px;
+    letter-spacing: 0;
+  }
+  :root[data-style="wordperfect"] .hero::after {
+    content: 'Doc 1 Pg 1 Ln 1.0"  Pos 1.0"';
+    display: block;
+    margin-top: 12px;
+    color: #ffff55;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+    border-top: 1px solid #5555aa;
+    padding-top: 6px;
+  }
+  :root[data-style="wordperfect"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    font-size: clamp(24px, 5vw, 42px) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    text-shadow: none;
+    line-height: 1.1;
+  }
+  :root[data-style="wordperfect"] .hero h1::before { content: ''; }
+  :root[data-style="wordperfect"] .hero h1::after  {
+    content: '_';
+    color: #ffff55;
+    animation: blink 1s steps(2) infinite;
+    margin-left: 4px;
+  }
+  :root[data-style="wordperfect"] .hero .sub {
+    color: #c8c8ff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 12px !important;
+  }
+  /* "[Bold]"-ish reveal-code chips for clocks, meta, chips */
+  :root[data-style="wordperfect"] .clock,
+  :root[data-style="wordperfect"] .hero-meta,
+  :root[data-style="wordperfect"] .pill {
+    background: #ffffff !important;
+    color: #0000aa !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 700 !important;
+    text-transform: none;
+    letter-spacing: 0 !important;
+    padding: 3px 8px !important;
+  }
+  :root[data-style="wordperfect"] .clock .loc,
+  :root[data-style="wordperfect"] .clock .time,
+  :root[data-style="wordperfect"] .clock .day {
+    color: #0000aa !important;
+  }
+  :root[data-style="wordperfect"] .countdown-inline {
+    background: #ffff55 !important;
+    border: 1px solid #ffff55 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 4px 10px !important;
+  }
+  :root[data-style="wordperfect"] .countdown-inline .num,
+  :root[data-style="wordperfect"] .countdown-inline .lbl {
+    color: #0000aa !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    -webkit-text-stroke: 0;
+  }
+  :root[data-style="wordperfect"] .card,
+  :root[data-style="wordperfect"] .day-card,
+  :root[data-style="wordperfect"] .timeline,
+  :root[data-style="wordperfect"] .footer-note {
+    background: #0000aa !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    position: relative;
+  }
+  /* Status line on every card */
+  :root[data-style="wordperfect"] .card::after,
+  :root[data-style="wordperfect"] .day-card::after,
+  :root[data-style="wordperfect"] .timeline::after {
+    content: 'Doc 1 Pg 1 Ln 1.0"  Pos 1.0"';
+    display: block;
+    margin: 14px -18px -18px;
+    padding: 4px 12px;
+    background: #1414c8;
+    color: #ffff55;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-top: 1px solid #5555aa;
+    text-align: right;
+  }
+  :root[data-style="wordperfect"] section h2 {
+    background: #ffffff !important;
+    color: #0000aa !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 700 !important;
+    text-transform: none;
+    letter-spacing: 0 !important;
+    padding: 4px 10px;
+    border: 1px solid #fff;
+    display: inline-flex;
+    font-size: 14px !important;
+  }
+  :root[data-style="wordperfect"] section h2 .h-ico {
+    background: transparent !important;
+    color: #0000aa !important;
+  }
+  :root[data-style="wordperfect"] .card h3,
+  :root[data-style="wordperfect"] .day-info h3 {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 14px !important;
+    color: #ffff55 !important;
+    text-transform: none;
+    border-bottom: 1px solid #5555aa;
+    padding-bottom: 4px;
+  }
+  :root[data-style="wordperfect"] .day-num {
+    background: #ffff55 !important;
+    color: #0000aa !important;
+    border: 1px solid #ffff55 !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  :root[data-style="wordperfect"] .day-num .dnum,
+  :root[data-style="wordperfect"] .day-num .dwk { color: #0000aa !important; }
+  :root[data-style="wordperfect"] .event-time {
+    color: #55ffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  :root[data-style="wordperfect"] .event-title {
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  :root[data-style="wordperfect"] .tab {
+    background: #0000aa !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 0 !important;
+    color: #ffffff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 700;
+    text-transform: none;
+    padding: 4px 10px !important;
+    margin-right: 0;
+  }
+  :root[data-style="wordperfect"] .tab.active {
+    background: #ffffff !important;
+    color: #0000aa !important;
+  }
+  :root[data-style="wordperfect"] a.tap,
+  :root[data-style="wordperfect"] .event-loc {
+    color: #55ffff !important;
+    text-decoration: underline !important;
+    border-bottom: none !important;
+  }
+  :root[data-style="wordperfect"] .search-input {
+    background: #0000aa !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  /* Reveal-codes style markers replace some emoji/decoration */
+  :root[data-style="wordperfect"] .kv-key {
+    color: #ffff55 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  :root[data-style="wordperfect"] .kv-val {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  :root[data-style="wordperfect"] mark.hl {
+    background: #ffff55 !important;
+    color: #0000aa !important;
+    border-radius: 0 !important;
+  }
+  :root[data-style="wordperfect"] .footer-note {
+    color: #c8c8ff !important;
+  }
+  :root[data-style="wordperfect"] .footer-note::before {
+    content: '────────────────────────────────────────';
+    display: block;
+    color: #5555aa;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   /* mobile tweaks */
   @media (max-width: 600px) {
     .container { padding: 20px 14px 80px; }
@@ -2972,6 +3245,11 @@
         <strong>MrBeast</strong>
         <span>YOUTUBE THUMBNAIL ENERGY</span>
       </button>
+      <button class="style-card" data-style="wordperfect">
+        <div class="style-prev pv-wordperfect"></div>
+        <strong>WordPerfect 5.1</strong>
+        <span>DOS · F-keys · 1989</span>
+      </button>
     </div>
   </section>
 
@@ -3217,7 +3495,8 @@ setActiveTab();
 
 /* ───────── Style picker ───────── */
 const STYLES = ['default', 'geocities', 'facebook', 'regency', 'tolkien', 'terminal',
-                'nintendo', 'ghibli', 'synthwave', 'newspaper', 'anderson', 'mrbeast'];
+                'nintendo', 'ghibli', 'synthwave', 'newspaper', 'anderson', 'mrbeast',
+                'wordperfect'];
 function applyStyle(style) {
   if (!STYLES.includes(style)) style = 'default';
   if (style === 'default') {
