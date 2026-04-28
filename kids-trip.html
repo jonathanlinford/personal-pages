@@ -10,10 +10,11 @@
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  :root {
+  :root, :root[data-theme="dark"] {
     --bg: #0a0a0f;
     --bg-elev: #12121a;
     --bg-elev-2: #1a1a28;
+    --bg-translucent: rgba(10, 10, 15, 0.85);
     --border: #1e1e2e;
     --border-bright: #2e2e42;
     --text: #e8e8f0;
@@ -42,6 +43,51 @@
     --luke: #38bdf8;
     --twins: #c084fc;
     --everyone: #94a3b8;
+
+    --grid-line: rgba(129,140,248,0.04);
+    --glow-1: rgba(244,114,182,0.10);
+    --glow-2: rgba(129,140,248,0.10);
+    --glow-3: rgba(52,211,153,0.06);
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f6f6fb;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #eef0f7;
+    --bg-translucent: rgba(246, 246, 251, 0.88);
+    --border: #e2e4ed;
+    --border-bright: #c8ccda;
+    --text: #1a1a25;
+    --text-dim: #5b5d72;
+    --text-faint: #9598ac;
+    --accent: #4f46e5;
+    --accent-glow: rgba(79, 70, 229, 0.10);
+
+    --daisy: #db2777;
+    --daisy-bg: rgba(219, 39, 119, 0.08);
+    --daisy-bg-2: rgba(219, 39, 119, 0.14);
+
+    --nancy: #7c3aed;
+    --nancy-bg: rgba(124, 58, 237, 0.08);
+    --nancy-bg-2: rgba(124, 58, 237, 0.14);
+
+    --abbie: #d97706;
+    --abbie-bg: rgba(217, 119, 6, 0.08);
+    --abbie-bg-2: rgba(217, 119, 6, 0.16);
+
+    --grandma: #059669;
+    --grandma-bg: rgba(5, 150, 105, 0.08);
+    --grandma-bg-2: rgba(5, 150, 105, 0.14);
+
+    --sally: #ca8a04;
+    --luke: #0284c7;
+    --twins: #9333ea;
+    --everyone: #475569;
+
+    --grid-line: rgba(79,70,229,0.05);
+    --glow-1: rgba(219,39,119,0.06);
+    --glow-2: rgba(79,70,229,0.06);
+    --glow-3: rgba(5,150,105,0.04);
   }
 
   html { scroll-behavior: smooth; }
@@ -61,8 +107,8 @@
     inset: 0;
     z-index: -1;
     background-image:
-      linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
     animation: grid-drift 60s linear infinite;
@@ -76,10 +122,41 @@
     inset: 0;
     z-index: -1;
     background:
-      radial-gradient(800px 400px at 20% 0%, rgba(244,114,182,0.10), transparent 70%),
-      radial-gradient(700px 400px at 90% 30%, rgba(129,140,248,0.10), transparent 70%),
-      radial-gradient(900px 600px at 50% 100%, rgba(52,211,153,0.06), transparent 70%);
+      radial-gradient(800px 400px at 20% 0%, var(--glow-1), transparent 70%),
+      radial-gradient(700px 400px at 90% 30%, var(--glow-2), transparent 70%),
+      radial-gradient(900px 600px at 50% 100%, var(--glow-3), transparent 70%);
     pointer-events: none;
+  }
+
+  /* ─── Theme toggle ─── */
+  .theme-toggle {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--bg-translucent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .theme-toggle .ico { font-size: 14px; line-height: 1; }
+  .theme-toggle .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
   }
 
   .container {
@@ -209,7 +286,7 @@
     padding: 10px 18px 12px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(10, 10, 15, 0.85);
+    background: var(--bg-translucent);
     border-bottom: 1px solid var(--border);
   }
   .search-input-wrap {
@@ -293,10 +370,63 @@
     z-index: 50;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(10, 10, 15, 0.85);
+    background: var(--bg-translucent);
     margin: 0 -18px 28px;
     padding: 12px 18px;
     border-bottom: 1px solid var(--border);
+  }
+  .tabs-shell { position: relative; }
+  /* fade gradients to indicate horizontal scrollability */
+  .tabs-shell::before,
+  .tabs-shell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity 0.25s;
+  }
+  .tabs-shell::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-translucent), transparent);
+    opacity: 0;
+  }
+  .tabs-shell::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-translucent), transparent);
+  }
+  .tabs-shell.scrolled-start::before { opacity: 1; }
+  .tabs-shell.scrolled-end::after { opacity: 0; }
+  /* "more →" hint chevron — visible until user scrolls */
+  .scroll-hint {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 3;
+    animation: scrollNudge 1.6s ease-in-out infinite;
+    transition: opacity 0.3s;
+  }
+  .scroll-hint::after {
+    content: '→';
+    font-size: 14px;
+  }
+  .tabs-shell.scrolled-end .scroll-hint,
+  .tabs-shell.user-scrolled .scroll-hint { opacity: 0; }
+  @keyframes scrollNudge {
+    0%, 100% { transform: translate(0, -50%); }
+    50%      { transform: translate(4px, -50%); }
   }
   .tabs-inner {
     display: flex;
@@ -877,6 +1007,11 @@
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 
+<button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+  <span class="ico" id="themeIco">⚙</span>
+  <span class="lbl" id="themeLbl">Auto</span>
+</button>
+
 <div class="container">
 
   <!-- ═══ LIVE CLOCKS ═══ -->
@@ -907,16 +1042,19 @@
 
   <!-- ═══ TAB NAV ═══ -->
   <nav class="tabs">
-    <div class="tabs-inner" id="tabs">
-      <a class="tab active" href="#schedule">📅 Schedule</a>
-      <a class="tab" href="#caretakers">🤝 Caretakers</a>
-      <a class="tab" href="#sally">🎒 Sally</a>
-      <a class="tab" href="#luke">🚗 Luke</a>
-      <a class="tab" href="#twins">👶 Twins</a>
-      <a class="tab" href="#meals">🍽 Meals</a>
-      <a class="tab" href="#contacts">📞 Contacts</a>
-      <a class="tab" href="#home">🏠 Home</a>
-      <a class="tab" href="#flights">✈ Flights</a>
+    <div class="tabs-shell" id="tabsShell">
+      <div class="tabs-inner" id="tabs">
+        <a class="tab active" href="#schedule">📅 Schedule</a>
+        <a class="tab" href="#caretakers">🤝 Caretakers</a>
+        <a class="tab" href="#sally">🎒 Sally</a>
+        <a class="tab" href="#luke">🚗 Luke</a>
+        <a class="tab" href="#twins">👶 Twins</a>
+        <a class="tab" href="#meals">🍽 Meals</a>
+        <a class="tab" href="#contacts">📞 Contacts</a>
+        <a class="tab" href="#home">🏠 Home</a>
+        <a class="tab" href="#flights">✈ Flights</a>
+      </div>
+      <span class="scroll-hint">more</span>
     </div>
   </nav>
 
@@ -1523,6 +1661,58 @@ function setActiveTab() {
 }
 window.addEventListener('scroll', setActiveTab, { passive: true });
 setActiveTab();
+
+/* ───────── Theme toggle ───────── */
+const themeBtn = document.getElementById('themeBtn');
+const themeIco = document.getElementById('themeIco');
+const themeLbl = document.getElementById('themeLbl');
+const THEMES = ['auto', 'light', 'dark'];
+const THEME_LABELS = { auto: 'Auto', light: 'Light', dark: 'Dark' };
+const THEME_ICOS   = { auto: '⚙', light: '☀️', dark: '🌙' };
+
+function effectiveTheme(mode) {
+  if (mode === 'auto') {
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+  return mode;
+}
+function applyTheme(mode) {
+  document.documentElement.dataset.theme = effectiveTheme(mode);
+  document.documentElement.dataset.mode = mode;
+  themeIco.textContent = THEME_ICOS[mode];
+  themeLbl.textContent = THEME_LABELS[mode];
+  // Update meta theme-color for browser chrome
+  const tc = effectiveTheme(mode) === 'light' ? '#f6f6fb' : '#0a0a0f';
+  let meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', tc);
+  localStorage.setItem('kt-theme-mode', mode);
+}
+let themeMode = localStorage.getItem('kt-theme-mode') || 'auto';
+if (!THEMES.includes(themeMode)) themeMode = 'auto';
+applyTheme(themeMode);
+themeBtn.addEventListener('click', () => {
+  themeMode = THEMES[(THEMES.indexOf(themeMode) + 1) % THEMES.length];
+  applyTheme(themeMode);
+});
+// Track system changes when in auto mode
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  if (themeMode === 'auto') applyTheme('auto');
+});
+
+/* ───────── Tab scroll affordance ───────── */
+const tabsShell = document.getElementById('tabsShell');
+const tabsInner = document.getElementById('tabs');
+function updateTabScroll() {
+  const sl = tabsInner.scrollLeft;
+  const max = tabsInner.scrollWidth - tabsInner.clientWidth;
+  tabsShell.classList.toggle('scrolled-start', sl > 4);
+  tabsShell.classList.toggle('scrolled-end', max <= 4 || sl >= max - 4);
+  if (sl > 8) tabsShell.classList.add('user-scrolled');
+}
+tabsInner.addEventListener('scroll', updateTabScroll, { passive: true });
+window.addEventListener('resize', updateTabScroll);
+// Initial state
+setTimeout(updateTabScroll, 50);
 
 /* ───────── Live clocks ───────── */
 function fmtClock(tz) {
