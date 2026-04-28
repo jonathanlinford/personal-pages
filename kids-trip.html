@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a0a0f">
 <title>Kids @ Home — May 3-12, 2026</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cinzel:wght@500;700&display=swap');
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -165,116 +165,146 @@
     padding: 32px 18px 80px;
   }
 
-  /* ─── Clocks ─── */
-  .clocks {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 24px;
-    animation: fadeUp 0.5s ease;
-  }
-  .clock {
-    flex: 1;
-    max-width: 220px;
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 10px;
-    align-items: center;
-    padding: 10px 14px;
+  /* ─── Compact hero ─── */
+  .hero {
+    margin: 0 0 28px;
+    padding: 18px 20px 22px;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: border-color 0.2s;
+    border-radius: 20px;
+    animation: fadeUp 0.6s ease;
+    position: relative;
+    overflow: hidden;
   }
-  .clock:hover { border-color: var(--border-bright); }
-  .clock .flag { font-size: 22px; line-height: 1; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 80% at 90% 0%, var(--accent-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .clocks {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .clock {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 12px;
+    line-height: 1;
+  }
+  .clock .flag { font-size: 14px; }
   .clock .loc {
-    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-faint);
-    margin-bottom: 2px;
   }
   .clock .time {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text);
-    line-height: 1.2;
   }
   .clock .day {
     font-size: 10px;
     color: var(--text-dim);
-    margin-left: 6px;
     font-weight: 500;
   }
-
-  /* ─── Hero ─── */
-  .hero {
-    margin-bottom: 32px;
-    text-align: center;
-    animation: fadeUp 0.6s ease;
-  }
-  .hero .kicker {
-    display: inline-block;
+  .hero-meta {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 14px;
-    padding: 6px 12px;
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 100px;
+    color: var(--text-faint);
+    white-space: nowrap;
   }
+
   .hero h1 {
-    font-size: clamp(36px, 7vw, 64px);
+    font-size: clamp(32px, 6vw, 52px);
     font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--daisy) 100%);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(120deg, var(--text) 20%, var(--accent) 60%, var(--daisy) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
+    position: relative;
   }
   .hero .sub {
-    font-size: clamp(15px, 2.5vw, 18px);
+    font-size: 14px;
     color: var(--text-dim);
-    max-width: 580px;
-    margin: 0 auto 28px;
     line-height: 1.55;
+    position: relative;
+    margin-bottom: 14px;
   }
 
-  .countdown {
-    display: inline-flex;
-    align-items: stretch;
-    gap: 10px;
+  .hero-stats {
+    display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
   }
-  .cd-item {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 18px;
-    min-width: 78px;
-    text-align: center;
+  .countdown-inline {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(129,140,248,0.25);
+    border-radius: 100px;
   }
-  .cd-num {
+  .countdown-inline .num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
     color: var(--accent);
     line-height: 1;
   }
-  .cd-label {
+  .countdown-inline .lbl {
     font-size: 10px;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text-faint);
-    margin-top: 6px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .hero-chip strong { color: var(--text); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .hero-top { flex-direction: column; align-items: stretch; gap: 10px; }
+    .clocks { justify-content: center; }
+    .hero-meta { text-align: center; }
+    .hero { padding: 16px 16px 18px; }
   }
 
   /* ─── Search ─── */
@@ -983,6 +1013,565 @@
     animation: pulse 2s ease-in-out infinite;
   }
 
+  /* ─── Style picker ─── */
+  .style-picker-section { margin-top: 36px; }
+  .style-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .style-card {
+    background: var(--bg-elev);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .style-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .style-card.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .style-card strong { font-size: 13px; font-weight: 700; }
+  .style-card span { font-size: 11px; color: var(--text-dim); }
+  .style-prev {
+    height: 60px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .pv-default {
+    background: linear-gradient(135deg, #0a0a0f, #1a1a28);
+    border: 1px solid #2e2e42;
+  }
+  .pv-default::after {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px;
+    width: 26px; height: 6px;
+    background: linear-gradient(90deg, #fff, #818cf8);
+    border-radius: 3px;
+  }
+  .pv-geocities {
+    background:
+      repeating-linear-gradient(45deg, #ff00ff 0 4px, #ffff00 4px 8px, #00ffff 8px 12px);
+    border: 2px solid #000;
+  }
+  .pv-geocities::after {
+    content: 'WELCOME!';
+    position: absolute;
+    inset: 14px 8px;
+    background: #000;
+    color: #ffff00;
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px outset #ccc;
+  }
+  .pv-facebook {
+    background: #fff;
+    border: 1px solid #b6b6b6;
+    border-top: 3px solid #3b5998;
+  }
+  .pv-facebook::after {
+    content: 'facebook';
+    position: absolute;
+    top: 8px; left: 10px;
+    color: #3b5998;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+  .pv-regency {
+    background: #f5ecd6;
+    border: 1px solid #b08a5a;
+  }
+  .pv-regency::after {
+    content: 'M';
+    position: absolute;
+    top: 4px; left: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #6b4823;
+    line-height: 1;
+    font-style: italic;
+  }
+  .pv-tolkien {
+    background: radial-gradient(circle at 50% 50%, #2c1810, #0a0604);
+    border: 1px solid #d4af37;
+  }
+  .pv-tolkien::after {
+    content: '☉';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #d4af37;
+    font-size: 30px;
+  }
+  .pv-terminal {
+    background: #000;
+    border: 1px solid #00ff41;
+  }
+  .pv-terminal::after {
+    content: '> _';
+    position: absolute;
+    top: 12px; left: 8px;
+    color: #00ff41;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    text-shadow: 0 0 4px #00ff41;
+  }
+
+  /* ═══════════════════════════════════════════════
+     STYLE: 90s GeoCities
+     ═══════════════════════════════════════════════ */
+  :root[data-style="geocities"] {
+    --bg: #008080;
+    --bg-elev: #c0c0c0;
+    --bg-elev-2: #ffffcc;
+    --bg-translucent: rgba(192, 192, 192, 0.95);
+    --border: #000000;
+    --border-bright: #000000;
+    --text: #000000;
+    --text-dim: #000080;
+    --text-faint: #808080;
+    --accent: #ff00ff;
+    --accent-glow: rgba(255, 0, 255, 0.2);
+    --daisy: #ff1493; --daisy-bg: #ffb6e6; --daisy-bg-2: #ff69b4;
+    --nancy: #9400d3; --nancy-bg: #e6ccff; --nancy-bg-2: #c78fff;
+    --abbie: #ff8c00; --abbie-bg: #ffe4b5; --abbie-bg-2: #ffb366;
+    --grandma: #00aa00; --grandma-bg: #ccffcc; --grandma-bg-2: #99ff99;
+    --sally: #ffff00; --luke: #00ffff; --twins: #ff00ff; --everyone: #0000ff;
+    --grid-line: rgba(255,0,255,0.15);
+    --glow-1: rgba(255,255,0,0.3); --glow-2: rgba(0,255,255,0.3); --glow-3: rgba(255,0,255,0.2);
+  }
+  :root[data-style="geocities"] body {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive !important;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 28px, rgba(0,0,0,0.04) 28px 29px),
+      #008080 !important;
+  }
+  :root[data-style="geocities"] .bg-grid { display: none; }
+  :root[data-style="geocities"] .bg-glow { display: none; }
+  :root[data-style="geocities"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #ff00ff !important;
+    text-shadow: 3px 3px 0 #ffff00, 6px 6px 0 #00ffff;
+    font-family: 'Comic Sans MS', cursive !important;
+    text-align: center;
+    animation: rainbow-text 3s linear infinite;
+  }
+  @keyframes rainbow-text {
+    0%   { color: #ff0000; }
+    16%  { color: #ff7f00; }
+    33%  { color: #ffff00; }
+    50%  { color: #00ff00; }
+    66%  { color: #0000ff; }
+    83%  { color: #4b0082; }
+    100% { color: #ff0000; }
+  }
+  :root[data-style="geocities"] .card,
+  :root[data-style="geocities"] .day-card,
+  :root[data-style="geocities"] .hero,
+  :root[data-style="geocities"] .timeline,
+  :root[data-style="geocities"] .footer-note {
+    border: 3px ridge #c0c0c0 !important;
+    border-radius: 0 !important;
+    background: #ffffcc !important;
+    box-shadow: 4px 4px 0 #000 !important;
+  }
+  :root[data-style="geocities"] section h2 {
+    background: #000080;
+    color: #ffff00 !important;
+    padding: 6px 12px;
+    border: 2px outset #c0c0c0;
+    font-family: 'Comic Sans MS', cursive !important;
+  }
+  :root[data-style="geocities"] .tab {
+    border: 2px outset #c0c0c0 !important;
+    border-radius: 0 !important;
+    background: #c0c0c0 !important;
+    color: #000080 !important;
+  }
+  :root[data-style="geocities"] .tab.active {
+    border-style: inset !important;
+    color: #ff00ff !important;
+  }
+  :root[data-style="geocities"] a.tap,
+  :root[data-style="geocities"] .event-loc {
+    color: #0000ff !important;
+    text-decoration: underline !important;
+    border-bottom: none !important;
+  }
+  :root[data-style="geocities"] a.tap:visited { color: #800080 !important; }
+  :root[data-style="geocities"] .footer-note::before {
+    content: '✨ Best viewed in Netscape Navigator at 800×600 ✨';
+    display: block;
+    color: #ff00ff;
+    font-weight: bold;
+    margin-bottom: 8px;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* ═══════════════════════════════════════════════
+     STYLE: Early Facebook (2007)
+     ═══════════════════════════════════════════════ */
+  :root[data-style="facebook"] {
+    --bg: #d8dfea;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #eceff5;
+    --bg-translucent: rgba(216, 223, 234, 0.95);
+    --border: #b6b6b6;
+    --border-bright: #6d84b4;
+    --text: #1a1a1a;
+    --text-dim: #555;
+    --text-faint: #777;
+    --accent: #3b5998;
+    --accent-glow: rgba(59, 89, 152, 0.12);
+    --daisy: #d33682; --daisy-bg: #fbe5f1; --daisy-bg-2: #f5b5db;
+    --nancy: #6d84b4; --nancy-bg: #e1e7f1; --nancy-bg-2: #b9c4dc;
+    --abbie: #c1750e; --abbie-bg: #fbf1d9; --abbie-bg-2: #f3d590;
+    --grandma: #1a8c4a; --grandma-bg: #d6f0e0; --grandma-bg-2: #94d3ad;
+    --sally: #c08a04; --luke: #3b5998; --twins: #7c3a8e; --everyone: #475569;
+    --grid-line: transparent;
+    --glow-1: transparent; --glow-2: transparent; --glow-3: transparent;
+  }
+  :root[data-style="facebook"] body {
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif !important;
+    font-size: 11px;
+    background: #d8dfea !important;
+  }
+  :root[data-style="facebook"] .bg-grid,
+  :root[data-style="facebook"] .bg-glow { display: none; }
+  :root[data-style="facebook"] .hero {
+    border-top: 3px solid #3b5998 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+  }
+  :root[data-style="facebook"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #3b5998 !important;
+    font-family: tahoma, sans-serif !important;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 32px !important;
+  }
+  :root[data-style="facebook"] .card,
+  :root[data-style="facebook"] .day-card,
+  :root[data-style="facebook"] .timeline {
+    border: 1px solid #b6b6b6 !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  :root[data-style="facebook"] section h2 {
+    background: #6d84b4;
+    color: #fff !important;
+    padding: 4px 10px;
+    border-radius: 4px 4px 0 0;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  :root[data-style="facebook"] section h2 .h-ico {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+  :root[data-style="facebook"] .tab {
+    border-radius: 4px 4px 0 0 !important;
+    border: 1px solid #b6b6b6 !important;
+    border-bottom: none !important;
+    background: #ebedf2 !important;
+    color: #3b5998 !important;
+    font-weight: 700;
+  }
+  :root[data-style="facebook"] .tab.active {
+    background: #3b5998 !important;
+    color: #fff !important;
+  }
+  :root[data-style="facebook"] a.tap,
+  :root[data-style="facebook"] .event-loc {
+    color: #3b5998 !important;
+    text-decoration: underline !important;
+  }
+  :root[data-style="facebook"] .pill,
+  :root[data-style="facebook"] .clock,
+  :root[data-style="facebook"] .hero-chip,
+  :root[data-style="facebook"] .countdown-inline,
+  :root[data-style="facebook"] .style-card,
+  :root[data-style="facebook"] .footer-note {
+    border-radius: 4px !important;
+  }
+
+  /* ═══════════════════════════════════════════════
+     STYLE: Pride & Prejudice (Regency)
+     ═══════════════════════════════════════════════ */
+  :root[data-style="regency"] {
+    --bg: #f5ecd6;
+    --bg-elev: #fbf5e2;
+    --bg-elev-2: #ede0c0;
+    --bg-translucent: rgba(245, 236, 214, 0.95);
+    --border: #c8a875;
+    --border-bright: #8a6431;
+    --text: #3a2718;
+    --text-dim: #6b4823;
+    --text-faint: #8a6431;
+    --accent: #7d2027;
+    --accent-glow: rgba(125, 32, 39, 0.10);
+    --daisy: #b04068; --daisy-bg: #f5d8e2; --daisy-bg-2: #e6a8be;
+    --nancy: #5a4a8c; --nancy-bg: #e1dcef; --nancy-bg-2: #b4abd2;
+    --abbie: #8a6431; --abbie-bg: #ede0c0; --abbie-bg-2: #d3b27c;
+    --grandma: #4a6741; --grandma-bg: #d8e1cf; --grandma-bg-2: #a8b89d;
+    --sally: #b08a25; --luke: #2c5876; --twins: #6c3a78; --everyone: #5a4a3c;
+    --grid-line: transparent;
+    --glow-1: rgba(176,138,37,0.08); --glow-2: rgba(125,32,39,0.06); --glow-3: rgba(74,103,65,0.04);
+  }
+  :root[data-style="regency"] body {
+    font-family: 'Cormorant Garamond', 'Playfair Display', 'EB Garamond', Georgia, 'Times New Roman', serif !important;
+    background: #f5ecd6 !important;
+  }
+  :root[data-style="regency"] .bg-grid {
+    background-image:
+      radial-gradient(circle, rgba(138,100,49,0.07) 1px, transparent 1.5px) !important;
+    background-size: 24px 24px !important;
+  }
+  :root[data-style="regency"] .hero h1,
+  :root[data-style="regency"] section h2,
+  :root[data-style="regency"] .card h3 {
+    font-family: 'Playfair Display', 'EB Garamond', Georgia, serif !important;
+    font-style: italic;
+    font-weight: 700 !important;
+  }
+  :root[data-style="regency"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #7d2027 !important;
+    text-align: center;
+    font-size: clamp(36px, 6vw, 56px) !important;
+    letter-spacing: 0 !important;
+  }
+  :root[data-style="regency"] .hero h1::before { content: '~ '; color: var(--abbie); font-style: normal; }
+  :root[data-style="regency"] .hero h1::after  { content: ' ~'; color: var(--abbie); font-style: normal; }
+  :root[data-style="regency"] .hero,
+  :root[data-style="regency"] .card,
+  :root[data-style="regency"] .day-card,
+  :root[data-style="regency"] .timeline,
+  :root[data-style="regency"] .footer-note {
+    border: 1px solid #c8a875 !important;
+    border-radius: 4px !important;
+    background: #fbf5e2 !important;
+    box-shadow: 0 1px 0 rgba(138,100,49,0.1) !important;
+  }
+  :root[data-style="regency"] .hero {
+    background:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='1' fill='rgba(138,100,49,0.08)'/></svg>"),
+      #fbf5e2 !important;
+  }
+  :root[data-style="regency"] section h2 .h-ico { background: transparent !important; font-style: normal; }
+  :root[data-style="regency"] .tab {
+    border-radius: 0 !important;
+    color: #6b4823 !important;
+    font-style: italic;
+    font-family: 'Playfair Display', Georgia, serif !important;
+  }
+  :root[data-style="regency"] .tab.active {
+    background: #7d2027 !important;
+    color: #fbf5e2 !important;
+  }
+  :root[data-style="regency"] .sub::first-letter,
+  :root[data-style="regency"] .day-info h3::first-letter {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #7d2027;
+  }
+
+  /* ═══════════════════════════════════════════════
+     STYLE: Lord of the Rings
+     ═══════════════════════════════════════════════ */
+  :root[data-style="tolkien"] {
+    --bg: #0a0604;
+    --bg-elev: #1a0f08;
+    --bg-elev-2: #2c1810;
+    --bg-translucent: rgba(10, 6, 4, 0.92);
+    --border: #5e3a1c;
+    --border-bright: #d4af37;
+    --text: #f0d99a;
+    --text-dim: #c8a560;
+    --text-faint: #8a6a3a;
+    --accent: #d4af37;
+    --accent-glow: rgba(212, 175, 55, 0.18);
+    --daisy: #e8a957; --daisy-bg: rgba(232,169,87,0.15); --daisy-bg-2: rgba(232,169,87,0.28);
+    --nancy: #9b6dd8; --nancy-bg: rgba(155,109,216,0.15); --nancy-bg-2: rgba(155,109,216,0.28);
+    --abbie: #e85d3a; --abbie-bg: rgba(232,93,58,0.15); --abbie-bg-2: rgba(232,93,58,0.28);
+    --grandma: #6cba78; --grandma-bg: rgba(108,186,120,0.15); --grandma-bg-2: rgba(108,186,120,0.28);
+    --sally: #f0d99a; --luke: #6dc6e8; --twins: #d99ae8; --everyone: #c8a560;
+    --grid-line: rgba(212,175,55,0.04);
+    --glow-1: rgba(212,175,55,0.10); --glow-2: rgba(232,93,58,0.08); --glow-3: rgba(155,109,216,0.06);
+  }
+  :root[data-style="tolkien"] body {
+    font-family: 'Cinzel', 'Trajan Pro', Georgia, serif !important;
+    background: #0a0604 !important;
+  }
+  :root[data-style="tolkien"] .hero h1,
+  :root[data-style="tolkien"] section h2,
+  :root[data-style="tolkien"] .card h3 {
+    font-family: 'Cinzel', 'Trajan Pro', serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em !important;
+    font-weight: 700 !important;
+  }
+  :root[data-style="tolkien"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #d4af37 !important;
+    text-shadow: 0 0 18px rgba(212,175,55,0.4);
+    text-align: center;
+    letter-spacing: 0.08em !important;
+  }
+  :root[data-style="tolkien"] .hero,
+  :root[data-style="tolkien"] .card,
+  :root[data-style="tolkien"] .day-card,
+  :root[data-style="tolkien"] .timeline,
+  :root[data-style="tolkien"] .footer-note {
+    border: 1px solid #5e3a1c !important;
+    background:
+      linear-gradient(180deg, rgba(212,175,55,0.04), transparent),
+      #1a0f08 !important;
+    box-shadow:
+      inset 0 0 24px rgba(212,175,55,0.06),
+      0 0 0 1px rgba(212,175,55,0.1) !important;
+  }
+  :root[data-style="tolkien"] .hero::before {
+    background: radial-gradient(80% 100% at 50% 0%, rgba(212,175,55,0.18), transparent 70%) !important;
+  }
+  :root[data-style="tolkien"] section h2 .h-ico { background: rgba(212,175,55,0.15) !important; }
+  :root[data-style="tolkien"] .tab.active {
+    background: rgba(212,175,55,0.18) !important;
+    border-color: #d4af37 !important;
+    color: #d4af37 !important;
+  }
+  :root[data-style="tolkien"] a.tap,
+  :root[data-style="tolkien"] .event-loc {
+    color: #d4af37 !important;
+    border-bottom-color: rgba(212,175,55,0.5) !important;
+  }
+  :root[data-style="tolkien"] .footer-note::after {
+    content: '~ Not all those who wander are lost ~';
+    display: block;
+    margin-top: 10px;
+    color: #d4af37;
+    font-style: italic;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ═══════════════════════════════════════════════
+     STYLE: Terminal (CRT)
+     ═══════════════════════════════════════════════ */
+  :root[data-style="terminal"] {
+    --bg: #000000;
+    --bg-elev: #001100;
+    --bg-elev-2: #002200;
+    --bg-translucent: rgba(0, 0, 0, 0.92);
+    --border: #00ff41;
+    --border-bright: #00ff41;
+    --text: #00ff41;
+    --text-dim: #00cc34;
+    --text-faint: #008820;
+    --accent: #00ff41;
+    --accent-glow: rgba(0, 255, 65, 0.15);
+    --daisy: #ff41ff; --daisy-bg: rgba(255,65,255,0.1); --daisy-bg-2: rgba(255,65,255,0.2);
+    --nancy: #41ffff; --nancy-bg: rgba(65,255,255,0.1); --nancy-bg-2: rgba(65,255,255,0.2);
+    --abbie: #ffaa41; --abbie-bg: rgba(255,170,65,0.1); --abbie-bg-2: rgba(255,170,65,0.2);
+    --grandma: #41ff41; --grandma-bg: rgba(65,255,65,0.1); --grandma-bg-2: rgba(65,255,65,0.2);
+    --sally: #ffff41; --luke: #41aaff; --twins: #ff41aa; --everyone: #00ff41;
+    --grid-line: rgba(0,255,65,0.06);
+    --glow-1: rgba(0,255,65,0.06); --glow-2: rgba(0,255,65,0.04); --glow-3: rgba(0,255,65,0.04);
+  }
+  :root[data-style="terminal"] body {
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    background: #000 !important;
+    color: #00ff41 !important;
+  }
+  :root[data-style="terminal"]::before {
+    /* CRT scanlines */
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0 1px, transparent 1px 3px);
+  }
+  :root[data-style="terminal"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #00ff41 !important;
+    text-shadow: 0 0 6px #00ff41, 0 0 12px rgba(0,255,65,0.4);
+    font-family: 'JetBrains Mono', monospace !important;
+    letter-spacing: 0 !important;
+  }
+  :root[data-style="terminal"] .hero h1::before { content: '> '; }
+  :root[data-style="terminal"] .hero h1::after  {
+    content: '_';
+    animation: blink 1s steps(2) infinite;
+  }
+  :root[data-style="terminal"] .hero,
+  :root[data-style="terminal"] .card,
+  :root[data-style="terminal"] .day-card,
+  :root[data-style="terminal"] .timeline,
+  :root[data-style="terminal"] .footer-note {
+    border: 1px solid #00ff41 !important;
+    border-radius: 0 !important;
+    background: #000 !important;
+    box-shadow: 0 0 10px rgba(0,255,65,0.15) !important;
+  }
+  :root[data-style="terminal"] section h2 {
+    color: #00ff41 !important;
+    text-shadow: 0 0 4px #00ff41;
+  }
+  :root[data-style="terminal"] section h2::before { content: '## '; opacity: 0.6; }
+  :root[data-style="terminal"] .tab {
+    border-radius: 0 !important;
+    border: 1px solid #00ff41 !important;
+    color: #00ff41 !important;
+    background: #000 !important;
+  }
+  :root[data-style="terminal"] .tab.active {
+    background: #00ff41 !important;
+    color: #000 !important;
+  }
+  :root[data-style="terminal"] a.tap,
+  :root[data-style="terminal"] .event-loc {
+    color: #00ff41 !important;
+    text-decoration: underline !important;
+    border-bottom: none !important;
+  }
+  :root[data-style="terminal"] .pill { border-radius: 0 !important; }
+  :root[data-style="terminal"] input,
+  :root[data-style="terminal"] .search-input {
+    background: #000 !important;
+    color: #00ff41 !important;
+    border-color: #00ff41 !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+
   /* mobile tweaks */
   @media (max-width: 600px) {
     .container { padding: 20px 14px 80px; }
@@ -1014,30 +1603,32 @@
 
 <div class="container">
 
-  <!-- ═══ LIVE CLOCKS ═══ -->
-  <div class="clocks">
-    <div class="clock">
-      <span class="flag">🇺🇸</span>
-      <div>
-        <div class="loc">Salem · MT</div>
-        <div class="time"><span id="t-salem">--:--</span><span class="day" id="d-salem"></span></div>
-      </div>
-    </div>
-    <div class="clock">
-      <span class="flag">🇯🇵</span>
-      <div>
-        <div class="loc">Japan · JST</div>
-        <div class="time"><span id="t-japan">--:--</span><span class="day" id="d-japan"></span></div>
-      </div>
-    </div>
-  </div>
-
   <!-- ═══ HERO ═══ -->
   <header class="hero">
-    <span class="kicker">May 3 → 12, 2026 · Japan trip</span>
+    <div class="hero-top">
+      <div class="clocks">
+        <div class="clock">
+          <span class="flag">🇺🇸</span>
+          <span class="loc">Salem</span>
+          <span class="time" id="t-salem">--:--</span>
+          <span class="day" id="d-salem"></span>
+        </div>
+        <div class="clock">
+          <span class="flag">🇯🇵</span>
+          <span class="loc">Japan</span>
+          <span class="time" id="t-japan">--:--</span>
+          <span class="day" id="d-japan"></span>
+        </div>
+      </div>
+      <span class="hero-meta">May 3–12, 2026</span>
+    </div>
     <h1>Kids @ Home</h1>
-    <p class="sub">Everything caretakers need while Mom &amp; Dad are in Japan. Schedule, contacts, routines, and the twins' care guide — all in one place.</p>
-    <div class="countdown" id="countdown"></div>
+    <p class="sub">Caretaker reference for Sally, Luke, Emerald &amp; Georgia while Mom &amp; Dad are in Japan.</p>
+    <div class="hero-stats">
+      <div class="countdown-inline" id="countdown"></div>
+      <span class="hero-chip">👶 <strong>4</strong> kids</span>
+      <span class="hero-chip">🤝 <strong>4</strong> caretakers</span>
+    </div>
   </header>
 
   <!-- ═══ TAB NAV ═══ -->
@@ -1422,6 +2013,44 @@
     </div>
   </section>
 
+  <!-- ═══ STYLE PICKER ═══ -->
+  <section id="style-picker" class="style-picker-section">
+    <h2><span class="h-ico">🎨</span>Pick a vibe</h2>
+    <p style="color:var(--text-dim);font-size:13px;margin-bottom:14px">Switch the page's whole aesthetic. Your choice is saved.</p>
+    <div class="style-grid" id="styleGrid">
+      <button class="style-card" data-style="default">
+        <div class="style-prev pv-default"></div>
+        <strong>Default</strong>
+        <span>Modern dark / light</span>
+      </button>
+      <button class="style-card" data-style="geocities">
+        <div class="style-prev pv-geocities"></div>
+        <strong>90s GeoCities</strong>
+        <span>Comic Sans &amp; sparkles</span>
+      </button>
+      <button class="style-card" data-style="facebook">
+        <div class="style-prev pv-facebook"></div>
+        <strong>Early Facebook</strong>
+        <span>Wallcake era · 2007 blue</span>
+      </button>
+      <button class="style-card" data-style="regency">
+        <div class="style-prev pv-regency"></div>
+        <strong>Pride &amp; Prejudice</strong>
+        <span>Regency parchment</span>
+      </button>
+      <button class="style-card" data-style="tolkien">
+        <div class="style-prev pv-tolkien"></div>
+        <strong>Lord of the Rings</strong>
+        <span>Gold on midnight</span>
+      </button>
+      <button class="style-card" data-style="terminal">
+        <div class="style-prev pv-terminal"></div>
+        <strong>Terminal</strong>
+        <span>CRT · phosphor green</span>
+      </button>
+    </div>
+  </section>
+
   <div class="footer-note">
     <span class="live-dot"></span><strong>Live source of truth:</strong> the Google Calendar this page is paired with. <a class="tap" href="https://calendar.google.com/calendar/u/0/r?cid=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8@group.calendar.google.com" target="_blank">Open calendar</a><br>
     Last regenerated automatically · save this page to your home screen for quick access.
@@ -1662,6 +2291,26 @@ function setActiveTab() {
 window.addEventListener('scroll', setActiveTab, { passive: true });
 setActiveTab();
 
+/* ───────── Style picker ───────── */
+const STYLES = ['default', 'geocities', 'facebook', 'regency', 'tolkien', 'terminal'];
+function applyStyle(style) {
+  if (!STYLES.includes(style)) style = 'default';
+  if (style === 'default') {
+    document.documentElement.removeAttribute('data-style');
+  } else {
+    document.documentElement.setAttribute('data-style', style);
+  }
+  localStorage.setItem('kt-style', style);
+  document.querySelectorAll('.style-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.style === style);
+  });
+}
+const savedStyle = localStorage.getItem('kt-style') || 'default';
+applyStyle(savedStyle);
+document.querySelectorAll('.style-card').forEach(card => {
+  card.addEventListener('click', () => applyStyle(card.dataset.style));
+});
+
 /* ───────── Theme toggle ───────── */
 const themeBtn = document.getElementById('themeBtn');
 const themeIco = document.getElementById('themeIco');
@@ -1854,20 +2503,20 @@ function updateCountdown() {
   const tripStart = new Date('2026-05-03T05:30:00-06:00').getTime();
   const tripEnd = new Date('2026-05-12T18:00:00-06:00').getTime();
   const now = Date.now();
+  const cd = document.getElementById('countdown');
   let target, label;
   if (now < tripStart)      { target = tripStart; label = 'until parents leave'; }
   else if (now < tripEnd)   { target = tripEnd;   label = 'until parents return'; }
-  else                       { document.getElementById('countdown').innerHTML = '<div class="cd-item"><div class="cd-num">✓</div><div class="cd-label">trip complete</div></div>'; return; }
+  else                       { cd.innerHTML = '<span class="lbl">✓ Trip complete</span>'; return; }
   const diff = target - now;
   const days = Math.floor(diff / 86400000);
   const hrs  = Math.floor((diff % 86400000) / 3600000);
   const mins = Math.floor((diff % 3600000) / 60000);
-  document.getElementById('countdown').innerHTML = `
-    <div class="cd-item"><div class="cd-num">${days}</div><div class="cd-label">days</div></div>
-    <div class="cd-item"><div class="cd-num">${hrs}</div><div class="cd-label">hours</div></div>
-    <div class="cd-item"><div class="cd-num">${mins}</div><div class="cd-label">minutes</div></div>
-    <div class="cd-item" style="background:transparent;border:none;display:flex;align-items:center;padding:0 4px"><span class="cd-label" style="white-space:nowrap">${label}</span></div>
-  `;
+  let parts = '';
+  if (days) parts += `<span class="num">${days}</span><span class="lbl">d</span>`;
+  parts += `<span class="num">${hrs}</span><span class="lbl">h</span>`;
+  parts += `<span class="num">${mins}</span><span class="lbl">m</span>`;
+  cd.innerHTML = parts + `<span class="lbl" style="margin-left:6px">${label}</span>`;
 }
 updateCountdown();
 setInterval(updateCountdown, 30000);
