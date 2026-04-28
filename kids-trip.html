@@ -470,30 +470,43 @@
     border-bottom: 1px solid var(--border);
   }
   .tabs-shell { position: relative; }
-  /* Edge fades hint at horizontal scrollability — last visible tab
-     dissolves into the nav background. */
-  .tabs-shell::before,
-  .tabs-shell::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 56px;
-    pointer-events: none;
-    z-index: 2;
-    transition: opacity 0.25s;
+  /* Edge fades hint at horizontal scrollability. Using mask-image
+     fades the actual tab content (text + icons) into transparency,
+     instead of overlaying a translucent gradient that leaves text
+     visible underneath. The mask updates as the user scrolls. */
+  .tabs-inner {
+    -webkit-mask-image: linear-gradient(to right,
+      black 0,
+      black calc(100% - 64px),
+      transparent 100%);
+            mask-image: linear-gradient(to right,
+      black 0,
+      black calc(100% - 64px),
+      transparent 100%);
+    transition: -webkit-mask-image 0.2s, mask-image 0.2s;
   }
-  .tabs-shell::before {
-    left: 0;
-    background: linear-gradient(to right, var(--bg) 0%, var(--bg-translucent) 50%, transparent 100%);
-    opacity: 0;
+  .tabs-shell.scrolled-start .tabs-inner {
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0,
+      black 64px,
+      black calc(100% - 64px),
+      transparent 100%);
+            mask-image: linear-gradient(to right,
+      transparent 0,
+      black 64px,
+      black calc(100% - 64px),
+      transparent 100%);
   }
-  .tabs-shell::after {
-    right: 0;
-    background: linear-gradient(to left, var(--bg) 0%, var(--bg-translucent) 50%, transparent 100%);
+  .tabs-shell.scrolled-end .tabs-inner {
+    -webkit-mask-image: linear-gradient(to right,
+      transparent 0,
+      black 64px,
+      black 100%);
+            mask-image: linear-gradient(to right,
+      transparent 0,
+      black 64px,
+      black 100%);
   }
-  .tabs-shell.scrolled-start::before { opacity: 1; }
-  .tabs-shell.scrolled-end::after { opacity: 0; }
   .tabs-inner {
     display: flex;
     gap: 6px;
@@ -1003,28 +1016,27 @@
 
   /* ─── Meal plan grid ─── */
   .meals {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     margin: 0 -2px;
-    padding-bottom: 4px;
   }
   .meals table {
     border-collapse: separate;
     border-spacing: 4px;
     width: 100%;
-    min-width: 540px;
+    table-layout: fixed;
   }
   .meals th, .meals td {
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 8px;
     font-size: 12px;
     font-weight: 500;
     color: var(--text-dim);
     vertical-align: top;
     line-height: 1.4;
     text-align: left;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
   .meals th {
     background: var(--bg-elev-2);
@@ -1034,12 +1046,51 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+  .meals td:first-child,
+  .meals th:first-child {
+    width: 64px;
+  }
   .meals td:first-child {
     background: var(--bg-elev-2);
     color: var(--text);
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
+  }
+  /* Stack to one cell per row on very narrow screens */
+  @media (max-width: 480px) {
+    .meals table, .meals thead, .meals tbody, .meals tr, .meals td, .meals th {
+      display: block;
+      width: 100% !important;
+    }
+    .meals thead { display: none; }
+    .meals tr {
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+      background: var(--bg);
+    }
+    .meals td {
+      border: none;
+      padding: 4px 8px;
+      background: transparent !important;
+    }
+    .meals td:first-child {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      padding-bottom: 6px;
+    }
+    .meals td:not(:first-child)::before {
+      content: attr(data-meal) ': ';
+      color: var(--text-faint);
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-right: 4px;
+    }
   }
 
   /* ─── Bottom nav (mobile) ─── */
@@ -3138,12 +3189,12 @@
       <div class="meals">
         <table>
           <tr><th>Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>
-          <tr><td>Sun 5/3</td><td>Cereal, oatmeal, eggs, or waffles</td><td>Ramen or PB&amp;J</td><td>Orange chicken from Costco</td></tr>
-          <tr><td>Mon 5/4</td><td>Pancakes or Cheerios</td><td>Chicken chunks with fries</td><td>Spaghetti and meatballs</td></tr>
-          <tr><td>Tue 5/5</td><td>Oatmeal or cereal</td><td>Mac and cheese</td><td>Walleye skillet from Walmart</td></tr>
-          <tr><td>Wed 5/6</td><td>Waffles or eggs</td><td>Quesadillas or buttered noodles</td><td>Frozen pizza</td></tr>
-          <tr><td>Thu 5/7</td><td>Pancakes or cereal</td><td>Ramen or canned fruit + sandwiches</td><td>Chicken chunks &amp; fries</td></tr>
-          <tr><td>Fri 5/8</td><td>Eggs or oatmeal</td><td>Buttered noodles or PB&amp;J</td><td>Pickup (Taco Bell, McDonald's)</td></tr>
+          <tr><td>Sun 5/3</td><td data-meal="Breakfast">Cereal, oatmeal, eggs, or waffles</td><td data-meal="Lunch">Ramen or PB&amp;J</td><td data-meal="Dinner">Orange chicken from Costco</td></tr>
+          <tr><td>Mon 5/4</td><td data-meal="Breakfast">Pancakes or Cheerios</td><td data-meal="Lunch">Chicken chunks with fries</td><td data-meal="Dinner">Spaghetti and meatballs</td></tr>
+          <tr><td>Tue 5/5</td><td data-meal="Breakfast">Oatmeal or cereal</td><td data-meal="Lunch">Mac and cheese</td><td data-meal="Dinner">Walleye skillet from Walmart</td></tr>
+          <tr><td>Wed 5/6</td><td data-meal="Breakfast">Waffles or eggs</td><td data-meal="Lunch">Quesadillas or buttered noodles</td><td data-meal="Dinner">Frozen pizza</td></tr>
+          <tr><td>Thu 5/7</td><td data-meal="Breakfast">Pancakes or cereal</td><td data-meal="Lunch">Ramen or canned fruit + sandwiches</td><td data-meal="Dinner">Chicken chunks &amp; fries</td></tr>
+          <tr><td>Fri 5/8</td><td data-meal="Breakfast">Eggs or oatmeal</td><td data-meal="Lunch">Buttered noodles or PB&amp;J</td><td data-meal="Dinner">Pickup (Taco Bell, McDonald's)</td></tr>
         </table>
       </div>
     </div>
