@@ -88,6 +88,50 @@
     padding: 32px 18px 80px;
   }
 
+  /* ─── Clocks ─── */
+  .clocks {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s ease;
+  }
+  .clock {
+    flex: 1;
+    max-width: 220px;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s;
+  }
+  .clock:hover { border-color: var(--border-bright); }
+  .clock .flag { font-size: 22px; line-height: 1; }
+  .clock .loc {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-faint);
+    margin-bottom: 2px;
+  }
+  .clock .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .clock .day {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-left: 6px;
+    font-weight: 500;
+  }
+
   /* ─── Hero ─── */
   .hero {
     margin-bottom: 32px;
@@ -154,6 +198,92 @@
     letter-spacing: 0.15em;
     color: var(--text-faint);
     margin-top: 6px;
+  }
+
+  /* ─── Search ─── */
+  .search-wrap {
+    position: sticky;
+    top: 56px;
+    z-index: 49;
+    margin: -8px -18px 22px;
+    padding: 10px 18px 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.85);
+    border-bottom: 1px solid var(--border);
+  }
+  .search-input-wrap {
+    position: relative;
+  }
+  .search-input-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--text-faint);
+    pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    padding: 11px 40px 11px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input::placeholder { color: var(--text-faint); }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-elev-2);
+    color: var(--text-dim);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    transition: all 0.2s;
+  }
+  .search-clear:hover { background: var(--accent); color: #fff; }
+  .search-clear.visible { display: flex; }
+  .search-meta {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  /* Search filter visuals */
+  .search-active .card,
+  .search-active .day-card,
+  .search-active section h2 {
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .search-hide {
+    display: none !important;
+  }
+  mark.hl {
+    background: rgba(129, 140, 248, 0.35);
+    color: var(--text);
+    border-radius: 3px;
+    padding: 0 2px;
   }
 
   /* ─── Tab nav ─── */
@@ -749,6 +879,24 @@
 
 <div class="container">
 
+  <!-- ═══ LIVE CLOCKS ═══ -->
+  <div class="clocks">
+    <div class="clock">
+      <span class="flag">🇺🇸</span>
+      <div>
+        <div class="loc">Salem · MT</div>
+        <div class="time"><span id="t-salem">--:--</span><span class="day" id="d-salem"></span></div>
+      </div>
+    </div>
+    <div class="clock">
+      <span class="flag">🇯🇵</span>
+      <div>
+        <div class="loc">Japan · JST</div>
+        <div class="time"><span id="t-japan">--:--</span><span class="day" id="d-japan"></span></div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ HERO ═══ -->
   <header class="hero">
     <span class="kicker">May 3 → 12, 2026 · Japan trip</span>
@@ -771,6 +919,16 @@
       <a class="tab" href="#flights">✈ Flights</a>
     </div>
   </nav>
+
+  <!-- ═══ SEARCH ═══ -->
+  <div class="search-wrap">
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search" class="search-input" type="search" placeholder='Search anything — "ear drops", "Misty", "Wed", "Abbie"…' autocomplete="off">
+      <button id="searchClear" class="search-clear" aria-label="Clear search">✕</button>
+    </div>
+    <div class="search-meta" id="searchMeta"></div>
+  </div>
 
   <!-- ═══ SCHEDULE TIMELINE ═══ -->
   <section id="schedule">
@@ -1365,6 +1523,141 @@ function setActiveTab() {
 }
 window.addEventListener('scroll', setActiveTab, { passive: true });
 setActiveTab();
+
+/* ───────── Live clocks ───────── */
+function fmtClock(tz) {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-US', {
+    timeZone: tz,
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+  const day = now.toLocaleDateString('en-US', {
+    timeZone: tz,
+    weekday: 'short',
+  });
+  return { time, day };
+}
+function tickClocks() {
+  const us = fmtClock('America/Denver');
+  document.getElementById('t-salem').textContent = us.time;
+  document.getElementById('d-salem').textContent = us.day;
+  const jp = fmtClock('Asia/Tokyo');
+  document.getElementById('t-japan').textContent = jp.time;
+  document.getElementById('d-japan').textContent = jp.day;
+}
+tickClocks();
+setInterval(tickClocks, 5000);
+
+/* ───────── Search ───────── */
+const searchEl = document.getElementById('search');
+const clearBtn = document.getElementById('searchClear');
+const metaEl = document.getElementById('searchMeta');
+const searchTargets = [
+  ...document.querySelectorAll('section .card, section .day-card')
+];
+const sectionEls = document.querySelectorAll('section[id]');
+
+function clearHighlights(el) {
+  el.querySelectorAll('mark.hl').forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+}
+function highlightIn(el, q) {
+  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p = n.parentElement;
+      if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+      if (p.closest('.search-wrap')) return NodeFilter.FILTER_REJECT;
+      if (p.classList && p.classList.contains('hl')) return NodeFilter.FILTER_REJECT;
+      return re.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    },
+  });
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  nodes.forEach(node => {
+    const frag = document.createDocumentFragment();
+    const parts = node.nodeValue.split(re);
+    parts.forEach(p => {
+      if (re.test(p)) {
+        const m = document.createElement('mark');
+        m.className = 'hl';
+        m.textContent = p;
+        frag.appendChild(m);
+      } else {
+        frag.appendChild(document.createTextNode(p));
+      }
+      re.lastIndex = 0;
+    });
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+function runSearch() {
+  const q = searchEl.value.trim();
+  // Reset highlights everywhere
+  searchTargets.forEach(el => { el.classList.remove('search-hide'); clearHighlights(el); });
+  sectionEls.forEach(s => s.classList.remove('search-hide'));
+
+  if (!q) {
+    document.body.classList.remove('search-active');
+    clearBtn.classList.remove('visible');
+    metaEl.textContent = '';
+
+    // Re-open all day cards (auto behavior — we don't force-open all, just leave default)
+    return;
+  }
+  document.body.classList.add('search-active');
+  clearBtn.classList.add('visible');
+
+  const ql = q.toLowerCase();
+  let matches = 0;
+  searchTargets.forEach(el => {
+    const text = el.textContent.toLowerCase();
+    if (text.includes(ql)) {
+      matches += 1;
+      highlightIn(el, q);
+      // If it's a day card, open it so matches inside are visible
+      if (el.classList.contains('day-card')) el.classList.add('open');
+    } else {
+      el.classList.add('search-hide');
+    }
+  });
+  // Hide section heading if nothing in that section matches
+  sectionEls.forEach(s => {
+    const visible = [...s.querySelectorAll('.card, .day-card')].some(c => !c.classList.contains('search-hide'));
+    if (!visible && [...s.querySelectorAll('.card, .day-card')].length > 0) {
+      s.classList.add('search-hide');
+    }
+  });
+
+  metaEl.textContent = matches === 0
+    ? `no matches for "${q}"`
+    : `${matches} ${matches === 1 ? 'match' : 'matches'} for "${q}"`;
+}
+searchEl.addEventListener('input', runSearch);
+clearBtn.addEventListener('click', () => {
+  searchEl.value = '';
+  searchEl.focus();
+  runSearch();
+});
+// Keyboard shortcut: Cmd/Ctrl+K
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    searchEl.focus();
+    searchEl.select();
+  } else if (e.key === 'Escape' && document.activeElement === searchEl) {
+    searchEl.value = '';
+    runSearch();
+    searchEl.blur();
+  }
+});
 
 /* ───────── Countdown ───────── */
 function updateCountdown() {
