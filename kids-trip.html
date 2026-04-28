@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<title>Kids @ Home — May 3-12, 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg-elev: #12121a;
+    --bg-elev-2: #1a1a28;
+    --border: #1e1e2e;
+    --border-bright: #2e2e42;
+    --text: #e8e8f0;
+    --text-dim: #9090a8;
+    --text-faint: #585870;
+    --accent: #818cf8;
+    --accent-glow: rgba(129, 140, 248, 0.18);
+
+    --daisy: #f472b6;
+    --daisy-bg: rgba(244, 114, 182, 0.12);
+    --daisy-bg-2: rgba(244, 114, 182, 0.22);
+
+    --nancy: #a78bfa;
+    --nancy-bg: rgba(167, 139, 250, 0.12);
+    --nancy-bg-2: rgba(167, 139, 250, 0.22);
+
+    --abbie: #fbbf24;
+    --abbie-bg: rgba(251, 191, 36, 0.12);
+    --abbie-bg-2: rgba(251, 191, 36, 0.22);
+
+    --grandma: #34d399;
+    --grandma-bg: rgba(52, 211, 153, 0.12);
+    --grandma-bg-2: rgba(52, 211, 153, 0.22);
+
+    --sally: #fde047;
+    --luke: #38bdf8;
+    --twins: #c084fc;
+    --everyone: #94a3b8;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Animated grid background */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(129,140,248,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(129,140,248,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    animation: grid-drift 60s linear infinite;
+  }
+  @keyframes grid-drift {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+  }
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(800px 400px at 20% 0%, rgba(244,114,182,0.10), transparent 70%),
+      radial-gradient(700px 400px at 90% 30%, rgba(129,140,248,0.10), transparent 70%),
+      radial-gradient(900px 600px at 50% 100%, rgba(52,211,153,0.06), transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 32px 18px 80px;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    margin-bottom: 32px;
+    text-align: center;
+    animation: fadeUp 0.6s ease;
+  }
+  .hero .kicker {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding: 6px 12px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--daisy) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+  }
+  .hero .sub {
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: var(--text-dim);
+    max-width: 580px;
+    margin: 0 auto 28px;
+    line-height: 1.55;
+  }
+
+  .countdown {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cd-item {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    min-width: 78px;
+    text-align: center;
+  }
+  .cd-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .cd-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    margin-top: 6px;
+  }
+
+  /* ─── Tab nav ─── */
+  nav.tabs {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.85);
+    margin: 0 -18px 28px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs-inner {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .tabs-inner::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); background: var(--bg-elev); }
+  .tab.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: rgba(129,140,248,0.25);
+  }
+
+  /* ─── Sections ─── */
+  section {
+    margin-bottom: 36px;
+    scroll-margin-top: 80px;
+  }
+  section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.01em;
+  }
+  section h2 .h-ico {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--accent-glow);
+    font-size: 16px;
+  }
+
+  /* ─── Caretaker timeline ─── */
+  .timeline {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    overflow: hidden;
+  }
+  .timeline-bar {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 3px;
+    margin-bottom: 12px;
+    height: 38px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .tb-cell {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    transition: transform 0.2s;
+  }
+  .tb-cell:hover { transform: scaleY(1.08); }
+  .tb-cell.daisy   { background: linear-gradient(135deg, var(--daisy-bg-2), var(--daisy-bg)); border: 1px solid var(--daisy); color: var(--daisy); }
+  .tb-cell.nancy   { background: linear-gradient(135deg, var(--nancy-bg-2), var(--nancy-bg)); border: 1px solid var(--nancy); color: var(--nancy); }
+  .tb-cell.abbie   { background: linear-gradient(135deg, var(--abbie-bg-2), var(--abbie-bg)); border: 1px solid var(--abbie); color: var(--abbie); }
+  .tb-cell.grandma { background: linear-gradient(135deg, var(--grandma-bg-2), var(--grandma-bg)); border: 1px solid var(--grandma); color: var(--grandma); }
+
+  .timeline-dates {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--text-faint);
+    text-align: center;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 4px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ─── Day cards ─── */
+  .day-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .day-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    animation: fadeUp 0.5s ease backwards;
+  }
+  .day-card.open { border-color: var(--border-bright); }
+  .day-header {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .day-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    line-height: 1;
+  }
+  .day-num .dnum {
+    font-size: 22px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .day-num .dwk {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+  .day-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .day-info .day-meta {
+    font-size: 12px;
+    color: var(--text-dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    align-items: center;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .pill.daisy   { background: var(--daisy-bg);   color: var(--daisy);   }
+  .pill.nancy   { background: var(--nancy-bg);   color: var(--nancy);   }
+  .pill.abbie   { background: var(--abbie-bg);   color: var(--abbie);   }
+  .pill.grandma { background: var(--grandma-bg); color: var(--grandma); }
+  .day-toggle {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    transition: transform 0.25s;
+  }
+  .day-card.open .day-toggle { transform: rotate(180deg); }
+
+  .day-events {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .day-card.open .day-events { max-height: 2000px; }
+  .day-events-inner {
+    padding: 0 18px 18px;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+    padding-top: 14px;
+  }
+
+  .event {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    align-items: start;
+  }
+  .event:last-child { border-bottom: none; }
+  .event-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding-top: 2px;
+  }
+  .event-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .event-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .event-loc {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--accent);
+    font-size: 11px;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+  }
+  .event-loc:hover { color: #fff; }
+  .event.kid-sally   .event-time { color: var(--sally);   }
+  .event.kid-luke    .event-time { color: var(--luke);    }
+  .event.kid-twins   .event-time { color: var(--twins);   }
+  .event.kid-everyone .event-time { color: var(--everyone); }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kv {
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .kv:last-child { border-bottom: none; }
+  .kv-key {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .kv-val {
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .kv-val .small { color: var(--text-dim); font-size: 12px; }
+
+  .card.daisy   { background: linear-gradient(180deg, var(--daisy-bg) 0%, transparent 50%), var(--bg-elev); }
+  .card.nancy   { background: linear-gradient(180deg, var(--nancy-bg) 0%, transparent 50%), var(--bg-elev); }
+  .card.abbie   { background: linear-gradient(180deg, var(--abbie-bg) 0%, transparent 50%), var(--bg-elev); }
+  .card.grandma { background: linear-gradient(180deg, var(--grandma-bg) 0%, transparent 50%), var(--bg-elev); }
+
+  /* tappable inline links */
+  a.tap {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(129,140,248,0.35);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  a.tap:hover { color: #fff; border-bottom-color: var(--accent); }
+  a.phone, a.email, a.maps { white-space: nowrap; }
+  .actions {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .action {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .action:hover {
+    color: var(--text);
+    background: var(--accent-glow);
+    border-color: var(--accent);
+  }
+
+  /* ─── Twin schedule ─── */
+  .twin-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .twin-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    align-items: start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--border);
+    position: relative;
+  }
+  .twin-row:last-child { border-bottom: none; }
+  .twin-row::before {
+    content: '';
+    position: absolute;
+    left: 90px;
+    top: 22px;
+    bottom: -14px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--twins), transparent 80%);
+    opacity: 0.4;
+  }
+  .twin-row:last-child::before { display: none; }
+  .twin-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--twins);
+    font-weight: 600;
+    padding-top: 1px;
+  }
+  .twin-content { font-size: 13px; line-height: 1.55; }
+  .twin-content strong { font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
+  .twin-content .small { color: var(--text-dim); font-size: 12px; }
+
+  .bottle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .bottle {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+  .bottle .oz {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--twins);
+  }
+  .bottle .when {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  .twin-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .twin-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+  }
+  .twin-card h4 { font-size: 14px; margin-bottom: 8px; }
+  .twin-card.emerald h4 { color: #34d399; }
+  .twin-card.georgia h4 { color: #c084fc; }
+  .twin-card ul { list-style: none; padding: 0; }
+  .twin-card li {
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+  }
+  .twin-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--twins);
+  }
+
+  /* checklists */
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .checklist li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 13px;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--text-faint);
+    border-radius: 4px;
+    background: var(--bg);
+  }
+  .checklist.numbered {
+    counter-reset: ck;
+  }
+  .checklist.numbered li {
+    counter-increment: ck;
+  }
+  .checklist.numbered li::before {
+    content: counter(ck);
+    width: 22px;
+    height: 22px;
+    top: 8px;
+    left: 0;
+    border-radius: 50%;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .checklist.numbered li {
+    padding-left: 32px;
+  }
+
+  /* ─── Meal plan grid ─── */
+  .meals {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -2px;
+    padding-bottom: 4px;
+  }
+  .meals table {
+    border-collapse: separate;
+    border-spacing: 4px;
+    width: 100%;
+    min-width: 540px;
+  }
+  .meals th, .meals td {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    vertical-align: top;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .meals th {
+    background: var(--bg-elev-2);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .meals td:first-child {
+    background: var(--bg-elev-2);
+    color: var(--text);
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* ─── Bottom nav (mobile) ─── */
+  .footer-note {
+    margin-top: 32px;
+    padding: 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .footer-note strong { color: var(--text); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    margin-right: 6px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* mobile tweaks */
+  @media (max-width: 600px) {
+    .container { padding: 20px 14px 80px; }
+    .timeline-bar { height: 32px; gap: 2px; }
+    .tb-cell { font-size: 9px; }
+    .timeline-dates { font-size: 8px; gap: 2px; }
+    .day-header { gap: 10px; padding: 14px; }
+    .day-num { width: 50px; height: 50px; }
+    .day-num .dnum { font-size: 19px; }
+    .event { grid-template-columns: 60px 1fr; gap: 10px; }
+    .twin-row { grid-template-columns: 80px 1fr; gap: 10px; }
+    .twin-row::before { left: 74px; }
+    .twin-pair { grid-template-columns: 1fr; }
+    .kv { grid-template-columns: 1fr; gap: 4px; padding: 8px 0; }
+    .kv-key { color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    section h2 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="container">
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <span class="kicker">May 3 → 12, 2026 · Japan trip</span>
+    <h1>Kids @ Home</h1>
+    <p class="sub">Everything caretakers need while Mom &amp; Dad are in Japan. Schedule, contacts, routines, and the twins' care guide — all in one place.</p>
+    <div class="countdown" id="countdown"></div>
+  </header>
+
+  <!-- ═══ TAB NAV ═══ -->
+  <nav class="tabs">
+    <div class="tabs-inner" id="tabs">
+      <a class="tab active" href="#schedule">📅 Schedule</a>
+      <a class="tab" href="#caretakers">🤝 Caretakers</a>
+      <a class="tab" href="#sally">🎒 Sally</a>
+      <a class="tab" href="#luke">🚗 Luke</a>
+      <a class="tab" href="#twins">👶 Twins</a>
+      <a class="tab" href="#meals">🍽 Meals</a>
+      <a class="tab" href="#contacts">📞 Contacts</a>
+      <a class="tab" href="#home">🏠 Home</a>
+      <a class="tab" href="#flights">✈ Flights</a>
+    </div>
+  </nav>
+
+  <!-- ═══ SCHEDULE TIMELINE ═══ -->
+  <section id="schedule">
+    <h2><span class="h-ico">📅</span>Caretaker Timeline</h2>
+
+    <div class="timeline">
+      <div class="timeline-bar" id="tlBar"></div>
+      <div class="timeline-dates" id="tlDates"></div>
+      <div class="legend">
+        <span class="legend-item"><span class="legend-dot" style="background:var(--daisy)"></span>Daisy</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--nancy)"></span>Nancy</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--abbie)"></span>Abbie</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--grandma)"></span>Grandma Sally</span>
+      </div>
+    </div>
+
+    <h2 style="margin-top:28px"><span class="h-ico">🗓</span>Day-by-Day</h2>
+    <div class="day-list" id="dayList"></div>
+  </section>
+
+  <!-- ═══ CARETAKERS ═══ -->
+  <section id="caretakers">
+    <h2><span class="h-ico">🤝</span>Caretakers</h2>
+
+    <div class="card daisy">
+      <h3>🌸 Daisy <span style="color:var(--daisy);font-weight:500">(Marguerite Linford)</span></h3>
+      <div class="kv"><div class="kv-key">When</div><div class="kv-val">Sun May 3 PM → Fri May 8 PM (at our house, all 4 kids)<br><span class="small">Plus Friday evening drive to Nancy's</span></div></div>
+      <div class="kv"><div class="kv-key">Phone</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18016682848">📞 Call</a><a class="action" href="sms:+18016682848">💬 Text</a></div> 801-668-2848</div></div>
+      <div class="kv"><div class="kv-key">Email</div><div class="kv-val"><a class="tap" href="mailto:MargueriteLinford@gmail.com">MargueriteLinford@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Address</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=763%20E%20820%20N%2C%20Apt%20307%2C%20Provo%2C%20UT%2084606" target="_blank">763 E 820 N, Apt 307, Provo, UT 84606</a></div></div>
+      <div class="kv"><div class="kv-key">Notes</div><div class="kv-val">Has the van for the week. Garage code TBD.</div></div>
+    </div>
+
+    <div class="card nancy">
+      <h3>💐 Nancy Gallo</h3>
+      <div class="kv"><div class="kv-key">When</div><div class="kv-val">Sat May 2 → Sun May 3 PM (sleepover + church, all 4 kids)<br>Fri May 8 night → Sun May 10 (Lehi, all 4 kids)</div></div>
+      <div class="kv"><div class="kv-key">Phone</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18015032308">📞 Call</a><a class="action" href="sms:+18015032308">💬 Text</a></div> 801-503-2308</div></div>
+      <div class="kv"><div class="kv-key">Email</div><div class="kv-val"><a class="tap" href="mailto:NancyLinford@gmail.com">NancyLinford@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Address</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=3061%20W%202400%20N%2C%20Lehi%2C%20UT%2084043" target="_blank">3061 W 2400 N, Lehi, UT 84043</a></div></div>
+      <div class="kv"><div class="kv-key">Husband</div><div class="kv-val">Jonathan (Matt) Gallo · <a class="tap" href="tel:+14077173832">407-717-3832</a> · <a class="tap" href="mailto:JMattGallo@gmail.com">JMattGallo@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Heads up</div><div class="kv-val">Nancy is pregnant with a 3-yr-old + 18-mo-old at home — keep weekend low-stress. One pack &amp; play coming with the kids; Nancy has a second.</div></div>
+    </div>
+
+    <div class="card abbie">
+      <h3>🟠 Abbie Johnson <span style="color:var(--abbie);font-weight:500">(née Hulme)</span></h3>
+      <div class="kv"><div class="kv-key">When</div><div class="kv-val">Sun May 10 → Tue May 12 PM (Payson, Luke + Sally only)</div></div>
+      <div class="kv"><div class="kv-key">Phone</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18013501210">📞 Call</a><a class="action" href="sms:+18013501210">💬 Text</a></div> 801-350-1210</div></div>
+      <div class="kv"><div class="kv-key">Email</div><div class="kv-val"><a class="tap" href="mailto:ahulme@gmail.com">ahulme@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Address</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=1481%20N%20Arrow%20Park%20Dr%2C%20Payson%2C%20UT%2084651" target="_blank">1481 N Arrow Park Dr, Payson, UT 84651</a></div></div>
+      <div class="kv"><div class="kv-key">Husband Joel</div><div class="kv-val"><a class="tap" href="tel:+17248142046">724-814-2046</a> · <a class="tap" href="mailto:ridingdk@gmail.com">ridingdk@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Notes</div><div class="kv-val">May take Luke to Saturday soccer game and/or Tuesday clinic (TBD).</div></div>
+    </div>
+
+    <div class="card grandma">
+      <h3>🌷 Grandma Sally Linford</h3>
+      <div class="kv"><div class="kv-key">When</div><div class="kv-val">Sun May 10 → Tue May 12 PM (Draper, twins only)</div></div>
+      <div class="kv"><div class="kv-key">Phone</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18016711118">📞 Call</a><a class="action" href="sms:+18016711118">💬 Text</a></div> 801-671-1118</div></div>
+      <div class="kv"><div class="kv-key">Email</div><div class="kv-val"><a class="tap" href="mailto:SallyLinford@gmail.com">SallyLinford@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Address</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=12668%20S%20Wasatch%20Park%20Cv%2C%20Draper%2C%20UT%2084020" target="_blank">12668 S Wasatch Park Cv, Draper, UT 84020</a></div></div>
+      <div class="kv"><div class="kv-key">Grandpa David</div><div class="kv-val"><a class="tap" href="tel:+18016714255">801-671-4255</a> · <a class="tap" href="mailto:dlinford@gmail.com">dlinford@gmail.com</a></div></div>
+      <div class="kv"><div class="kv-key">Notes</div><div class="kv-val">Has watched the twins before but it's been a while. See twins guide for naps, bottles, ear drops, and lotion.</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ SALLY ═══ -->
+  <section id="sally">
+    <h2><span class="h-ico" style="background:rgba(253,224,71,0.15);color:var(--sally)">🎒</span>Sally <span style="font-size:14px;font-weight:400;color:var(--text-dim);margin-left:6px">— age 6, kindergarten</span></h2>
+
+    <div class="card">
+      <h3>🏫 School (APA — American Preparatory Academy)</h3>
+      <div class="kv"><div class="kv-key">Hours</div><div class="kv-val">8:00 AM start</div></div>
+      <div class="kv"><div class="kv-key">Dismissal</div><div class="kv-val">Mon, Tue, Fri: <strong>3:10 PM</strong> · Wed, Thu: <strong>2:10 PM</strong></div></div>
+      <div class="kv"><div class="kv-key">Lunch</div><div class="kv-val">School lunch — no packed lunch needed</div></div>
+      <div class="kv"><div class="kv-key">Morning carpool</div><div class="kv-val"><strong>Alex Smith (Misty's husband)</strong> picks up at <strong>7:30 AM</strong> every weekday<br>📞 <a class="tap" href="tel:+14353400484">435-340-0484</a></div></div>
+      <div class="kv"><div class="kv-key">Afternoon ride home</div><div class="kv-val">Mon, Wed, Thu — <strong>Abby</strong> drives Sally home<br>Tue, Fri — <strong>Misty Smith</strong> drives Sally home (📞 <a class="tap" href="tel:+18018502214">801-850-2214</a>)<br><span class="small">Daisy doesn't need to handle Sally's school carpool.</span></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🌅 Morning routine</h3>
+      <ol class="checklist numbered">
+        <li>Wake up by <strong>6:30 AM</strong> (school days)</li>
+        <li>Shower (if no shower the night before)</li>
+        <li>Breakfast</li>
+        <li>Brush teeth</li>
+        <li>Get dressed</li>
+        <li>Brush hair</li>
+        <li>Sign Sally's docket (blue &amp; black accordion folder)</li>
+      </ol>
+      <h3 style="margin-top:18px">🎒 Backpack checklist (before Alex arrives at 7:30)</h3>
+      <ul class="checklist">
+        <li>Docket — blue &amp; black accordion folder w/ signed learning plan</li>
+        <li>Snack (granola bar, beef stick, or similar) in cup pocket</li>
+        <li>Water bottle (filled)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📓 Homework routine (after dinner)</h3>
+      <ul class="checklist">
+        <li>Check docket — needs to be signed daily</li>
+        <li>Math homework, usually 5-10 min</li>
+        <li>Pack backpack &amp; sign learning plan before bed</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>💃 Dance — Tuesdays (optional)</h3>
+      <div class="kv"><div class="kv-key">Time</div><div class="kv-val">6:30 PM – 7:45 PM<br><span class="small">Leave by 6:15 PM · kids in car by 6:10 PM</span></div></div>
+      <div class="kv"><div class="kv-key">Where</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=Lifehouse%20Performing%20Arts%20Academy%2C%20669%20N%20250%20E%2C%20Salem%2C%20UT" target="_blank">Lifehouse Performing Arts Academy, 669 N 250 E, Salem, UT 84653</a><br><span class="small">Drop-off and pickup are drive-through. Go inside if she doesn't come out.</span></div></div>
+      <div class="kv"><div class="kv-key">What to bring</div><div class="kv-val">
+        <ul class="checklist">
+          <li>Hair in a ponytail</li>
+          <li>Dance uniform + tights (launch pad in mom's closet)</li>
+          <li>Tote bag with ballet slippers + tap shoes</li>
+          <li>Water bottle (move back to school backpack after)</li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ═══ LUKE ═══ -->
+  <section id="luke">
+    <h2><span class="h-ico" style="background:rgba(56,189,248,0.15);color:var(--luke)">🚗</span>Luke <span style="font-size:14px;font-weight:400;color:var(--text-dim);margin-left:6px">— age 4, pre-K</span></h2>
+
+    <div class="card">
+      <h3>🏫 Preschool — Inquiry Academy</h3>
+      <div class="kv"><div class="kv-key">When</div><div class="kv-val">Mon, Wed, Fri only · 12:30 PM – 3:00 PM</div></div>
+      <div class="kv"><div class="kv-key">Where</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=Inquiry%20Academy%2C%20Salem%2C%20UT" target="_blank">Inquiry Academy, Salem, UT</a> · 7 min from home</div></div>
+      <div class="kv"><div class="kv-key">Notes</div><div class="kv-val"><strong>Optional</strong> — can skip if too overwhelming. Neighborhood playdates are a great substitute.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>⚽ Soccer — Speedy Cheetahs (all optional)</h3>
+      <div class="kv"><div class="kv-key">Tuesday clinic</div><div class="kv-val">6:00 PM at <a class="tap" href="https://www.google.com/maps/search/?api=1&query=Barnett%20Elementary%20School%2C%20Payson%2C%20UT" target="_blank">Barnett Elementary, Payson</a><br><span class="small" style="color:var(--abbie)">⚠ Conflicts with Sally's dance — likely skipping unless Abbie picks him up</span></div></div>
+      <div class="kv"><div class="kv-key">Thursday practice</div><div class="kv-val">Time TBD</div></div>
+      <div class="kv"><div class="kv-key">Sat May 9 game</div><div class="kv-val">9:00 AM (WHITE jersey) at Barnett Elementary, Payson<br><span class="small">Luke is at Nancy's in Lehi this day — coordinate ride down or skip</span></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🎓 Preschool Graduation — Wed May 13</h3>
+      <div class="kv"><div class="kv-key">Time</div><div class="kv-val">6:30 PM</div></div>
+      <div class="kv"><div class="kv-key">Where</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=Emerald%20Eve%20Event%20Center%2C%20192%20UT-198%2C%20Salem%2C%20UT" target="_blank">Emerald Eve Event Center, 192 UT-198, Salem, UT</a><br><span class="small">Parents will be home by then — FYI for caretakers.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ TWINS ═══ -->
+  <section id="twins">
+    <h2><span class="h-ico" style="background:rgba(192,132,252,0.15);color:var(--twins)">👶</span>Twins — Emerald &amp; Georgia <span style="font-size:14px;font-weight:400;color:var(--text-dim);margin-left:6px">— DOB 2/25/25</span></h2>
+
+    <div class="card">
+      <h3>🍼 Daily bottles (per baby — 26 oz total)</h3>
+      <div class="bottle-grid">
+        <div class="bottle"><div class="oz">6 oz</div><div class="when">Wake-up</div></div>
+        <div class="bottle"><div class="oz">6 oz</div><div class="when">Before 1st nap</div></div>
+        <div class="bottle"><div class="oz">6 oz</div><div class="when">Before 2nd nap</div></div>
+        <div class="bottle"><div class="oz">8 oz</div><div class="when">Bedtime</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⏰ Daily schedule</h3>
+      <div class="twin-schedule">
+        <div class="twin-row">
+          <div class="twin-time">~6:30 AM</div>
+          <div class="twin-content"><strong>Wake up</strong>6 oz bottle · breakfast</div>
+        </div>
+        <div class="twin-row">
+          <div class="twin-time">8:30–9:30 AM</div>
+          <div class="twin-content"><strong>First nap</strong>Put down whenever they get grumpy. 6 oz bottle going down. Sleep separately — one in bedroom, one in pack &amp; play in closet. Usually 1.5–2 hrs.</div>
+        </div>
+        <div class="twin-row">
+          <div class="twin-time">After nap 1</div>
+          <div class="twin-content"><strong>Post-nap wake window</strong>Snack, then lunch.</div>
+        </div>
+        <div class="twin-row">
+          <div class="twin-time">Varies</div>
+          <div class="twin-content"><strong>Second nap</strong>6 oz bottle going down. Can sleep as late as 5–5:30 PM. <span class="small">See nap schedule below.</span></div>
+        </div>
+        <div class="twin-row">
+          <div class="twin-time">After nap 2</div>
+          <div class="twin-content"><strong>Afternoon wake window</strong>Snack, then dinner.</div>
+        </div>
+        <div class="twin-row">
+          <div class="twin-time">7:00–7:30 PM</div>
+          <div class="twin-content"><strong>Bedtime</strong>Bath/shower → jammies → lotion → ear drops → 8 oz bottle.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>😴 Second nap schedule</h3>
+      <div style="display:grid;grid-template-columns:1fr;gap:10px">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-faint);margin-bottom:6px">School days (M / W / F)</div>
+          <div style="font-size:13px;line-height:1.55">
+            ▸ Up by 10 AM → nap at <strong>12:45 PM</strong> (after Luke drop-off)<br>
+            ▸ Up by 11:30–12 PM → nap at <strong>3 PM</strong> (after Luke pickup)
+          </div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-faint);margin-bottom:6px">No school (T / Th)</div>
+          <div style="font-size:13px;line-height:1.55">
+            ▸ Up by 11 AM → nap at <strong>1:30–2 PM</strong><br>
+            ▸ Long 1st nap → push to <strong>3–4 PM</strong>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:12px;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;font-size:12px;line-height:1.55;color:#fcd34d">
+        ⚠ Always keep a <strong>2–3 hr wake window</strong> between naps. Never down for a nap less than 2 hrs after waking. Don't let them sleep past 5–5:30 PM so bedtime stays on track.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🌙 Bedtime routine (~7:00–7:30 PM)</h3>
+      <ol class="checklist numbered">
+        <li>Bath or shower</li>
+        <li>Jammies</li>
+        <li>Lotion (both girls) — pink Johnson &amp; Johnson baby lotion in the bathroom. Use steroid cream on Emerald if eczema is flaring.</li>
+        <li>Ear drops (both girls) — give before putting them down</li>
+        <li>8 oz bottle — they go down with their bottles</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>👯 Individual notes</h3>
+      <div class="twin-pair">
+        <div class="twin-card emerald">
+          <h4>🌿 Emerald</h4>
+          <ul>
+            <li>Lighter sleeper — naps less reliably</li>
+            <li>Sometimes skips 1st or 2nd nap entirely — that's OK, just keep her up</li>
+            <li>Has eczema — apply J&amp;J pink baby lotion every night</li>
+            <li>Use steroid cream if eczema is flaring</li>
+            <li>Needs ear drops before bed</li>
+          </ul>
+        </div>
+        <div class="twin-card georgia">
+          <h4>💜 Georgia</h4>
+          <ul>
+            <li>Better napper overall</li>
+            <li>Still needs ear drops before bed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🍽 Twin food</h3>
+      <div class="kv"><div class="kv-key">Drinks</div><div class="kv-val">Cow's milk + prune juice (managing constipation), formula as needed. Suppositories on hand.</div></div>
+      <div class="kv"><div class="kv-key">Breakfast</div><div class="kv-val">Dry Cheerios, freezer waffles, pancakes, oatmeal, eggs, berries</div></div>
+      <div class="kv"><div class="kv-key">Snacks</div><div class="kv-val">🫒 Black olives (their absolute favorite!), spoon-fed applesauce</div></div>
+      <div class="kv"><div class="kv-key">Style</div><div class="kv-val">Baby-led weaning + some spoon feeding</div></div>
+      <div class="kv"><div class="kv-key">Allergies</div><div class="kv-val" style="color:var(--grandma)">None for any kid</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ MEAL PLAN ═══ -->
+  <section id="meals">
+    <h2><span class="h-ico">🍽</span>Meal plan — Daisy week</h2>
+
+    <div class="card">
+      <h3>📅 Sun May 3 → Fri May 8</h3>
+      <div class="meals">
+        <table>
+          <tr><th>Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr>
+          <tr><td>Sun 5/3</td><td>Cereal, oatmeal, eggs, or waffles</td><td>Ramen or PB&amp;J</td><td>Orange chicken from Costco</td></tr>
+          <tr><td>Mon 5/4</td><td>Pancakes or Cheerios</td><td>Chicken chunks with fries</td><td>Spaghetti and meatballs</td></tr>
+          <tr><td>Tue 5/5</td><td>Oatmeal or cereal</td><td>Mac and cheese</td><td>Walleye skillet from Walmart</td></tr>
+          <tr><td>Wed 5/6</td><td>Waffles or eggs</td><td>Quesadillas or buttered noodles</td><td>Frozen pizza</td></tr>
+          <tr><td>Thu 5/7</td><td>Pancakes or cereal</td><td>Ramen or canned fruit + sandwiches</td><td>Chicken chunks &amp; fries</td></tr>
+          <tr><td>Fri 5/8</td><td>Eggs or oatmeal</td><td>Buttered noodles or PB&amp;J</td><td>Pickup (Taco Bell, McDonald's)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🍝 Lunch options for Luke + twins</h3>
+      <div style="font-size:13px;color:var(--text-dim);line-height:1.7">
+        Ramen · Costco chicken chunks with fries · buttered noodles with salt &amp; Parmesan · canned mandarin oranges or pears · PB&amp;J · mac and cheese · quesadillas
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACTS ═══ -->
+  <section id="contacts">
+    <h2><span class="h-ico">📞</span>Contacts</h2>
+
+    <div class="card">
+      <h3>👨‍👩 Parents (us)</h3>
+      <div class="kv"><div class="kv-key">Jonny</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18017392031">📞 Call</a><a class="action" href="sms:+18017392031">💬 Text</a><a class="action" href="mailto:JonathanLinford@gmail.com">✉ Email</a></div></div></div>
+      <div class="kv"><div class="kv-key">Lauren</div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18018226975">📞 Call</a><a class="action" href="sms:+18018226975">💬 Text</a><a class="action" href="mailto:LaurenLinfo@gmail.com">✉ Email</a></div></div></div>
+      <div class="kv"><div class="kv-key">Time zone</div><div class="kv-val">Japan = UTC+9 (15-16 hrs ahead of Mountain). Text and we'll respond when up.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>👫 Sally + Luke's friends' families <span style="font-size:11px;font-weight:500;color:var(--text-dim)">— Elk Ridge 15th Ward</span></h3>
+      <div class="kv"><div class="kv-key">Brittany Boice<br><span class="small">Rae &amp; Crew's mom</span></div><div class="kv-val"><div class="actions"><a class="action" href="tel:+16613739399">📞 Call</a><a class="action" href="sms:+16613739399">💬 Text</a></div><br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=172%20W%201550%20S%2C%20Salem%2C%20UT%2084651" target="_blank">172 W 1550 S, Salem, UT</a></div></div>
+      <div class="kv"><div class="kv-key">McKaila Taylor<br><span class="small">Jordan &amp; Emmett's mom</span></div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18019899646">📞 Call</a><a class="action" href="sms:+18019899646">💬 Text</a></div><br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=126%20W%20Carson%20Way%2C%20Salem%2C%20UT%2084653" target="_blank">126 W Carson Way, Salem, UT</a></div></div>
+      <div class="kv"><div class="kv-key">Ashley Shelton<br><span class="small">Jace's mom</span></div><div class="kv-val"><div class="actions"><a class="action" href="tel:+12087899968">📞 Call</a><a class="action" href="sms:+12087899968">💬 Text</a></div><br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=1498%20S%20210%20W%2C%20Salem%2C%20UT%2084653" target="_blank">1498 S 210 W, Salem, UT</a></div></div>
+      <div class="kv"><div class="kv-key">Sunny's mom</div><div class="kv-val" style="color:var(--text-faint)">Name &amp; number TBD</div></div>
+    </div>
+
+    <div class="card">
+      <h3>🏫 School carpool</h3>
+      <div class="kv"><div class="kv-key">Alex Smith<br><span class="small">Misty's husband — morning carpool 7:30 AM</span></div><div class="kv-val"><div class="actions"><a class="action" href="tel:+14353400484">📞 Call</a><a class="action" href="sms:+14353400484">💬 Text</a></div></div></div>
+      <div class="kv"><div class="kv-key">Misty Smith<br><span class="small">Maya's mom — Tue/Fri afternoon ride</span></div><div class="kv-val"><div class="actions"><a class="action" href="tel:+18018502214">📞 Call</a><a class="action" href="sms:+18018502214">💬 Text</a></div></div></div>
+      <div class="kv"><div class="kv-key">Abby<br><span class="small">Mon/Wed/Thu afternoon ride</span></div><div class="kv-val" style="color:var(--text-faint)">Phone TBD</div></div>
+    </div>
+
+    <div class="card">
+      <h3>🚨 Emergency</h3>
+      <div class="kv"><div class="kv-key">Emergency</div><div class="kv-val"><a class="tap" href="tel:911">📞 911</a></div></div>
+      <div class="kv"><div class="kv-key">Poison Control</div><div class="kv-val"><a class="tap" href="tel:+18002221222">1-800-222-1222</a></div></div>
+      <div class="kv"><div class="kv-key">Closest hospital</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=Mountain%20View%20Hospital%2C%201000%20E%20100%20N%2C%20Payson%2C%20UT%2084651" target="_blank">Mountain View Hospital — 1000 E 100 N, Payson, UT</a> · <a class="tap" href="tel:+18014657000">801-465-7000</a></div></div>
+      <div class="kv"><div class="kv-key">Can't reach us</div><div class="kv-val">Call Grandpa David <a class="tap" href="tel:+18016714255">801-671-4255</a> or Grandma Sally <a class="tap" href="tel:+18016711118">801-671-1118</a></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ HOME ═══ -->
+  <section id="home">
+    <h2><span class="h-ico">🏠</span>Home / Utilities</h2>
+    <div class="card">
+      <div class="kv"><div class="kv-key">Address</div><div class="kv-val"><a class="tap" href="https://www.google.com/maps/search/?api=1&query=1574%20S%20130%20W%2C%20Salem%2C%20UT%2084653" target="_blank">1574 S 130 W, Salem, UT 84653</a></div></div>
+      <div class="kv"><div class="kv-key">🗑 Trash + recycle</div><div class="kv-val">Trash + recycle to curb <strong>Wednesday night</strong> for Thursday morning pickup.<br><span class="small" style="color:var(--abbie)">⚠ Lauren also mentioned a Thursday-night trash routine — confirming with parents.</span></div></div>
+      <div class="kv"><div class="kv-key">🚐 Daisy's wheels</div><div class="kv-val">Daisy has the van for the week.</div></div>
+      <div class="kv"><div class="kv-key">Garage / WiFi</div><div class="kv-val" style="color:var(--text-faint)">Codes &amp; password TBD</div></div>
+    </div>
+
+    <div class="card">
+      <h3>⛪ Church</h3>
+      <div class="kv"><div class="kv-key">Home ward (Salem)</div><div class="kv-val">Elk Ridge 15th Ward · Sundays 1:30–3:30 PM<br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=Elk%20Ridge%20Meetinghouse%2C%20450%20Elk%20Ridge%20Dr%2C%20Elk%20Ridge%2C%20UT%2084651" target="_blank">450 Elk Ridge Dr, Elk Ridge, UT 84651</a></div></div>
+      <div class="kv"><div class="kv-key">Nancy's ward (Lehi)</div><div class="kv-val">Sundays 12:00–2:00 PM<br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=The%20Church%20of%20Jesus%20Christ%20of%20Latter-day%20Saints%2C%20W%20Cramden%20Dr%2C%20Lehi%2C%20UT%2084048" target="_blank">W Cramden Dr, Lehi, UT 84048</a></div></div>
+      <div class="kv"><div class="kv-key">Grandparents' ward (Draper)</div><div class="kv-val">Sundays 9:00–11:00 AM<br><a class="tap" href="https://www.google.com/maps/search/?api=1&query=LDS%20Meetinghouse%2C%20Walden%20Ln%2C%20Draper%2C%20UT%2084020" target="_blank">Walden Ln, Draper, UT 84020</a></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ FLIGHTS ═══ -->
+  <section id="flights">
+    <h2><span class="h-ico">✈</span>Parents' flight itinerary</h2>
+
+    <div class="card">
+      <h3>🛫 Outbound — Sun May 3, 2026</h3>
+      <div class="kv"><div class="kv-key">DL 2874</div><div class="kv-val">SLC → SEA · dep 7:51 AM MT, arr 9:15 AM PT<br><a class="tap" href="https://www.google.com/search?q=DL+2874" target="_blank">View live status</a></div></div>
+      <div class="kv"><div class="kv-key">Layover</div><div class="kv-val">2h 35m at SEA</div></div>
+      <div class="kv"><div class="kv-key">DL 167</div><div class="kv-val">SEA → HND · dep 11:50 AM PT, arr 2:15 PM JST Mon May 4<br><a class="tap" href="https://www.google.com/search?q=DL+167" target="_blank">View live status</a></div></div>
+    </div>
+
+    <div class="card">
+      <h3>🛬 Return — Tue May 12, 2026</h3>
+      <div class="kv"><div class="kv-key">DL 166</div><div class="kv-val">HND → SEA · dep 4:05 PM JST, arr 9:15 AM PT (same day)<br><a class="tap" href="https://www.google.com/search?q=DL+166" target="_blank">View live status</a></div></div>
+      <div class="kv"><div class="kv-key">DL 1120</div><div class="kv-val">SEA → SLC · dep 1:25 PM PT, arr 4:40 PM MT<br><a class="tap" href="https://www.google.com/search?q=DL+1120" target="_blank">View live status</a></div></div>
+      <div class="kv"><div class="kv-key">Home</div><div class="kv-val">Salem ~6:00 PM MT · pick up kids on the way</div></div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    <span class="live-dot"></span><strong>Live source of truth:</strong> the Google Calendar this page is paired with. <a class="tap" href="https://calendar.google.com/calendar/u/0/r?cid=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8@group.calendar.google.com" target="_blank">Open calendar</a><br>
+    Last regenerated automatically · save this page to your home screen for quick access.
+  </div>
+
+</div>
+
+<script>
+/* ───────── Data: schedule events ───────── */
+const SHIFT = {
+  daisy: { name: 'Daisy', emoji: '🌸', cls: 'daisy' },
+  nancy: { name: 'Nancy', emoji: '💐', cls: 'nancy' },
+  abbie: { name: 'Abbie', emoji: '🟠', cls: 'abbie' },
+  grandma: { name: 'Grandma Sally', emoji: '🌷', cls: 'grandma' },
+};
+
+// caretaker timeline (May 2 → May 12)
+const TIMELINE = [
+  { date: '5/2', day: 'Sat', shifts: ['nancy'] },
+  { date: '5/3', day: 'Sun', shifts: ['nancy', 'daisy'] },
+  { date: '5/4', day: 'Mon', shifts: ['daisy'] },
+  { date: '5/5', day: 'Tue', shifts: ['daisy'] },
+  { date: '5/6', day: 'Wed', shifts: ['daisy'] },
+  { date: '5/7', day: 'Thu', shifts: ['daisy'] },
+  { date: '5/8', day: 'Fri', shifts: ['daisy', 'nancy'] },
+  { date: '5/9', day: 'Sat', shifts: ['nancy'] },
+  { date: '5/10', day: 'Sun', shifts: ['nancy', 'abbie', 'grandma'] },
+  { date: '5/11', day: 'Mon', shifts: ['abbie', 'grandma'] },
+  { date: '5/12', day: 'Tue', shifts: ['abbie', 'grandma'] },
+];
+
+const DAYS = [
+  {
+    date: '2026-05-02', label: 'Sat May 2',
+    headline: 'Nancy picks up kids — sleepover',
+    shifts: ['nancy'], events: [
+      { t: '3:00 PM*', who: 'everyone', title: '🚗 Nancy picks up the 4 kids', desc: 'Time TBD — please coordinate.', loc: '1574 S 130 W, Salem, UT' },
+    ],
+  },
+  {
+    date: '2026-05-03', label: 'Sun May 3',
+    headline: 'Parents fly · church with Nancy',
+    shifts: ['nancy', 'daisy'], events: [
+      { t: '5:30 AM', who: 'everyone', title: '✈ Parents leave for SLC', desc: 'DL 2874 dep 7:51 AM. Kids already at Nancy\'s.', loc: 'Salt Lake City Intl Airport' },
+      { t: '9:00 AM', who: 'everyone', title: 'Breakfast at Nancy\'s', loc: '3061 W 2400 N, Lehi, UT' },
+      { t: '12:00 PM', who: 'everyone', title: '⛪ Church with Nancy (Lehi ward, 2 hrs)', loc: 'W Cramden Dr, Lehi, UT' },
+      { t: '3:00 PM*', who: 'everyone', title: '🚗 Nancy drops kids home → Daisy starts', desc: 'Time TBD.' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner at home (Daisy)' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime' },
+    ],
+  },
+  {
+    date: '2026-05-04', label: 'Mon May 4',
+    headline: 'Dad\'s birthday',
+    shifts: ['daisy'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake + morning routine' },
+      { t: '7:30 AM', who: 'sally', title: '🚗 Alex Smith picks up Sally', desc: 'School carpool morning pickup.' },
+      { t: '12:30 PM', who: 'luke', title: '🚗 Luke preschool drop-off', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '3:00 PM', who: 'luke', title: '🚗 Luke preschool pick-up', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '3:10 PM', who: 'sally', title: '🎒 Sally home (Abby drives)' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner — spaghetti & meatballs' },
+      { t: '7:00 PM', who: 'everyone', title: '🎂 Cake / call Dad for his birthday' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime' },
+    ],
+  },
+  {
+    date: '2026-05-05', label: 'Tue May 5',
+    headline: 'Sally Dance · twin no-school nap',
+    shifts: ['daisy'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake + morning routine' },
+      { t: '7:30 AM', who: 'sally', title: '🚗 Alex Smith picks up Sally' },
+      { t: '3:10 PM', who: 'sally', title: '🎒 Sally home (Misty drives)' },
+      { t: '5:00 PM', who: 'everyone', title: 'Dinner (early — dance night)' },
+      { t: '6:10 PM', who: 'sally', title: 'Kids in car for dance' },
+      { t: '6:30 PM', who: 'sally', title: '💃 Sally Dance (until 7:45)', loc: 'Lifehouse Performing Arts Academy, Salem, UT' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime' },
+    ],
+  },
+  {
+    date: '2026-05-06', label: 'Wed May 6',
+    headline: 'Trash + recycle to curb',
+    shifts: ['daisy'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake + morning routine' },
+      { t: '7:30 AM', who: 'sally', title: '🚗 Alex Smith picks up Sally' },
+      { t: '12:30 PM', who: 'luke', title: '🚗 Luke preschool drop-off', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '2:10 PM', who: 'sally', title: '🎒 Sally home (Abby drives — early dismissal)' },
+      { t: '3:00 PM', who: 'luke', title: '🚗 Luke preschool pick-up', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner — frozen pizza' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime' },
+      { t: '8:30 PM', who: 'everyone', title: '🗑 Trash + 🟦 Recycle to curb', desc: 'Thursday morning pickup.' },
+    ],
+  },
+  {
+    date: '2026-05-07', label: 'Thu May 7',
+    headline: 'School (early dismissal)',
+    shifts: ['daisy'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake + morning routine' },
+      { t: '7:30 AM', who: 'sally', title: '🚗 Alex Smith picks up Sally' },
+      { t: '2:10 PM', who: 'sally', title: '🎒 Sally home (Abby drives — early dismissal)' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner — chicken chunks & fries' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime' },
+    ],
+  },
+  {
+    date: '2026-05-08', label: 'Fri May 8',
+    headline: 'Daisy drives all 4 kids to Nancy\'s',
+    shifts: ['daisy', 'nancy'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake + morning routine' },
+      { t: '7:30 AM', who: 'sally', title: '🚗 Alex Smith picks up Sally' },
+      { t: '12:30 PM', who: 'luke', title: '🚗 Luke preschool drop-off', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '3:00 PM', who: 'luke', title: '🚗 Luke preschool pick-up', loc: 'Inquiry Academy, Salem, UT' },
+      { t: '3:10 PM', who: 'sally', title: '🎒 Sally home (Misty drives)' },
+      { t: '5:00 PM', who: 'everyone', title: 'Dinner (early — driving)' },
+      { t: '7:00 PM', who: 'everyone', title: '🚗 Daisy drives all 4 kids to Nancy\'s', loc: '3061 W 2400 N, Lehi, UT' },
+    ],
+  },
+  {
+    date: '2026-05-09', label: 'Sat May 9',
+    headline: 'Soccer game · all 4 kids at Nancy\'s',
+    shifts: ['nancy'], events: [
+      { t: '8:00 AM', who: 'everyone', title: 'Breakfast at Nancy\'s', loc: '3061 W 2400 N, Lehi, UT' },
+      { t: '9:00 AM', who: 'luke', title: '⚽ Luke Speedy Cheetahs game (WHITE jersey)', desc: 'Luke is at Nancy\'s in Lehi — coordinate ride to Payson, or skip.', loc: 'Barnett Elementary, Payson, UT' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner at Nancy\'s' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime at Nancy\'s' },
+    ],
+  },
+  {
+    date: '2026-05-10', label: 'Sun May 10',
+    headline: 'Handoffs — Luke+Sally → Abbie · Twins → Grandma',
+    shifts: ['nancy', 'abbie', 'grandma'], events: [
+      { t: '9:00 AM', who: 'everyone', title: 'Breakfast at Nancy\'s' },
+      { t: '1:00 PM', who: 'everyone', title: '🚗 Daisy drives Luke + Sally → Abbie\'s', loc: '1481 N Arrow Park Dr, Payson, UT' },
+      { t: '1:00 PM', who: 'twins', title: '🚗 Twins → Grandma Sally\'s (Daisy or Nancy drops)', loc: '12668 S Wasatch Park Cv, Draper, UT' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner at Abbie\'s + Grandma Sally\'s' },
+      { t: '7:00 PM', who: 'twins', title: '🌙 Twin bedtime at Grandma\'s' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime at Abbie\'s' },
+    ],
+  },
+  {
+    date: '2026-05-11', label: 'Mon May 11',
+    headline: 'School day — Sally + Luke at Abbie\'s',
+    shifts: ['abbie', 'grandma'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake (at Abbie\'s)' },
+      { t: '7:30 AM', who: 'sally', title: '🎒 Sally to school — Abbie drops off (Misty\'s home-pickup carpool n/a)' },
+      { t: '12:30 PM', who: 'luke', title: '🚗 Luke preschool — Abbie drives from Payson', desc: 'Or skip if too much.' },
+      { t: '2:10 PM', who: 'sally', title: '🎒 Sally pick-up (Abbie)' },
+      { t: '3:00 PM', who: 'luke', title: '🚗 Luke preschool pick-up (Abbie)' },
+      { t: '5:30 PM', who: 'everyone', title: 'Dinner at Abbie\'s + Grandma\'s' },
+      { t: '7:00 PM', who: 'twins', title: '🌙 Twin bedtime at Grandma\'s' },
+      { t: '7:30 PM', who: 'everyone', title: '🌙 Bedtime at Abbie\'s' },
+    ],
+  },
+  {
+    date: '2026-05-12', label: 'Tue May 12',
+    headline: 'Parents return! Pick up kids',
+    shifts: ['abbie', 'grandma'], events: [
+      { t: '6:30 AM', who: 'sally', title: '🌅 Sally wake (at Abbie\'s)' },
+      { t: '7:30 AM', who: 'sally', title: '🎒 Sally to school (Abbie)' },
+      { t: '3:10 PM', who: 'sally', title: '🎒 Sally pick-up (Abbie)' },
+      { t: '4:40 PM', who: 'everyone', title: '✈ Parents land SLC (DL 1120)', loc: 'Salt Lake City Intl Airport' },
+      { t: '6:00 PM', who: 'everyone', title: '🏠 Parents arrive home', loc: '1574 S 130 W, Salem, UT' },
+      { t: '7:00 PM', who: 'everyone', title: '🚗 Pick up kids — Abbie\'s + Grandma Sally\'s' },
+    ],
+  },
+];
+
+/* ───────── Render: timeline bar ───────── */
+const tlBar = document.getElementById('tlBar');
+const tlDates = document.getElementById('tlDates');
+TIMELINE.slice(0, 11).forEach((day, i) => {
+  if (i === 0) return; // start at May 3 for the 11-day visible window? Actually show all
+});
+// Show full May 2 → May 12 (11 days)
+TIMELINE.forEach(day => {
+  const cell = document.createElement('div');
+  cell.className = 'tb-cell ' + day.shifts[0]; // primary shift
+  cell.textContent = day.shifts.map(s => SHIFT[s].emoji).join('');
+  cell.title = day.day + ' ' + day.date + ': ' + day.shifts.map(s => SHIFT[s].name).join(' / ');
+  tlBar.appendChild(cell);
+  const dt = document.createElement('div');
+  dt.textContent = day.day.charAt(0) + ' ' + day.date.split('/')[1];
+  tlDates.appendChild(dt);
+});
+
+/* ───────── Render: day cards ───────── */
+const dayList = document.getElementById('dayList');
+DAYS.forEach((day, i) => {
+  const card = document.createElement('div');
+  card.className = 'day-card';
+  card.style.animationDelay = (i * 0.04) + 's';
+  if (i === 0) card.classList.add('open');
+
+  const [, m, d] = day.date.split('-');
+  const dateObj = new Date(day.date + 'T00:00:00');
+  const dwk = dateObj.toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+
+  const pills = day.shifts.map(s => `<span class="pill ${s}">${SHIFT[s].emoji} ${SHIFT[s].name}</span>`).join(' ');
+
+  const evHtml = day.events.map(ev => `
+    <div class="event kid-${ev.who}">
+      <div class="event-time">${ev.t}</div>
+      <div>
+        <div class="event-title">${ev.title}</div>
+        ${ev.desc ? `<div class="event-desc">${ev.desc}</div>` : ''}
+        ${ev.loc ? `<a class="event-loc" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.loc)}">📍 ${ev.loc}</a>` : ''}
+      </div>
+    </div>`).join('');
+
+  card.innerHTML = `
+    <div class="day-header" onclick="this.parentNode.classList.toggle('open')">
+      <div class="day-num">
+        <div class="dnum">${parseInt(d, 10)}</div>
+        <div class="dwk">${dwk}</div>
+      </div>
+      <div class="day-info">
+        <h3>${day.label} — ${day.headline}</h3>
+        <div class="day-meta">${pills}</div>
+      </div>
+      <div class="day-toggle">▼</div>
+    </div>
+    <div class="day-events"><div class="day-events-inner">${evHtml}</div></div>
+  `;
+  dayList.appendChild(card);
+});
+
+/* ───────── Tab nav: scroll-spy ───────── */
+const tabs = document.querySelectorAll('.tab');
+const sections = [...document.querySelectorAll('section[id]')];
+
+function setActiveTab() {
+  let active = sections[0].id;
+  const y = window.scrollY + 120;
+  for (const s of sections) {
+    if (s.offsetTop <= y) active = s.id;
+  }
+  tabs.forEach(t => t.classList.toggle('active', t.getAttribute('href') === '#' + active));
+}
+window.addEventListener('scroll', setActiveTab, { passive: true });
+setActiveTab();
+
+/* ───────── Countdown ───────── */
+function updateCountdown() {
+  const tripStart = new Date('2026-05-03T05:30:00-06:00').getTime();
+  const tripEnd = new Date('2026-05-12T18:00:00-06:00').getTime();
+  const now = Date.now();
+  let target, label;
+  if (now < tripStart)      { target = tripStart; label = 'until parents leave'; }
+  else if (now < tripEnd)   { target = tripEnd;   label = 'until parents return'; }
+  else                       { document.getElementById('countdown').innerHTML = '<div class="cd-item"><div class="cd-num">✓</div><div class="cd-label">trip complete</div></div>'; return; }
+  const diff = target - now;
+  const days = Math.floor(diff / 86400000);
+  const hrs  = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('countdown').innerHTML = `
+    <div class="cd-item"><div class="cd-num">${days}</div><div class="cd-label">days</div></div>
+    <div class="cd-item"><div class="cd-num">${hrs}</div><div class="cd-label">hours</div></div>
+    <div class="cd-item"><div class="cd-num">${mins}</div><div class="cd-label">minutes</div></div>
+    <div class="cd-item" style="background:transparent;border:none;display:flex;align-items:center;padding:0 4px"><span class="cd-label" style="white-space:nowrap">${label}</span></div>
+  `;
+}
+updateCountdown();
+setInterval(updateCountdown, 30000);
+</script>
+
+</body>
+</html>
