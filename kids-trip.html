@@ -798,6 +798,32 @@
   .card.grandma { background: linear-gradient(180deg, var(--grandma-bg) 0%, transparent 50%), var(--bg-elev); }
 
   /* embedded Google Calendar */
+  .cal-views {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .cal-view-btn {
+    padding: 7px 14px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-dim);
+    font: 600 12px/1 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .cal-view-btn:hover {
+    color: var(--text);
+    border-color: var(--border-bright);
+  }
+  .cal-view-btn.active {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
   .cal-embed {
     position: relative;
     width: 100%;
@@ -812,6 +838,12 @@
     width: 100%;
     height: 720px;
     border: 0;
+    transition: filter 0.25s ease;
+  }
+  /* Invert filter when the surrounding theme is dark — gives the Google
+     Calendar embed a passable dark mode without losing event colors. */
+  .cal-embed.dark iframe {
+    filter: invert(0.92) hue-rotate(180deg);
   }
   @media (max-width: 720px) {
     .cal-embed iframe { height: 560px; }
@@ -3211,8 +3243,16 @@
       <a class="tap" href="https://calendar.google.com/calendar/u/0/r?cid=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8@group.calendar.google.com" target="_blank" rel="noopener">Add to your Google Calendar</a>
     </p>
 
-    <div class="cal-embed">
+    <div class="cal-views" role="tablist" aria-label="Calendar view">
+      <button class="cal-view-btn" data-mode="DAY" type="button">Day</button>
+      <button class="cal-view-btn active" data-mode="AGENDA" type="button">Schedule</button>
+      <button class="cal-view-btn" data-mode="WEEK" type="button">Week</button>
+      <button class="cal-view-btn" data-mode="MONTH" type="button">Month</button>
+    </div>
+
+    <div class="cal-embed" id="calEmbed">
       <iframe
+        id="calFrame"
         title="Kids @ Home — Japan Trip calendar"
         src="https://calendar.google.com/calendar/embed?src=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8%40group.calendar.google.com&amp;ctz=America%2FDenver&amp;mode=AGENDA&amp;showTitle=0&amp;showCalendars=0&amp;showPrint=0&amp;showTabs=1&amp;showTz=0&amp;showNav=1&amp;showDate=1"
         loading="lazy"
@@ -3549,6 +3589,7 @@ function applyStyle(style) {
   document.querySelectorAll('.style-card').forEach(c => {
     c.classList.toggle('active', c.dataset.style === style);
   });
+  updateCalendarTheme();
 }
 const savedStyle = localStorage.getItem('kt-style') || 'default';
 applyStyle(savedStyle);
@@ -3580,7 +3621,46 @@ function applyTheme(mode) {
   let meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute('content', tc);
   localStorage.setItem('kt-theme-mode', mode);
+  updateCalendarTheme();
 }
+
+/* ───────── Calendar embed: view picker + auto dark/light ───────── */
+const CAL_BASE = 'https://calendar.google.com/calendar/embed?src=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8%40group.calendar.google.com&ctz=America%2FDenver&showTitle=0&showCalendars=0&showPrint=0&showTabs=1&showTz=0&showNav=1&showDate=1';
+function setCalMode(mode) {
+  const frame = document.getElementById('calFrame');
+  if (!frame) return;
+  frame.src = CAL_BASE + '&mode=' + mode;
+  document.querySelectorAll('.cal-view-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+}
+document.querySelectorAll('.cal-view-btn').forEach(btn => {
+  btn.addEventListener('click', () => setCalMode(btn.dataset.mode));
+});
+
+function isPageDark() {
+  const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+  let r, g, b;
+  if (bg.startsWith('#')) {
+    let hex = bg.slice(1);
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    r = parseInt(hex.slice(0, 2), 16);
+    g = parseInt(hex.slice(2, 4), 16);
+    b = parseInt(hex.slice(4, 6), 16);
+  } else {
+    const m = bg.match(/[\d.]+/g);
+    if (!m || m.length < 3) return true;
+    [r, g, b] = m.map(Number);
+  }
+  // Perceived luminance (Rec. 601)
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 < 0.5;
+}
+function updateCalendarTheme() {
+  const el = document.getElementById('calEmbed');
+  if (!el) return;
+  el.classList.toggle('dark', isPageDark());
+}
+updateCalendarTheme();
 let themeMode = localStorage.getItem('kt-theme-mode') || 'auto';
 if (!THEMES.includes(themeMode)) themeMode = 'auto';
 applyTheme(themeMode);
