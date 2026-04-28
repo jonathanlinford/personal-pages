@@ -28,7 +28,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E👶%3C/text%3E%3C/svg%3E">
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cinzel:wght@500;700&family=Press+Start+2P&family=Quicksand:wght@400;500;700&family=Audiowide&family=Caveat:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cinzel:wght@500;700&family=Press+Start+2P&family=Quicksand:wght@400;500;700&family=Audiowide&family=Caveat:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Anton&family=Bangers&display=swap');
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1260,6 +1260,21 @@
     color: #c8857a;
     font-size: 28px;
   }
+  .pv-mrbeast {
+    background: url('assets/mrbeast-bg.png') center/cover, #ffd700;
+    border: 3px solid #000;
+  }
+  .pv-mrbeast::after {
+    content: '$1,000,000';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-3deg);
+    color: #ffd700;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 14px;
+    -webkit-text-stroke: 2px #000;
+    text-shadow: 2px 2px 0 #000;
+  }
 
   /* ═══════════════════════════════════════════════
      STYLE: 90s GeoCities
@@ -2140,6 +2155,295 @@
     color: #fdf2e9 !important;
   }
 
+  /* ═══════════════════════════════════════════════
+     STYLE: MrBeast (YouTube clickbait thumbnail)
+     ═══════════════════════════════════════════════ */
+  :root[data-style="mrbeast"] {
+    --bg: #ffd700;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #fffbeb;
+    --bg-translucent: rgba(255, 215, 0, 0.95);
+    --border: #000000;
+    --border-bright: #ff0000;
+    --text: #000000;
+    --text-dim: #1a1a1a;
+    --text-faint: #4a4a4a;
+    --accent: #ff0000;
+    --accent-glow: rgba(255, 0, 0, 0.25);
+    --daisy: #ff1493; --daisy-bg: #ffb6e6; --daisy-bg-2: #ff69b4;
+    --nancy: #4169ff; --nancy-bg: #b6c8ff; --nancy-bg-2: #6e8eff;
+    --abbie: #ff8c00; --abbie-bg: #ffd9a8; --abbie-bg-2: #ffae42;
+    --grandma: #00b300; --grandma-bg: #c8ffc8; --grandma-bg-2: #66ff66;
+    --sally: #ffd700; --luke: #00aaff; --twins: #ff66cc; --everyone: #ff0000;
+    --grid-line: rgba(0,0,0,0.06);
+    --glow-1: rgba(255,0,0,0.20); --glow-2: rgba(255,215,0,0.30); --glow-3: rgba(0,170,255,0.18);
+  }
+  :root[data-style="mrbeast"] body {
+    font-family: 'Anton', Impact, 'Arial Black', sans-serif !important;
+    background:
+      url('assets/mrbeast-bg.png') center/cover fixed,
+      #ffd700 !important;
+    color: #000 !important;
+  }
+  :root[data-style="mrbeast"] .bg-grid { display: none; }
+  :root[data-style="mrbeast"] .bg-glow {
+    background: radial-gradient(60% 50% at 50% 0%, rgba(255,255,255,0.3), transparent 70%) !important;
+  }
+  :root[data-style="mrbeast"] .container::before {
+    /* "$1,000,000" floating sticker */
+    content: '$1,000,000';
+    position: fixed;
+    top: 80px; right: -20px;
+    transform: rotate(8deg);
+    background: #ffd700;
+    color: #ff0000;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 28px;
+    padding: 8px 20px;
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0 #000;
+    -webkit-text-stroke: 1px #000;
+    z-index: 5;
+    pointer-events: none;
+    animation: mb-shake 0.4s ease-in-out infinite;
+  }
+  @keyframes mb-shake {
+    0%, 100% { transform: rotate(8deg) scale(1); }
+    50%      { transform: rotate(8deg) scale(1.05); }
+  }
+  :root[data-style="mrbeast"] .hero {
+    background:
+      url('assets/mrbeast-bg.png') center/cover !important;
+    border: 6px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: 10px 10px 0 #000 !important;
+    text-align: center;
+    padding: 30px 20px !important;
+    position: relative;
+    overflow: visible !important;
+  }
+  :root[data-style="mrbeast"] .hero::before { display: none; }
+  :root[data-style="mrbeast"] .hero h1 {
+    -webkit-text-fill-color: initial !important;
+    background: none !important;
+    color: #ffd700 !important;
+    font-family: 'Anton', Impact, 'Arial Black', sans-serif !important;
+    font-size: clamp(48px, 11vw, 96px) !important;
+    -webkit-text-stroke: 4px #000;
+    text-stroke: 4px #000;
+    text-shadow:
+      6px 6px 0 #000,
+      0 0 30px rgba(255,0,0,0.7);
+    letter-spacing: 0.02em !important;
+    line-height: 1;
+    text-transform: uppercase;
+    transform: rotate(-2deg);
+    animation: mb-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes mb-pulse {
+    0%, 100% { transform: rotate(-2deg) scale(1); }
+    50%      { transform: rotate(-2deg) scale(1.04); }
+  }
+  :root[data-style="mrbeast"] .hero .sub {
+    color: #fff !important;
+    font-family: 'Bangers', 'Anton', Impact, sans-serif !important;
+    font-size: 22px !important;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 3px 3px 0 #000;
+    letter-spacing: 0.06em;
+    margin-top: 10px;
+  }
+  :root[data-style="mrbeast"] .clock,
+  :root[data-style="mrbeast"] .hero-meta {
+    background: #fff !important;
+    color: #000 !important;
+    border: 3px solid #000 !important;
+    border-radius: 0 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    box-shadow: 3px 3px 0 #000;
+  }
+  :root[data-style="mrbeast"] .countdown-inline {
+    background: #ff0000 !important;
+    border: 4px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0 #000;
+    padding: 8px 16px !important;
+  }
+  :root[data-style="mrbeast"] .countdown-inline .num {
+    color: #ffd700 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 24px !important;
+    -webkit-text-stroke: 1px #000;
+  }
+  :root[data-style="mrbeast"] .countdown-inline .lbl {
+    color: #fff !important;
+    font-family: 'Bangers', sans-serif !important;
+    font-size: 13px !important;
+    letter-spacing: 0.08em;
+  }
+  :root[data-style="mrbeast"] .card,
+  :root[data-style="mrbeast"] .day-card,
+  :root[data-style="mrbeast"] .timeline,
+  :root[data-style="mrbeast"] .footer-note {
+    border: 4px solid #000 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: 6px 6px 0 #000 !important;
+    color: #000 !important;
+  }
+  :root[data-style="mrbeast"] section h2 {
+    font-family: 'Anton', Impact, sans-serif !important;
+    color: #ff0000 !important;
+    font-size: 32px !important;
+    -webkit-text-stroke: 1.5px #000;
+    text-shadow: 3px 3px 0 #000;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transform: rotate(-1deg);
+    display: inline-block;
+    background: #ffd700;
+    padding: 6px 16px;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+  }
+  :root[data-style="mrbeast"] section h2 .h-ico {
+    background: #ff0000 !important;
+    color: #fff !important;
+    font-size: 22px !important;
+  }
+  :root[data-style="mrbeast"] .card h3 {
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 22px !important;
+    text-transform: uppercase;
+    color: #000 !important;
+    border-bottom: 3px solid #ff0000;
+    padding-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+  :root[data-style="mrbeast"] .day-info h3 {
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 20px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  :root[data-style="mrbeast"] .tab {
+    border: 3px solid #000 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 16px !important;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0 #000;
+    margin-right: 4px;
+  }
+  :root[data-style="mrbeast"] .tab.active {
+    background: #ff0000 !important;
+    color: #ffd700 !important;
+    -webkit-text-stroke: 0.5px #000;
+  }
+  :root[data-style="mrbeast"] .pill {
+    border-radius: 0 !important;
+    border: 2px solid #000 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0 #000;
+  }
+  :root[data-style="mrbeast"] .day-num {
+    background: #ff0000 !important;
+    border: 3px solid #000 !important;
+    border-radius: 0 !important;
+    color: #ffd700 !important;
+    box-shadow: 3px 3px 0 #000;
+  }
+  :root[data-style="mrbeast"] .day-num .dnum {
+    color: #ffd700 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    -webkit-text-stroke: 1px #000;
+  }
+  :root[data-style="mrbeast"] .day-num .dwk { color: #fff !important; }
+  :root[data-style="mrbeast"] .event-time {
+    font-family: 'Anton', Impact, sans-serif !important;
+    color: #ff0000 !important;
+    font-size: 16px !important;
+  }
+  :root[data-style="mrbeast"] .event-title {
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 16px !important;
+    text-transform: uppercase;
+  }
+  :root[data-style="mrbeast"] a.tap,
+  :root[data-style="mrbeast"] .event-loc {
+    color: #0000ff !important;
+    font-weight: 700;
+    border-bottom: 2px solid #0000ff !important;
+    text-transform: uppercase;
+  }
+  :root[data-style="mrbeast"] .search-input {
+    border: 4px solid #000 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    font-size: 18px !important;
+    box-shadow: 4px 4px 0 #000;
+  }
+  :root[data-style="mrbeast"] .timeline {
+    background: #ffd700 !important;
+  }
+  :root[data-style="mrbeast"] .tb-cell {
+    border-radius: 0 !important;
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-family: 'Anton', Impact, sans-serif !important;
+    box-shadow: 2px 2px 0 #000;
+  }
+  /* "MUST WATCH!!!" footer banner */
+  :root[data-style="mrbeast"] .footer-note::before {
+    content: '🚨 MUST WATCH!!! 🚨';
+    display: block;
+    background: #ff0000;
+    color: #ffd700;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 28px;
+    -webkit-text-stroke: 1.5px #000;
+    text-shadow: 3px 3px 0 #000;
+    padding: 10px;
+    border: 4px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transform: rotate(-1deg);
+    animation: mb-pulse 1.6s ease-in-out infinite;
+  }
+  /* Red arrow accent on the countdown */
+  :root[data-style="mrbeast"] .countdown-inline::before {
+    content: '';
+    position: absolute;
+    top: -50px; left: -40px;
+    width: 80px; height: 60px;
+    background: url('assets/mrbeast-arrow.png') no-repeat center/contain;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+  :root[data-style="mrbeast"] .countdown-inline { position: relative; overflow: visible; }
+  /* Scroll-bouncing emojis on the bg */
+  :root[data-style="mrbeast"] .container::after {
+    content: '💰💸';
+    position: fixed;
+    bottom: 20px; left: 16px;
+    font-size: 36px;
+    animation: mb-bounce 1.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 5;
+  }
+  @keyframes mb-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+
   /* mobile tweaks */
   @media (max-width: 600px) {
     .container { padding: 20px 14px 80px; }
@@ -2639,6 +2943,11 @@
         <strong>Wes Anderson</strong>
         <span>Pastel symmetry</span>
       </button>
+      <button class="style-card" data-style="mrbeast">
+        <div class="style-prev pv-mrbeast"></div>
+        <strong>MrBeast</strong>
+        <span>YOUTUBE THUMBNAIL ENERGY</span>
+      </button>
     </div>
   </section>
 
@@ -2884,7 +3193,7 @@ setActiveTab();
 
 /* ───────── Style picker ───────── */
 const STYLES = ['default', 'geocities', 'facebook', 'regency', 'tolkien', 'terminal',
-                'nintendo', 'ghibli', 'synthwave', 'newspaper', 'anderson'];
+                'nintendo', 'ghibli', 'synthwave', 'newspaper', 'anderson', 'mrbeast'];
 function applyStyle(style) {
   if (!STYLES.includes(style)) style = 'default';
   if (style === 'default') {
