@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#0a0a0f">
 <title>Kids @ Home — May 3-12, 2026</title>
 <meta name="description" content="Caretaker reference for Sally, Luke, Emerald & Georgia while Mom & Dad are in Japan. Schedule, contacts, twin care guide, meal plan.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 
 <!-- Open Graph / link previews -->
 <meta property="og:type" content="website">
@@ -794,6 +796,26 @@
   .card.nancy   { background: linear-gradient(180deg, var(--nancy-bg) 0%, transparent 50%), var(--bg-elev); }
   .card.abbie   { background: linear-gradient(180deg, var(--abbie-bg) 0%, transparent 50%), var(--bg-elev); }
   .card.grandma { background: linear-gradient(180deg, var(--grandma-bg) 0%, transparent 50%), var(--bg-elev); }
+
+  /* embedded Google Calendar */
+  .cal-embed {
+    position: relative;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  }
+  .cal-embed iframe {
+    display: block;
+    width: 100%;
+    height: 720px;
+    border: 0;
+  }
+  @media (max-width: 720px) {
+    .cal-embed iframe { height: 560px; }
+  }
 
   /* tappable inline links */
   a.tap {
@@ -2811,6 +2833,7 @@
         <a class="tab" href="#contacts">📞 Contacts</a>
         <a class="tab" href="#home">🏠 Home</a>
         <a class="tab" href="#flights">✈ Flights</a>
+        <a class="tab" href="#calendar">📆 Calendar</a>
       </div>
       <span class="scroll-hint">more</span>
     </div>
@@ -3177,6 +3200,24 @@
       <div class="kv"><div class="kv-key">DL 166</div><div class="kv-val">HND → SEA · dep 4:05 PM JST, arr 9:15 AM PT (same day)<br><a class="tap" href="https://www.google.com/search?q=DL+166" target="_blank">View live status</a></div></div>
       <div class="kv"><div class="kv-key">DL 1120</div><div class="kv-val">SEA → SLC · dep 1:25 PM PT, arr 4:40 PM MT<br><a class="tap" href="https://www.google.com/search?q=DL+1120" target="_blank">View live status</a></div></div>
       <div class="kv"><div class="kv-key">Home</div><div class="kv-val">Salem ~6:00 PM MT · pick up kids on the way</div></div>
+    </div>
+  </section>
+
+  <!-- ═══ CALENDAR EMBED ═══ -->
+  <section id="calendar">
+    <h2><span class="h-ico">📆</span>Live calendar</h2>
+    <p style="color:var(--text-dim);font-size:13px;margin-bottom:14px">
+      The shared Google Calendar — source of truth for every event on this page. Updates here propagate automatically.
+      <a class="tap" href="https://calendar.google.com/calendar/u/0/r?cid=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8@group.calendar.google.com" target="_blank" rel="noopener">Add to your Google Calendar</a>
+    </p>
+
+    <div class="cal-embed">
+      <iframe
+        title="Kids @ Home — Japan Trip calendar"
+        src="https://calendar.google.com/calendar/embed?src=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8%40group.calendar.google.com&amp;ctz=America%2FDenver&amp;mode=AGENDA&amp;showTitle=0&amp;showCalendars=0&amp;showPrint=0&amp;showTabs=1&amp;showTz=0&amp;showNav=1&amp;showDate=1"
+        loading="lazy"
+        frameborder="0"
+        scrolling="no"></iframe>
     </div>
   </section>
 
