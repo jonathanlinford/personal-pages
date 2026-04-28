@@ -799,32 +799,6 @@
   .card.grandma { background: linear-gradient(180deg, var(--grandma-bg) 0%, transparent 50%), var(--bg-elev); }
 
   /* embedded Google Calendar */
-  .cal-views {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .cal-view-btn {
-    padding: 7px 14px;
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    color: var(--text-dim);
-    font: 600 12px/1 'Inter', sans-serif;
-    letter-spacing: 0.3px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-  }
-  .cal-view-btn:hover {
-    color: var(--text);
-    border-color: var(--border-bright);
-  }
-  .cal-view-btn.active {
-    color: #fff;
-    background: var(--accent);
-    border-color: var(--accent);
-  }
   .cal-embed {
     position: relative;
     width: 100%;
@@ -3245,13 +3219,6 @@
       <a class="tap" href="https://calendar.google.com/calendar/u/0/r?cid=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8@group.calendar.google.com" target="_blank" rel="noopener">Add to your Google Calendar</a>
     </p>
 
-    <div class="cal-views" role="tablist" aria-label="Calendar view">
-      <button class="cal-view-btn" data-mode="DAY" type="button">Day</button>
-      <button class="cal-view-btn active" data-mode="AGENDA" type="button">Schedule</button>
-      <button class="cal-view-btn" data-mode="WEEK" type="button">Week</button>
-      <button class="cal-view-btn" data-mode="MONTH" type="button">Month</button>
-    </div>
-
     <div class="cal-embed" id="calEmbed">
       <iframe
         id="calFrame"
@@ -3630,20 +3597,7 @@ function applyTheme(mode) {
   updateCalendarTheme();
 }
 
-/* ───────── Calendar embed: view picker + auto dark/light ───────── */
-const CAL_BASE = 'https://calendar.google.com/calendar/embed?src=045ff78d210e92c454ae89b40d66f81faeafde75eb9117fc4eadf7ac0794f7b8%40group.calendar.google.com&ctz=America%2FDenver&showTitle=0&showCalendars=0&showPrint=0&showTabs=1&showTz=0&showNav=1&showDate=1';
-function setCalMode(mode) {
-  const frame = document.getElementById('calFrame');
-  if (!frame) return;
-  frame.src = CAL_BASE + '&mode=' + mode;
-  document.querySelectorAll('.cal-view-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.mode === mode);
-  });
-}
-document.querySelectorAll('.cal-view-btn').forEach(btn => {
-  btn.addEventListener('click', () => setCalMode(btn.dataset.mode));
-});
-
+/* ───────── Calendar embed: auto dark/light ───────── */
 function isPageDark() {
   const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
   let r, g, b;
