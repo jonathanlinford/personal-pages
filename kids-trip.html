@@ -188,6 +188,31 @@
     margin: 0 auto;
     padding: 32px 18px 80px;
   }
+  @media (min-width: 1200px) {
+    .container { max-width: 1140px; }
+  }
+
+  /* ─── Multi-column section grids on wide screens ───
+     Sections that are mostly card-lists collapse into a 2-column grid
+     when there's room, so desktop doesn't waste horizontal space.
+     Mobile (default) stays single-column. */
+  @media (min-width: 880px) {
+    #caretakers, #sally, #luke, #twins,
+    #meals, #contacts, #home, #flights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      column-gap: 14px;
+      row-gap: 14px;
+      align-items: start;
+    }
+    /* Anything that isn't a card spans the whole grid row. */
+    #caretakers > h2, #sally > h2, #luke > h2, #twins > h2,
+    #meals > h2, #contacts > h2, #home > h2, #flights > h2,
+    #caretakers > p, #sally > p, #luke > p, #twins > p,
+    #meals > p, #contacts > p, #home > p, #flights > p {
+      grid-column: 1 / -1;
+    }
+  }
 
   /* ─── Compact hero ─── */
   .hero {
@@ -445,58 +470,30 @@
     border-bottom: 1px solid var(--border);
   }
   .tabs-shell { position: relative; }
-  /* fade gradients to indicate horizontal scrollability */
+  /* Edge fades hint at horizontal scrollability — last visible tab
+     dissolves into the nav background. */
   .tabs-shell::before,
   .tabs-shell::after {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 36px;
+    width: 56px;
     pointer-events: none;
     z-index: 2;
     transition: opacity 0.25s;
   }
   .tabs-shell::before {
     left: 0;
-    background: linear-gradient(to right, var(--bg-translucent), transparent);
+    background: linear-gradient(to right, var(--bg) 0%, var(--bg-translucent) 50%, transparent 100%);
     opacity: 0;
   }
   .tabs-shell::after {
     right: 0;
-    background: linear-gradient(to left, var(--bg-translucent), transparent);
+    background: linear-gradient(to left, var(--bg) 0%, var(--bg-translucent) 50%, transparent 100%);
   }
   .tabs-shell.scrolled-start::before { opacity: 1; }
   .tabs-shell.scrolled-end::after { opacity: 0; }
-  /* "more →" hint chevron — visible until user scrolls */
-  .scroll-hint {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    pointer-events: none;
-    z-index: 3;
-    animation: scrollNudge 1.6s ease-in-out infinite;
-    transition: opacity 0.3s;
-  }
-  .scroll-hint::after {
-    content: '→';
-    font-size: 14px;
-  }
-  .tabs-shell.scrolled-end .scroll-hint,
-  .tabs-shell.user-scrolled .scroll-hint { opacity: 0; }
-  @keyframes scrollNudge {
-    0%, 100% { transform: translate(0, -50%); }
-    50%      { transform: translate(4px, -50%); }
-  }
   .tabs-inner {
     display: flex;
     gap: 6px;
@@ -2864,7 +2861,6 @@
         <a class="tab" href="#flights">✈ Flights</a>
         <a class="tab" href="#calendar">📆 Calendar</a>
       </div>
-      <span class="scroll-hint">more</span>
     </div>
   </nav>
 
@@ -3662,7 +3658,6 @@ function updateTabScroll() {
   const max = tabsInner.scrollWidth - tabsInner.clientWidth;
   tabsShell.classList.toggle('scrolled-start', sl > 4);
   tabsShell.classList.toggle('scrolled-end', max <= 4 || sl >= max - 4);
-  if (sl > 8) tabsShell.classList.add('user-scrolled');
 }
 tabsInner.addEventListener('scroll', updateTabScroll, { passive: true });
 window.addEventListener('resize', updateTabScroll);
