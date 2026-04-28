@@ -2213,22 +2213,28 @@
   }
   :root[data-style="mrbeast"] .hero {
     background:
+      linear-gradient(90deg, rgba(255,215,0,0.95) 0%, rgba(255,215,0,0.5) 45%, transparent 65%),
+      url('assets/mrbeast-face.png') right center/contain no-repeat,
       url('assets/mrbeast-bg.png') center/cover !important;
     border: 6px solid #000 !important;
     border-radius: 0 !important;
     box-shadow: 10px 10px 0 #000 !important;
-    text-align: center;
+    text-align: left;
     padding: 30px 20px !important;
     position: relative;
     overflow: visible !important;
+    min-height: 360px;
   }
   :root[data-style="mrbeast"] .hero::before { display: none; }
+  :root[data-style="mrbeast"] .hero-top {
+    margin-bottom: 18px;
+  }
   :root[data-style="mrbeast"] .hero h1 {
     -webkit-text-fill-color: initial !important;
     background: none !important;
     color: #ffd700 !important;
     font-family: 'Anton', Impact, 'Arial Black', sans-serif !important;
-    font-size: clamp(48px, 11vw, 96px) !important;
+    font-size: clamp(40px, 9vw, 84px) !important;
     -webkit-text-stroke: 4px #000;
     text-stroke: 4px #000;
     text-shadow:
@@ -2239,6 +2245,24 @@
     text-transform: uppercase;
     transform: rotate(-2deg);
     animation: mb-pulse 1.6s ease-in-out infinite;
+    max-width: 60%;
+  }
+  :root[data-style="mrbeast"] .hero .sub,
+  :root[data-style="mrbeast"] .hero-stats {
+    max-width: 60%;
+  }
+  @media (max-width: 700px) {
+    :root[data-style="mrbeast"] .hero {
+      background:
+        linear-gradient(180deg, rgba(255,215,0,0.92) 0%, rgba(255,215,0,0.55) 35%, transparent 50%),
+        url('assets/mrbeast-face.png') center top/cover no-repeat !important;
+      min-height: 460px;
+      text-align: center;
+    }
+    :root[data-style="mrbeast"] .hero h1,
+    :root[data-style="mrbeast"] .hero .sub,
+    :root[data-style="mrbeast"] .hero-stats { max-width: 100%; }
+    :root[data-style="mrbeast"] .hero-stats { justify-content: center; }
   }
   @keyframes mb-pulse {
     0%, 100% { transform: rotate(-2deg) scale(1); }
