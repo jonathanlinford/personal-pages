@@ -152,35 +152,35 @@
     pointer-events: none;
   }
 
-  /* ─── Theme toggle ─── */
+  /* ─── Theme toggle (inline in hero) ─── */
   .theme-toggle {
-    position: fixed;
-    top: max(14px, env(safe-area-inset-top));
-    right: 14px;
-    z-index: 60;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 12px;
-    background: var(--bg-translucent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    padding: 6px 12px;
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 100px;
     color: var(--text);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: border-color 0.2s, transform 0.15s;
+    transition: border-color 0.2s, transform 0.15s, opacity 0.2s;
   }
   .theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
-  .theme-toggle .ico { font-size: 14px; line-height: 1; }
+  .theme-toggle.hidden { display: none; }
+  .theme-toggle .ico { font-size: 13px; line-height: 1; }
   .theme-toggle .lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-dim);
+  }
+  .hero-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .container {
@@ -342,6 +342,7 @@
     .hero-top { flex-direction: column; align-items: stretch; gap: 10px; }
     .clocks { justify-content: center; }
     .hero-meta { text-align: center; }
+    .hero-right { justify-content: space-between; }
     .hero { padding: 16px 16px 18px; }
   }
 
@@ -2819,11 +2820,6 @@
 <div class="bg-grid"></div>
 <div class="bg-glow"></div>
 
-<button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
-  <span class="ico" id="themeIco">⚙</span>
-  <span class="lbl" id="themeLbl">Auto</span>
-</button>
-
 <div class="container">
 
   <!-- ═══ HERO ═══ -->
@@ -2843,7 +2839,13 @@
           <span class="day" id="d-japan"></span>
         </div>
       </div>
-      <span class="hero-meta">May 3–12, 2026</span>
+      <div class="hero-right">
+        <span class="hero-meta">May 3–12, 2026</span>
+        <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+          <span class="ico" id="themeIco">⚙</span>
+          <span class="lbl" id="themeLbl">Auto</span>
+        </button>
+      </div>
     </div>
     <h1>Kids @ Home</h1>
     <p class="sub">Caretaker reference for Sally, Luke, Emerald &amp; Georgia while Mom &amp; Dad are in Japan.</p>
@@ -3589,6 +3591,10 @@ function applyStyle(style) {
   document.querySelectorAll('.style-card').forEach(c => {
     c.classList.toggle('active', c.dataset.style === style);
   });
+  // Theme toggle only makes sense for the default style — every other
+  // style picks its own dark/light look. Hide it elsewhere.
+  const tb = document.getElementById('themeBtn');
+  if (tb) tb.classList.toggle('hidden', style !== 'default');
   updateCalendarTheme();
 }
 const savedStyle = localStorage.getItem('kt-style') || 'default';
