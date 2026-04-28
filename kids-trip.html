@@ -300,6 +300,15 @@
     font-weight: 800;
     color: var(--accent);
     line-height: 1;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+    min-width: 1.1em;
+    text-align: right;
+  }
+  .countdown-inline .num.cd-ms {
+    font-size: 11px;
+    opacity: 0.5;
+    min-width: 2.4em;
   }
   .countdown-inline .lbl {
     font-size: 10px;
@@ -307,6 +316,11 @@
     letter-spacing: 0.12em;
     color: var(--text-dim);
     font-weight: 600;
+  }
+  .countdown-inline .cd-d-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
   }
   .hero-chip {
     display: inline-flex;
@@ -2869,7 +2883,8 @@ window.addEventListener('scroll', setActiveTab, { passive: true });
 setActiveTab();
 
 /* ───────── Style picker ───────── */
-const STYLES = ['default', 'geocities', 'facebook', 'regency', 'tolkien', 'terminal'];
+const STYLES = ['default', 'geocities', 'facebook', 'regency', 'tolkien', 'terminal',
+                'nintendo', 'ghibli', 'synthwave', 'newspaper', 'anderson'];
 function applyStyle(style) {
   if (!STYLES.includes(style)) style = 'default';
   if (style === 'default') {
@@ -3076,27 +3091,55 @@ document.addEventListener('keydown', e => {
 });
 
 /* ───────── Countdown ───────── */
-function updateCountdown() {
-  const tripStart = new Date('2026-05-03T05:30:00-06:00').getTime();
-  const tripEnd = new Date('2026-05-12T18:00:00-06:00').getTime();
+const TRIP_START = new Date('2026-05-03T05:30:00-06:00').getTime();
+const TRIP_END   = new Date('2026-05-12T18:00:00-06:00').getTime();
+const cdEl = document.getElementById('countdown');
+// Build the structure ONCE so we only mutate text nodes — no innerHTML thrash
+function buildCountdown() {
+  cdEl.innerHTML = `
+    <span class="cd-d-wrap"><span class="num" id="cd-d">0</span><span class="lbl">d</span></span>
+    <span class="num" id="cd-h">0</span><span class="lbl">h</span>
+    <span class="num" id="cd-m">0</span><span class="lbl">m</span>
+    <span class="num" id="cd-s">0</span><span class="lbl">s</span>
+    <span class="num cd-ms" id="cd-ms">000</span>
+    <span class="lbl" id="cd-label" style="margin-left:6px"></span>
+  `;
+}
+buildCountdown();
+const cdD = document.getElementById('cd-d');
+const cdDWrap = cdEl.querySelector('.cd-d-wrap');
+const cdH = document.getElementById('cd-h');
+const cdM = document.getElementById('cd-m');
+const cdS = document.getElementById('cd-s');
+const cdMs = document.getElementById('cd-ms');
+const cdLbl = document.getElementById('cd-label');
+const pad = (n, w=2) => String(n).padStart(w, '0');
+function tickCountdown() {
   const now = Date.now();
-  const cd = document.getElementById('countdown');
   let target, label;
-  if (now < tripStart)      { target = tripStart; label = 'until parents leave'; }
-  else if (now < tripEnd)   { target = tripEnd;   label = 'until parents return'; }
-  else                       { cd.innerHTML = '<span class="lbl">✓ Trip complete</span>'; return; }
+  if (now < TRIP_START)    { target = TRIP_START; label = 'until parents leave'; }
+  else if (now < TRIP_END) { target = TRIP_END;   label = 'until parents return'; }
+  else {
+    cdEl.innerHTML = '<span class="lbl">✓ Trip complete</span>';
+    cancelAnimationFrame(cdRAF);
+    return;
+  }
   const diff = target - now;
   const days = Math.floor(diff / 86400000);
   const hrs  = Math.floor((diff % 86400000) / 3600000);
   const mins = Math.floor((diff % 3600000) / 60000);
-  let parts = '';
-  if (days) parts += `<span class="num">${days}</span><span class="lbl">d</span>`;
-  parts += `<span class="num">${hrs}</span><span class="lbl">h</span>`;
-  parts += `<span class="num">${mins}</span><span class="lbl">m</span>`;
-  cd.innerHTML = parts + `<span class="lbl" style="margin-left:6px">${label}</span>`;
+  const secs = Math.floor((diff % 60000) / 1000);
+  const ms   = diff % 1000;
+  cdDWrap.style.display = days > 0 ? '' : 'none';
+  if (days > 0) cdD.textContent = days;
+  cdH.textContent = pad(hrs);
+  cdM.textContent = pad(mins);
+  cdS.textContent = pad(secs);
+  cdMs.textContent = pad(ms, 3);
+  if (cdLbl.textContent !== label) cdLbl.textContent = label;
+  cdRAF = requestAnimationFrame(tickCountdown);
 }
-updateCountdown();
-setInterval(updateCountdown, 30000);
+let cdRAF = requestAnimationFrame(tickCountdown);
 </script>
 
 </body>
