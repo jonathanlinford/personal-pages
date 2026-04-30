@@ -82,10 +82,37 @@ const unlock = `<!DOCTYPE html>
   button:hover{background:#7479ff}
   button:disabled{opacity:.5;cursor:wait}
   .err{color:#ff6168;font-size:12px;text-align:center;margin-top:6px;min-height:14px}
+  /* Default-hidden so a synchronous head script can decide what to show before paint */
+  #ui{display:none}
+  #spinner{display:none}
+  .spinner{
+    width:36px;height:36px;border-radius:50%;
+    border:3px solid rgba(99,102,241,0.15);border-top-color:#6366f1;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<script>
+  // Synchronous: decide *before* paint whether to show unlock UI or spinner.
+  // Avoids a flash of the password box on refresh when we have a cached password.
+  (function(){
+    var SS_KEY = "japan2026.pw";
+    var cached = null;
+    try { cached = sessionStorage.getItem(SS_KEY); } catch (e) {}
+    // Inject a tiny <style> override before the body paints.
+    var s = document.createElement("style");
+    if (cached) {
+      s.textContent = "#spinner{display:flex !important}";
+    } else {
+      s.textContent = "#ui{display:block !important}";
+    }
+    document.head.appendChild(s);
+  })();
+</script>
 </head>
 <body>
 <noscript><div class="box"><h1>JavaScript required</h1><p>This page is encrypted and needs JavaScript to decrypt.</p></div></noscript>
+<div id="spinner" style="align-items:center;justify-content:center"><div class="spinner"></div></div>
 <div class="box" id="ui">
   <div class="lock">🔒</div>
   <h1>${title}</h1>
@@ -149,6 +176,11 @@ const unlock = `<!DOCTYPE html>
       render(html);
     } catch (e) {
       try { sessionStorage.removeItem(SS_KEY); } catch {}
+      // Hide spinner (cached path) and reveal the unlock box.
+      const sp = document.getElementById("spinner");
+      if (sp) sp.style.display = "none";
+      const ui = document.getElementById("ui");
+      if (ui) ui.style.display = "block";
       if (errEl) errEl.textContent = "Wrong password.";
       if (btn) btn.disabled = false;
       const pwEl = document.getElementById("pw");
