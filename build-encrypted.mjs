@@ -117,8 +117,16 @@ const unlock = `<!DOCTYPE html>
   <div class="lock">🔒</div>
   <h1>${title}</h1>
   <p>Enter password to view trip details.</p>
-  <form id="f" autocomplete="off">
-    <input id="pw" type="password" placeholder="Password" autofocus required>
+  <form id="f" action="#" method="post">
+    <!-- Hidden but a11y-accessible username gives iCloud Keychain / 1Password / Bitwarden
+         a stable account identifier so they reliably save and autofill the password.
+         Each traveler saves the same shared password to their own keychain. -->
+    <input id="user" name="username" type="text" value="japan-trip-2026"
+           autocomplete="username" readonly aria-hidden="true"
+           tabindex="-1"
+           style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
+    <input id="pw" name="password" type="password" placeholder="Password"
+           autocomplete="current-password" autofocus required>
     <button id="go" type="submit">Unlock</button>
     <div class="err" id="err"></div>
   </form>
