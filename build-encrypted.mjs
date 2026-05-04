@@ -20,6 +20,44 @@ if (!srcPath || !password || !outPath) {
   process.exit(1);
 }
 
+// Per-page social preview metadata. Keyed by output basename.
+const SOCIAL = {
+  "japan-2026.html": {
+    url: "https://jonathanlinford.github.io/personal-pages/japan-2026.html",
+    ogTitle: "Japan · May 2026",
+    ogDescription: "Our trip itinerary, hotels, trains, and day-by-day plans. Password protected.",
+    image: "https://jonathanlinford.github.io/personal-pages/japan-2026-og.png",
+    imageWidth: 1200,
+    imageHeight: 633,
+    imageAlt: "Mount Fuji at twilight with cherry blossoms — Japan, May 2026",
+    siteName: "Jonny & Lauren",
+    themeColor: "#6366f1",
+  },
+};
+const outBase = outPath.split("/").pop();
+const social = SOCIAL[outBase];
+
+const escapeAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const socialMeta = social ? `
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${escapeAttr(social.siteName)}">
+<meta property="og:title" content="${escapeAttr(social.ogTitle)}">
+<meta property="og:description" content="${escapeAttr(social.ogDescription)}">
+<meta property="og:url" content="${escapeAttr(social.url)}">
+<meta property="og:image" content="${escapeAttr(social.image)}">
+<meta property="og:image:secure_url" content="${escapeAttr(social.image)}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="${social.imageWidth}">
+<meta property="og:image:height" content="${social.imageHeight}">
+<meta property="og:image:alt" content="${escapeAttr(social.imageAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeAttr(social.ogTitle)}">
+<meta name="twitter:description" content="${escapeAttr(social.ogDescription)}">
+<meta name="twitter:image" content="${escapeAttr(social.image)}">
+<meta name="twitter:image:alt" content="${escapeAttr(social.imageAlt)}">
+<meta name="theme-color" content="${escapeAttr(social.themeColor)}">` : "";
+
 const PBKDF2_ITERATIONS = 600_000;
 const KEY_BYTES = 32;
 const SALT_BYTES = 16;
@@ -46,7 +84,7 @@ const unlock = `<!DOCTYPE html>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
-<title>${title}</title>
+<title>${title}</title>${socialMeta}
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
