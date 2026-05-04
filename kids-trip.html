@@ -644,6 +644,10 @@
     animation: fadeUp 0.5s ease backwards;
   }
   .day-card.open { border-color: var(--border-bright); }
+  .day-card.past { opacity: 0.45; transition: opacity 0.2s, border-color 0.2s, transform 0.2s; }
+  .day-card.past:hover { opacity: 0.85; }
+  .day-card.past .day-info h3 { color: var(--text-dim); }
+  .day-card.today { border-color: var(--good, #34c759); }
   .day-header {
     display: grid;
     grid-template-columns: 56px 1fr auto;
@@ -3637,11 +3641,21 @@ TIMELINE.forEach(day => {
 
 /* ───────── Render: day cards ───────── */
 const dayList = document.getElementById('dayList');
+// Today in Mountain Time (where the kids/caretakers live)
+const todayISO = (() => {
+  const f = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit' });
+  return f.format(new Date()); // YYYY-MM-DD
+})();
+const firstUpcomingIdx = DAYS.findIndex(d => d.date >= todayISO);
 DAYS.forEach((day, i) => {
   const card = document.createElement('div');
-  card.className = 'day-card';
+  const isToday = day.date === todayISO;
+  const isPast  = day.date < todayISO;
+  card.className = 'day-card' + (isPast ? ' past' : '') + (isToday ? ' today' : '');
   card.style.animationDelay = (i * 0.04) + 's';
-  if (i === 0) card.classList.add('open');
+  // Auto-open today; if the trip hasn't started yet, open the first day; if it's over, leave all closed.
+  const openIdx = firstUpcomingIdx === -1 ? -1 : firstUpcomingIdx;
+  if (i === openIdx) card.classList.add('open');
 
   const [, m, d] = day.date.split('-');
   const dateObj = new Date(day.date + 'T00:00:00');
