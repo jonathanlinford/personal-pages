@@ -57,6 +57,29 @@
     --persona-jonny:#5a5fe5; --persona-lauren:#d63a86;
     color-scheme:light;
   }
+  [data-theme="dune"]{
+    --bg:#1a0d08; --bg-elev:#241510;
+    --card:#2a1812; --card-hover:#34201a;
+    --border:#3d2820; --border-bright:#5c3a2a;
+    --text:#f4ddc4; --text-dim:#b8a48a; --text-faint:#7a6a55;
+    --accent:#29e0ff; --accent-light:#5ee8ff; --accent-glow:rgba(41,224,255,0.18);
+    --jp-red:#e2553a; --good:#9ad17a; --warn:#ffb84d; --bad:#ff6b4a;
+    --pre-trip:#ff8c66;
+    --grid-stroke:rgba(41,224,255,0.03);
+    --shadow-strong:0 12px 40px rgba(0,0,0,0.55);
+    --persona-jonny:#29e0ff; --persona-lauren:#e8896b;
+    color-scheme:dark;
+  }
+  /* dune-theme tweaks — keep accent-tinted overlays reading as Ibad-blue on warm sand */
+  [data-theme="dune"] .booking-info code,
+  [data-theme="dune"] .day-pill,
+  [data-theme="dune"] .b-action,
+  [data-theme="dune"] .qr-tip,
+  [data-theme="dune"] .now-event{background:rgba(41,224,255,0.07)}
+  [data-theme="dune"] .day-pill{color:var(--accent-light)}
+  [data-theme="dune"] .booking-info code{color:var(--accent-light)}
+  [data-theme="dune"] .b-action{color:var(--accent-light)}
+  [data-theme="dune"] .cd-cell{background:rgba(0,0,0,0.32)}
   /* light-theme tweaks for elements that hard-coded dark colors */
   [data-theme="light"] .booking-info code,
   [data-theme="light"] .day-pill,
@@ -1007,7 +1030,7 @@ function bindQuick(){
 // =============================== theme ===============================
 const THEME_KEY = "japan2026.theme.v1";
 function applyTheme(t){
-  // t: "auto" | "light" | "dark"
+  // t: "auto" | "light" | "dark" | "dune"
   const root = document.documentElement;
   if (t === "auto"){
     const sys = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
@@ -1016,7 +1039,7 @@ function applyTheme(t){
     root.setAttribute("data-theme", t);
   }
   const btn = document.getElementById("theme-toggle");
-  if (btn) btn.textContent = ({auto:"🌓", light:"☀️", dark:"🌙"})[t];
+  if (btn) btn.textContent = ({auto:"🌓", light:"☀️", dark:"🌙", dune:"🏜️"})[t];
 }
 function setupTheme(){
   let t;
@@ -1030,7 +1053,7 @@ function setupTheme(){
   });
   document.getElementById("theme-toggle").addEventListener("click", ()=>{
     let cur; try { cur = localStorage.getItem(THEME_KEY) || "auto"; } catch { cur = "auto"; }
-    const next = cur === "auto" ? "light" : cur === "light" ? "dark" : "auto";
+    const next = cur === "auto" ? "light" : cur === "light" ? "dark" : cur === "dark" ? "dune" : "auto";
     try { localStorage.setItem(THEME_KEY, next); } catch {}
     applyTheme(next);
   });
