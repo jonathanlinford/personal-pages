@@ -100,25 +100,7 @@
     font-family:inherit;
   }
   .icon-btn:hover{border-color:var(--accent);color:var(--accent-light)}
-  .persona-switch{
-    display:inline-flex;background:var(--bg-elev);border:1px solid var(--border);
-    border-radius:10px;padding:3px;gap:2px;
-  }
-  .persona-btn{
-    padding:6px 11px;background:none;border:none;color:var(--text-dim);
-    font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;border-radius:7px;
-    text-transform:uppercase;letter-spacing:0.4px;transition:all 0.15s;line-height:1;
-    display:flex;align-items:center;gap:5px;
-  }
-  .persona-btn:hover{color:var(--text)}
-  .persona-btn .pdot{width:7px;height:7px;border-radius:50%;background:var(--text-faint)}
-  .persona-btn[data-p="jonny"]  .pdot{background:var(--persona-jonny)}
-  .persona-btn[data-p="lauren"] .pdot{background:var(--persona-lauren)}
-  .persona-btn[data-p="both"]   .pdot{background:linear-gradient(90deg,var(--persona-jonny),var(--persona-lauren))}
-  .persona-btn.active{background:var(--accent-glow);color:var(--text)}
   /* persona row tinting */
-  [data-persona="jonny"]  .own-lauren{display:none}
-  [data-persona="lauren"] .own-jonny{display:none}
   .own-jonny  .contact-label::before{content:"J · ";color:var(--persona-jonny);font-weight:800}
   .own-lauren .contact-label::before{content:"L · ";color:var(--persona-lauren);font-weight:800}
   .qr-backup-card.own-jonny  {box-shadow:0 0 0 2px var(--persona-jonny)}
@@ -341,11 +323,6 @@
     <div class="hero-top">
       <h1 id="trip-title"></h1>
       <div class="hero-controls">
-        <div class="persona-switch" id="persona-switch">
-          <button class="persona-btn active" data-p="both"><span class="pdot"></span>Both</button>
-          <button class="persona-btn" data-p="jonny"><span class="pdot"></span>Jonny</button>
-          <button class="persona-btn" data-p="lauren"><span class="pdot"></span>Lauren</button>
-        </div>
         <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌓</button>
       </div>
     </div>
@@ -1059,26 +1036,6 @@ function setupTheme(){
   });
 }
 
-// =============================== persona ===============================
-const PERSONA_KEY = "japan2026.persona.v1";
-function applyPersona(p){
-  document.documentElement.setAttribute("data-persona", p);
-  document.querySelectorAll(".persona-btn").forEach(b=>b.classList.toggle("active", b.dataset.p===p));
-}
-function setupPersona(){
-  let p;
-  try { p = localStorage.getItem(PERSONA_KEY); } catch {}
-  if (!p) p = "both";
-  applyPersona(p);
-  document.querySelectorAll(".persona-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const next = btn.dataset.p;
-      try { localStorage.setItem(PERSONA_KEY, next); } catch {}
-      applyPersona(next);
-    });
-  });
-}
-
 // =============================== copy buttons ===============================
 function setupCopy(){
   document.body.addEventListener("click", async e=>{
@@ -1105,7 +1062,6 @@ function setupCopy(){
 
 function init(){
   setupTheme();
-  setupPersona();
   setupCopy();
   renderHero();
   renderNow();
