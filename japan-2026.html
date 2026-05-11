@@ -120,9 +120,34 @@
     width:34px;height:34px;border-radius:10px;border:1px solid var(--border);
     background:var(--bg-elev);color:var(--text);font-size:15px;cursor:pointer;
     display:flex;align-items:center;justify-content:center;transition:all 0.15s;
-    font-family:inherit;
+    font-family:inherit;position:relative;
   }
   .icon-btn:hover{border-color:var(--accent);color:var(--accent-light)}
+  /* Lisan al-Gaib pop bubble — fires when switching into the Dune theme */
+  .lisan-pop{
+    position:absolute;top:calc(100% + 8px);right:0;
+    background:var(--bg-elev);color:var(--accent-light);
+    border:1px solid var(--accent);border-radius:10px;
+    padding:6px 12px;font-size:12px;font-weight:700;font-family:inherit;
+    white-space:nowrap;pointer-events:none;letter-spacing:0.3px;
+    box-shadow:0 6px 20px rgba(41,224,255,0.35);
+    opacity:0;transform-origin:top right;
+    animation:lisanPop 1.9s cubic-bezier(.4,1.5,.5,1) forwards;
+    z-index:100;
+  }
+  .lisan-pop::before{
+    content:"";position:absolute;top:-5px;right:10px;
+    width:8px;height:8px;background:var(--bg-elev);
+    border-left:1px solid var(--accent);border-top:1px solid var(--accent);
+    transform:rotate(45deg);
+  }
+  @keyframes lisanPop{
+    0%   {opacity:0;transform:translateY(-6px) scale(0.6);}
+    18%  {opacity:1;transform:translateY(0)    scale(1.08);}
+    32%  {opacity:1;transform:translateY(0)    scale(1);}
+    78%  {opacity:1;transform:translateY(0)    scale(1);}
+    100% {opacity:0;transform:translateY(-3px) scale(0.85);}
+  }
   /* persona row tinting */
   .own-jonny  .contact-label::before{content:"J · ";color:var(--persona-jonny);font-weight:800}
   .own-lauren .contact-label::before{content:"L · ";color:var(--persona-lauren);font-weight:800}
@@ -1056,7 +1081,19 @@ function setupTheme(){
     const next = cur === "auto" ? "light" : cur === "light" ? "dark" : cur === "dark" ? "dune" : "auto";
     try { localStorage.setItem(THEME_KEY, next); } catch {}
     applyTheme(next);
+    if (next === "dune") showLisanPop();
   });
+}
+function showLisanPop(){
+  const btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  const old = btn.querySelector(".lisan-pop");
+  if (old) old.remove();
+  const pop = document.createElement("span");
+  pop.className = "lisan-pop";
+  pop.textContent = "Lisan al-Gaib!";
+  btn.appendChild(pop);
+  setTimeout(()=>pop.remove(), 2000);
 }
 
 // =============================== copy buttons ===============================
