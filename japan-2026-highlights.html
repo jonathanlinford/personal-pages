@@ -793,13 +793,25 @@
       maxGap = Math.max(maxGap, distKm(latlngs[i-1], latlngs[i]));
     }
     const isTravelDay = maxGap > 30;
-    sorted.forEach(p => {
-      L.marker([p.lat, p.lon], { icon: dot })
-        .bindTooltip(p.time, { direction: 'top', offset: [0, -4] })
+    // For travel days, wrap longitudes so consecutive points take the short way
+    // around the globe (otherwise the line goes the long way across Asia/Europe)
+    const drawPath = latlngs.map(([lat, lon]) => [lat, lon]);
+    if (isTravelDay) {
+      for (let i = 1; i < drawPath.length; i++) {
+        let diff = drawPath[i][1] - drawPath[i-1][1];
+        if (diff > 180) drawPath[i][1] -= 360;
+        else if (diff < -180) drawPath[i][1] += 360;
+      }
+    }
+    // Place markers at the (possibly wrapped) path positions so they stay
+    // visually aligned with the polyline
+    drawPath.forEach((ll, i) => {
+      L.marker(ll, { icon: dot })
+        .bindTooltip(sorted[i].time, { direction: 'top', offset: [0, -4] })
         .addTo(map);
     });
-    if (isTravelDay && latlngs.length > 1) {
-      L.polyline(latlngs, {
+    if (isTravelDay && drawPath.length > 1) {
+      L.polyline(drawPath, {
         color: '#bc002d',
         weight: 3,
         opacity: 0.85,
@@ -807,8 +819,8 @@
         lineCap: 'round',
       }).addTo(map);
     }
-    if (latlngs.length === 1) map.setView(latlngs[0], 14);
-    else map.fitBounds(L.latLngBounds(latlngs), { padding: [25, 25], maxZoom: 15 });
+    if (drawPath.length === 1) map.setView(drawPath[0], 14);
+    else map.fitBounds(L.latLngBounds(drawPath), { padding: [25, 25], maxZoom: 15 });
   });
 })();
 </script>
