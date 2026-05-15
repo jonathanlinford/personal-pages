@@ -3,43 +3,118 @@
 <head>
 <meta charset="utf-8">
 <title>Japan 2026 · Highlights</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f1e8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#11111a">
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="88">🗾</text></svg>'>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jonny &amp; Lauren">
+<meta property="og:title" content="Japan 2026 · Highlights">
+<meta property="og:description" content="44 highlights from a 10‑day trip — Tokyo, Shirakawa‑go, Takayama, Kyoto, Atami.">
+<meta property="og:url" content="https://jonathanlinford.github.io/personal-pages/japan-2026-highlights.html">
+<meta property="og:image" content="https://jonathanlinford.github.io/personal-pages/japan-2026-highlights-og.png">
+<meta property="og:image:secure_url" content="https://jonathanlinford.github.io/personal-pages/japan-2026-highlights-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Japan 2026 highlights — collage of six trip photos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Japan 2026 · Highlights">
+<meta name="twitter:description" content="44 highlights from a 10‑day trip — Tokyo, Shirakawa‑go, Takayama, Kyoto, Atami.">
+<meta name="twitter:image" content="https://jonathanlinford.github.io/personal-pages/japan-2026-highlights-og.png">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 <style>
-  :root {
+  /* ── Light (default) ── */
+  :root, [data-theme="light"] {
     --ink: #1a1a1a;
     --paper: #f7f1e8;
     --paper-2: #efe4d2;
+    --card-bg: #ffffff;
+    --card-border: rgba(0,0,0,0.06);
+    --text-muted: rgba(0,0,0,0.65);
+    --text-faint: rgba(0,0,0,0.45);
+    --time-color: rgba(0,0,0,0.5);
     --red: #bc002d;
     --red-deep: #8a0021;
     --gold: #c9a96e;
     --indigo: #1e3a5f;
+    --indigo-tint: rgba(30,58,95,0.25);
     --sakura: #f8c8d8;
     --shadow: rgba(60, 30, 10, 0.12);
+    --nav-bg: rgba(247,241,232,0.92);
+    --footer-border: rgba(0,0,0,0.08);
+    --grid-overlay: rgba(0,0,0,0.015);
+  }
+  /* ── Dark ── */
+  [data-theme="dark"] {
+    --ink: #e9e7e0;
+    --paper: #0f0e14;
+    --paper-2: #17151e;
+    --card-bg: #1c1a25;
+    --card-border: rgba(255,255,255,0.06);
+    --text-muted: rgba(233,231,224,0.75);
+    --text-faint: rgba(233,231,224,0.45);
+    --time-color: rgba(233,231,224,0.5);
+    --red: #e23156;
+    --red-deep: #a31f3a;
+    --gold: #d8c294;
+    --indigo: #a3b8d8;
+    --indigo-tint: rgba(163,184,216,0.25);
+    --sakura: #c97e9b;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --nav-bg: rgba(15,14,20,0.92);
+    --footer-border: rgba(255,255,255,0.08);
+    --grid-overlay: rgba(255,255,255,0.02);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e9e7e0;
+      --paper: #0f0e14;
+      --paper-2: #17151e;
+      --card-bg: #1c1a25;
+      --card-border: rgba(255,255,255,0.06);
+      --text-muted: rgba(233,231,224,0.75);
+      --text-faint: rgba(233,231,224,0.45);
+      --time-color: rgba(233,231,224,0.5);
+      --red: #e23156;
+      --red-deep: #a31f3a;
+      --gold: #d8c294;
+      --indigo: #a3b8d8;
+      --indigo-tint: rgba(163,184,216,0.25);
+      --sakura: #c97e9b;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --nav-bg: rgba(15,14,20,0.92);
+      --footer-border: rgba(255,255,255,0.08);
+      --grid-overlay: rgba(255,255,255,0.02);
+    }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
     font-family: "Hiragino Mincho ProN", "Yu Mincho", "Cormorant Garamond", Georgia, serif;
     background:
-      radial-gradient(circle at 20% 10%, rgba(248,200,216,0.35), transparent 40%),
-      radial-gradient(circle at 90% 60%, rgba(201,169,110,0.18), transparent 45%),
+      radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--sakura) 35%, transparent), transparent 40%),
+      radial-gradient(circle at 90% 60%, color-mix(in srgb, var(--gold) 18%, transparent), transparent 45%),
       var(--paper);
     background-attachment: fixed;
     color: var(--ink);
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
   }
   body::before {
     content: "";
     position: fixed; inset: 0;
     background-image:
-      repeating-linear-gradient(0deg, transparent 0 23px, rgba(0,0,0,0.015) 23px 24px),
-      repeating-linear-gradient(90deg, transparent 0 23px, rgba(0,0,0,0.015) 23px 24px);
+      repeating-linear-gradient(0deg, transparent 0 23px, var(--grid-overlay) 23px 24px),
+      repeating-linear-gradient(90deg, transparent 0 23px, var(--grid-overlay) 23px 24px);
     pointer-events: none;
     z-index: 0;
   }
@@ -50,23 +125,20 @@
     text-align: center;
     overflow: hidden;
     background: linear-gradient(180deg, var(--paper-2), var(--paper));
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid var(--footer-border);
   }
   .sun {
-    position: absolute;
-    top: -120px; left: 50%;
+    position: absolute; top: -120px; left: 50%;
     transform: translateX(-50%);
     width: 360px; height: 360px;
     border-radius: 50%;
-    background: radial-gradient(circle, var(--red) 0%, var(--red) 60%, rgba(188,0,45,0) 70%);
-    filter: blur(2px);
-    opacity: 0.85;
-    z-index: 0;
+    background: radial-gradient(circle, var(--red) 0%, var(--red) 60%, transparent 70%);
+    filter: blur(2px); opacity: 0.85; z-index: 0;
   }
   .hero h1 { position: relative; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 1rem 0 0.25rem; letter-spacing: 0.02em; }
   .hero .jp-title { position: relative; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--red-deep); letter-spacing: 0.5em; margin: 0; }
-  .hero .dates { position: relative; margin-top: 1rem; font-size: 1.1rem; color: rgba(0,0,0,0.65); font-style: italic; }
-  .hero .stats { position: relative; margin-top: 1.5rem; display: inline-flex; gap: 2rem; padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.08); border-radius: 999px; font-size: 0.95rem; }
+  .hero .dates { position: relative; margin-top: 1rem; font-size: 1.1rem; color: var(--text-muted); font-style: italic; }
+  .hero .stats { position: relative; margin-top: 1.5rem; display: inline-flex; gap: 2rem; padding: 0.75rem 1.5rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 999px; font-size: 0.95rem; }
   .hero .stats b { color: var(--red-deep); }
   .petal {
     position: absolute; width: 14px; height: 14px;
@@ -76,11 +148,31 @@
     animation: fall 18s linear infinite;
   }
   @keyframes fall { 0% { transform: translate(0, -50px) rotate(0deg); opacity: 0.7; } 100% { transform: translate(30vw, 110vh) rotate(540deg); opacity: 0; } }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed; top: 12px; right: 14px;
+    z-index: 1000;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .theme-toggle:hover { transform: scale(1.08); }
+  .theme-toggle:active { transform: scale(0.95); }
+
   nav.daynav {
     position: sticky; top: 0; z-index: 500;
-    background: rgba(247,241,232,0.92);
+    background: var(--nav-bg);
     backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid var(--footer-border);
     padding: 0.65rem 1rem;
     display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.1rem;
     font-size: 0.9rem;
@@ -90,9 +182,8 @@
   .day { max-width: 1240px; margin: 4rem auto; padding: 0 1.5rem; }
   .day-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--red); padding-bottom: 1rem; }
   .day-stamp {
-    flex-shrink: 0;
-    width: 90px; height: 90px;
-    background: var(--red); color: var(--paper);
+    flex-shrink: 0; width: 90px; height: 90px;
+    background: var(--red); color: #fff8e7;
     border-radius: 8px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     box-shadow: 3px 3px 0 var(--red-deep);
@@ -102,64 +193,51 @@
   .day-stamp .day-jp { font-size: 1.6rem; letter-spacing: 0.05em; }
   .day-stamp .day-en { font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0.9; }
   .day-meta h2 { margin: 0; font-size: 1.8rem; }
-  .day-meta .muted { color: rgba(0,0,0,0.45); font-weight: 400; font-size: 1.1rem; }
+  .day-meta .muted { color: var(--text-faint); font-weight: 400; font-size: 1.1rem; }
   .day-meta .subtitle { margin: 0.25rem 0 0; color: var(--indigo); font-style: italic; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.75rem; }
   .card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 4px 14px var(--shadow), 0 1px 0 rgba(0,0,0,0.04);
+    box-shadow: 0 4px 14px var(--shadow), 0 1px 0 var(--card-border);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     display: flex; flex-direction: column;
     border-top: 4px solid var(--red);
   }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px var(--shadow), 0 2px 0 rgba(0,0,0,0.04); }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px var(--shadow); }
   .media { position: relative; background: #111; aspect-ratio: 4 / 3; overflow: hidden; }
   .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .caption { padding: 0.9rem 1.1rem 1.1rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
   .caption-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
   .caption h3 { margin: 0; font-size: 1.15rem; font-weight: 600; }
-  .caption .time { font-size: 0.75rem; color: rgba(0,0,0,0.5); font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, monospace; }
-  .caption p { margin: 0; color: rgba(0,0,0,0.72); font-size: 0.95rem; }
-  .gps { align-self: flex-start; margin-top: auto; font-size: 0.78rem; color: var(--indigo); text-decoration: none; padding: 0.2rem 0.55rem; border: 1px solid rgba(30,58,95,0.25); border-radius: 999px; transition: background 0.2s; }
-  .gps:hover { background: var(--indigo); color: white; }
-  footer { text-align: center; padding: 3rem 1rem 4rem; color: rgba(0,0,0,0.5); font-size: 0.9rem; border-top: 1px solid rgba(0,0,0,0.08); margin-top: 4rem; }
-  footer .seal { display: inline-block; width: 60px; height: 60px; background: var(--red); color: white; border-radius: 8px; line-height: 60px; font-size: 1.6rem; margin-bottom: 0.5rem; transform: rotate(-4deg); box-shadow: 2px 2px 0 var(--red-deep); }
+  .caption .time { font-size: 0.75rem; color: var(--time-color); font-variant-numeric: tabular-nums; font-family: ui-monospace, Menlo, monospace; }
+  .caption p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+  .gps { align-self: flex-start; margin-top: auto; font-size: 0.78rem; color: var(--indigo); text-decoration: none; padding: 0.2rem 0.55rem; border: 1px solid var(--indigo-tint); border-radius: 999px; transition: background 0.2s; }
+  .gps:hover { background: var(--indigo); color: var(--paper); }
+  footer { text-align: center; padding: 3rem 1rem 4rem; color: var(--text-faint); font-size: 0.9rem; border-top: 1px solid var(--footer-border); margin-top: 4rem; }
+  footer .seal { display: inline-block; width: 60px; height: 60px; background: var(--red); color: #fff8e7; border-radius: 8px; line-height: 60px; font-size: 1.6rem; margin-bottom: 0.5rem; transform: rotate(-4deg); box-shadow: 2px 2px 0 var(--red-deep); }
+
+  .day-map { height: 320px; width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--card-border); box-shadow: 0 2px 8px var(--shadow); z-index: 0; }
+  .halda-pin {
+    background: var(--red);
+    width: 12px !important; height: 12px !important;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px var(--red), 0 1px 3px rgba(0,0,0,0.4);
+    margin-left: -6px !important; margin-top: -6px !important;
+  }
+
   @media (max-width: 600px) {
     .grid { grid-template-columns: 1fr; }
     .day-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
     .day-stamp { width: 70px; height: 70px; }
     .day-stamp .day-jp { font-size: 1.3rem; }
   }
-
-  
-  
-  .day-map {
-    height: 320px;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 2px 8px var(--shadow);
-    z-index: 0;
-  }
-  .halda-pin {
-    background: var(--red);
-    width: 12px !important;
-    height: 12px !important;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 0 0 1px var(--red), 0 1px 3px rgba(0,0,0,0.4);
-    margin-left: -6px !important;
-    margin-top: -6px !important;
-  }
-
-
 </style>
 </head>
 <body>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌗</button>
 <main>
 
 <section class="hero">
@@ -175,7 +253,7 @@
   <div class="stats">
     <span>📸 <b>1,888</b> photos</span>
     <span>🎥 <b>505</b> videos</span>
-    <span>✨ <b>44</b> highlights</span>
+    <span>✨ <b>45</b> highlights</span>
   </div>
 </section>
 
@@ -264,10 +342,18 @@
     <section class="day" id="d2026-05-05">
       <header class="day-header">
         <div class="day-stamp"><span class="day-jp">三日目</span><span class="day-en">Day 3</span></div>
-        <div class="day-meta"><h2>Day 3 · <span class="muted">2026-05-05</span></h2><p class="subtitle">Rooftop lunch, Smash, sumo</p></div>
+        <div class="day-meta"><h2>Day 3 · <span class="muted">2026-05-05</span></h2><p class="subtitle">Shopping, rooftop lunch, Smash, sumo</p></div>
       </header>
       <div class="day-map" id="map-2026-05-05" data-pins='[{&quot;lat&quot;: 35.716597, &quot;lon&quot;: 139.798689, &quot;time&quot;: &quot;07:00&quot;}, {&quot;lat&quot;: 35.7145, &quot;lon&quot;: 139.7974, &quot;time&quot;: &quot;08:38&quot;}, {&quot;lat&quot;: 35.714306, &quot;lon&quot;: 139.796953, &quot;time&quot;: &quot;08:39&quot;}, {&quot;lat&quot;: 35.714111, &quot;lon&quot;: 139.796908, &quot;time&quot;: &quot;08:39&quot;}, {&quot;lat&quot;: 35.7141, &quot;lon&quot;: 139.7969, &quot;time&quot;: &quot;08:39&quot;}, {&quot;lat&quot;: 35.7141, &quot;lon&quot;: 139.796864, &quot;time&quot;: &quot;08:39&quot;}, {&quot;lat&quot;: 35.7138, &quot;lon&quot;: 139.7968, &quot;time&quot;: &quot;08:40&quot;}, {&quot;lat&quot;: 35.713761, &quot;lon&quot;: 139.796742, &quot;time&quot;: &quot;08:40&quot;}, {&quot;lat&quot;: 35.7135, &quot;lon&quot;: 139.7966, &quot;time&quot;: &quot;08:40&quot;}, {&quot;lat&quot;: 35.710672, &quot;lon&quot;: 139.797756, &quot;time&quot;: &quot;09:21&quot;}, {&quot;lat&quot;: 35.710606, &quot;lon&quot;: 139.797944, &quot;time&quot;: &quot;09:21&quot;}, {&quot;lat&quot;: 35.7103, &quot;lon&quot;: 139.7982, &quot;time&quot;: &quot;09:22&quot;}, {&quot;lat&quot;: 35.710292, &quot;lon&quot;: 139.798189, &quot;time&quot;: &quot;09:22&quot;}, {&quot;lat&quot;: 35.710286, &quot;lon&quot;: 139.798178, &quot;time&quot;: &quot;09:22&quot;}, {&quot;lat&quot;: 35.70985, &quot;lon&quot;: 139.797858, &quot;time&quot;: &quot;09:25&quot;}, {&quot;lat&quot;: 35.709836, &quot;lon&quot;: 139.797875, &quot;time&quot;: &quot;09:36&quot;}, {&quot;lat&quot;: 35.709872, &quot;lon&quot;: 139.797836, &quot;time&quot;: &quot;09:37&quot;}, {&quot;lat&quot;: 35.6776, &quot;lon&quot;: 139.776175, &quot;time&quot;: &quot;10:21&quot;}, {&quot;lat&quot;: 35.638997, &quot;lon&quot;: 139.876389, &quot;time&quot;: &quot;10:45&quot;}, {&quot;lat&quot;: 35.6385, &quot;lon&quot;: 139.877975, &quot;time&quot;: &quot;10:45&quot;}, {&quot;lat&quot;: 35.647136, &quot;lon&quot;: 140.0391, &quot;time&quot;: &quot;11:10&quot;}, {&quot;lat&quot;: 35.646, &quot;lon&quot;: 140.035719, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.646269, &quot;lon&quot;: 140.036294, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.646308, &quot;lon&quot;: 140.036006, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.6459, &quot;lon&quot;: 140.0357, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.645897, &quot;lon&quot;: 140.035661, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.645897, &quot;lon&quot;: 140.035661, &quot;time&quot;: &quot;11:20&quot;}, {&quot;lat&quot;: 35.645528, &quot;lon&quot;: 140.036667, &quot;time&quot;: &quot;11:23&quot;}, {&quot;lat&quot;: 35.645528, &quot;lon&quot;: 140.036667, &quot;time&quot;: &quot;11:24&quot;}, {&quot;lat&quot;: 35.645539, &quot;lon&quot;: 140.036728, &quot;time&quot;: &quot;11:24&quot;}, {&quot;lat&quot;: 35.6455, &quot;lon&quot;: 140.036561, &quot;time&quot;: &quot;11:28&quot;}, {&quot;lat&quot;: 35.645225, &quot;lon&quot;: 140.036317, &quot;time&quot;: &quot;11:29&quot;}, {&quot;lat&quot;: 35.6455, &quot;lon&quot;: 140.0365, &quot;time&quot;: &quot;11:29&quot;}, {&quot;lat&quot;: 35.645486, &quot;lon&quot;: 140.036506, &quot;time&quot;: &quot;11:29&quot;}, {&quot;lat&quot;: 35.64545, &quot;lon&quot;: 140.036531, &quot;time&quot;: &quot;11:29&quot;}, {&quot;lat&quot;: 35.645447, &quot;lon&quot;: 140.036514, &quot;time&quot;: &quot;11:30&quot;}, {&quot;lat&quot;: 35.645447, &quot;lon&quot;: 140.036436, &quot;time&quot;: &quot;11:36&quot;}, {&quot;lat&quot;: 35.645642, &quot;lon&quot;: 140.036575, &quot;time&quot;: &quot;11:44&quot;}, {&quot;lat&quot;: 35.645644, &quot;lon&quot;: 140.036636, &quot;time&quot;: &quot;11:45&quot;}, {&quot;lat&quot;: 35.6457, &quot;lon&quot;: 140.0365, &quot;time&quot;: &quot;11:46&quot;}, {&quot;lat&quot;: 35.645642, &quot;lon&quot;: 140.036683, &quot;time&quot;: &quot;11:47&quot;}, {&quot;lat&quot;: 35.6456, &quot;lon&quot;: 140.0366, &quot;time&quot;: &quot;11:47&quot;}, {&quot;lat&quot;: 35.6444, &quot;lon&quot;: 140.0373, &quot;time&quot;: &quot;12:12&quot;}, {&quot;lat&quot;: 35.644133, &quot;lon&quot;: 140.036972, &quot;time&quot;: &quot;12:23&quot;}, {&quot;lat&quot;: 35.644117, &quot;lon&quot;: 140.036986, &quot;time&quot;: &quot;12:25&quot;}, {&quot;lat&quot;: 35.644117, &quot;lon&quot;: 140.036986, &quot;time&quot;: &quot;12:25&quot;}, {&quot;lat&quot;: 35.6439, &quot;lon&quot;: 140.0375, &quot;time&quot;: &quot;12:28&quot;}, {&quot;lat&quot;: 35.6436, &quot;lon&quot;: 140.0379, &quot;time&quot;: &quot;12:29&quot;}, {&quot;lat&quot;: 35.6442, &quot;lon&quot;: 140.0368, &quot;time&quot;: &quot;12:32&quot;}, {&quot;lat&quot;: 35.6441, &quot;lon&quot;: 140.0368, &quot;time&quot;: &quot;12:33&quot;}, {&quot;lat&quot;: 35.644, &quot;lon&quot;: 140.0372, &quot;time&quot;: &quot;12:37&quot;}, {&quot;lat&quot;: 35.6442, &quot;lon&quot;: 140.037675, &quot;time&quot;: &quot;12:59&quot;}, {&quot;lat&quot;: 35.644036, &quot;lon&quot;: 140.037828, &quot;time&quot;: &quot;13:00&quot;}, {&quot;lat&quot;: 35.644, &quot;lon&quot;: 140.0378, &quot;time&quot;: &quot;13:00&quot;}, {&quot;lat&quot;: 35.6441, &quot;lon&quot;: 140.037, &quot;time&quot;: &quot;13:01&quot;}, {&quot;lat&quot;: 35.6416, &quot;lon&quot;: 140.038, &quot;time&quot;: &quot;13:09&quot;}, {&quot;lat&quot;: 35.644975, &quot;lon&quot;: 140.034286, &quot;time&quot;: &quot;13:14&quot;}, {&quot;lat&quot;: 35.645372, &quot;lon&quot;: 140.036761, &quot;time&quot;: &quot;13:14&quot;}, {&quot;lat&quot;: 35.645675, &quot;lon&quot;: 140.036789, &quot;time&quot;: &quot;13:15&quot;}, {&quot;lat&quot;: 35.645436, &quot;lon&quot;: 140.036606, &quot;time&quot;: &quot;13:18&quot;}, {&quot;lat&quot;: 35.6456, &quot;lon&quot;: 140.0366, &quot;time&quot;: &quot;13:25&quot;}, {&quot;lat&quot;: 35.6456, &quot;lon&quot;: 140.0366, &quot;time&quot;: &quot;13:49&quot;}, {&quot;lat&quot;: 35.6456, &quot;lon&quot;: 140.0368, &quot;time&quot;: &quot;14:10&quot;}, {&quot;lat&quot;: 35.645561, &quot;lon&quot;: 140.036833, &quot;time&quot;: &quot;14:11&quot;}, {&quot;lat&quot;: 35.645578, &quot;lon&quot;: 140.036408, &quot;time&quot;: &quot;14:13&quot;}, {&quot;lat&quot;: 35.645569, &quot;lon&quot;: 140.036378, &quot;time&quot;: &quot;14:13&quot;}, {&quot;lat&quot;: 35.645564, &quot;lon&quot;: 140.036575, &quot;time&quot;: &quot;14:14&quot;}, {&quot;lat&quot;: 35.6455, &quot;lon&quot;: 140.0364, &quot;time&quot;: &quot;14:19&quot;}, {&quot;lat&quot;: 35.645558, &quot;lon&quot;: 140.036864, &quot;time&quot;: &quot;14:26&quot;}, {&quot;lat&quot;: 35.645561, &quot;lon&quot;: 140.036819, &quot;time&quot;: &quot;14:27&quot;}, {&quot;lat&quot;: 35.6801, &quot;lon&quot;: 139.767, &quot;time&quot;: &quot;14:40&quot;}, {&quot;lat&quot;: 35.6806, &quot;lon&quot;: 139.7666, &quot;time&quot;: &quot;14:41&quot;}, {&quot;lat&quot;: 35.645592, &quot;lon&quot;: 140.036561, &quot;time&quot;: &quot;15:50&quot;}, {&quot;lat&quot;: 35.673056, &quot;lon&quot;: 139.764917, &quot;time&quot;: &quot;16:44&quot;}, {&quot;lat&quot;: 35.673275, &quot;lon&quot;: 139.766983, &quot;time&quot;: &quot;17:07&quot;}, {&quot;lat&quot;: 35.669922, &quot;lon&quot;: 139.763411, &quot;time&quot;: &quot;17:14&quot;}, {&quot;lat&quot;: 35.672367, &quot;lon&quot;: 139.762956, &quot;time&quot;: &quot;17:57&quot;}, {&quot;lat&quot;: 35.6737, &quot;lon&quot;: 139.7646, &quot;time&quot;: &quot;18:08&quot;}, {&quot;lat&quot;: 35.673736, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;18:16&quot;}, {&quot;lat&quot;: 35.673736, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;18:16&quot;}, {&quot;lat&quot;: 35.6737, &quot;lon&quot;: 139.7646, &quot;time&quot;: &quot;18:24&quot;}, {&quot;lat&quot;: 35.6737, &quot;lon&quot;: 139.7646, &quot;time&quot;: &quot;18:34&quot;}, {&quot;lat&quot;: 35.6737, &quot;lon&quot;: 139.7646, &quot;time&quot;: &quot;18:40&quot;}, {&quot;lat&quot;: 35.673728, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673728, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673728, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673722, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.673717, &quot;lon&quot;: 139.764586, &quot;time&quot;: &quot;19:21&quot;}, {&quot;lat&quot;: 35.670392, &quot;lon&quot;: 139.764083, &quot;time&quot;: &quot;19:36&quot;}, {&quot;lat&quot;: 35.673192, &quot;lon&quot;: 139.767089, &quot;time&quot;: &quot;19:46&quot;}, {&quot;lat&quot;: 35.673206, &quot;lon&quot;: 139.767106, &quot;time&quot;: &quot;19:46&quot;}, {&quot;lat&quot;: 35.673131, &quot;lon&quot;: 139.767028, &quot;time&quot;: &quot;19:49&quot;}, {&quot;lat&quot;: 35.670117, &quot;lon&quot;: 139.763642, &quot;time&quot;: &quot;20:09&quot;}, {&quot;lat&quot;: 35.6582, &quot;lon&quot;: 139.7023, &quot;time&quot;: &quot;20:39&quot;}, {&quot;lat&quot;: 35.668669, &quot;lon&quot;: 139.764725, &quot;time&quot;: &quot;20:40&quot;}, {&quot;lat&quot;: 35.6586, &quot;lon&quot;: 139.7023, &quot;time&quot;: &quot;20:41&quot;}, {&quot;lat&quot;: 35.6687, &quot;lon&quot;: 139.7647, &quot;time&quot;: &quot;20:43&quot;}, {&quot;lat&quot;: 35.6687, &quot;lon&quot;: 139.7647, &quot;time&quot;: &quot;20:46&quot;}, {&quot;lat&quot;: 35.668644, &quot;lon&quot;: 139.764739, &quot;time&quot;: &quot;20:48&quot;}, {&quot;lat&quot;: 35.668653, &quot;lon&quot;: 139.764725, &quot;time&quot;: &quot;20:48&quot;}, {&quot;lat&quot;: 35.668633, &quot;lon&quot;: 139.764694, &quot;time&quot;: &quot;20:52&quot;}, {&quot;lat&quot;: 35.6686, &quot;lon&quot;: 139.7647, &quot;time&quot;: &quot;20:52&quot;}, {&quot;lat&quot;: 35.668647, &quot;lon&quot;: 139.764725, &quot;time&quot;: &quot;20:56&quot;}, {&quot;lat&quot;: 35.6686, &quot;lon&quot;: 139.7647, &quot;time&quot;: &quot;20:56&quot;}, {&quot;lat&quot;: 35.668597, &quot;lon&quot;: 139.764817, &quot;time&quot;: &quot;21:03&quot;}, {&quot;lat&quot;: 35.668675, &quot;lon&quot;: 139.764769, &quot;time&quot;: &quot;21:10&quot;}, {&quot;lat&quot;: 35.6687, &quot;lon&quot;: 139.7647, &quot;time&quot;: &quot;21:12&quot;}, {&quot;lat&quot;: 35.668614, &quot;lon&quot;: 139.764617, &quot;time&quot;: &quot;21:19&quot;}, {&quot;lat&quot;: 35.668683, &quot;lon&quot;: 139.764756, &quot;time&quot;: &quot;21:29&quot;}]'></div>
       <div class="grid">
+        <article class="card">
+          <div class="media"><a href="assets/japan-2026-highlights/day3_shopping_collage.jpg" target="_blank"><img loading="lazy" src="assets/japan-2026-highlights/day3_shopping_collage.jpg" alt="Shopping in Asakusa"></a></div>
+          <div class="caption">
+            <div class="caption-top"><h3>Shopping in Asakusa</h3><span class="time">08:30</span></div>
+            <p>Nakamise stalls, dept‑store elevators, a morning of browsing.</p>
+            
+          </div>
+        </article>
         <article class="card">
           <div class="media"><a href="assets/japan-2026-highlights/jonny_DSC03097.jpg" target="_blank"><img loading="lazy" src="assets/japan-2026-highlights/jonny_DSC03097.jpg" alt="Smash tournament"></a></div>
           <div class="caption">
@@ -648,12 +734,36 @@
 <footer>
   <div class="seal">林</div>
   <p>Curated from 2,393 photos & videos. Tokyo · Shirakawa‑go · Takayama · Kyoto · Atami.</p>
-  <p style="font-size:0.78rem; opacity:0.6;">Photos curated from a ten‑day trip — Tokyo, Shirakawa‑go, Takayama, Kyoto, Atami.</p>
 </footer>
 
 </main>
 
 <script>
+// Theme toggle: respect system pref by default, persist manual override
+(function() {
+  const KEY = 'japan-highlights-theme';
+  const btn = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  const stored = localStorage.getItem(KEY);
+  if (stored === 'dark' || stored === 'light') root.setAttribute('data-theme', stored);
+  function effective() {
+    return root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  function updateIcon() {
+    btn.textContent = effective() === 'dark' ? '☀️' : '🌙';
+  }
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const next = effective() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateIcon);
+})();
+
+// Per-day maps
 (function() {
   const dot = L.divIcon({ className: 'halda-pin', iconSize: [12, 12] });
   document.querySelectorAll('.day-map').forEach(el => {
@@ -675,8 +785,5 @@
   });
 })();
 </script>
-
-
-
 </body>
 </html>
