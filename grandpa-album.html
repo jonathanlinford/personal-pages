@@ -2,173 +2,740 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0a0a0f">
 <title>Grandpa's Album: CD vs. MP3</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
+  :root{
+    --bg:#0a0a0f; --bg-elev:#11111a;
+    --card:#13131c; --card-hover:#1a1a26;
+    --border:#1f1f2e; --border-bright:#2a2a40;
+    --text:#e7e7f0; --text-dim:#8a8aa0; --text-faint:#5a5a70;
+    --accent:#6366f1; --accent-light:#818cf8; --accent-glow:rgba(99,102,241,0.15);
+    --good:#34c759; --warn:#ffa826; --bad:#ff453a;
+    --grid-stroke:rgba(99,102,241,0.022);
+    --shadow-strong:0 12px 40px rgba(0,0,0,0.4);
+    color-scheme:dark;
+  }
+  html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
   body{
-    background:#0a0a0f;color:#e4e4ef;
-    font-family:-apple-system,'Inter',sans-serif;
-    display:flex;align-items:center;justify-content:center;
-    background-image:
-      linear-gradient(rgba(99,102,241,0.025) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(99,102,241,0.025) 1px,transparent 1px);
-    background-size:60px 60px;
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;line-height:1.55;min-height:100vh;
+    padding-bottom:max(96px,env(safe-area-inset-bottom));
   }
-  .box{
-    background:#12121a;border:1px solid #1e1e2e;border-radius:18px;
-    padding:36px 32px;max-width:380px;width:calc(100% - 32px);
-    box-shadow:0 12px 40px rgba(0,0,0,0.4);
+  body::before{
+    content:"";position:fixed;inset:0;
+    background-image:linear-gradient(var(--grid-stroke) 1px,transparent 1px),linear-gradient(90deg,var(--grid-stroke) 1px,transparent 1px);
+    background-size:60px 60px;pointer-events:none;z-index:0;
   }
-  .lock{font-size:30px;margin-bottom:14px;text-align:center}
-  h1{font-size:18px;font-weight:700;margin-bottom:6px;text-align:center}
-  p{font-size:13px;color:#8888a0;text-align:center;margin-bottom:22px;line-height:1.5}
-  form{display:flex;flex-direction:column;gap:10px}
-  input{
-    padding:12px 14px;background:#0a0a0f;border:1px solid #1e1e2e;border-radius:10px;
-    color:#e4e4ef;font-size:14px;font-family:inherit;outline:none;
-    transition:border-color .15s,box-shadow .15s;
+  .wrap{position:relative;max-width:980px;margin:0 auto;padding:28px 18px;z-index:1}
+  .hero{
+    padding:24px 26px;border-radius:18px;
+    background:linear-gradient(135deg,rgba(99,102,241,0.10),rgba(167,139,250,0.06));
+    border:1px solid var(--border-bright);margin-bottom:28px;position:relative;overflow:hidden;
   }
-  input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)}
-  button{
-    padding:12px;background:#6366f1;color:white;border:none;border-radius:10px;
-    font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;
-    transition:background .15s;
+  .hero::after{content:"";position:absolute;top:-30%;right:-15%;width:300px;height:300px;background:radial-gradient(circle,var(--accent) 0%,transparent 65%);opacity:0.10;pointer-events:none}
+  .eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;color:var(--accent-light);margin-bottom:8px}
+  h1{font-size:30px;font-weight:800;line-height:1.15;letter-spacing:-0.5px;margin-bottom:10px;background:linear-gradient(135deg,var(--text),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .lede{font-size:15px;color:var(--text-dim);max-width:680px;line-height:1.6}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:11px;color:var(--text-faint);font-family:'JetBrains Mono',monospace}
+  .meta span{display:inline-flex;align-items:center;gap:5px}
+  .meta b{color:var(--text-dim);font-weight:600}
+
+  section{margin-bottom:34px}
+  h2{font-size:18px;font-weight:700;margin-bottom:14px;letter-spacing:-0.2px}
+  h2 .num{font-size:12px;color:var(--text-faint);font-weight:600;margin-right:8px;font-family:'JetBrains Mono',monospace}
+  p{font-size:14px;color:var(--text-dim);line-height:1.6;margin-bottom:12px}
+  p strong{color:var(--text);font-weight:600}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  @media (max-width:760px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden}
+  .stat-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--text-faint);margin-bottom:8px}
+  .stat-value{font-size:32px;font-weight:800;line-height:1;font-family:'JetBrains Mono',monospace;margin-bottom:4px}
+  .stat-value.good{color:var(--good)}
+  .stat-value.warn{color:var(--warn)}
+  .stat-value.bad{color:var(--bad)}
+  .stat-sub{font-size:11px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  @media (max-width:680px){.compare-grid{grid-template-columns:1fr}}
+  .source-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .source-card.flac{border-color:rgba(99,102,241,0.4);background:linear-gradient(180deg,var(--card),rgba(99,102,241,0.04))}
+  .source-card.mp3 {border-color:rgba(255,69,58,0.3);background:linear-gradient(180deg,var(--card),rgba(255,69,58,0.04))}
+  .source-card h3{font-size:14px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .source-card .badge{font-size:9px;padding:2px 8px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;font-family:'JetBrains Mono',monospace}
+  .source-card.flac .badge{background:rgba(52,199,89,0.12);color:var(--good)}
+  .source-card.mp3  .badge{background:rgba(255,69,58,0.12);color:var(--bad)}
+  .source-card dl{font-size:13px;color:var(--text-dim);display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:10px}
+  .source-card dt{color:var(--text-faint);font-size:11px;text-transform:uppercase;letter-spacing:0.4px;font-weight:600;align-self:center}
+  .source-card dd{font-family:'JetBrains Mono',monospace;color:var(--text);font-size:13px}
+
+  .chart-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px}
+  .chart-title{font-size:14px;font-weight:700;margin-bottom:4px}
+  .chart-cap{font-size:12px;color:var(--text-dim);margin-bottom:14px}
+  .chart{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+  .legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-2px}
+
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-faint);font-weight:700;background:var(--bg-elev)}
+  td{color:var(--text)}
+  td.num{text-align:right;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+  td.title{font-weight:500}
+  td.mono{font-family:'JetBrains Mono',monospace}
+  td.mp3{color:var(--text-dim)}
+  td.mp3.track-clipped{color:var(--bad);font-weight:600}
+
+  .callout{background:var(--card);border-left:3px solid var(--accent);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0;font-size:14px;color:var(--text-dim)}
+  .callout.bad{border-left-color:var(--bad)}
+  .callout.good{border-left-color:var(--good)}
+  .callout strong{color:var(--text)}
+
+  .conclusion{
+    margin-top:8px;padding:22px 26px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(52,199,89,0.06),rgba(99,102,241,0.06));
+    border:1px solid var(--border-bright);
   }
-  button:hover{background:#7479ff}
-  button:disabled{opacity:.5;cursor:wait}
-  .err{color:#ff6168;font-size:12px;text-align:center;margin-top:6px;min-height:14px}
-  /* Default-hidden so a synchronous head script can decide what to show before paint */
-  #ui{display:none}
-  #spinner{display:none}
-  .spinner{
-    width:36px;height:36px;border-radius:50%;
-    border:3px solid rgba(99,102,241,0.15);border-top-color:#6366f1;
-    animation:spin .8s linear infinite;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
+  .conclusion h2{margin-bottom:10px}
+  .conclusion ul{padding-left:18px;color:var(--text-dim);font-size:14px}
+  .conclusion li{margin-bottom:7px}
+  .conclusion li strong{color:var(--text)}
+
+  footer{font-size:11px;color:var(--text-faint);text-align:center;margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace}
 </style>
-<script>
-  // Synchronous: decide *before* paint whether to show unlock UI or spinner.
-  // Avoids a flash of the password box on refresh when we have a cached password.
-  (function(){
-    var SS_KEY = "grandpa-album.pw";
-    var cached = null;
-    try { cached = sessionStorage.getItem(SS_KEY); } catch (e) {}
-    // Inject a tiny <style> override before the body paints.
-    var s = document.createElement("style");
-    if (cached) {
-      s.textContent = "#spinner{display:flex !important}";
-    } else {
-      s.textContent = "#ui{display:block !important}";
-    }
-    document.head.appendChild(s);
-  })();
-</script>
 </head>
 <body>
-<noscript><div class="box"><h1>JavaScript required</h1><p>This page is encrypted and needs JavaScript to decrypt.</p></div></noscript>
-<div id="spinner" style="align-items:center;justify-content:center"><div class="spinner"></div></div>
-<div class="box" id="ui">
-  <div class="lock">🔒</div>
-  <h1>Grandpa's Album: CD vs. MP3</h1>
-  <p>Enter password to view trip details.</p>
-  <form id="f" action="#" method="post">
-    <!-- Hidden but a11y-accessible username gives iCloud Keychain / 1Password / Bitwarden
-         a stable account identifier so they reliably save and autofill the password.
-         Each traveler saves the same shared password to their own keychain. -->
-    <input id="user" name="username" type="text" value="japan-trip-2026"
-           autocomplete="username" readonly aria-hidden="true"
-           tabindex="-1"
-           style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
-    <input id="pw" name="password" type="password" placeholder="Password"
-           autocomplete="current-password" autofocus required>
-    <button id="go" type="submit">Unlock</button>
-    <div class="err" id="err"></div>
-  </form>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Album Master Audit</div>
+    <h1>Why I went hunting for the CD</h1>
+    <p class="lede">
+      The MP3s of Grandpa's <em>How Great Thou Art and Other Favorite Songs</em> have been sitting in Dad's
+      Google Drive for years. They were the obvious shortcut: just upload them to Spotify and call it done.
+      I didn't, and this page is the receipt.
+    </p>
+    <div class="meta">
+      <span><b>Album:</b> How Great Thou Art and Other Favorite Songs</span>
+      <span><b>Artists:</b> Ray H. Linford and Elna Austin Linford</span>
+      <span><b>Recorded:</b> Labor Day Weekend 1989</span>
+      <span><b>CD pressed:</b> 2000, Torchlight Press</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="num">01</span>Topline numbers</h2>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-label">FLAC bitrate</div>
+        <div class="stat-value good">431</div>
+        <div class="stat-sub">kbps average · lossless</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">MP3 bitrate</div>
+        <div class="stat-value bad">128</div>
+        <div class="stat-sub">kbps CBR · lossy</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">MP3 tracks clipped</div>
+        <div class="stat-value bad">7 / 26</div>
+        <div class="stat-sub">peaks past 0 dBFS</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">FLAC tracks clipped</div>
+        <div class="stat-value good">0 / 26</div>
+        <div class="stat-sub">clean headroom</div>
+      </div>
+    </div>
+    <p>
+      In one line: the Drive MP3s are a third the data rate, have audible lossy artifacts in the high frequencies,
+      and seven of the twenty-six tracks have digital clipping baked in. The fresh FLAC rip from the original CD
+      has none of those problems. The streaming release will be made from the FLAC.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span>The two source files</h2>
+    <div class="compare-grid">
+      <div class="source-card flac">
+        <h3>FLAC <span class="badge">lossless</span></h3>
+        <p style="font-size:12px;margin:4px 0 0">Ripped from the original CD this week with whipper / cdparanoia. Bit-perfect, 9-pass secure rip.</p>
+        <dl>
+          <dt>Format</dt><dd>FLAC, 16-bit / 44.1 kHz</dd>
+          <dt>Bitrate</dt><dd>431 kbps avg</dd>
+          <dt>Total size</dt><dd>225.6 MB</dd>
+          <dt>Source</dt><dd>Original 2000 CD-R, family copy</dd>
+        </dl>
+      </div>
+      <div class="source-card mp3">
+        <h3>MP3 <span class="badge">lossy</span></h3>
+        <p style="font-size:12px;margin:4px 0 0">Years-old copies in Dad's Drive. Unknown provenance — some prior generation of CD-to-MP3 conversion.</p>
+        <dl>
+          <dt>Format</dt><dd>MP3, 128 kbps CBR</dd>
+          <dt>Bitrate</dt><dd>128 kbps fixed</dd>
+          <dt>Total size</dt><dd>67.0 MB</dd>
+          <dt>Source</dt><dd>Google Drive (provenance unknown)</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span>Bitrate, track by track</h2>
+    <div class="chart-card">
+      <div class="chart-title">Per-track bitrate</div>
+      <div class="chart-cap">FLAC bars in indigo, MP3 in red. The Y axis is kbps. Higher is better — more bits per second of music means more fidelity preserved.</div>
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" class="chart" preserveAspectRatio="xMidYMid meet">
+<rect width="880" height="240" fill="none"/>
+<line x1="36" y1="16.0" x2="868" y2="16.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="19.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">500.00</text>
+<line x1="36" y1="63.0" x2="868" y2="63.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="66.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">375.00</text>
+<line x1="36" y1="110.0" x2="868" y2="110.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="113.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">250.00</text>
+<line x1="36" y1="157.0" x2="868" y2="157.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="160.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">125.00</text>
+<line x1="36" y1="204.0" x2="868" y2="204.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="207.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0.00</text>
+<rect x="37.0" y="38.56" width="15.0" height="165.44" fill="var(--accent)" opacity="0.9"><title>01. How Great Thou Art: FLAC kbps = 440</title></rect>
+<rect x="52.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>01. How Great Thou Art: MP3 kbps = 128</title></rect>
+<text x="53.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">01</text>
+<rect x="69.0" y="28.407999999999987" width="15.0" height="175.592" fill="var(--accent)" opacity="0.9"><title>02. I Need Thee Every Hour: FLAC kbps = 467</title></rect>
+<rect x="84.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>02. I Need Thee Every Hour: MP3 kbps = 128</title></rect>
+<rect x="101.0" y="41.94399999999999" width="15.0" height="162.056" fill="var(--accent)" opacity="0.9"><title>03. There Is a Green Hill Far Away: FLAC kbps = 431</title></rect>
+<rect x="116.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>03. There Is a Green Hill Far Away: MP3 kbps = 128</title></rect>
+<text x="117.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">03</text>
+<rect x="133.0" y="32.168000000000006" width="15.0" height="171.832" fill="var(--accent)" opacity="0.9"><title>04. I Walked Today Where Jesus Walked: FLAC kbps = 457</title></rect>
+<rect x="148.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>04. I Walked Today Where Jesus Walked: MP3 kbps = 128</title></rect>
+<rect x="165.0" y="44.952" width="15.0" height="159.048" fill="var(--accent)" opacity="0.9"><title>05. He That Hath Clean Hands: FLAC kbps = 423</title></rect>
+<rect x="180.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>05. He That Hath Clean Hands: MP3 kbps = 128</title></rect>
+<text x="181.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">05</text>
+<rect x="197.0" y="38.93600000000001" width="15.0" height="165.064" fill="var(--accent)" opacity="0.9"><title>06. A House Becomes a Home: FLAC kbps = 439</title></rect>
+<rect x="212.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>06. A House Becomes a Home: MP3 kbps = 128</title></rect>
+<rect x="229.0" y="40.06399999999999" width="15.0" height="163.936" fill="var(--accent)" opacity="0.9"><title>07. The Lord&#x27;s Prayer: FLAC kbps = 436</title></rect>
+<rect x="244.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>07. The Lord&#x27;s Prayer: MP3 kbps = 128</title></rect>
+<text x="245.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">07</text>
+<rect x="261.0" y="44.952" width="15.0" height="159.048" fill="var(--accent)" opacity="0.9"><title>08. White Christmas: FLAC kbps = 423</title></rect>
+<rect x="276.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>08. White Christmas: MP3 kbps = 128</title></rect>
+<rect x="293.0" y="65.256" width="15.0" height="138.744" fill="var(--accent)" opacity="0.9"><title>09. German Medley: FLAC kbps = 369</title></rect>
+<rect x="308.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>09. German Medley: MP3 kbps = 128</title></rect>
+<text x="309.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">09</text>
+<rect x="325.0" y="59.99199999999999" width="15.0" height="144.008" fill="var(--accent)" opacity="0.9"><title>10. Sing Sweet and Low: FLAC kbps = 383</title></rect>
+<rect x="340.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>10. Sing Sweet and Low: MP3 kbps = 128</title></rect>
+<rect x="357.0" y="29.911999999999978" width="15.0" height="174.08800000000002" fill="var(--accent)" opacity="0.9"><title>11. The Birthday of a King: FLAC kbps = 463</title></rect>
+<rect x="372.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>11. The Birthday of a King: MP3 kbps = 128</title></rect>
+<text x="373.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">11</text>
+<rect x="389.0" y="55.855999999999995" width="15.0" height="148.144" fill="var(--accent)" opacity="0.9"><title>12. Du Holde Kunst: FLAC kbps = 394</title></rect>
+<rect x="404.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>12. Du Holde Kunst: MP3 kbps = 128</title></rect>
+<rect x="421.0" y="50.59200000000001" width="15.0" height="153.408" fill="var(--accent)" opacity="0.9"><title>13. Without a Song: FLAC kbps = 408</title></rect>
+<rect x="436.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>13. Without a Song: MP3 kbps = 128</title></rect>
+<text x="437.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">13</text>
+<rect x="453.0" y="66.38400000000001" width="15.0" height="137.61599999999999" fill="var(--accent)" opacity="0.9"><title>14. Believe Me If All Those Endearing Young Charms: FLAC kbps = 366</title></rect>
+<rect x="468.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>14. Believe Me If All Those Endearing Young Charms: MP3 kbps = 128</title></rect>
+<rect x="485.0" y="60.367999999999995" width="15.0" height="143.632" fill="var(--accent)" opacity="0.9"><title>15. Smilin&#x27; Through: FLAC kbps = 382</title></rect>
+<rect x="500.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>15. Smilin&#x27; Through: MP3 kbps = 128</title></rect>
+<text x="501.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">15</text>
+<rect x="517.0" y="58.111999999999995" width="15.0" height="145.888" fill="var(--accent)" opacity="0.9"><title>16. Annie Laurie: FLAC kbps = 388</title></rect>
+<rect x="532.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>16. Annie Laurie: MP3 kbps = 128</title></rect>
+<rect x="549.0" y="50.21600000000001" width="15.0" height="153.784" fill="var(--accent)" opacity="0.9"><title>17. My Cup Runneth Over: FLAC kbps = 409</title></rect>
+<rect x="564.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>17. My Cup Runneth Over: MP3 kbps = 128</title></rect>
+<text x="565.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">17</text>
+<rect x="581.0" y="46.08000000000001" width="15.0" height="157.92" fill="var(--accent)" opacity="0.9"><title>18. &#x27;Til There Was You: FLAC kbps = 420</title></rect>
+<rect x="596.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>18. &#x27;Til There Was You: MP3 kbps = 128</title></rect>
+<rect x="613.0" y="41.94399999999999" width="15.0" height="162.056" fill="var(--accent)" opacity="0.9"><title>19. You and I: FLAC kbps = 431</title></rect>
+<rect x="628.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>19. You and I: MP3 kbps = 128</title></rect>
+<text x="629.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">19</text>
+<rect x="645.0" y="56.98399999999998" width="15.0" height="147.01600000000002" fill="var(--accent)" opacity="0.9"><title>20. Edelweiss: FLAC kbps = 391</title></rect>
+<rect x="660.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>20. Edelweiss: MP3 kbps = 128</title></rect>
+<rect x="677.0" y="17.128000000000014" width="15.0" height="186.87199999999999" fill="var(--accent)" opacity="0.9"><title>21. If Ever I Would Leave You: FLAC kbps = 497</title></rect>
+<rect x="692.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>21. If Ever I Would Leave You: MP3 kbps = 128</title></rect>
+<text x="693.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">21</text>
+<rect x="709.0" y="15.24799999999999" width="15.0" height="188.752" fill="var(--accent)" opacity="0.9"><title>22. God Bless America: FLAC kbps = 502</title></rect>
+<rect x="724.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>22. God Bless America: MP3 kbps = 128</title></rect>
+<rect x="741.0" y="33.29599999999999" width="15.0" height="170.704" fill="var(--accent)" opacity="0.9"><title>23. Shortnin&#x27; Bread: FLAC kbps = 454</title></rect>
+<rect x="756.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>23. Shortnin&#x27; Bread: MP3 kbps = 128</title></rect>
+<text x="757.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">23</text>
+<rect x="773.0" y="23.52000000000001" width="15.0" height="180.48" fill="var(--accent)" opacity="0.9"><title>24. He&#x27;s Got the Whole World: FLAC kbps = 480</title></rect>
+<rect x="788.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>24. He&#x27;s Got the Whole World: MP3 kbps = 128</title></rect>
+<rect x="805.0" y="36.304" width="15.0" height="167.696" fill="var(--accent)" opacity="0.9"><title>25. Ol&#x27; Man River: FLAC kbps = 446</title></rect>
+<rect x="820.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>25. Ol&#x27; Man River: MP3 kbps = 128</title></rect>
+<text x="821.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">25</text>
+<rect x="837.0" y="50.21600000000001" width="15.0" height="153.784" fill="var(--accent)" opacity="0.9"><title>26. A Day in Spring: FLAC kbps = 409</title></rect>
+<rect x="852.0" y="155.872" width="15.0" height="48.128" fill="var(--bad)" opacity="0.9"><title>26. A Day in Spring: MP3 kbps = 128</title></rect>
+<text x="6" y="120.0" text-anchor="middle" font-size="10" fill="var(--text-dim)" transform="rotate(-90 6 120.0)">kbps</text>
+</svg>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--accent)"></span>FLAC (lossless rip)</span>
+        <span><span class="sw" style="background:var(--bad)"></span>MP3 (Drive copy)</span>
+      </div>
+    </div>
+    <p>
+      MP3s are pinned to 128 kbps because they were encoded at constant bitrate. The FLAC bars vary because
+      lossless compression keeps every sample but adapts to how much information is in each track — quieter
+      tracks compress better, louder dramatic tracks (like <em>Ol' Man River</em>, #25) compress less and end up larger.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span>Clipping</h2>
+    <p>
+      Digital audio has a ceiling: peak amplitude can't exceed <code style="font-family:'JetBrains Mono',monospace;color:var(--text);background:var(--bg-elev);padding:1px 6px;border-radius:4px">±1.0</code> (full scale).
+      Push past that during encoding and the waveform gets flat-topped — audible distortion that's permanently
+      baked into the file. The CD masters were properly mastered with headroom; the MP3 conversion pipeline
+      pushed many tracks past the ceiling.
+    </p>
+    <div class="chart-card">
+      <div class="chart-title">Peak amplitude per track</div>
+      <div class="chart-cap">Each pair of bars is one track. The red dashed line at 1.0 is the digital clipping threshold. Bars that hit or cross it have distortion baked in.</div>
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" class="chart" preserveAspectRatio="xMidYMid meet">
+<rect width="880" height="240" fill="none"/>
+<line x1="36" y1="16.0" x2="868" y2="16.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="19.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">1.30</text>
+<line x1="36" y1="63.0" x2="868" y2="63.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="66.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0.98</text>
+<line x1="36" y1="110.0" x2="868" y2="110.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="113.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0.65</text>
+<line x1="36" y1="157.0" x2="868" y2="157.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="160.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0.33</text>
+<line x1="36" y1="204.0" x2="868" y2="204.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="30" y="207.0" text-anchor="end" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0.00</text>
+<line x1="36" y1="59.3846153846154" x2="868" y2="59.3846153846154" stroke="var(--bad)" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="864" y="55.3846153846154" text-anchor="end" font-size="10" fill="var(--bad)" font-weight="700">clipping (1.0)</text>
+<rect x="37.0" y="109.34923076923079" width="15.0" height="94.65076923076921" fill="var(--accent)" opacity="0.9"><title>01. How Great Thou Art: FLAC peak = 0.6545</title></rect>
+<rect x="52.0" y="61.46707692307692" width="15.0" height="142.53292307692308" fill="var(--bad)" opacity="0.9"><title>01. How Great Thou Art: MP3 peak = 0.9856</title></rect>
+<text x="53.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">01</text>
+<rect x="69.0" y="97.33169230769231" width="15.0" height="106.66830769230769" fill="var(--accent)" opacity="0.9"><title>02. I Need Thee Every Hour: FLAC peak = 0.7376</title></rect>
+<rect x="84.0" y="60.52707692307695" width="15.0" height="143.47292307692305" fill="var(--bad)" opacity="0.9"><title>02. I Need Thee Every Hour: MP3 peak = 0.9921</title></rect>
+<rect x="101.0" y="106.90523076923078" width="15.0" height="97.09476923076922" fill="var(--accent)" opacity="0.9"><title>03. There Is a Green Hill Far Away: FLAC peak = 0.6714</title></rect>
+<rect x="116.0" y="61.98769230769233" width="15.0" height="142.01230769230767" fill="var(--bad)" opacity="0.9"><title>03. There Is a Green Hill Far Away: MP3 peak = 0.982</title></rect>
+<text x="117.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">03</text>
+<rect x="133.0" y="102.79815384615385" width="15.0" height="101.20184615384615" fill="var(--accent)" opacity="0.9"><title>04. I Walked Today Where Jesus Walked: FLAC peak = 0.6998</title></rect>
+<rect x="148.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>04. I Walked Today Where Jesus Walked: MP3 peak = 1.0</title></rect>
+<rect x="165.0" y="117.49107692307693" width="15.0" height="86.50892307692307" fill="var(--accent)" opacity="0.9"><title>05. He That Hath Clean Hands: FLAC peak = 0.5982</title></rect>
+<rect x="180.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>05. He That Hath Clean Hands: MP3 peak = 1.0</title></rect>
+<text x="181.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">05</text>
+<rect x="197.0" y="106.06646153846154" width="15.0" height="97.93353846153846" fill="var(--accent)" opacity="0.9"><title>06. A House Becomes a Home: FLAC peak = 0.6772</title></rect>
+<rect x="212.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>06. A House Becomes a Home: MP3 peak = 1.0</title></rect>
+<rect x="229.0" y="119.60246153846154" width="15.0" height="84.39753846153846" fill="var(--accent)" opacity="0.9"><title>07. The Lord&#x27;s Prayer: FLAC peak = 0.5836</title></rect>
+<rect x="244.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>07. The Lord&#x27;s Prayer: MP3 peak = 1.0</title></rect>
+<text x="245.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">07</text>
+<rect x="261.0" y="119.44338461538462" width="15.0" height="84.55661538461538" fill="var(--accent)" opacity="0.9"><title>08. White Christmas: FLAC peak = 0.5847</title></rect>
+<rect x="276.0" y="60.29569230769232" width="15.0" height="143.70430769230768" fill="var(--bad)" opacity="0.9"><title>08. White Christmas: MP3 peak = 0.9937</title></rect>
+<rect x="293.0" y="145.27169230769232" width="15.0" height="58.72830769230769" fill="var(--accent)" opacity="0.9"><title>09. German Medley: FLAC peak = 0.4061</title></rect>
+<rect x="308.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>09. German Medley: MP3 peak = 1.0</title></rect>
+<text x="309.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">09</text>
+<rect x="325.0" y="125.14123076923077" width="15.0" height="78.85876923076923" fill="var(--accent)" opacity="0.9"><title>10. Sing Sweet and Low: FLAC peak = 0.5453</title></rect>
+<rect x="340.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>10. Sing Sweet and Low: MP3 peak = 1.0</title></rect>
+<rect x="357.0" y="103.72369230769232" width="15.0" height="100.27630769230768" fill="var(--accent)" opacity="0.9"><title>11. The Birthday of a King: FLAC peak = 0.6934</title></rect>
+<rect x="372.0" y="66.97692307692307" width="15.0" height="137.02307692307693" fill="var(--bad)" opacity="0.9"><title>11. The Birthday of a King: MP3 peak = 0.9475</title></rect>
+<text x="373.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">11</text>
+<rect x="389.0" y="125.34369230769231" width="15.0" height="78.65630769230769" fill="var(--accent)" opacity="0.9"><title>12. Du Holde Kunst: FLAC peak = 0.5439</title></rect>
+<rect x="404.0" y="63.549538461538475" width="15.0" height="140.45046153846152" fill="var(--bad)" opacity="0.9"><title>12. Du Holde Kunst: MP3 peak = 0.9712</title></rect>
+<rect x="421.0" y="111.47507692307693" width="15.0" height="92.52492307692307" fill="var(--accent)" opacity="0.9"><title>13. Without a Song: FLAC peak = 0.6398</title></rect>
+<rect x="436.0" y="65.73323076923077" width="15.0" height="138.26676923076923" fill="var(--bad)" opacity="0.9"><title>13. Without a Song: MP3 peak = 0.9561</title></rect>
+<text x="437.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">13</text>
+<rect x="453.0" y="134.83046153846152" width="15.0" height="69.16953846153847" fill="var(--accent)" opacity="0.9"><title>14. Believe Me If All Those Endearing Young Charms: FLAC peak = 0.4783</title></rect>
+<rect x="468.0" y="64.0123076923077" width="15.0" height="139.9876923076923" fill="var(--bad)" opacity="0.9"><title>14. Believe Me If All Those Endearing Young Charms: MP3 peak = 0.968</title></rect>
+<rect x="485.0" y="122.39353846153845" width="15.0" height="81.60646153846155" fill="var(--accent)" opacity="0.9"><title>15. Smilin&#x27; Through: FLAC peak = 0.5643</title></rect>
+<rect x="500.0" y="62.59507692307693" width="15.0" height="141.40492307692307" fill="var(--bad)" opacity="0.9"><title>15. Smilin&#x27; Through: MP3 peak = 0.9778</title></rect>
+<text x="501.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">15</text>
+<rect x="517.0" y="112.32830769230769" width="15.0" height="91.67169230769231" fill="var(--accent)" opacity="0.9"><title>16. Annie Laurie: FLAC peak = 0.6339</title></rect>
+<rect x="532.0" y="65.14030769230769" width="15.0" height="138.8596923076923" fill="var(--bad)" opacity="0.9"><title>16. Annie Laurie: MP3 peak = 0.9602</title></rect>
+<rect x="549.0" y="117.08615384615386" width="15.0" height="86.91384615384614" fill="var(--accent)" opacity="0.9"><title>17. My Cup Runneth Over: FLAC peak = 0.601</title></rect>
+<rect x="564.0" y="64.80769230769229" width="15.0" height="139.1923076923077" fill="var(--bad)" opacity="0.9"><title>17. My Cup Runneth Over: MP3 peak = 0.9625</title></rect>
+<text x="565.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">17</text>
+<rect x="581.0" y="100.81692307692308" width="15.0" height="103.18307692307692" fill="var(--accent)" opacity="0.9"><title>18. &#x27;Til There Was You: FLAC peak = 0.7135</title></rect>
+<rect x="596.0" y="63.954461538461544" width="15.0" height="140.04553846153846" fill="var(--bad)" opacity="0.9"><title>18. &#x27;Til There Was You: MP3 peak = 0.9684</title></rect>
+<rect x="613.0" y="95.23476923076923" width="15.0" height="108.76523076923077" fill="var(--accent)" opacity="0.9"><title>19. You and I: FLAC peak = 0.7521</title></rect>
+<rect x="628.0" y="64.35938461538461" width="15.0" height="139.6406153846154" fill="var(--bad)" opacity="0.9"><title>19. You and I: MP3 peak = 0.9656</title></rect>
+<text x="629.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">19</text>
+<rect x="645.0" y="138.02646153846155" width="15.0" height="65.97353846153845" fill="var(--accent)" opacity="0.9"><title>20. Edelweiss: FLAC peak = 0.4562</title></rect>
+<rect x="660.0" y="63.014461538461546" width="15.0" height="140.98553846153845" fill="var(--bad)" opacity="0.9"><title>20. Edelweiss: MP3 peak = 0.9749</title></rect>
+<rect x="677.0" y="83.83907692307695" width="15.0" height="120.16092307692305" fill="var(--accent)" opacity="0.9"><title>21. If Ever I Would Leave You: FLAC peak = 0.8309</title></rect>
+<rect x="692.0" y="59.71723076923078" width="15.0" height="144.28276923076922" fill="var(--bad)" opacity="0.9"><title>21. If Ever I Would Leave You: MP3 peak = 0.9977</title></rect>
+<text x="693.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">21</text>
+<rect x="709.0" y="88.6113846153846" width="15.0" height="115.3886153846154" fill="var(--accent)" opacity="0.9"><title>22. God Bless America: FLAC peak = 0.7979</title></rect>
+<rect x="724.0" y="66.52861538461539" width="15.0" height="137.4713846153846" fill="var(--bad)" opacity="0.9"><title>22. God Bless America: MP3 peak = 0.9506</title></rect>
+<rect x="741.0" y="75.50923076923078" width="15.0" height="128.49076923076922" fill="var(--accent)" opacity="0.9"><title>23. Shortnin&#x27; Bread: FLAC peak = 0.8885</title></rect>
+<rect x="756.0" y="61.56830769230771" width="15.0" height="142.4316923076923" fill="var(--bad)" opacity="0.9"><title>23. Shortnin&#x27; Bread: MP3 peak = 0.9849</title></rect>
+<text x="757.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">23</text>
+<rect x="773.0" y="60.36800000000002" width="15.0" height="143.63199999999998" fill="var(--accent)" opacity="0.9"><title>24. He&#x27;s Got the Whole World: FLAC peak = 0.9932</title></rect>
+<rect x="788.0" y="70.24523076923077" width="15.0" height="133.75476923076923" fill="var(--bad)" opacity="0.9"><title>24. He&#x27;s Got the Whole World: MP3 peak = 0.9249</title></rect>
+<rect x="805.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--accent)" opacity="0.9"><title>25. Ol&#x27; Man River: FLAC peak = 1.0</title></rect>
+<rect x="820.0" y="59.38461538461539" width="15.0" height="144.6153846153846" fill="var(--bad)" opacity="0.9"><title>25. Ol&#x27; Man River: MP3 peak = 1.0</title></rect>
+<text x="821.0" y="218" text-anchor="middle" font-size="9" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">25</text>
+<rect x="837.0" y="106.06646153846154" width="15.0" height="97.93353846153846" fill="var(--accent)" opacity="0.9"><title>26. A Day in Spring: FLAC peak = 0.6772</title></rect>
+<rect x="852.0" y="66.49969230769233" width="15.0" height="137.50030769230767" fill="var(--bad)" opacity="0.9"><title>26. A Day in Spring: MP3 peak = 0.9508</title></rect>
+<text x="6" y="120.0" text-anchor="middle" font-size="10" fill="var(--text-dim)" transform="rotate(-90 6 120.0)">peak amplitude</text>
+</svg>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--accent)"></span>FLAC peak</span>
+        <span><span class="sw" style="background:var(--bad)"></span>MP3 peak</span>
+      </div>
+    </div>
+    <div class="callout bad">
+      <strong>7 of 26 MP3 tracks</strong> have peaks at or above 1.0 — actual clipping events.
+      <strong>0 of 26 FLAC tracks</strong> reach the ceiling. The CD masters are clean; the MP3s were level-boosted past full scale at some point years ago, and that distortion is now permanent in those files.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span>What MP3 throws away</h2>
+    <p>
+      MP3 is a lossy codec: it discards information that psychoacoustic models predict you can't hear. At 128 kbps it
+      throws away a lot — especially the high-frequency "air" that gives vocal recordings their natural presence.
+      Below is the percentage of each frequency band's energy that survives the MP3 conversion (volume-corrected, track 1 as sample).
+    </p>
+    <div class="chart-card">
+      <div class="chart-title">Frequency content preserved by MP3</div>
+      <div class="chart-cap">100% = MP3 keeps everything the FLAC has. Lower bars mean the MP3 discarded content in that band.</div>
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" class="chart" preserveAspectRatio="xMidYMid meet">
+<rect width="880" height="240" fill="none"/>
+<line x1="60" y1="16.0" x2="864" y2="16.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="52" y="19.0" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">100%</text>
+<line x1="60" y1="61.0" x2="864" y2="61.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="52" y="64.0" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">75%</text>
+<line x1="60" y1="106.0" x2="864" y2="106.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="52" y="109.0" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">50%</text>
+<line x1="60" y1="151.0" x2="864" y2="151.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="52" y="154.0" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">25%</text>
+<line x1="60" y1="196.0" x2="864" y2="196.0" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,3"/>
+<text x="52" y="199.0" text-anchor="end" font-size="10" fill="var(--text-faint)" font-family="JetBrains Mono, monospace">0%</text>
+<rect x="69.0" y="19.581999999999994" width="116.0" height="176.418" fill="var(--good)" opacity="0.9"/>
+<text x="127.0" y="13.581999999999994" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">98.0%</text>
+<text x="127.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">0–4</text>
+<text x="127.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+<rect x="203.0" y="27.862000000000023" width="116.0" height="168.13799999999998" fill="var(--good)" opacity="0.9"/>
+<text x="261.0" y="21.862000000000023" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">93.4%</text>
+<text x="261.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">4–8</text>
+<text x="261.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+<rect x="337.0" y="40.335999999999984" width="116.0" height="155.66400000000002" fill="var(--good)" opacity="0.9"/>
+<text x="395.0" y="34.335999999999984" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">86.5%</text>
+<text x="395.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">8–12</text>
+<text x="395.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+<rect x="471.0" y="134.476" width="116.0" height="61.524" fill="var(--bad)" opacity="0.9"/>
+<text x="529.0" y="128.476" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">34.2%</text>
+<text x="529.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">12–16</text>
+<text x="529.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+<rect x="605.0" y="195.082" width="116.0" height="0.918" fill="var(--bad)" opacity="0.9"/>
+<text x="663.0" y="189.082" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">0.5%</text>
+<text x="663.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">16–20</text>
+<text x="663.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+<rect x="739.0" y="195.01" width="116.0" height="0.9900000000000001" fill="var(--bad)" opacity="0.9"/>
+<text x="797.0" y="189.01" text-anchor="middle" font-size="11" fill="var(--text)" font-weight="700" font-family="JetBrains Mono, monospace">0.6%</text>
+<text x="797.0" y="210" text-anchor="middle" font-size="11" fill="var(--text-dim)" font-family="JetBrains Mono, monospace">20–22.1</text>
+<text x="797.0" y="224" text-anchor="middle" font-size="9" fill="var(--text-faint)">kHz</text>
+</svg>
+    </div>
+    <p>
+      The cliff above 12 kHz is the classic 128 kbps MP3 signature. The band from 12 to 16 kHz — where vocal sibilance
+      and "breath" sit — is two-thirds gone. Everything above 16 kHz is just deleted (less than 1% survives). On a phone
+      speaker or laptop, you might not notice. On real headphones, you do.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span>Null test</h2>
+    <p>
+      The most direct comparison: line up the FLAC and the MP3 sample for sample, match their volumes, subtract one
+      from the other, and measure how much signal is left. A perfect re-encode leaves nothing.
+    </p>
+    <div class="stat-grid" style="grid-template-columns:repeat(2,1fr);max-width:520px">
+      <div class="stat">
+        <div class="stat-label">Null-test RMS</div>
+        <div class="stat-value bad">0.1107</div>
+        <div class="stat-sub">FLAC minus MP3 (matched levels)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Transparent reference</div>
+        <div class="stat-value good">0.001</div>
+        <div class="stat-sub">below this = inaudible loss</div>
+      </div>
+    </div>
+    <div class="callout bad">
+      A value of <strong>0.1107</strong> is roughly 100× louder than the "transparent" threshold and well past
+      the casual-listening audibility threshold (~0.05). What's in that residual? The deleted high frequencies,
+      MP3 pre-echo artifacts at consonants, and the distortion from the clipped peaks.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span>Per-track detail</h2>
+    <div class="chart-card" style="padding:0;overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th class="num">Duration</th>
+            <th>FLAC kbps</th>
+            <th>MP3 kbps</th>
+            <th>FLAC peak</th>
+            <th>MP3 peak</th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+      <td class="num">01</td>
+      <td class="title">How Great Thou Art</td>
+      <td class="num mono">3:46</td>
+      <td class="mono">440 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6545</td>
+      <td class="mono mp3">0.9856</td>
+    </tr>
+    <tr>
+      <td class="num">02</td>
+      <td class="title">I Need Thee Every Hour</td>
+      <td class="num mono">3:38</td>
+      <td class="mono">467 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.7376</td>
+      <td class="mono mp3">0.9921</td>
+    </tr>
+    <tr>
+      <td class="num">03</td>
+      <td class="title">There Is a Green Hill Far Away</td>
+      <td class="num mono">1:53</td>
+      <td class="mono">431 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6714</td>
+      <td class="mono mp3">0.9820</td>
+    </tr>
+    <tr>
+      <td class="num">04</td>
+      <td class="title">I Walked Today Where Jesus Walked</td>
+      <td class="num mono">3:59</td>
+      <td class="mono">457 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.6998</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">05</td>
+      <td class="title">He That Hath Clean Hands</td>
+      <td class="num mono">3:26</td>
+      <td class="mono">423 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.5982</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">06</td>
+      <td class="title">A House Becomes a Home</td>
+      <td class="num mono">2:20</td>
+      <td class="mono">439 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.6772</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">07</td>
+      <td class="title">The Lord&#x27;s Prayer</td>
+      <td class="num mono">2:50</td>
+      <td class="mono">436 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.5836</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">08</td>
+      <td class="title">White Christmas</td>
+      <td class="num mono">1:49</td>
+      <td class="mono">423 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.5847</td>
+      <td class="mono mp3">0.9937</td>
+    </tr>
+    <tr>
+      <td class="num">09</td>
+      <td class="title">German Medley</td>
+      <td class="num mono">2:37</td>
+      <td class="mono">369 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.4061</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td class="title">Sing Sweet and Low</td>
+      <td class="num mono">3:02</td>
+      <td class="mono">383 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">0.5453</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td class="title">The Birthday of a King</td>
+      <td class="num mono">2:43</td>
+      <td class="mono">463 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6934</td>
+      <td class="mono mp3">0.9475</td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td class="title">Du Holde Kunst</td>
+      <td class="num mono">2:24</td>
+      <td class="mono">394 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.5439</td>
+      <td class="mono mp3">0.9712</td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td class="title">Without a Song</td>
+      <td class="num mono">2:27</td>
+      <td class="mono">408 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6398</td>
+      <td class="mono mp3">0.9561</td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td class="title">Believe Me If All Those Endearing Young Charms</td>
+      <td class="num mono">1:23</td>
+      <td class="mono">366 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.4783</td>
+      <td class="mono mp3">0.9680</td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td class="title">Smilin&#x27; Through</td>
+      <td class="num mono">1:21</td>
+      <td class="mono">382 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.5643</td>
+      <td class="mono mp3">0.9778</td>
+    </tr>
+    <tr>
+      <td class="num">16</td>
+      <td class="title">Annie Laurie</td>
+      <td class="num mono">4:13</td>
+      <td class="mono">388 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6339</td>
+      <td class="mono mp3">0.9602</td>
+    </tr>
+    <tr>
+      <td class="num">17</td>
+      <td class="title">My Cup Runneth Over</td>
+      <td class="num mono">1:55</td>
+      <td class="mono">409 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6010</td>
+      <td class="mono mp3">0.9625</td>
+    </tr>
+    <tr>
+      <td class="num">18</td>
+      <td class="title">&#x27;Til There Was You</td>
+      <td class="num mono">2:04</td>
+      <td class="mono">420 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.7135</td>
+      <td class="mono mp3">0.9684</td>
+    </tr>
+    <tr>
+      <td class="num">19</td>
+      <td class="title">You and I</td>
+      <td class="num mono">3:00</td>
+      <td class="mono">431 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.7521</td>
+      <td class="mono mp3">0.9656</td>
+    </tr>
+    <tr>
+      <td class="num">20</td>
+      <td class="title">Edelweiss</td>
+      <td class="num mono">1:53</td>
+      <td class="mono">391 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.4562</td>
+      <td class="mono mp3">0.9749</td>
+    </tr>
+    <tr>
+      <td class="num">21</td>
+      <td class="title">If Ever I Would Leave You</td>
+      <td class="num mono">3:08</td>
+      <td class="mono">497 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.8309</td>
+      <td class="mono mp3">0.9977</td>
+    </tr>
+    <tr>
+      <td class="num">22</td>
+      <td class="title">God Bless America</td>
+      <td class="num mono">2:50</td>
+      <td class="mono">502 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.7979</td>
+      <td class="mono mp3">0.9506</td>
+    </tr>
+    <tr>
+      <td class="num">23</td>
+      <td class="title">Shortnin&#x27; Bread</td>
+      <td class="num mono">2:48</td>
+      <td class="mono">454 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.8885</td>
+      <td class="mono mp3">0.9849</td>
+    </tr>
+    <tr>
+      <td class="num">24</td>
+      <td class="title">He&#x27;s Got the Whole World</td>
+      <td class="num mono">2:31</td>
+      <td class="mono">480 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.9932</td>
+      <td class="mono mp3">0.9249</td>
+    </tr>
+    <tr>
+      <td class="num">25</td>
+      <td class="title">Ol&#x27; Man River</td>
+      <td class="num mono">4:59</td>
+      <td class="mono">446 kbps</td>
+      <td class="mono mp3 track-clipped">128 kbps</td>
+      <td class="mono">1.0000</td>
+      <td class="mono mp3 track-clipped">1.0000  ⚠</td>
+    </tr>
+    <tr>
+      <td class="num">26</td>
+      <td class="title">A Day in Spring</td>
+      <td class="num mono">4:02</td>
+      <td class="mono">409 kbps</td>
+      <td class="mono mp3">128 kbps</td>
+      <td class="mono">0.6772</td>
+      <td class="mono mp3">0.9508</td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="conclusion">
+    <h2>Why this mattered</h2>
+    <ul>
+      <li><strong>Distortion would have been permanent.</strong> Uploading the MP3s would have sent 7 tracks with baked-in clipping to Spotify, Apple, and every other streaming service forever. Future generations of the family listening would hear those artifacts.</li>
+      <li><strong>Streaming services re-encode anyway.</strong> Spotify converts uploads to 320 kbps Vorbis, Apple to 256 kbps AAC. Giving them FLAC means their encoders work from the cleanest possible source. Giving them 128 kbps MP3 means they re-compress an already-compressed file, layering artifacts on artifacts.</li>
+      <li><strong>The fidelity gap is real.</strong> Grandpa and Elna's voices have nuance — sibilance, breath, the "air" of the room they recorded in — that lives in the 8-16 kHz band that MP3 mostly threw away. The FLAC version keeps it.</li>
+      <li><strong>This is the canonical master from here on.</strong> If anyone in the family ever wants to remaster, sample, or reissue this album in the future, they'll work from the FLAC files in the project directory, not from a degraded MP3 copy.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Analysis run 4390 of audio · whipper 0.10.0 · ffmpeg + numpy<br/>
+    Project: <code>~/Documents/grandpa-ray-album/</code>
+  </footer>
+
 </div>
-<script>
-(() => {
-  const SALT_B64 = "sFCS0SqSrgjs0CEaW1tIvg==";
-  const IV_B64   = "vkO5L3KDc2DG+8L0";
-  const PAYLOAD_B64 = "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";
-  const ITER = 600000;
-  const SS_KEY = "grandpa-album.pw";
-
-  const b64ToBuf = b64 => {
-    const bin = atob(b64);
-    const out = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
-    return out;
-  };
-
-  async function tryUnlock(pw) {
-    const enc = new TextEncoder();
-    const baseKey = await crypto.subtle.importKey(
-      "raw", enc.encode(pw), {name:"PBKDF2"}, false, ["deriveKey"]
-    );
-    const aesKey = await crypto.subtle.deriveKey(
-      {name:"PBKDF2", salt:b64ToBuf(SALT_B64), iterations:ITER, hash:"SHA-256"},
-      baseKey,
-      {name:"AES-GCM", length:256},
-      false, ["decrypt"]
-    );
-    const plain = await crypto.subtle.decrypt(
-      {name:"AES-GCM", iv:b64ToBuf(IV_B64)},
-      aesKey,
-      b64ToBuf(PAYLOAD_B64)
-    );
-    return new TextDecoder().decode(plain);
-  }
-
-  function render(html) {
-    document.open();
-    document.write(html);
-    document.close();
-  }
-
-  async function attempt(pw, persist) {
-    const errEl = document.getElementById("err");
-    const btn = document.getElementById("go");
-    if (errEl) errEl.textContent = "";
-    if (btn) btn.disabled = true;
-    try {
-      const html = await tryUnlock(pw);
-      if (persist) {
-        try { sessionStorage.setItem(SS_KEY, pw); } catch {}
-      }
-      render(html);
-    } catch (e) {
-      try { sessionStorage.removeItem(SS_KEY); } catch {}
-      // Hide spinner (cached path) and reveal the unlock box.
-      const sp = document.getElementById("spinner");
-      if (sp) sp.style.display = "none";
-      const ui = document.getElementById("ui");
-      if (ui) ui.style.display = "block";
-      if (errEl) errEl.textContent = "Wrong password.";
-      if (btn) btn.disabled = false;
-      const pwEl = document.getElementById("pw");
-      if (pwEl) { pwEl.value = ""; pwEl.focus(); }
-    }
-  }
-
-  // Auto-unlock on page load if we already have the password this session
-  let cached = null;
-  try { cached = sessionStorage.getItem(SS_KEY); } catch {}
-  if (cached) {
-    attempt(cached, false);
-  }
-
-  document.getElementById("f").addEventListener("submit", e => {
-    e.preventDefault();
-    const pw = document.getElementById("pw").value;
-    attempt(pw, true);
-  });
-})();
-</script>
 </body>
 </html>
