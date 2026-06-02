@@ -74,7 +74,7 @@
   }
   .hero-img{
     position:absolute; inset:0;
-    background:url('antarctica-og.png') center 38%/cover no-repeat;
+    background:url('antarctica-hero.png') center 38%/cover no-repeat;
     transform:scale(1.04);
   }
   .hero-img::after{
@@ -134,7 +134,20 @@
   .tl-year{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--gold); font-weight:500}
   .tl-head{font-weight:600; font-size:16px}
   .tl-body{font-size:14.5px; color:var(--text-dim); max-height:0; overflow:hidden; transition:max-height .35s ease, margin .35s; }
-  .tl-item.open .tl-body{max-height:240px; margin-top:6px}
+  .tl-item.open .tl-body{max-height:260px; margin-top:6px}
+  .tl-body a{color:var(--ice-light)}
+
+  /* explorer photo */
+  .explorer{margin:26px 0 6px; display:flex; gap:20px; align-items:center; flex-wrap:wrap;
+    background:linear-gradient(160deg,#0e1726,#0b1320); border:1px solid var(--border-bright);
+    border-radius:18px; padding:16px; box-shadow:var(--shadow)}
+  .explorer .frame{flex:0 0 auto; background:#f4efe4; padding:10px 10px 14px; border-radius:4px;
+    box-shadow:0 10px 30px rgba(0,0,0,.5); transform:rotate(-1.4deg)}
+  .explorer .frame img{display:block; width:230px; height:auto; border-radius:2px; filter:contrast(1.05) brightness(1.02)}
+  .explorer figcaption{flex:1; min-width:220px; font-size:14px; color:var(--text-dim); line-height:1.6}
+  .explorer figcaption .nm{display:block; font-weight:700; color:var(--text); font-size:16px; margin-bottom:4px}
+  .explorer figcaption a{color:var(--ice-light)}
+  @media (max-width:560px){ .explorer{justify-content:center} .explorer .frame img{width:200px} }
 
   .factstrip{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:22px}
   .fact{background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:16px 18px}
@@ -231,12 +244,19 @@
   .feas li::before{content:''; position:absolute; left:2px; top:11px; width:8px; height:8px; border-radius:50%; background:var(--ice)}
 
   /* ---------- MAPS ---------- */
-  .maps{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:20px}
-  .mapcard{background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden}
-  .mapcard .cap{padding:13px 16px; display:flex; justify-content:space-between; align-items:center; gap:8px}
-  .mapcard .cap b{font-size:14.5px}
-  .mapcard .cap small{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold)}
-  .mapcard iframe{width:100%; height:240px; border:0; display:block; filter:saturate(.9) brightness(.92)}
+  .maps{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; margin-top:18px}
+  .mapcard{background:var(--card); border:1px solid var(--border-bright); border-radius:18px; overflow:hidden; box-shadow:var(--shadow)}
+  .mapcard.feature{margin-top:20px}
+  .mapcard .cap{padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:8px}
+  .mapcard .cap b{font-size:16px}
+  .mapcard.feature .cap b{font-size:18px}
+  .mapcard .cap small{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--gold)}
+  /* dark-theme the OpenStreetMap tiles to match the page */
+  .mapcard iframe{width:100%; height:340px; border:0; display:block;
+    filter:invert(0.92) hue-rotate(180deg) saturate(0.8) contrast(0.92) brightness(1.05);}
+  .mapcard.feature iframe{height:520px}
+  .capfoot{padding:11px 18px; border-top:1px solid var(--border); font-size:12.5px; color:var(--text-faint); display:flex; gap:14px; flex-wrap:wrap}
+  .capfoot a{color:var(--ice)}
 
   /* ---------- CALLOUT ---------- */
   .callout{border-left:3px solid var(--gold); background:var(--gold-glow); border-radius:0 14px 14px 0; padding:16px 20px; margin-top:18px; font-size:15px; color:#f0e3cc}
@@ -247,6 +267,14 @@
   .status{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 20px; margin-top:18px}
   .status .dot{width:12px; height:12px; border-radius:50%; background:var(--warn); box-shadow:0 0 0 4px rgba(255,174,69,.18); flex-shrink:0; animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* ---------- LINK DIRECTORY ---------- */
+  .linkgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:22px}
+  .linkcol{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 20px}
+  .linkcol h4{font-size:14px; font-weight:700; margin-bottom:12px; color:var(--text)}
+  .linkcol a{display:block; font-size:13.5px; color:var(--ice-light); padding:5px 0; border-bottom:1px solid var(--border); line-height:1.4}
+  .linkcol a:last-child{border-bottom:0}
+  .linkcol a:hover{color:var(--ice); padding-left:4px; transition:.15s}
 
   .footer{margin-top:64px; padding-top:26px; border-top:1px solid var(--border); color:var(--text-faint); font-size:13px}
   .footer a{color:var(--text-dim)}
@@ -267,7 +295,7 @@
 <header class="hero">
   <div class="hero-img"></div>
   <div class="hero-inner">
-    <span class="eyebrow">🧭 Family Expedition · Planning</span>
+    <span class="eyebrow">🧭 A Family Daydream · Just Throwing Ideas Out</span>
     <h1>Taking Grandma Nancy<br>to <span class="accent">where her father went</span></h1>
     <p>In 1939, James Glenn Dyer sailed south with Admiral Byrd and wintered on a small island in Marguerite Bay. Eighty-some years later, his daughter is 85. This page is how we get her there, and the gentler ways to simply stand on Antarctica together.</p>
   </div>
@@ -280,6 +308,14 @@
     <div class="sec-label">The man we're chasing</div>
     <h2>James Glenn Dyer (1908–1995)</h2>
     <p class="lead">Surveyor, cartographer, and navigator. He didn't just visit Antarctica, he helped map a piece of it that still carries his name. Tap any moment to expand it.</p>
+
+    <figure class="explorer">
+      <div class="frame"><img src="dyer-explorer.jpg" alt="James Glenn Dyer, bearded, photographed during his Antarctic years in front of an expedition building"></div>
+      <figcaption>
+        <span class="nm">James Glenn Dyer, polar explorer</span>
+        Navigator and cartographer of the <a href="https://en.wikipedia.org/wiki/United_States_Antarctic_Service_Expedition" target="_blank" rel="noopener">U.S. Antarctic Service Expedition</a> (1939&ndash;41). This photo is from the family's expedition archive at <a href="https://usas1939.org/j.glenn.dyer/" target="_blank" rel="noopener">usas1939.org</a>, the memorial site built by his son John. His full story and journals live there.
+      </figcaption>
+    </figure>
 
     <div class="timeline" id="timeline">
       <div class="tl-item open">
@@ -298,13 +334,13 @@
         <div class="tl-dot"></div>
         <div class="tl-year">1939–41 · Antarctica</div>
         <div class="tl-head">Navigator &amp; cartographer, U.S. Antarctic Service Expedition</div>
-        <div class="tl-body">Answered Admiral Byrd's call. Wintered at <b>East Base on Stonington Island</b> in Marguerite Bay, and led the southeast sledging party. Survived a fall into a crevasse and a three-day storm on the high plateau.</div>
+        <div class="tl-body">Answered <a href="https://en.wikipedia.org/wiki/Richard_E._Byrd" target="_blank" rel="noopener">Admiral Byrd</a>'s call. Wintered at <b><a href="https://en.wikipedia.org/wiki/East_Base" target="_blank" rel="noopener">East Base</a> on <a href="https://en.wikipedia.org/wiki/Stonington_Island" target="_blank" rel="noopener">Stonington Island</a></b> in <a href="https://en.wikipedia.org/wiki/Marguerite_Bay" target="_blank" rel="noopener">Marguerite Bay</a>, and led the southeast sledging party. Survived a fall into a crevasse and a three-day storm on the high plateau.</div>
       </div>
       <div class="tl-item">
         <div class="tl-dot">⛰</div>
         <div class="tl-year">Forever · Palmer Land</div>
         <div class="tl-head">The Dyer Plateau is named for him</div>
-        <div class="tl-body">The broad ice upland he sledged across (70°30′S, 65°0′W) was named in his honor. It is interior Antarctica, reachable only by fly-in expedition, so it isn't part of any cruise. The bay he wintered in, however, is.</div>
+        <div class="tl-body">The broad ice upland he sledged across (70°30′S, 65°0′W) was named in his honor, the <a href="https://en.wikipedia.org/wiki/Dyer_Plateau" target="_blank" rel="noopener">Dyer Plateau</a>. It is interior Antarctica, reachable only by fly-in expedition, so it isn't part of any cruise. The bay he wintered in, however, is. (<a href="https://data.aad.gov.au/aadc/gaz/display_name.cfm?gaz_id=124089" target="_blank" rel="noopener">gazetteer entry</a>)</div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -316,7 +352,7 @@
         <div class="tl-dot"></div>
         <div class="tl-year">1956–74 · Weather Bureau</div>
         <div class="tl-head">Returned south, then led Overseas Operations</div>
-        <div class="tl-body">Back to Antarctica in 1956–57 as a U.S. observer during the International Geophysical Year. Retired in 1974 as Director of Overseas Operations. Awarded the Antarctic Service Medal.</div>
+        <div class="tl-body">Back to Antarctica in 1956–57 as a U.S. observer during the <a href="https://en.wikipedia.org/wiki/International_Geophysical_Year" target="_blank" rel="noopener">International Geophysical Year</a>. Retired in 1974 as Director of Overseas Operations. Awarded the <a href="https://en.wikipedia.org/wiki/Antarctica_Service_Medal" target="_blank" rel="noopener">Antarctic Service Medal</a>.</div>
       </div>
       <div class="tl-item">
         <div class="tl-dot">🤍</div>
@@ -327,9 +363,9 @@
     </div>
 
     <div class="factstrip">
-      <div class="fact"><div class="k">His island</div><div class="v"><b>Stonington Island</b>, in Marguerite Bay, below the Antarctic Circle.</div></div>
-      <div class="fact"><div class="k">His base</div><div class="v"><b>East Base</b>, a U.S. National Historic Site, commissioned by FDR in 1939.</div></div>
-      <div class="fact"><div class="k">The bay's name</div><div class="v">Charcot named <b>Marguerite Bay</b> in 1909 for his wife. Decades later, Dyer wintered in it.</div></div>
+      <div class="fact"><div class="k">His island</div><div class="v"><b><a href="https://en.wikipedia.org/wiki/Stonington_Island" target="_blank" rel="noopener">Stonington Island</a></b>, in Marguerite Bay, below the <a href="https://en.wikipedia.org/wiki/Antarctic_Circle" target="_blank" rel="noopener">Antarctic Circle</a>.</div></div>
+      <div class="fact"><div class="k">His base</div><div class="v"><b><a href="https://en.wikipedia.org/wiki/East_Base" target="_blank" rel="noopener">East Base</a></b>, a U.S. National Historic Site (<a href="https://www.ats.aq/devph/en/apa-database/130" target="_blank" rel="noopener">HSM 55</a>), commissioned by FDR in 1939.</div></div>
+      <div class="fact"><div class="k">The bay's name</div><div class="v"><a href="https://en.wikipedia.org/wiki/Jean-Baptiste_Charcot" target="_blank" rel="noopener">Charcot</a> named <b><a href="https://en.wikipedia.org/wiki/Marguerite_Bay" target="_blank" rel="noopener">Marguerite Bay</a></b> in 1909 for his wife. Decades later, Dyer wintered in it.</div></div>
       <div class="fact"><div class="k">Grandma Nancy</div><div class="v">His daughter, born Dec 6, <b>1940</b>. She is <b>85</b> now.</div></div>
     </div>
   </section>
@@ -438,6 +474,7 @@
             <div><div class="d">DAYS 15–22</div>Bellingshausen / Peter I I.</div>
             <div><div class="d">DAYS 23–25</div>Return to Ushuaia</div>
           </div>
+          <div style="margin-top:14px"><a href="https://oceanwide-expeditions.com/antarctica/cruises/otl27-27-bellingshausen-sea-peter-i-island-ellsworth-land-incl-helicopters" target="_blank" rel="noopener">Full voyage details, dates &amp; pricing ↗</a> &nbsp;·&nbsp; <a href="https://oceanwide-expeditions.com/our-fleet/m-v-ortelius" target="_blank" rel="noopener">about m/v Ortelius ↗</a></div>
         </div></div>
       </div>
 
@@ -601,35 +638,35 @@
 
   <!-- ===================== FEASIBILITY ===================== -->
   <section id="nancy">
-    <div class="sec-label">The real question</div>
-    <h2>Is this realistic for an 85-year-old?</h2>
-    <p class="lead">Short answer: possibly yes, but her doctor effectively makes the call. Age alone doesn't disqualify her, fitness and medical clearance do.</p>
+    <div class="sec-label">Good to know</div>
+    <h2>What a trip like this involves</h2>
+    <p class="lead">Antarctica is well within reach for adventurous travelers in their 80s, and Nancy comes from explorer stock. What matters is matching the itinerary to the trip we want, not a number. Here's the honest picture so we go in prepared and just enjoy it.</p>
     <div class="feas">
       <div class="card">
-        <h3>✅ In her favor</h3>
+        <h3>✅ Encouraging</h3>
         <ul>
-          <li>No operator sets an upper age limit. Oceanwide explicitly has none.</li>
-          <li>Aurora Expeditions has carried passengers up to age 92.</li>
-          <li>Fly-cruises remove the single hardest part, the 2-day Drake crossing.</li>
-          <li>Ships carry a doctor and a small medical clinic onboard.</li>
+          <li>No operator sets an upper age limit. <a href="https://oceanwide-expeditions.com/faq/what-is-the-age-restriction-on-the-voyages-of-oceanwide-expeditions" target="_blank" rel="noopener">Oceanwide</a> explicitly has none.</li>
+          <li><a href="https://www.aurora-expeditions.com/destination/antarctica-cruises/health-fitness-age-limits" target="_blank" rel="noopener">Aurora Expeditions</a> regularly welcomes guests in their 80s and has sailed travelers up to 92.</li>
+          <li>Fly-cruises skip the long open-ocean Drake crossing entirely, a calm, easy way in.</li>
+          <li>Every expedition ship carries a doctor and a medical clinic onboard.</li>
         </ul>
       </div>
       <div class="card">
-        <h3>⚠️ The hurdles</h3>
+        <h3>📋 Worth knowing</h3>
         <ul>
-          <li>A signed medical form is due 45–90 days before departure, sometimes by a GP.</li>
-          <li>She must manage a steep gangway, get in and out of a Zodiac, and walk on wet, snowy, rocky ground.</li>
-          <li>The deep-south Stonington voyages are the longest and roughest, highest demand of all.</li>
-          <li>Remote evacuation is slow and costly, comprehensive insurance is mandatory.</li>
+          <li>Operators ask everyone for a simple medical form a few weeks before sailing.</li>
+          <li>Landings mean walking down a gangway, stepping into a Zodiac, and strolling on snow or rock, all at an easy pace, with the crew assisting.</li>
+          <li>The deep-south Stonington voyages are the longest and most rugged of the options.</li>
+          <li>Thorough travel and evacuation insurance is standard for every Antarctic traveler.</li>
         </ul>
       </div>
       <div class="card">
-        <h3>💡 How to stack the deck</h3>
+        <h3>💡 Ways to keep it easy</h3>
         <ul>
-          <li>Get her cleared by her doctor early, before committing.</li>
-          <li>Book a private, accessible cabin near the elevator.</li>
-          <li>Bring a younger family member as her dedicated helper for landings.</li>
-          <li>If the deep-south voyage is too much, the Polar Circle fly-cruise is a meaningful middle.</li>
+          <li>Pick the itinerary that matches the energy we're after, there's a comfortable option at every level.</li>
+          <li>Book a roomy private cabin near the elevator for the most relaxed trip.</li>
+          <li>Travel as a family so we're together for every landing and every view.</li>
+          <li>If we'd rather keep it laid-back, the <a href="https://www.antarctica21.com/our-expeditions/polar-circle-air-cruise" target="_blank" rel="noopener">Polar Circle fly-cruise</a> is a lovely, lower-key way to go deep south.</li>
         </ul>
       </div>
     </div>
@@ -639,19 +676,33 @@
   <section id="maps">
     <div class="sec-label">Seeing it</div>
     <h2>The places on a map</h2>
-    <p class="lead">His island, and the two gateways we'd fly into. Drag and zoom each.</p>
-    <div class="maps">
-      <div class="mapcard">
-        <div class="cap"><b>🎯 Stonington I. &amp; Marguerite Bay</b><small>68°11′S 67°00′W</small></div>
-        <iframe loading="lazy" title="Stonington Island and Marguerite Bay" src="https://www.openstreetmap.org/export/embed.html?bbox=-69.6%2C-68.85%2C-65.2%2C-67.55&amp;layer=mapnik&amp;marker=-68.18%2C-67.0"></iframe>
+    <p class="lead">His island, and the two gateways we'd fly into. Drag and zoom each. The big one is Marguerite Bay, the deep-south bay where his base sat.</p>
+    <div class="mapcard feature">
+      <div class="cap"><b>🎯 Stonington Island &amp; East Base</b><small>Marguerite Bay · 68°11′S 67°00′W</small></div>
+      <iframe loading="lazy" title="Stonington Island and Marguerite Bay" src="https://www.openstreetmap.org/export/embed.html?bbox=-70.4%2C-69.0%2C-64.4%2C-67.3&amp;layer=mapnik&amp;marker=-68.18%2C-67.0"></iframe>
+      <div class="capfoot">
+        <a href="https://www.openstreetmap.org/?mlat=-68.18&amp;mlon=-67.0#map=8/-68.18/-67.0" target="_blank" rel="noopener">Open in OpenStreetMap ↗</a>
+        <a href="https://en.wikipedia.org/wiki/Stonington_Island" target="_blank" rel="noopener">Stonington Island ↗</a>
+        <a href="https://en.wikipedia.org/wiki/East_Base" target="_blank" rel="noopener">East Base ↗</a>
+        <a href="https://www.ats.aq/devph/en/apa-database/130" target="_blank" rel="noopener">Historic Site &amp; Monument 55 ↗</a>
       </div>
+    </div>
+    <div class="maps">
       <div class="mapcard">
         <div class="cap"><b>🚢 Ushuaia, Argentina</b><small>sail gateway</small></div>
         <iframe loading="lazy" title="Ushuaia" src="https://www.openstreetmap.org/export/embed.html?bbox=-68.55%2C-54.92%2C-68.10%2C-54.72&amp;layer=mapnik&amp;marker=-54.8019%2C-68.303"></iframe>
+        <div class="capfoot">
+          <a href="https://www.openstreetmap.org/?mlat=-54.8019&amp;mlon=-68.303#map=12/-54.8019/-68.303" target="_blank" rel="noopener">Open in OpenStreetMap ↗</a>
+          <a href="https://en.wikipedia.org/wiki/Ushuaia" target="_blank" rel="noopener">About Ushuaia ↗</a>
+        </div>
       </div>
       <div class="mapcard">
         <div class="cap"><b>✈️ Punta Arenas, Chile</b><small>fly gateway</small></div>
         <iframe loading="lazy" title="Punta Arenas" src="https://www.openstreetmap.org/export/embed.html?bbox=-71.10%2C-53.25%2C-70.75%2C-53.07&amp;layer=mapnik&amp;marker=-53.1638%2C-70.9171"></iframe>
+        <div class="capfoot">
+          <a href="https://www.openstreetmap.org/?mlat=-53.1638&amp;mlon=-70.9171#map=12/-53.1638/-70.9171" target="_blank" rel="noopener">Open in OpenStreetMap ↗</a>
+          <a href="https://en.wikipedia.org/wiki/Punta_Arenas" target="_blank" rel="noopener">About Punta Arenas ↗</a>
+        </div>
       </div>
     </div>
     <div class="callout" style="margin-top:20px">
@@ -676,21 +727,62 @@
     </div>
   </section>
 
+  <!-- ===================== LINK DIRECTORY ===================== -->
+  <section id="links">
+    <div class="sec-label">Dig deeper</div>
+    <h2>Everything, linked</h2>
+    <p class="lead">All the rabbit holes in one place, his life, the places, the operators, the ships, and the gateways. Open anything in a new tab.</p>
+    <div class="linkgrid">
+      <div class="linkcol">
+        <h4>🧭 His life &amp; the expedition</h4>
+        <a href="https://usas1939.org/j.glenn.dyer/" target="_blank" rel="noopener">usas1939.org &mdash; J. Glenn Dyer biography</a>
+        <a href="https://usas1939.org/" target="_blank" rel="noopener">usas1939.org &mdash; the whole expedition archive</a>
+        <a href="https://www.deseret.com/1995/3/16/19164527/death-james-glenn-dyer/" target="_blank" rel="noopener">Deseret News &mdash; his 1995 obituary</a>
+        <a href="https://en.wikipedia.org/wiki/United_States_Antarctic_Service_Expedition" target="_blank" rel="noopener">U.S. Antarctic Service Expedition (1939&ndash;41)</a>
+        <a href="https://en.wikipedia.org/wiki/Richard_E._Byrd" target="_blank" rel="noopener">Admiral Richard E. Byrd</a>
+        <a href="https://en.wikipedia.org/wiki/Dyer_Plateau" target="_blank" rel="noopener">Dyer Plateau</a>
+        <a href="https://data.aad.gov.au/aadc/gaz/display_name.cfm?gaz_id=124089" target="_blank" rel="noopener">Dyer Plateau &mdash; official gazetteer</a>
+        <a href="https://en.wikipedia.org/wiki/Antarctica_Service_Medal" target="_blank" rel="noopener">Antarctic Service Medal</a>
+        <a href="https://en.wikipedia.org/wiki/International_Geophysical_Year" target="_blank" rel="noopener">International Geophysical Year</a>
+      </div>
+      <div class="linkcol">
+        <h4>🗺️ The places</h4>
+        <a href="https://en.wikipedia.org/wiki/East_Base" target="_blank" rel="noopener">East Base</a>
+        <a href="https://www.ats.aq/devph/en/apa-database/130" target="_blank" rel="noopener">East Base &mdash; Historic Site &amp; Monument 55</a>
+        <a href="https://en.wikipedia.org/wiki/Stonington_Island" target="_blank" rel="noopener">Stonington Island</a>
+        <a href="https://en.wikipedia.org/wiki/Marguerite_Bay" target="_blank" rel="noopener">Marguerite Bay</a>
+        <a href="https://en.wikipedia.org/wiki/Jean-Baptiste_Charcot" target="_blank" rel="noopener">Jean-Baptiste Charcot</a>
+        <a href="https://en.wikipedia.org/wiki/Antarctic_Circle" target="_blank" rel="noopener">The Antarctic Circle</a>
+        <a href="https://en.wikipedia.org/wiki/Antarctic_Peninsula" target="_blank" rel="noopener">Antarctic Peninsula</a>
+        <a href="https://en.wikipedia.org/wiki/Drake_Passage" target="_blank" rel="noopener">Drake Passage</a>
+      </div>
+      <div class="linkcol">
+        <h4>🚢 Operators &amp; ships</h4>
+        <a href="https://oceanwide-expeditions.com/to-do/experiences/east-base" target="_blank" rel="noopener">Oceanwide &mdash; landing at East Base</a>
+        <a href="https://oceanwide-expeditions.com/to-do/experiences/stonington-island" target="_blank" rel="noopener">Oceanwide &mdash; Stonington Island</a>
+        <a href="https://oceanwide-expeditions.com/antarctica/cruises/otl27-27-bellingshausen-sea-peter-i-island-ellsworth-land-incl-helicopters" target="_blank" rel="noopener">Voyage OTL27-27 (Jan 2027, m/v Ortelius)</a>
+        <a href="https://oceanwide-expeditions.com/our-fleet/m-v-ortelius" target="_blank" rel="noopener">m/v Ortelius (the ship)</a>
+        <a href="https://www.antarctica21.com/our-expeditions/classic-antarctica-air-cruise" target="_blank" rel="noopener">Antarctica21 &mdash; Classic Air-Cruise</a>
+        <a href="https://www.antarctica21.com/our-expeditions/polar-circle-air-cruise" target="_blank" rel="noopener">Antarctica21 &mdash; Polar Circle Air-Cruise</a>
+        <a href="https://www.expeditions.com/expeditions/antarctica-cruise-fly-the-drake-passage" target="_blank" rel="noopener">Lindblad / Nat Geo &mdash; Fly the Drake</a>
+        <a href="https://www.silversea.com/destinations/antarctica-fly-cruise.html" target="_blank" rel="noopener">Silversea &mdash; Antarctica fly-cruise</a>
+        <a href="https://www.quarkexpeditions.com/expeditions/antarctic-express-crossing-the-circle" target="_blank" rel="noopener">Quark &mdash; Crossing the Circle</a>
+        <a href="https://www.aurora-expeditions.com/destination/antarctica-cruises/health-fitness-age-limits" target="_blank" rel="noopener">Aurora &mdash; health, fitness &amp; age</a>
+      </div>
+      <div class="linkcol">
+        <h4>✈️ Gateways &amp; getting there</h4>
+        <a href="https://en.wikipedia.org/wiki/Ushuaia" target="_blank" rel="noopener">Ushuaia, Argentina</a>
+        <a href="https://en.wikipedia.org/wiki/Punta_Arenas" target="_blank" rel="noopener">Punta Arenas, Chile</a>
+        <a href="https://en.wikipedia.org/wiki/King_George_Island_(South_Shetland_Islands)" target="_blank" rel="noopener">King George Island (the fly-in airstrip)</a>
+        <a href="https://www.openstreetmap.org/?mlat=-68.18&amp;mlon=-67.0#map=8/-68.18/-67.0" target="_blank" rel="noopener">Stonington / Marguerite Bay on the map</a>
+        <a href="https://iaato.org/" target="_blank" rel="noopener">IAATO &mdash; Antarctic tour operator standards</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FOOTER ===================== -->
   <div class="footer">
-    <div style="margin-bottom:14px"><b style="color:var(--text-dim)">Sources</b></div>
-    <div class="src">
-      <a href="https://oceanwide-expeditions.com/to-do/experiences/east-base">Oceanwide · East Base</a> ·
-      <a href="https://oceanwide-expeditions.com/to-do/experiences/stonington-island">Oceanwide · Stonington Island</a> ·
-      <a href="https://oceanwide-expeditions.com/antarctica/cruises/otl27-27-bellingshausen-sea-peter-i-island-ellsworth-land-incl-helicopters">OTL27-27 voyage</a> ·
-      <a href="https://www.antarctica21.com/journal/introducing-our-2027-28-antarctic-air-cruises">Antarctica21 air-cruises 2027-28</a> ·
-      <a href="https://www.expeditions.com/expeditions/antarctica-cruise-fly-the-drake-passage">Lindblad · Fly the Drake</a> ·
-      <a href="https://www.aurora-expeditions.com/destination/antarctica-cruises/health-fitness-age-limits">Aurora · health/fitness/age</a> ·
-      <a href="https://usas1939.org/j.glenn.dyer/">usas1939.org · J. Glenn Dyer</a> ·
-      <a href="https://en.wikipedia.org/wiki/Dyer_Plateau">Dyer Plateau</a> ·
-      <a href="https://en.wikipedia.org/wiki/Marguerite_Bay">Marguerite Bay</a>
-    </div>
-    <div style="margin-top:18px;color:var(--text-faint)">Built for the Linford / Dyer family · planning page, figures are starting fares and change often · verify with operators before booking.</div>
+    <div style="color:var(--text-faint)">A few ideas for the Linford / Dyer family, nothing booked. Prices are starting fares and change often, so treat everything here as a daydream to check out, not a plan. Verify with operators before anything is real.</div>
   </div>
 
 </div>
