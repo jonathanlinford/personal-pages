@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#05080f">
+<title>Antarctica: Where Grandpa Dyer Went</title>
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80">🧭</text></svg>'>
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jonny &amp; Lauren">
+<meta property="og:title" content="Antarctica · Where Grandpa Dyer Went">
+<meta property="og:description" content="Taking Grandma Nancy to the bay where her father, polar explorer James Glenn Dyer, wintered in 1939–41. Voyage options, the route, maps, and costs.">
+<meta property="og:url" content="https://jonathanlinford.github.io/personal-pages/antarctica-2027.html">
+<meta property="og:image" content="https://jonathanlinford.github.io/personal-pages/antarctica-og.png">
+<meta property="og:image:secure_url" content="https://jonathanlinford.github.io/personal-pages/antarctica-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A historic wooden research hut on a snowy Antarctic shore with an expedition ship anchored in an icy bay at twilight">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Antarctica · Where Grandpa Dyer Went">
+<meta name="twitter:description" content="Taking Grandma Nancy to the bay where her father, polar explorer James Glenn Dyer, wintered in 1939–41.">
+<meta name="twitter:image" content="https://jonathanlinford.github.io/personal-pages/antarctica-og.png">
+<meta name="twitter:image:alt" content="Historic Antarctic research hut and expedition ship at twilight">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --bg:#05080f; --bg-elev:#0a0f1a;
+    --card:#0d131f; --card-hover:#121a29;
+    --border:#18202f; --border-bright:#26334a;
+    --text:#e9eef7; --text-dim:#8fa0b8; --text-faint:#5c6b82;
+    --ice:#5cc8e8; --ice-light:#8fe0f5; --ice-deep:#2a7fa8;
+    --ice-glow:rgba(92,200,232,0.14);
+    --gold:#e8b667; --gold-glow:rgba(232,182,103,0.16);
+    --good:#34c77a; --warn:#ffae45; --bad:#ff5a6a;
+    --grid-stroke:rgba(92,200,232,0.025);
+    --shadow:0 16px 48px rgba(0,0,0,0.5);
+    color-scheme:dark;
+  }
+
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;
+    line-height:1.6; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--grid-stroke) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid-stroke) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 100% 80% at 50% 0%,#000 40%,transparent 100%);
+  }
+
+  .wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:0 22px 90px}
+
+  a{color:var(--ice-light); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; margin:0 -22px 8px; padding:0;
+    min-height:78vh; display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-img{
+    position:absolute; inset:0;
+    background:url('antarctica-og.png') center 38%/cover no-repeat;
+    transform:scale(1.04);
+  }
+  .hero-img::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg,rgba(5,8,15,0.35) 0%,rgba(5,8,15,0.1) 30%,rgba(5,8,15,0.7) 72%,var(--bg) 100%);
+  }
+  .hero-inner{position:relative; z-index:2; max-width:980px; margin:0 auto; padding:0 22px 54px; width:100%}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--ice-light);
+    background:rgba(92,200,232,0.1); border:1px solid rgba(92,200,232,0.25);
+    padding:6px 14px; border-radius:999px; margin-bottom:20px; backdrop-filter:blur(6px);
+  }
+  .hero h1{
+    font-size:clamp(34px,6.4vw,62px); font-weight:900; line-height:1.02;
+    letter-spacing:-0.02em; margin-bottom:18px;
+    text-shadow:0 4px 40px rgba(0,0,0,0.6);
+  }
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--ice-light),var(--ice) 60%,var(--gold));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero p{font-size:clamp(15px,2.2vw,19px); color:#cdd8e8; max-width:620px; text-shadow:0 2px 20px rgba(0,0,0,0.7)}
+
+  /* ---------- SECTIONS ---------- */
+  section{margin-top:64px; scroll-margin-top:24px}
+  .sec-label{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:2.5px;
+    text-transform:uppercase; color:var(--ice); margin-bottom:10px;
+  }
+  h2{font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-0.02em; margin-bottom:14px; line-height:1.1}
+  h3{font-size:19px; font-weight:700; margin-bottom:8px}
+  .lead{font-size:17px; color:var(--text-dim); max-width:680px}
+
+  .card{
+    background:var(--card); border:1px solid var(--border);
+    border-radius:18px; padding:24px; box-shadow:var(--shadow);
+  }
+
+  /* ---------- THE MAN: TIMELINE ---------- */
+  .bio-grid{display:grid; grid-template-columns:1fr; gap:18px; margin-top:24px}
+  .timeline{position:relative; padding-left:30px; margin-top:8px}
+  .timeline::before{
+    content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(var(--ice-deep),var(--border));
+  }
+  .tl-item{position:relative; margin-bottom:20px; cursor:pointer}
+  .tl-item:last-child{margin-bottom:0}
+  .tl-dot{
+    position:absolute; left:-30px; top:3px; width:20px; height:20px; border-radius:50%;
+    background:var(--bg-elev); border:2px solid var(--ice-deep);
+    display:flex; align-items:center; justify-content:center; font-size:10px;
+    transition:.25s;
+  }
+  .tl-item:hover .tl-dot,.tl-item.open .tl-dot{border-color:var(--ice); box-shadow:0 0 0 5px var(--ice-glow)}
+  .tl-year{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--gold); font-weight:500}
+  .tl-head{font-weight:600; font-size:16px}
+  .tl-body{font-size:14.5px; color:var(--text-dim); max-height:0; overflow:hidden; transition:max-height .35s ease, margin .35s; }
+  .tl-item.open .tl-body{max-height:240px; margin-top:6px}
+
+  .factstrip{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:22px}
+  .fact{background:var(--bg-elev); border:1px solid var(--border); border-radius:14px; padding:16px 18px}
+  .fact .k{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ice); margin-bottom:6px}
+  .fact .v{font-size:14.5px; color:var(--text)}
+  .fact .v b{color:var(--text)}
+
+  /* ---------- PATH TABS ---------- */
+  .tabs{display:flex; gap:10px; margin:26px 0 8px; flex-wrap:wrap}
+  .tab{
+    flex:1; min-width:240px; text-align:left; cursor:pointer;
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:18px 20px; transition:.22s; position:relative; overflow:hidden;
+  }
+  .tab:hover{border-color:var(--border-bright); transform:translateY(-2px)}
+  .tab.active{border-color:var(--ice); box-shadow:0 0 0 3px var(--ice-glow)}
+  .tab.active.gold{border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-glow)}
+  .tab .tt{font-weight:800; font-size:17px; display:flex; align-items:center; gap:9px; margin-bottom:4px}
+  .tab .ts{font-size:13.5px; color:var(--text-dim)}
+  .tab .badge{position:absolute; top:14px; right:14px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.5px; text-transform:uppercase; padding:3px 9px; border-radius:999px}
+  .badge.heritage{background:var(--gold-glow); color:var(--gold); border:1px solid rgba(232,182,103,0.3)}
+  .badge.easy{background:rgba(52,199,122,0.14); color:var(--good); border:1px solid rgba(52,199,122,0.3)}
+
+  .panel{display:none; animation:fade .4s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- COURSE MAP (SVG) ---------- */
+  .coursewrap{margin-top:18px; background:linear-gradient(160deg,#071120,#0a1626); border:1px solid var(--border); border-radius:18px; padding:18px; overflow:hidden}
+  .course-legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:8px; font-size:13px; color:var(--text-dim)}
+  .course-legend span{display:inline-flex; align-items:center; gap:7px}
+  .lg-dot{width:22px; height:3px; border-radius:3px; display:inline-block}
+  svg .route{fill:none; stroke-linecap:round; stroke-dasharray:6 7; opacity:.25; transition:opacity .3s}
+  svg .route.lit{opacity:1; animation:dash 2.4s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-130}}
+  svg text{font-family:'Inter',sans-serif}
+
+  /* ---------- OPTION CARDS ---------- */
+  .opt{margin-top:16px; border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--card)}
+  .opt-head{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; padding:20px 22px; cursor:pointer}
+  .opt-head:hover{background:var(--card-hover)}
+  .opt-title{font-weight:700; font-size:17px}
+  .opt-sub{font-size:13.5px; color:var(--text-dim); margin-top:3px}
+  .opt-price{text-align:right; white-space:nowrap}
+  .opt-price .num{font-size:19px; font-weight:800; color:var(--ice-light)}
+  .opt-price .lbl{font-size:11px; color:var(--text-faint); font-family:'JetBrains Mono',monospace}
+  .opt-body{max-height:0; overflow:hidden; transition:max-height .4s ease}
+  .opt.open .opt-body{max-height:1400px}
+  .opt-inner{padding:0 22px 22px; border-top:1px solid var(--border)}
+  .opt-inner ul{list-style:none; margin:14px 0}
+  .opt-inner li{padding:5px 0 5px 22px; position:relative; font-size:14.5px; color:var(--text-dim)}
+  .opt-inner li::before{content:'›'; position:absolute; left:4px; color:var(--ice); font-weight:700}
+  .chev{transition:.3s; color:var(--text-faint)}
+  .opt.open .chev{transform:rotate(90deg)}
+  .pill{display:inline-block; font-size:11px; font-family:'JetBrains Mono',monospace; padding:3px 9px; border-radius:999px; margin:2px 4px 2px 0; border:1px solid var(--border-bright); color:var(--text-dim)}
+  .pill.yes{color:var(--good); border-color:rgba(52,199,122,.4)}
+  .pill.no{color:var(--bad); border-color:rgba(255,90,106,.4)}
+  .pill.warn{color:var(--warn); border-color:rgba(255,174,69,.4)}
+
+  /* ---------- ITINERARY ---------- */
+  .itin{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; margin-top:12px}
+  .itin div{background:var(--bg-elev); border:1px solid var(--border); border-radius:10px; padding:10px 12px; font-size:13px}
+  .itin .d{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--gold); letter-spacing:.5px}
+  .itin .hot{border-color:var(--gold); box-shadow:0 0 0 2px var(--gold-glow)}
+
+  /* ---------- COMPARISON ---------- */
+  .matrix{width:100%; border-collapse:collapse; margin-top:18px; font-size:14px; overflow:hidden; border-radius:14px}
+  .matrix th,.matrix td{padding:13px 14px; text-align:left; border-bottom:1px solid var(--border)}
+  .matrix thead th{background:var(--bg-elev); font-size:12px; text-transform:uppercase; letter-spacing:.5px; color:var(--text-dim); font-family:'JetBrains Mono',monospace}
+  .matrix tbody tr:hover{background:var(--card-hover)}
+  .matrix td:first-child{font-weight:600; color:var(--text)}
+  .scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+
+  /* ---------- CALCULATOR ---------- */
+  .calc{margin-top:18px}
+  .calc-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:18px}
+  .stepper{display:inline-flex; align-items:center; background:var(--bg-elev); border:1px solid var(--border-bright); border-radius:12px; overflow:hidden}
+  .stepper button{width:42px; height:42px; background:none; border:none; color:var(--ice-light); font-size:22px; cursor:pointer; transition:.15s}
+  .stepper button:hover{background:var(--ice-glow)}
+  .stepper input{width:54px; text-align:center; background:none; border:none; color:var(--text); font-size:18px; font-weight:700; font-family:'JetBrains Mono',monospace; -moz-appearance:textfield}
+  .stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none}
+  .calc-grid{display:grid; grid-template-columns:1fr; gap:10px}
+  .calc-line{display:flex; justify-content:space-between; align-items:center; gap:12px; background:var(--bg-elev); border:1px solid var(--border); border-radius:12px; padding:14px 16px}
+  .calc-line .name{font-size:14.5px}
+  .calc-line .name small{display:block; color:var(--text-faint); font-size:12px}
+  .calc-line .total{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:17px; color:var(--ice-light); white-space:nowrap}
+  .calc-note{font-size:12.5px; color:var(--text-faint); margin-top:12px}
+
+  /* ---------- FEASIBILITY ---------- */
+  .feas{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:20px}
+  .feas .card h3{display:flex; align-items:center; gap:9px; font-size:16px}
+  .feas ul{list-style:none; margin-top:8px}
+  .feas li{font-size:14px; color:var(--text-dim); padding:4px 0 4px 22px; position:relative}
+  .feas li::before{content:''; position:absolute; left:2px; top:11px; width:8px; height:8px; border-radius:50%; background:var(--ice)}
+
+  /* ---------- MAPS ---------- */
+  .maps{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:20px}
+  .mapcard{background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden}
+  .mapcard .cap{padding:13px 16px; display:flex; justify-content:space-between; align-items:center; gap:8px}
+  .mapcard .cap b{font-size:14.5px}
+  .mapcard .cap small{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold)}
+  .mapcard iframe{width:100%; height:240px; border:0; display:block; filter:saturate(.9) brightness(.92)}
+
+  /* ---------- CALLOUT ---------- */
+  .callout{border-left:3px solid var(--gold); background:var(--gold-glow); border-radius:0 14px 14px 0; padding:16px 20px; margin-top:18px; font-size:15px; color:#f0e3cc}
+  .callout.ice{border-color:var(--ice); background:var(--ice-glow); color:#d6eef8}
+  .callout b{color:#fff}
+
+  /* ---------- STATUS ---------- */
+  .status{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 20px; margin-top:18px}
+  .status .dot{width:12px; height:12px; border-radius:50%; background:var(--warn); box-shadow:0 0 0 4px rgba(255,174,69,.18); flex-shrink:0; animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  .footer{margin-top:64px; padding-top:26px; border-top:1px solid var(--border); color:var(--text-faint); font-size:13px}
+  .footer a{color:var(--text-dim)}
+  .src{font-size:12.5px; color:var(--text-faint); line-height:2}
+
+  @media (max-width:600px){
+    .hero{min-height:70vh}
+    .tab{min-width:100%}
+    .opt-head{flex-direction:column}
+    .opt-price{text-align:left}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">🧭 Family Expedition · Planning</span>
+    <h1>Taking Grandma Nancy<br>to <span class="accent">where her father went</span></h1>
+    <p>In 1939, James Glenn Dyer sailed south with Admiral Byrd and wintered on a small island in Marguerite Bay. Eighty-some years later, his daughter is 85. This page is how we get her there, and the gentler ways to simply stand on Antarctica together.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===================== THE MAN ===================== -->
+  <section id="man">
+    <div class="sec-label">The man we're chasing</div>
+    <h2>James Glenn Dyer (1908–1995)</h2>
+    <p class="lead">Surveyor, cartographer, and navigator. He didn't just visit Antarctica, he helped map a piece of it that still carries his name. Tap any moment to expand it.</p>
+
+    <div class="timeline" id="timeline">
+      <div class="tl-item open">
+        <div class="tl-dot">★</div>
+        <div class="tl-year">1908 · Alamosa, Colorado</div>
+        <div class="tl-head">Born May 10 into a big farm family</div>
+        <div class="tl-body">One of eleven children of James Wesley Dyer and Beulah LaVert Bailey. He reportedly planted trees in Tennessee to earn money for school.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1933 · Georgia Tech</div>
+        <div class="tl-head">Degree in aeronautical engineering</div>
+        <div class="tl-body">Graduated into the Depression. Later surveyed for the U.S. government in Nevada, where he devised a faster sighting method using distant landmarks.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1939–41 · Antarctica</div>
+        <div class="tl-head">Navigator &amp; cartographer, U.S. Antarctic Service Expedition</div>
+        <div class="tl-body">Answered Admiral Byrd's call. Wintered at <b>East Base on Stonington Island</b> in Marguerite Bay, and led the southeast sledging party. Survived a fall into a crevasse and a three-day storm on the high plateau.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">⛰</div>
+        <div class="tl-year">Forever · Palmer Land</div>
+        <div class="tl-head">The Dyer Plateau is named for him</div>
+        <div class="tl-body">The broad ice upland he sledged across (70°30′S, 65°0′W) was named in his honor. It is interior Antarctica, reachable only by fly-in expedition, so it isn't part of any cruise. The bay he wintered in, however, is.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1942–45 · WWII</div>
+        <div class="tl-head">Major, commanded a secret Arctic air base</div>
+        <div class="tl-body">Recruited by the Army Air Corps for his polar expertise. Commanded "Crystal III," a refueling base for bombers bound for Europe.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1956–74 · Weather Bureau</div>
+        <div class="tl-head">Returned south, then led Overseas Operations</div>
+        <div class="tl-body">Back to Antarctica in 1956–57 as a U.S. observer during the International Geophysical Year. Retired in 1974 as Director of Overseas Operations. Awarded the Antarctic Service Medal.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🤍</div>
+        <div class="tl-year">1995 · Utah</div>
+        <div class="tl-head">Died March 13 at his daughter Nancy's home</div>
+        <div class="tl-body">Survived by daughter Nancy and sons Robert, John, and Winston, 31 grandchildren, and 16 great-grandchildren. Buried in Salt Lake City.</div>
+      </div>
+    </div>
+
+    <div class="factstrip">
+      <div class="fact"><div class="k">His island</div><div class="v"><b>Stonington Island</b>, in Marguerite Bay, below the Antarctic Circle.</div></div>
+      <div class="fact"><div class="k">His base</div><div class="v"><b>East Base</b>, a U.S. National Historic Site, commissioned by FDR in 1939.</div></div>
+      <div class="fact"><div class="k">The bay's name</div><div class="v">Charcot named <b>Marguerite Bay</b> in 1909 for his wife. Decades later, Dyer wintered in it.</div></div>
+      <div class="fact"><div class="k">Grandma Nancy</div><div class="v">His daughter, born Dec 6, <b>1940</b>. She is <b>85</b> now.</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== TWO PATHS ===================== -->
+  <section id="paths">
+    <div class="sec-label">The decision</div>
+    <h2>Two ways south</h2>
+    <p class="lead">There is one hard trade-off. The exact place he stood is the longest, roughest, priciest voyage, and even then a landing is never guaranteed. The gentlest trips can't reach it at all. Pick a path to light its route on the map and see its options.</p>
+
+    <div class="tabs">
+      <button class="tab gold active" data-path="heritage" onclick="setPath('heritage')">
+        <span class="badge heritage">His footsteps</span>
+        <div class="tt">🚢 The voyage he sailed</div>
+        <div class="ts">Cross the Antarctic Circle into Marguerite Bay and try to land at East Base. 25 days. The real thing.</div>
+      </button>
+      <button class="tab" data-path="easy" onclick="setPath('easy')">
+        <span class="badge easy">Gentlest</span>
+        <div class="tt">✈️ The easy way there</div>
+        <div class="ts">Fly over the Drake Passage, skip the rough seas, and stand on Antarctica. 8–11 days. Doesn't reach his island.</div>
+      </button>
+    </div>
+
+    <!-- COURSE MAP -->
+    <div class="coursewrap">
+      <svg viewBox="0 0 760 420" width="100%" role="img" aria-label="Route map of the two options across the Antarctic Peninsula">
+        <!-- water bg subtle -->
+        <defs>
+          <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#13243a"/><stop offset="1" stop-color="#0c1a2b"/>
+          </linearGradient>
+        </defs>
+
+        <!-- South America -->
+        <path d="M70,40 Q120,30 150,70 Q170,100 150,130 Q120,150 100,120 Q70,95 70,40 Z" fill="url(#land)" stroke="#24405e" stroke-width="1"/>
+        <circle cx="120" cy="92" r="4" fill="var(--gold)"/>
+        <text x="130" y="88" fill="#cdd8e8" font-size="13" font-weight="600">Ushuaia</text>
+        <text x="130" y="104" fill="#7d8ca3" font-size="10.5">Argentina · sail gateway</text>
+        <circle cx="96" cy="64" r="4" fill="#7fb2d8"/>
+        <text x="106" y="56" fill="#aebfd2" font-size="11">Punta Arenas</text>
+        <text x="106" y="69" fill="#7d8ca3" font-size="9.5">Chile · fly gateway</text>
+
+        <!-- Antarctic Peninsula -->
+        <path d="M520,150 Q470,180 450,240 Q435,300 470,360 Q500,400 540,395 Q560,360 545,320 Q560,270 590,250 Q620,235 600,200 Q580,165 520,150 Z" fill="url(#land)" stroke="#24405e" stroke-width="1"/>
+        <!-- King George Island -->
+        <circle cx="500" cy="158" r="4" fill="var(--good)"/>
+        <text x="510" y="150" fill="#cdd8e8" font-size="12" font-weight="600">King George I.</text>
+        <text x="510" y="164" fill="#7d8ca3" font-size="9.5">fly-in airstrip</text>
+        <!-- Antarctic Circle -->
+        <line x1="380" y1="300" x2="700" y2="300" stroke="#3a5878" stroke-width="1" stroke-dasharray="3 5"/>
+        <text x="384" y="294" fill="#9fb3cc" font-size="10" font-family="'JetBrains Mono',monospace">ANTARCTIC CIRCLE · 66°33′S</text>
+        <!-- Marguerite Bay / Stonington -->
+        <circle id="stoneMarker" cx="486" cy="356" r="6" fill="var(--gold)"/>
+        <circle cx="486" cy="356" r="11" fill="none" stroke="var(--gold)" stroke-width="1.5" opacity="0.5"/>
+        <text x="376" y="380" fill="#f0e3cc" font-size="12.5" font-weight="700">Stonington I. · East Base</text>
+        <text x="392" y="395" fill="#bda77f" font-size="10">Marguerite Bay · where Grandpa wintered</text>
+
+        <!-- Routes -->
+        <!-- Easy: Punta Arenas -> fly -> King George -> short peninsula loop -->
+        <path id="routeEasy" class="route" stroke="var(--good)" stroke-width="3"
+          d="M96,64 C 220,60 380,90 500,158 C 520,200 470,230 470,260"/>
+        <!-- Heritage: Ushuaia -> Drake -> peninsula -> down across circle -> Stonington -->
+        <path id="routeHeritage" class="route lit" stroke="var(--gold)" stroke-width="3"
+          d="M120,92 C 260,140 420,150 510,180 C 470,230 450,280 486,356"/>
+
+        <text x="250" y="210" fill="#7d8ca3" font-size="11" transform="rotate(8 250 210)">Drake Passage</text>
+      </svg>
+      <div class="course-legend">
+        <span><i class="lg-dot" style="background:var(--gold)"></i> His voyage · into Marguerite Bay</span>
+        <span><i class="lg-dot" style="background:var(--good)"></i> Easy fly-cruise · stops on the peninsula</span>
+      </div>
+    </div>
+
+    <!-- PANEL: HERITAGE -->
+    <div class="panel active" id="panel-heritage">
+      <div class="callout">
+        <b>Only one operator markets this.</b> Oceanwide Expeditions runs the deep-south voyages that actually aim for Marguerite Bay, and they have a dedicated page about landing at East Base, calling the shore landing "easy" and "among the most popular research stations we visit." The catch: <b>getting a ship into the bay at all is rare and ice-dependent.</b> Treat the East Base landing as a hope, not a promise.
+      </div>
+
+      <div class="opt open">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">🚢 Oceanwide · "Bellingshausen Sea / Peter I Island + Ellsworth Land" <span class="chev">›</span></div>
+            <div class="opt-sub">m/v <i>Ortelius</i> · 25 days · from Ushuaia · helicopters + Zodiacs</div>
+          </div>
+          <div class="opt-price"><div class="num">$24,600</div><div class="lbl">from / person · OTL27-27</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px">
+            <span class="pill">Soonest: 14 Jan – 7 Feb 2027</span>
+            <span class="pill yes">Aims for Stonington</span>
+            <span class="pill warn">Crosses the Drake by sea</span>
+            <span class="pill warn">Roughest / longest</span>
+          </div>
+          <ul>
+            <li>Sails from <b>Ushuaia</b>, crosses the Antarctic Circle at Crystal Sound (days 8–11), enters <b>Marguerite Bay</b> (days 12–14).</li>
+            <li>Carries <b>two helicopters</b>, used "in sites where Zodiacs cannot be used," which materially improves the odds of reaching the bay.</li>
+            <li>The $24,600 figure is the cheapest shared quad-porthole berth. A <b>private twin or suite will run well into the $30k–$60k+</b> per person on a 25-day deep-south voyage.</li>
+            <li>This is open-ocean Bellingshausen Sea sailing, the most physically demanding voyage class there is.</li>
+          </ul>
+          <div class="itin">
+            <div><div class="d">DAYS 1–2</div>Ushuaia → Drake Passage</div>
+            <div><div class="d">DAYS 3–7</div>Peninsula &amp; islands</div>
+            <div class="hot"><div class="d">DAYS 8–11</div>Cross the Circle · Crystal Sound</div>
+            <div class="hot"><div class="d">DAYS 12–14</div>Marguerite Bay · Stonington try</div>
+            <div><div class="d">DAYS 15–22</div>Bellingshausen / Peter I I.</div>
+            <div><div class="d">DAYS 23–25</div>Return to Ushuaia</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="opt">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">🚢 Oceanwide · "Deep South Basecamp" <span class="chev">›</span></div>
+            <div class="opt-sub">m/v <i>Ortelius</i> · ~13 days · from Ushuaia</div>
+          </div>
+          <div class="opt-price"><div class="num">on request</div><div class="lbl">OTL31-28 · 2028</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px">
+            <span class="pill">27 Feb – 11 Mar 2028</span>
+            <span class="pill yes">Aims for Stonington</span>
+            <span class="pill">Shorter &amp; gentler than the 25-day</span>
+          </div>
+          <ul>
+            <li>A shorter deep-south option for the following season, more room to book, gentler than the 25-day Bellingshausen run.</li>
+            <li>Price not yet posted, I've asked Oceanwide for a quote (see "Where things stand" below).</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- PANEL: EASY -->
+    <div class="panel" id="panel-easy">
+      <div class="callout ice">
+        <b>The gentle trade-off.</b> A ~2-hour charter flight replaces the rough 2-day Drake Passage crossing. Far kinder on an 85-year-old, roughly half the price, and you still set foot on Antarctica with penguins and ice all around. <b>None of these reach Marguerite Bay or East Base.</b> That is the cost of comfort.
+      </div>
+
+      <div class="opt open">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">✈️ Lindblad / National Geographic · "Fly the Drake" <span class="chev">›</span></div>
+            <div class="opt-sub">8 / 9 / 10-day options · from Puerto Natales, Chile</div>
+          </div>
+          <div class="opt-price"><div class="num">$12,400</div><div class="lbl">from / person · incl. flights</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px">
+            <span class="pill yes">Flies the Drake</span>
+            <span class="pill no">No Stonington</span>
+            <span class="pill">Includes the charter flights</span>
+          </div>
+          <ul>
+            <li>Two-hour flight to King George Island, then expedition cruising on the peninsula.</li>
+            <li>Lowest entry price of the gentle options, and a very well-run operator.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <div class="opt">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">✈️ Antarctica21 · "Classic Antarctica Air-Cruise" <span class="chev">›</span></div>
+            <div class="opt-sub">8 days / 7 nights · from Punta Arenas, Chile</div>
+          </div>
+          <div class="opt-price"><div class="num">~$14–16k</div><div class="lbl">from / person</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px"><span class="pill yes">Flies the Drake</span><span class="pill no">No Stonington</span><span class="pill">Pioneered the air-cruise</span></div>
+          <ul>
+            <li>South Shetlands and the western peninsula. The original fly-cruise operator, small ships (~76 guests).</li>
+            <li>Shortest total trip, easiest on energy and logistics.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <div class="opt">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">✈️ Antarctica21 · "Polar Circle Air-Cruise" <span class="chev">›</span> <span class="pill" style="margin-left:6px">middle path</span></div>
+            <div class="opt-sub">10 days · from Punta Arenas · only 2 departures</div>
+          </div>
+          <div class="opt-price"><div class="num">$24,995</div><div class="lbl">from / person</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px"><span class="pill yes">Flies the Drake</span><span class="pill warn">Reaches ~66°S</span><span class="pill no">Short of Marguerite Bay</span></div>
+          <ul>
+            <li>The best of both worlds-ish: flies over the Drake (gentle) <b>and</b> pushes for the Antarctic Circle, the symbolic "deep south" line.</li>
+            <li>Gets to about 66°S (Crystal Sound) but still stops well short of Stonington. The closest a comfortable trip comes.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <div class="opt">
+        <div class="opt-head" onclick="toggleOpt(this)">
+          <div>
+            <div class="opt-title">✈️ Silversea &amp; others · luxury fly-cruises <span class="chev">›</span></div>
+            <div class="opt-sub">from Punta Arenas / Puerto Williams</div>
+          </div>
+          <div class="opt-price"><div class="num">premium</div><div class="lbl">suites · varies</div></div>
+        </div>
+        <div class="opt-body"><div class="opt-inner">
+          <div style="margin-top:14px"><span class="pill yes">Flies the Drake</span><span class="pill no">No Stonington</span><span class="pill">Most comfortable cabins</span></div>
+          <ul>
+            <li>For maximum comfort: large suites, fine dining, butlers. Same gentle fly-in format, peninsula itineraries.</li>
+            <li>Quark also runs a "Crossing the Circle" fly-cruise (11 days) that crosses 66°S but, again, not Marguerite Bay.</li>
+          </ul>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON ===================== -->
+  <section id="compare">
+    <div class="sec-label">Side by side</div>
+    <h2>How they stack up</h2>
+    <div class="scrollx">
+      <table class="matrix">
+        <thead><tr>
+          <th>Option</th><th>Days</th><th>Gateway</th><th>Drake</th><th>Reaches East Base?</th><th>From / person</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>🚢 Oceanwide Deep South (OTL27-27)</td><td>25</td><td>Ushuaia</td>
+            <td><span class="pill warn">by sea</span></td><td><span class="pill yes">Tries (not guaranteed)</span></td><td>$24,600+</td>
+          </tr>
+          <tr>
+            <td>🚢 Oceanwide Deep South Basecamp</td><td>~13</td><td>Ushuaia</td>
+            <td><span class="pill warn">by sea</span></td><td><span class="pill yes">Tries (not guaranteed)</span></td><td>on request</td>
+          </tr>
+          <tr>
+            <td>✈️ Antarctica21 Polar Circle</td><td>10</td><td>Punta Arenas</td>
+            <td><span class="pill yes">flies</span></td><td><span class="pill no">No (reaches ~66°S)</span></td><td>$24,995</td>
+          </tr>
+          <tr>
+            <td>✈️ Antarctica21 Classic</td><td>8</td><td>Punta Arenas</td>
+            <td><span class="pill yes">flies</span></td><td><span class="pill no">No</span></td><td>~$14–16k</td>
+          </tr>
+          <tr>
+            <td>✈️ Lindblad Fly the Drake</td><td>8–10</td><td>Puerto Natales</td>
+            <td><span class="pill yes">flies</span></td><td><span class="pill no">No</span></td><td>$12,400</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== CALCULATOR ===================== -->
+  <section id="cost">
+    <div class="sec-label">What it costs us</div>
+    <h2>Who's going?</h2>
+    <p class="lead">Set how many of us travel. Totals use the lowest published per-person fare, so think of them as floors, not ceilings (the deep-south voyage in a private cabin will be considerably more).</p>
+    <div class="calc card">
+      <div class="calc-row">
+        <div>
+          <div style="font-size:13px;color:var(--text-dim);margin-bottom:6px">Travelers (incl. Grandma Nancy)</div>
+          <div class="stepper">
+            <button onclick="bump(-1)">–</button>
+            <input id="pax" type="number" value="3" min="1" max="12" oninput="recalc()">
+            <button onclick="bump(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc-grid" id="calcGrid"></div>
+      <div class="calc-note">Floors only. Deep-south private cabins, single supplements, international airfare to the gateway, travel insurance, and pre-voyage hotels are extra. I've asked Oceanwide for exact cabin pricing.</div>
+    </div>
+  </section>
+
+  <!-- ===================== FEASIBILITY ===================== -->
+  <section id="nancy">
+    <div class="sec-label">The real question</div>
+    <h2>Is this realistic for an 85-year-old?</h2>
+    <p class="lead">Short answer: possibly yes, but her doctor effectively makes the call. Age alone doesn't disqualify her, fitness and medical clearance do.</p>
+    <div class="feas">
+      <div class="card">
+        <h3>✅ In her favor</h3>
+        <ul>
+          <li>No operator sets an upper age limit. Oceanwide explicitly has none.</li>
+          <li>Aurora Expeditions has carried passengers up to age 92.</li>
+          <li>Fly-cruises remove the single hardest part, the 2-day Drake crossing.</li>
+          <li>Ships carry a doctor and a small medical clinic onboard.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚠️ The hurdles</h3>
+        <ul>
+          <li>A signed medical form is due 45–90 days before departure, sometimes by a GP.</li>
+          <li>She must manage a steep gangway, get in and out of a Zodiac, and walk on wet, snowy, rocky ground.</li>
+          <li>The deep-south Stonington voyages are the longest and roughest, highest demand of all.</li>
+          <li>Remote evacuation is slow and costly, comprehensive insurance is mandatory.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>💡 How to stack the deck</h3>
+        <ul>
+          <li>Get her cleared by her doctor early, before committing.</li>
+          <li>Book a private, accessible cabin near the elevator.</li>
+          <li>Bring a younger family member as her dedicated helper for landings.</li>
+          <li>If the deep-south voyage is too much, the Polar Circle fly-cruise is a meaningful middle.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAPS ===================== -->
+  <section id="maps">
+    <div class="sec-label">Seeing it</div>
+    <h2>The places on a map</h2>
+    <p class="lead">His island, and the two gateways we'd fly into. Drag and zoom each.</p>
+    <div class="maps">
+      <div class="mapcard">
+        <div class="cap"><b>🎯 Stonington I. &amp; Marguerite Bay</b><small>68°11′S 67°00′W</small></div>
+        <iframe loading="lazy" title="Stonington Island and Marguerite Bay" src="https://www.openstreetmap.org/export/embed.html?bbox=-69.6%2C-68.85%2C-65.2%2C-67.55&amp;layer=mapnik&amp;marker=-68.18%2C-67.0"></iframe>
+      </div>
+      <div class="mapcard">
+        <div class="cap"><b>🚢 Ushuaia, Argentina</b><small>sail gateway</small></div>
+        <iframe loading="lazy" title="Ushuaia" src="https://www.openstreetmap.org/export/embed.html?bbox=-68.55%2C-54.92%2C-68.10%2C-54.72&amp;layer=mapnik&amp;marker=-54.8019%2C-68.303"></iframe>
+      </div>
+      <div class="mapcard">
+        <div class="cap"><b>✈️ Punta Arenas, Chile</b><small>fly gateway</small></div>
+        <iframe loading="lazy" title="Punta Arenas" src="https://www.openstreetmap.org/export/embed.html?bbox=-71.10%2C-53.25%2C-70.75%2C-53.07&amp;layer=mapnik&amp;marker=-53.1638%2C-70.9171"></iframe>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px">
+      🧭 <b>The poetry of the place:</b> Charcot named Marguerite Bay for the wife he loved in 1909. Three decades later, Nancy's father wintered on an island inside it. Bringing his daughter back closes a circle more than a century in the making.
+    </div>
+  </section>
+
+  <!-- ===================== STATUS ===================== -->
+  <section id="status">
+    <div class="sec-label">Where things stand</div>
+    <h2>Next step</h2>
+    <div class="status">
+      <span class="dot"></span>
+      <div>
+        <b>Inquiry sent to Oceanwide</b> (their US reservations desk) on June 2, 2026. I asked the three things that decide everything:
+        <div style="margin-top:8px;color:var(--text-dim);font-size:14px">
+          1. How often these voyages actually land at East Base, and how often ice blocks Marguerite Bay. &nbsp;·&nbsp;
+          2. Full private-cabin and suite pricing for 2027 and a quote for 2028. &nbsp;·&nbsp;
+          3. Onboard medical, accessibility, and what they require of an 85-year-old passenger.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <div class="footer">
+    <div style="margin-bottom:14px"><b style="color:var(--text-dim)">Sources</b></div>
+    <div class="src">
+      <a href="https://oceanwide-expeditions.com/to-do/experiences/east-base">Oceanwide · East Base</a> ·
+      <a href="https://oceanwide-expeditions.com/to-do/experiences/stonington-island">Oceanwide · Stonington Island</a> ·
+      <a href="https://oceanwide-expeditions.com/antarctica/cruises/otl27-27-bellingshausen-sea-peter-i-island-ellsworth-land-incl-helicopters">OTL27-27 voyage</a> ·
+      <a href="https://www.antarctica21.com/journal/introducing-our-2027-28-antarctic-air-cruises">Antarctica21 air-cruises 2027-28</a> ·
+      <a href="https://www.expeditions.com/expeditions/antarctica-cruise-fly-the-drake-passage">Lindblad · Fly the Drake</a> ·
+      <a href="https://www.aurora-expeditions.com/destination/antarctica-cruises/health-fitness-age-limits">Aurora · health/fitness/age</a> ·
+      <a href="https://usas1939.org/j.glenn.dyer/">usas1939.org · J. Glenn Dyer</a> ·
+      <a href="https://en.wikipedia.org/wiki/Dyer_Plateau">Dyer Plateau</a> ·
+      <a href="https://en.wikipedia.org/wiki/Marguerite_Bay">Marguerite Bay</a>
+    </div>
+    <div style="margin-top:18px;color:var(--text-faint)">Built for the Linford / Dyer family · planning page, figures are starting fares and change often · verify with operators before booking.</div>
+  </div>
+
+</div>
+
+<script>
+  // ---- Path tabs + route highlight ----
+  function setPath(p){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.path===p));
+    document.querySelectorAll('.tab').forEach(t=>{ if(t.dataset.path==='heritage') t.classList.toggle('gold', t.dataset.path===p); });
+    document.getElementById('panel-heritage').classList.toggle('active', p==='heritage');
+    document.getElementById('panel-easy').classList.toggle('active', p==='easy');
+    document.getElementById('routeHeritage').classList.toggle('lit', p==='heritage');
+    document.getElementById('routeEasy').classList.toggle('lit', p==='easy');
+  }
+
+  // ---- Timeline accordion ----
+  document.querySelectorAll('.tl-item').forEach(it=>{
+    it.addEventListener('click',()=> it.classList.toggle('open'));
+  });
+
+  // ---- Option accordions ----
+  function toggleOpt(head){ head.closest('.opt').classList.toggle('open'); }
+
+  // ---- Cost calculator ----
+  const OPTIONS = [
+    {name:'Oceanwide Deep South (OTL27-27)', sub:'25 days · lowest berth · his island', pp:24600},
+    {name:'Antarctica21 Polar Circle', sub:'10 days · flies the Drake · ~66°S', pp:24995},
+    {name:'Antarctica21 Classic', sub:'8 days · flies the Drake', pp:14895},
+    {name:'Lindblad Fly the Drake', sub:'8–10 days · incl. flights', pp:12400},
+  ];
+  function fmt(n){ return '$'+n.toLocaleString('en-US'); }
+  function bump(d){ const i=document.getElementById('pax'); i.value=Math.max(1,Math.min(12,(parseInt(i.value)||1)+d)); recalc(); }
+  function recalc(){
+    const pax=Math.max(1,Math.min(12,parseInt(document.getElementById('pax').value)||1));
+    document.getElementById('calcGrid').innerHTML = OPTIONS.map(o=>`
+      <div class="calc-line">
+        <div class="name">${o.name}<small>${o.sub} · ${fmt(o.pp)}/person</small></div>
+        <div class="total">${fmt(o.pp*pax)}</div>
+      </div>`).join('');
+  }
+  recalc();
+</script>
+</body>
+</html>
