@@ -465,7 +465,8 @@
           <ul>
             <li>Sails from <b>Ushuaia</b>, crosses the Antarctic Circle at Crystal Sound (days 8–11), enters <b>Marguerite Bay</b> (days 12–14).</li>
             <li>Carries <b>two helicopters</b>, used "in sites where Zodiacs cannot be used," which materially improves the odds of reaching the bay.</li>
-            <li>The $24,600 figure is the cheapest shared quad-porthole berth. A <b>private twin or suite will run well into the $30k–$60k+</b> per person on a 25-day deep-south voyage.</li>
+            <li>Real cabin pricing (published June 2026): shared quad berth <b>$24,600</b> pp · private twin <b>$30,650 pp</b> ($61,300 for the cabin) · twin deluxe $35,000 pp · single occupancy from $52,105 · superior cabin $72,500.</li>
+            <li><b>Availability (June 3, 2026):</b> most cabin categories still open; triples are waitlisted. The 2028 sister voyage below is already fully sold out, so these book out far ahead.</li>
             <li>This is open-ocean Bellingshausen Sea sailing, the most physically demanding voyage class there is.</li>
           </ul>
           <div class="itin">
@@ -486,17 +487,19 @@
             <div class="opt-title">🚢 Oceanwide · "Deep South Basecamp" <span class="chev">›</span></div>
             <div class="opt-sub">m/v <i>Ortelius</i> · ~13 days · from Ushuaia</div>
           </div>
-          <div class="opt-price"><div class="num">on request</div><div class="lbl">OTL31-28 · 2028</div></div>
+          <div class="opt-price"><div class="num">sold out</div><div class="lbl">waitlist · OTL31-28 · 2028</div></div>
         </div>
         <div class="opt-body"><div class="opt-inner">
           <div style="margin-top:14px">
             <span class="pill">27 Feb – 11 Mar 2028</span>
-            <span class="pill yes">Aims for Stonington</span>
+            <span class="pill yes">Itinerary names Stonington</span>
             <span class="pill">Shorter &amp; gentler than the 25-day</span>
+            <span class="pill warn">Sold out · waitlist only</span>
           </div>
           <ul>
-            <li>A shorter deep-south option for the following season, more room to book, gentler than the 25-day Bellingshausen run.</li>
-            <li>Full cabin pricing is on the <a href="https://oceanwide-expeditions.com/antarctica/cruises/otl31-28-deep-south-basecamp-experience-long-hikes" target="_blank" rel="noopener">OTL31-28 voyage page ↗</a>.</li>
+            <li>13 nights, Ushuaia round trip. <b>Days 5&ndash;8 are spent inside Marguerite Bay</b>: Horseshoe Island, Pourquoi Pas Island, <b>Stonington Island</b>, and Red Rock Ridge are all named in the itinerary.</li>
+            <li>Published pricing: shared berths <b>$13,700&ndash;$19,600</b> pp; private twin <b>$33,700 total</b> ($16,850 pp); single occupancy from $28,645.</li>
+            <li><b>As of June 3, 2026 every cabin category is sold out</b> with a non-obligatory <a href="https://oceanwide-expeditions.com/antarctica/cruises/otl31-28-deep-south-basecamp-experience-long-hikes" target="_blank" rel="noopener">waitlist ↗</a>. These voyages book out nearly two years ahead.</li>
           </ul>
         </div></div>
       </div>
@@ -598,7 +601,7 @@
           </tr>
           <tr>
             <td>🚢 Oceanwide Deep South Basecamp</td><td>~13</td><td>Ushuaia</td>
-            <td><span class="pill warn">by sea</span></td><td><span class="pill yes">Tries (not guaranteed)</span></td><td>on request</td>
+            <td><span class="pill warn">by sea</span></td><td><span class="pill yes">Itinerary names it</span></td><td>$13,700+ · <span class="pill warn">sold out</span></td>
           </tr>
           <tr>
             <td>✈️ Antarctica21 Polar Circle</td><td>10</td><td>Punta Arenas</td>
@@ -628,7 +631,7 @@
           <div style="font-size:13px;color:var(--text-dim);margin-bottom:6px">Travelers (incl. Grandma Nancy)</div>
           <div class="stepper">
             <button onclick="bump(-1)">–</button>
-            <input id="pax" type="number" value="3" min="1" max="12" oninput="recalc()">
+            <input id="pax" type="number" value="1" min="1" max="12" oninput="recalc()">
             <button onclick="bump(1)">+</button>
           </div>
         </div>
@@ -836,7 +839,8 @@
 
   // ---- Cost calculator ----
   const OPTIONS = [
-    {name:'Oceanwide Deep South (OTL27-27)', sub:'25 days · lowest berth · his island', pp:24600},
+    {name:'Oceanwide Deep South (OTL27-27)', sub:'25 days · shared quad berth · his island', pp:24600},
+    {name:'Oceanwide Deep South, private twin', sub:'25 days · twin porthole cabin · his island', pp:30650},
     {name:'Antarctica21 Polar Circle', sub:'10 days · flies the Drake · ~66°S', pp:24995},
     {name:'Antarctica21 Classic', sub:'8 days · flies the Drake', pp:14895},
     {name:'Lindblad Fly the Drake', sub:'8–10 days · incl. flights', pp:12400},
