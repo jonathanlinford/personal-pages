@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robinhood Gold vs SoFi Plus · Jonny's Pages</title>
+<meta name="description" content="An in-depth, numbers-first comparison of Robinhood Gold and SoFi Plus: pricing, APY, credit cards, IRA match, loan discounts, break-even math, and fine print. Rates as of June 10, 2026.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --card-2: #16161f;
+    --border: #1e1e2e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --text-faint: #55556a;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --rh: #d4af37;
+    --rh-dim: rgba(212, 175, 55, 0.14);
+    --rh-border: rgba(212, 175, 55, 0.35);
+    --sofi: #2ec5e3;
+    --sofi-dim: rgba(46, 197, 227, 0.12);
+    --sofi-border: rgba(46, 197, 227, 0.35);
+    --good: #34c759;
+    --bad: #ff453a;
+    --warn: #ff9f0a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .bg-grid {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow {
+    position: fixed; pointer-events: none; z-index: 0;
+    width: 720px; height: 720px; border-radius: 50%;
+    filter: blur(140px); opacity: 0.13;
+  }
+  .glow-rh { background: var(--rh); top: -300px; left: -240px; }
+  .glow-sofi { background: var(--sofi); bottom: -320px; right: -240px; }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 24px 90px;
+  }
+
+  .crumb {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-faint);
+    margin-bottom: 36px;
+  }
+  .crumb a { color: var(--text-dim); text-decoration: none; }
+  .crumb a:hover { color: var(--accent-light); }
+
+  /* ── Hero ── */
+  .hero { text-align: center; margin-bottom: 56px; }
+  .hero .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 18px;
+    animation: rise 0.6s ease both;
+  }
+  .versus {
+    display: flex; align-items: center; justify-content: center;
+    gap: 22px; flex-wrap: wrap;
+  }
+  .versus .side {
+    font-size: clamp(30px, 5.4vw, 52px);
+    font-weight: 900; letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .side-rh {
+    background: linear-gradient(135deg, #f5e3a4, var(--rh) 60%, #9a7b1e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rise 0.6s 0.08s ease both;
+  }
+  .side-sofi {
+    background: linear-gradient(135deg, #b6ecf7, var(--sofi) 55%, #1488a8);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rise 0.6s 0.24s ease both;
+  }
+  .versus .vs {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px; font-weight: 700; color: var(--text-faint);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 8px 14px; background: var(--card);
+    animation: pop 0.5s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .hero .sub {
+    margin: 22px auto 0; max-width: 640px;
+    color: var(--text-dim); font-size: 16px;
+    animation: rise 0.6s 0.35s ease both;
+  }
+  .hero .stamp {
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; color: var(--text-faint);
+    animation: rise 0.6s 0.45s ease both;
+  }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+
+  /* ── TLDR ── */
+  .tldr {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    padding: 26px 28px;
+    margin-bottom: 64px;
+    animation: rise 0.6s 0.5s ease both;
+  }
+  .tldr h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 14px;
+  }
+  .tldr p { color: var(--text); font-size: 15.5px; margin-bottom: 10px; }
+  .tldr p:last-child { margin-bottom: 0; }
+  .tldr strong.rh { color: var(--rh); }
+  .tldr strong.sofi { color: var(--sofi); }
+
+  /* ── Section headers ── */
+  section { margin-bottom: 72px; }
+  .sec-head { margin-bottom: 26px; }
+  .sec-head .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-faint); letter-spacing: 0.18em;
+  }
+  .sec-head h2 {
+    font-size: 27px; font-weight: 800; letter-spacing: -0.01em; margin-top: 4px;
+  }
+  .sec-head p { color: var(--text-dim); margin-top: 8px; max-width: 700px; font-size: 15px; }
+
+  /* ── Duel cards ── */
+  .duel { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .duel { grid-template-columns: 1fr; } }
+
+  .fighter {
+    border-radius: 16px; padding: 26px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .fighter::before {
+    content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  }
+  .fighter.rh::before { background: linear-gradient(90deg, transparent, var(--rh), transparent); }
+  .fighter.sofi::before { background: linear-gradient(90deg, transparent, var(--sofi), transparent); }
+
+  .fighter .label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .fighter.rh .label { background: var(--rh-dim); color: var(--rh); border: 1px solid var(--rh-border); }
+  .fighter.sofi .label { background: var(--sofi-dim); color: var(--sofi); border: 1px solid var(--sofi-border); }
+
+  .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  }
+  .price small { font-size: 14px; font-weight: 500; color: var(--text-dim); letter-spacing: 0; }
+  .fighter .alt-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; color: var(--text-dim); margin-top: 8px;
+  }
+  .fighter .what {
+    margin-top: 16px; color: var(--text-dim); font-size: 14.5px;
+  }
+  .fighter ul { list-style: none; margin-top: 18px; }
+  .fighter li {
+    padding: 9px 0 9px 26px; position: relative;
+    font-size: 14.5px; border-top: 1px solid var(--border);
+  }
+  .fighter li::before {
+    content: '◆'; position: absolute; left: 4px; top: 9px; font-size: 10px;
+  }
+  .fighter.rh li::before { color: var(--rh); }
+  .fighter.sofi li::before { color: var(--sofi); }
+  .fighter li b { font-weight: 600; }
+  .fighter li .mono { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; }
+
+  /* ── Callout ── */
+  .callout {
+    display: flex; gap: 14px; align-items: flex-start;
+    border-radius: 14px; padding: 18px 20px; margin-top: 20px;
+    background: rgba(255, 159, 10, 0.07);
+    border: 1px solid rgba(255, 159, 10, 0.3);
+    font-size: 14.5px;
+  }
+  .callout .ic { font-size: 18px; line-height: 1.3; }
+  .callout b { color: var(--warn); }
+  .callout.indigo { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.35); }
+  .callout.indigo b { color: var(--accent-light); }
+
+  /* ── Stat strip ── */
+  .stat-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px;
+  }
+  @media (max-width: 720px) { .stat-strip { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 13px;
+    padding: 16px 16px 14px;
+  }
+  .stat .v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .stat .v.rh-c { color: var(--rh); }
+  .stat .v.sofi-c { color: var(--sofi); }
+  .stat .k { font-size: 12px; color: var(--text-dim); margin-top: 5px; line-height: 1.4; }
+
+  /* ── Battle rows (category deep-dive) ── */
+  .battle {
+    border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    margin-bottom: 18px; background: var(--card);
+  }
+  .battle-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 16px 22px; background: var(--card-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .battle-head h3 { font-size: 16.5px; font-weight: 700; }
+  .battle-head .winner {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+  }
+  .winner.w-rh { background: var(--rh-dim); color: var(--rh); border: 1px solid var(--rh-border); }
+  .winner.w-sofi { background: var(--sofi-dim); color: var(--sofi); border: 1px solid var(--sofi-border); }
+  .winner.w-tie { background: rgba(136,136,160,0.12); color: var(--text-dim); border: 1px solid var(--border); }
+  .battle-body { display: grid; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .battle-body { grid-template-columns: 1fr; } }
+  .battle-col { padding: 18px 22px; font-size: 14.5px; color: var(--text-dim); }
+  .battle-col:first-child { border-right: 1px solid var(--border); }
+  @media (max-width: 720px) { .battle-col:first-child { border-right: none; border-bottom: 1px solid var(--border); } }
+  .battle-col .who {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .battle-col.c-rh .who { color: var(--rh); }
+  .battle-col.c-sofi .who { color: var(--sofi); }
+  .battle-col b { color: var(--text); font-weight: 600; }
+  .battle-col .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .battle-note {
+    padding: 13px 22px; border-top: 1px solid var(--border);
+    font-size: 13.5px; color: var(--text-dim); background: rgba(99,102,241,0.04);
+  }
+  .battle-note b { color: var(--accent-light); }
+
+  /* ── Calculators ── */
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc {
+    border-radius: 16px; padding: 24px; background: var(--card);
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .calc::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; }
+  .calc.rh::before { background: linear-gradient(90deg, transparent, var(--rh), transparent); }
+  .calc.sofi::before { background: linear-gradient(90deg, transparent, var(--sofi), transparent); }
+  .calc h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .calc .cost-line {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .slider-row { margin-bottom: 16px; }
+  .slider-row label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 13px; color: var(--text-dim); margin-bottom: 7px;
+  }
+  .slider-row label output {
+    font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 600; color: var(--text);
+  }
+  input[type=range] {
+    width: 100%; appearance: none; -webkit-appearance: none;
+    height: 5px; border-radius: 4px; background: var(--border); outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    cursor: pointer; border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--border);
+  }
+  .calc.rh input[type=range]::-webkit-slider-thumb { background: var(--rh); }
+  .calc.sofi input[type=range]::-webkit-slider-thumb { background: var(--sofi); }
+  input[type=range]::-moz-range-thumb {
+    width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 2px solid var(--bg);
+  }
+  .calc.rh input[type=range]::-moz-range-thumb { background: var(--rh); }
+  .calc.sofi input[type=range]::-moz-range-thumb { background: var(--sofi); }
+
+  .calc .result {
+    margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border);
+  }
+  .calc .result .rows { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--text-dim); }
+  .calc .result .rows div { display: flex; justify-content: space-between; padding: 3px 0; }
+  .calc .net {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .calc .net .nk { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+  .calc .net .nv {
+    font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .nv.pos { color: var(--good); }
+  .nv.neg { color: var(--bad); }
+  .calc .verdict-line { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ── Big table ── */
+  .table-wrap {
+    border: 1px solid var(--border); border-radius: 16px; overflow-x: auto;
+    background: var(--card);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+  thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    text-align: left; padding: 14px 18px;
+    background: var(--card-2); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+  }
+  thead th.col-rh { color: var(--rh); }
+  thead th.col-sofi { color: var(--sofi); }
+  thead th:first-child { color: var(--text-dim); width: 26%; }
+  tbody td {
+    padding: 13px 18px; border-bottom: 1px solid var(--border);
+    vertical-align: top; color: var(--text-dim);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td:first-child { color: var(--text); font-weight: 600; font-size: 13.5px; }
+  tbody tr:hover td { background: rgba(99,102,241,0.04); }
+  td .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
+  td .win { color: var(--good); font-weight: 600; }
+  td .meh { color: var(--text-faint); }
+  .tbl-section td {
+    background: var(--card-2) !important;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px !important;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-light) !important;
+    font-weight: 600 !important; padding: 10px 18px;
+  }
+
+  /* ── Fine print ── */
+  .gotchas { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .gotchas { grid-template-columns: 1fr; } }
+  .gotcha-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 22px; background: var(--card);
+  }
+  .gotcha-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+  .gotcha-card h3 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; }
+  .dot.d-rh { background: var(--rh); }
+  .dot.d-sofi { background: var(--sofi); }
+  .gotcha-card ul { list-style: none; }
+  .gotcha-card li {
+    font-size: 13.5px; color: var(--text-dim); padding: 7px 0 7px 22px; position: relative;
+    border-top: 1px solid var(--border);
+  }
+  .gotcha-card li::before { content: '⚠'; position: absolute; left: 0; top: 7px; font-size: 11px; color: var(--warn); }
+  .gotcha-card li b { color: var(--text); }
+
+  /* ── Verdict ── */
+  .verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .verdict-grid { grid-template-columns: 1fr; } }
+  .verdict-card {
+    border-radius: 16px; padding: 26px; position: relative; overflow: hidden;
+  }
+  .verdict-card.rh { background: linear-gradient(160deg, rgba(212,175,55,0.12), var(--card) 55%); border: 1px solid var(--rh-border); }
+  .verdict-card.sofi { background: linear-gradient(160deg, rgba(46,197,227,0.10), var(--card) 55%); border: 1px solid var(--sofi-border); }
+  .verdict-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+  .verdict-card.rh h3 { color: var(--rh); }
+  .verdict-card.sofi h3 { color: var(--sofi); }
+  .verdict-card .tagline {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim); margin-bottom: 14px;
+  }
+  .verdict-card p { font-size: 14.5px; color: var(--text-dim); margin-bottom: 10px; }
+  .verdict-card p b { color: var(--text); }
+
+  .my-take {
+    margin-top: 18px; border-radius: 16px; padding: 26px 28px;
+    border: 1px solid rgba(99,102,241,0.4);
+    background: linear-gradient(160deg, rgba(99,102,241,0.1), var(--card) 60%);
+  }
+  .my-take h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent-light); margin-bottom: 12px;
+  }
+  .my-take p { font-size: 15px; color: var(--text); margin-bottom: 10px; }
+  .my-take p:last-child { margin-bottom: 0; }
+
+  /* ── Sources / footer ── */
+  .sources {
+    border-top: 1px solid var(--border); padding-top: 26px;
+  }
+  .sources h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-faint); margin-bottom: 12px;
+  }
+  .sources ul { list-style: none; columns: 2; column-gap: 32px; }
+  @media (max-width: 640px) { .sources ul { columns: 1; } }
+  .sources li { font-size: 12.5px; padding: 3px 0; break-inside: avoid; }
+  .sources a { color: var(--text-dim); text-decoration: none; border-bottom: 1px dotted var(--border); }
+  .sources a:hover { color: var(--accent-light); }
+  .disclaimer {
+    margin-top: 22px; font-size: 12px; color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace; line-height: 1.7;
+  }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow glow-rh"></div>
+<div class="bg-glow glow-sofi"></div>
+
+<div class="container">
+  <div class="crumb"><a href="index.html">← jonny's pages</a> / money</div>
+
+  <div class="hero">
+    <div class="kicker">Premium membership face-off</div>
+    <div class="versus">
+      <span class="side side-rh">Robinhood Gold</span>
+      <span class="vs">VS</span>
+      <span class="side side-sofi">SoFi Plus</span>
+    </div>
+    <p class="sub">Two fintech subscriptions that promise to pay for themselves. One is a $50-a-year brokerage upgrade, the other a $120-a-year banking bundle. Here's where each one actually earns its fee.</p>
+    <div class="stamp">rates &amp; terms verified 2026-06-10</div>
+  </div>
+
+  <div class="tldr">
+    <h2>TL;DR</h2>
+    <p><strong class="rh">Robinhood Gold</strong> is the easier yes. At $50/yr it pays for itself with either ~$1,500 of idle cash (3.35% APY vs basically nothing on the free tier) or any meaningful IRA contribution (3% match vs 1%). Max a $7,500 IRA and the match alone is $225/yr, which is 4.5x the fee. The 3% flat cash-back Gold Card rides along at no annual fee.</p>
+    <p><strong class="sofi">SoFi Plus</strong> got harder to love on March 31, 2026, when SoFi killed the free direct-deposit path and made it $10/mo for everyone. The catch: direct deposit still gets you 3.10% savings APY and all the loan discounts <em>without</em> Plus. You're paying $120/yr mostly for +1.40% APY on your first $20K (max $280/yr), 5% grocery cash back on their new Smart Card, and the 1% invest match.</p>
+    <p><strong>They're different tools.</strong> Gold upgrades a brokerage; Plus upgrades a bank. If you only pick one and you invest at all, Gold's math is far more forgiving. Plus only pencils if you keep a big savings balance at SoFi or spend heavily on groceries with their card.</p>
+  </div>
+
+  <!-- ── 01 contenders ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">01 / THE CONTENDERS</div>
+      <h2>What you're actually buying</h2>
+    </div>
+    <div class="duel">
+      <div class="fighter rh reveal">
+        <span class="label">Robinhood Gold</span>
+        <div class="price">$5<small>/mo</small></div>
+        <div class="alt-price">or $50/yr (2 months free) · first 30 days free</div>
+        <p class="what">A premium tier on Robinhood's brokerage. Almost every perk is investment-flavored: yield on cash, retirement match, cheaper leverage, better data.</p>
+        <ul>
+          <li><b>3.35% APY</b> on uninvested brokerage cash, <span class="mono">no cap</span> (free tier: ~0.01%)</li>
+          <li><b>3% IRA match</b> on contributions (free tier: 1%); up to <span class="mono">$225/yr</span> at the $7,500 limit</li>
+          <li><b>Gold Card:</b> 3% cash back on everything, $0 annual fee, no foreign transaction fees</li>
+          <li><b>First $1,000 of margin</b> interest-free; discounted rates after</li>
+          <li><b>Bigger instant deposits</b> (up to 3x portfolio value)</li>
+          <li><b>Cheaper derivatives:</b> futures <span class="mono">$0.50</span>/contract, index options <span class="mono">$0.35</span>/contract</li>
+          <li><b>Research stack:</b> Morningstar reports, Nasdaq Level II, Cortex AI insights</li>
+          <li><b>Extras:</b> $500 closing credit via Sage Home Loans, Strategies fee capped above $100K</li>
+        </ul>
+      </div>
+      <div class="fighter sofi reveal">
+        <span class="label">SoFi Plus</span>
+        <div class="price">$10<small>/mo</small></div>
+        <div class="alt-price">$120/yr · no annual option · no free path since 2026-03-31</div>
+        <p class="what">A premium tier on SoFi's banking super-app. The perks sprawl across savings, cards, loans, investing, and a pile of partner discounts.</p>
+        <ul>
+          <li><b>4.50% APY</b> on savings, <span class="mono">first $20K only</span> (3.10% above that; direct deposit without Plus already gets 3.10%)</li>
+          <li><b>5% grocery cash back</b> on the new SoFi Smart Card (Plus members only)</li>
+          <li><b>10% cash-back boost</b> on the classic SoFi card (2% becomes 2.2%)</li>
+          <li><b>1% invest match</b> on eligible recurring deposits (5-year hold) + <b>1% crypto buy match</b></li>
+          <li><b>5% back on SoFi Travel</b> bookings (except air)</li>
+          <li><b>Unlimited sessions</b> with credentialed financial planners; IPO allocation priority</li>
+          <li><b>Loan discounts:</b> 0.25% off personal loans, 0.125% off student refi, $500 off mortgage origination</li>
+          <li><b>Partner grab-bag:</b> 20% off TurboTax, $50 Rakuten bonus, Vivid Seats &amp; Seated credits, CNBC+ and Care.com discounts, SoFi Stadium perks</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout reveal">
+      <span class="ic">⚠️</span>
+      <div><b>The March 2026 rug-pull:</b> until 3/30/2026, SoFi Plus was free with any eligible direct deposit. As of 3/31/2026 it's $10/mo for everyone, full stop. Direct deposit still unlocks the 3.10% savings APY and the lending-rate discounts on its own, so the real question is whether the Plus-only extras are worth $120/yr <em>on top of</em> what direct deposit already gives you.</div>
+    </div>
+    <div class="stat-strip reveal">
+      <div class="stat"><div class="v rh-c">$50</div><div class="k">Gold per year (annual plan)</div></div>
+      <div class="stat"><div class="v sofi-c">$120</div><div class="k">Plus per year (monthly only)</div></div>
+      <div class="stat"><div class="v rh-c">~$1,495</div><div class="k">idle cash that makes Gold free (at 3.35%)</div></div>
+      <div class="stat"><div class="v sofi-c">~$8,600</div><div class="k">SoFi savings that makes Plus free (vs the 3.10% you'd get anyway)</div></div>
+    </div>
+  </section>
+
+  <!-- ── 02 category battles ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">02 / CATEGORY BY CATEGORY</div>
+      <h2>Head-to-head</h2>
+      <p>Each round compares the premium tier against what you'd get from the same company for free, because that's the only honest way to score a subscription.</p>
+    </div>
+
+    <div class="battle reveal">
+      <div class="battle-head"><h3>💵 Yield on cash</h3><span class="winner w-sofi">SoFi, with an asterisk</span></div>
+      <div class="battle-body">
+        <div class="battle-col c-rh"><div class="who">Robinhood Gold</div>
+          <b>3.35% APY, uncapped,</b> on uninvested brokerage cash (FDIC-insured via partner-bank sweep). The free tier earns essentially nothing, so the entire 3.35% counts as a Gold benefit. <span class="mono">$10K parked = ~$335/yr.</span></div>
+        <div class="battle-col c-sofi"><div class="who">SoFi Plus</div>
+          <b>4.50% APY but only on your first $20K</b> in savings; 3.10% above that. Direct deposit already earns 3.10% without Plus, so the Plus premium is really <b>+1.40% on $20K max = $280/yr</b>. Checking stays at 0.50% either way.</div>
+      </div>
+      <div class="battle-note"><b>Scoring note:</b> SoFi's headline rate is higher, but Robinhood's delta over its own free tier is much larger. If your cash lives at a 4%+ HYSA elsewhere anyway, neither APY perk should drive the decision alone.</div>
+    </div>
+
+    <div class="battle reveal">
+      <div class="battle-head"><h3>💳 Credit cards</h3><span class="winner w-rh">Robinhood</span></div>
+      <div class="battle-body">
+        <div class="battle-col c-rh"><div class="who">Robinhood Gold Card</div>
+          <b>3% flat cash back on every category</b>, $0 annual fee, no foreign transaction fees, Visa Signature perks, virtual card numbers, free authorized users of any age. APR 21.99% to 29.99% variable. Still gated behind an application queue, and the 3% requires keeping Gold active.</div>
+        <div class="battle-col c-sofi"><div class="who">SoFi cards + Plus</div>
+          New <b>Smart Card: 5% on groceries</b> (Plus only); classic SoFi card gets a 10% boost, <b>2% to 2.2%</b>. 5% groceries is excellent for a big grocery budget, but it's one category; everything else trails the Gold Card's flat 3%.</div>
+      </div>
+      <div class="battle-note"><b>Scoring note:</b> a 3% flat card is top-of-market and quietly the strongest single perk in either bundle. SoFi's 5% grocery niche can out-earn it only if groceries dominate your card spend.</div>
+    </div>
+
+    <div class="battle reveal">
+      <div class="battle-head"><h3>🏦 Retirement &amp; investing</h3><span class="winner w-rh">Robinhood</span></div>
+      <div class="battle-body">
+        <div class="battle-col c-rh"><div class="who">Robinhood Gold</div>
+          <b>3% IRA match</b> (vs 1% free) = up to <span class="mono">$225/yr</span> on a maxed $7,500 contribution; that's $150/yr more than the free tier, triple the annual fee by itself. Strings: stay subscribed 1 year, leave the money in the IRA 5 years. Plus cheap futures/index options and the Cortex/Morningstar/Level II research stack.</div>
+        <div class="battle-col c-sofi"><div class="who">SoFi Plus</div>
+          <b>1% match on eligible recurring net deposits</b> into taxable invest accounts (5-year hold) and <b>1% crypto buy match</b>. Unlimited certified financial planner sessions is genuinely valuable if you'd otherwise pay for advice. IPO access is a niche perk.</div>
+      </div>
+      <div class="battle-note"><b>Scoring note:</b> 3% on an IRA beats 1% on taxable deposits for almost everyone without a workplace plan; the match is on contributions you were (hopefully) making anyway.</div>
+    </div>
+
+    <div class="battle reveal">
+      <div class="battle-head"><h3>🏠 Loans &amp; borrowing</h3><span class="winner w-tie">Tie / depends</span></div>
+      <div class="battle-body">
+        <div class="battle-col c-rh"><div class="who">Robinhood Gold</div>
+          <b>First $1,000 of margin free</b>, then discounted rates (around 5% on balances up to $50K as of early 2026). $500 closing-cost credit through Sage Home Loans. Margin perks only matter if you actually borrow against your portfolio.</div>
+        <div class="battle-col c-sofi"><div class="who">SoFi Plus</div>
+          Extra <b>0.25% off personal loans</b>, 0.125% off student refi, $500 off mortgage origination, $200 off home equity. Real money if you're borrowing, <b>but direct deposit gets you these same discounts without Plus</b>, so they're barely a Plus benefit at all.</div>
+      </div>
+    </div>
+
+    <div class="battle reveal">
+      <div class="battle-head"><h3>🎁 Lifestyle &amp; partner perks</h3><span class="winner w-sofi">SoFi</span></div>
+      <div class="battle-body">
+        <div class="battle-col c-rh"><div class="who">Robinhood Gold</div>
+          Thin on lifestyle: a rewards program with partner perks and experiences, plus the card's Visa Signature benefits (trip interruption protection, etc.). Gold is unapologetically an investing product.</div>
+        <div class="battle-col c-sofi"><div class="who">SoFi Plus</div>
+          The kitchen sink: <b>20% off TurboTax Federal</b>, $50 Rakuten welcome bonus, $20 Seated dining reward, 10% off Vivid Seats (max $50), 40% off CNBC+, Care.com year for $99, HelloPrivacy and Trust discounts, SoFi Stadium expedited entry. Each is small and partner-fulfilled, but a TurboTax filer + one ticket order can claw back $50 to $80 of the fee.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 calculators ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">03 / RUN YOUR OWN NUMBERS</div>
+      <h2>Break-even calculators</h2>
+      <p>Annual value of each membership over its own free tier, minus the fee. Drag the sliders to your situation; green means the subscription pays for itself.</p>
+    </div>
+    <div class="calc-grid">
+      <div class="calc rh reveal">
+        <h3>Robinhood Gold</h3>
+        <div class="cost-line">cost: $50/yr (annual plan)</div>
+        <div class="slider-row">
+          <label>Avg. uninvested cash at Robinhood <output id="rhCashOut">$2,000</output></label>
+          <input type="range" id="rhCash" min="0" max="30000" step="500" value="2000">
+        </div>
+        <div class="slider-row">
+          <label>Annual IRA contribution <output id="rhIraOut">$7,500</output></label>
+          <input type="range" id="rhIra" min="0" max="7500" step="250" value="7500">
+        </div>
+        <div class="slider-row">
+          <label>Annual Gold Card spend <output id="rhSpendOut">$12,000</output></label>
+          <input type="range" id="rhSpend" min="0" max="60000" step="1000" value="12000">
+        </div>
+        <div class="result">
+          <div class="rows">
+            <div><span>cash yield (3.35% vs ~0%)</span><span id="rhYield">$0</span></div>
+            <div><span>IRA match edge (3% vs 1%)</span><span id="rhMatch">$0</span></div>
+            <div><span>card edge (3% vs a 2% card)</span><span id="rhCard">$0</span></div>
+            <div><span>membership fee</span><span>-$50</span></div>
+          </div>
+          <div class="net"><span class="nk">Net per year</span><span class="nv" id="rhNet">$0</span></div>
+          <div class="verdict-line" id="rhVerdict"></div>
+        </div>
+      </div>
+      <div class="calc sofi reveal">
+        <h3>SoFi Plus</h3>
+        <div class="cost-line">cost: $120/yr ($10/mo)</div>
+        <div class="slider-row">
+          <label>Avg. SoFi savings balance <output id="sfSaveOut">$10,000</output></label>
+          <input type="range" id="sfSave" min="0" max="40000" step="500" value="10000">
+        </div>
+        <div class="slider-row">
+          <label>Monthly grocery spend on Smart Card <output id="sfGrocOut">$800</output></label>
+          <input type="range" id="sfGroc" min="0" max="2500" step="50" value="800">
+        </div>
+        <div class="slider-row">
+          <label>Annual recurring invest deposits (1% match) <output id="sfInvOut">$0</output></label>
+          <input type="range" id="sfInv" min="0" max="20000" step="500" value="0">
+        </div>
+        <div class="result">
+          <div class="rows">
+            <div><span>APY edge (+1.40% on first $20K)</span><span id="sfYield">$0</span></div>
+            <div><span>grocery edge (5% vs 2% baseline)</span><span id="sfGrocV">$0</span></div>
+            <div><span>invest match (1%, 5-yr hold)</span><span id="sfMatch">$0</span></div>
+            <div><span>membership fee</span><span>-$120</span></div>
+          </div>
+          <div class="net"><span class="nk">Net per year</span><span class="nv" id="sfNet">$0</span></div>
+          <div class="verdict-line" id="sfVerdict"></div>
+        </div>
+      </div>
+    </div>
+    <div class="callout indigo reveal">
+      <span class="ic">🧮</span>
+      <div><b>Assumptions:</b> the SoFi APY edge is measured against the 3.10% you'd earn with plain direct deposit, and grocery value against a generic 2% flat card. The Robinhood card edge assumes your alternative is a 2% card. Rates float; both companies cut APYs repeatedly through 2025-2026.</div>
+    </div>
+  </section>
+
+  <!-- ── 04 table ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">04 / THE FULL GRID</div>
+      <h2>Everything, side by side</h2>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th class="col-rh">Robinhood Gold</th><th class="col-sofi">SoFi Plus</th></tr>
+        </thead>
+        <tbody>
+          <tr class="tbl-section"><td colspan="3">Cost &amp; access</td></tr>
+          <tr><td>Price</td><td><span class="mono win">$5/mo or $50/yr</span></td><td><span class="mono">$10/mo ($120/yr)</span>, no annual plan</td></tr>
+          <tr><td>Free trial / free path</td><td><span class="mono">30 days free</span> (one time)</td><td><span class="meh">None since 3/31/2026</span> (was free w/ direct deposit)</td></tr>
+          <tr><td>What it sits on top of</td><td>Brokerage (+ IRA, card, crypto)</td><td>Checking/savings (+ invest, loans, cards)</td></tr>
+          <tr class="tbl-section"><td colspan="3">Cash &amp; banking</td></tr>
+          <tr><td>Premium APY</td><td><span class="mono">3.35%</span> on brokerage cash, <span class="win">no cap</span></td><td><span class="mono">4.50%</span> on savings, <span class="meh">first $20K only</span>, then 3.10%</td></tr>
+          <tr><td>Free-tier APY (same company)</td><td><span class="mono meh">~0.01%</span></td><td><span class="mono">3.10%</span> w/ direct deposit; 0.80% without</td></tr>
+          <tr><td>Effective APY edge</td><td><span class="win">+3.34%</span> uncapped</td><td><span class="mono">+1.40%</span> on $20K max (<span class="mono">$280/yr</span> ceiling)</td></tr>
+          <tr><td>FDIC insurance</td><td>Partner-bank sweep, up to $2.5M</td><td>SoFi is a chartered bank; up to $3M via insured deposit program</td></tr>
+          <tr class="tbl-section"><td colspan="3">Cards</td></tr>
+          <tr><td>Flagship card</td><td>Gold Card: <span class="win">3% everything</span>, $0 AF, no FTF (waitlist/queue)</td><td>Smart Card: <span class="win">5% groceries</span>; classic card 2% boosted to 2.2%</td></tr>
+          <tr><td>Card requires subscription?</td><td>Yes, 3% needs active Gold</td><td>5% grocery rate needs active Plus</td></tr>
+          <tr class="tbl-section"><td colspan="3">Investing &amp; retirement</td></tr>
+          <tr><td>IRA match</td><td><span class="win">3%</span> (1% free tier), <span class="mono">$225/yr</span> max; 1-yr sub + 5-yr hold</td><td><span class="meh">None</span> (match is on taxable deposits)</td></tr>
+          <tr><td>Other match</td><td>Periodic transfer-match promos</td><td><span class="mono">1%</span> recurring invest deposits (5-yr hold); <span class="mono">1%</span> crypto buys</td></tr>
+          <tr><td>Advice / research</td><td>Morningstar, Level II, Cortex AI</td><td><span class="win">Unlimited CFP sessions</span>, IPO priority</td></tr>
+          <tr><td>Trading fee perks</td><td>Futures <span class="mono">$0.50</span>, index options <span class="mono">$0.35</span>; margin: first <span class="mono">$1K free</span></td><td><span class="meh">n/a</span></td></tr>
+          <tr class="tbl-section"><td colspan="3">Loans</td></tr>
+          <tr><td>Loan perks</td><td>$500 Sage Home Loans closing credit; discounted margin</td><td>0.25% personal / 0.125% student refi / $500 mortgage orig. <span class="meh">(also free w/ direct deposit)</span></td></tr>
+          <tr class="tbl-section"><td colspan="3">Everything else</td></tr>
+          <tr><td>Lifestyle perks</td><td><span class="meh">Minimal</span>: rewards program, Visa Signature benefits</td><td><span class="win">Extensive</span>: TurboTax 20%, Rakuten $50, Seated, Vivid Seats, CNBC+, Care.com, stadium perks</td></tr>
+          <tr><td>Instant deposits</td><td>Up to 3x portfolio value</td><td><span class="meh">n/a</span></td></tr>
+          <tr><td>Cancel risk</td><td>Lose 3% card rate + APY; IRA match clawback if &lt;1yr</td><td>Drop to direct-deposit tier (3.10%, keep loan discounts)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 05 fine print ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">05 / READ THIS BEFORE PAYING</div>
+      <h2>Fine print &amp; gotchas</h2>
+    </div>
+    <div class="gotchas">
+      <div class="gotcha-card reveal">
+        <h3><span class="dot d-rh"></span>Robinhood Gold</h3>
+        <ul>
+          <li><b>IRA match handcuffs:</b> keep Gold for 1 year and the matched assets in the IRA for 5 years, or the match can be clawed back.</li>
+          <li><b>The card is a leash:</b> the Gold Card's 3% only flows while Gold is active; cancel and the card's whole premise collapses.</li>
+          <li><b>Queue for the card:</b> still an application queue; funded brokerage + active Gold required, approval not guaranteed.</li>
+          <li><b>APY drift:</b> Gold cash APY fell from 5.00% (2024) to 3.35% (mid-2026), tracking Fed cuts. The perk shrinks as rates fall.</li>
+          <li><b>Carry APR:</b> 21.99% to 29.99% variable on the card; one carried balance wipes out a year of rewards.</li>
+        </ul>
+      </div>
+      <div class="gotcha-card reveal">
+        <h3><span class="dot d-sofi"></span>SoFi Plus</h3>
+        <ul>
+          <li><b>You may already have the good parts:</b> direct deposit alone keeps 3.10% APY and all lending discounts. Plus is only the delta on top.</li>
+          <li><b>$20K APY cap:</b> the 4.50% headline rate stops at $20K; larger balances fall back to 3.10%, capping the perk at ~$280/yr.</li>
+          <li><b>5-year hold on matches:</b> the 1% invest match forfeits if you pull funds early or lapse the qualifying criteria.</li>
+          <li><b>Partner-fulfilled perks:</b> most lifestyle benefits are run by third parties, change without notice, and require activation legwork.</li>
+          <li><b>Precedent of repricing:</b> SoFi already converted a free benefit into a $120/yr fee once (March 2026). Terms say benefits "are subject to change."</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 verdict ── -->
+  <section>
+    <div class="sec-head reveal">
+      <div class="num">06 / VERDICT</div>
+      <h2>Who should buy what</h2>
+    </div>
+    <div class="verdict-grid">
+      <div class="verdict-card rh reveal">
+        <h3>Get Robinhood Gold if…</h3>
+        <div class="tagline">$50/yr · pays for itself fast</div>
+        <p>…you contribute to an IRA at all (the 3% match is the single best dollar-for-dollar perk in either program), keep more than ~$1,500 idle in your brokerage, or want a no-annual-fee 3% flat cash-back card and don't mind the subscription leash.</p>
+        <p><b>Skip it</b> if your cash and retirement accounts live elsewhere and you'd never use the card; the research perks alone aren't worth it.</p>
+      </div>
+      <div class="verdict-card sofi reveal">
+        <h3>Get SoFi Plus if…</h3>
+        <div class="tagline">$120/yr · needs real usage to pencil</div>
+        <p>…SoFi is already your primary bank with $9K+ parked in savings, or you'd put serious grocery spend on the 5% Smart Card ($350+/mo covers the fee by itself vs a 2% card), or you'll actually book the planner sessions and harvest the partner perks.</p>
+        <p><b>Skip it</b> if you just want good APY and loan discounts; plain direct deposit still delivers those for free.</p>
+      </div>
+    </div>
+    <div class="my-take reveal">
+      <h3>My take</h3>
+      <p>For our situation the order is clear: <b>Gold first, Plus only with a job to do.</b> With no workplace 401(k), every retirement dollar goes through an IRA, and a 3% match on a maxed contribution is $225/yr against a $50 fee. That's a 350% return on the subscription before counting cash yield or the card.</p>
+      <p>SoFi Plus is the inverse: the two things I'd actually want (high savings APY, loan discounts) are still free with direct deposit. The honest case for Plus in a household our size is the 5% grocery card; at a realistic family grocery budget it covers the $120 and then some, but that means adopting the Smart Card as the daily driver. Worth a look if we ever move primary banking to SoFi; not before.</p>
+    </div>
+  </section>
+
+  <!-- ── sources ── -->
+  <div class="sources reveal">
+    <h3>Sources</h3>
+    <ul>
+      <li><a href="https://robinhood.com/creditcard/" target="_blank" rel="noopener">Robinhood Gold Card (official)</a></li>
+      <li><a href="https://robinhood.com/us/en/gold/" target="_blank" rel="noopener">Robinhood Gold membership (official)</a></li>
+      <li><a href="https://robinhood.com/us/en/support/articles/margin-rates/" target="_blank" rel="noopener">Robinhood margin rates (official)</a></li>
+      <li><a href="https://www.sofi.com/sofi-plus/" target="_blank" rel="noopener">SoFi Plus (official)</a></li>
+      <li><a href="https://www.sofi.com/banking/high-yield-savings-account/" target="_blank" rel="noopener">SoFi savings APY (official)</a></li>
+      <li><a href="https://support.sofi.com/hc/en-us/articles/41752686792717" target="_blank" rel="noopener">SoFi: deposits no longer grant Plus after 3/30/2026</a></li>
+      <li><a href="https://www.doctorofcredit.com/sofi-plus-now-costs-10-month-adds-5-grocery-earn/" target="_blank" rel="noopener">Doctor of Credit: SoFi Plus goes paid</a></li>
+      <li><a href="https://www.nerdwallet.com/credit-cards/learn/robinhood-credit-card" target="_blank" rel="noopener">NerdWallet: Robinhood Gold Card</a></li>
+      <li><a href="https://www.finder.com/investments/is-robinhood-gold-worth-it" target="_blank" rel="noopener">Finder: Is Robinhood Gold worth it (2026)</a></li>
+    </ul>
+    <p class="disclaimer">Rates and terms checked 2026-06-10 and they move constantly; both firms cut APYs multiple times in 2025-2026. Nothing here is financial advice, just math. APYs variable; matches carry holding requirements; card approval not guaranteed.</p>
+  </div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const usd = n => (n < 0 ? '-$' : '$') + Math.abs(Math.round(n)).toLocaleString('en-US');
+
+  function calcRH() {
+    const cash = +$('rhCash').value, ira = +$('rhIra').value, spend = +$('rhSpend').value;
+    $('rhCashOut').textContent = usd(cash);
+    $('rhIraOut').textContent = usd(ira);
+    $('rhSpendOut').textContent = usd(spend);
+    const yieldV = cash * 0.0335;          // free tier ~0%
+    const matchV = ira * 0.02;             // 3% vs 1% free tier
+    const cardV = spend * 0.01;            // 3% vs a 2% alternative card
+    const net = yieldV + matchV + cardV - 50;
+    $('rhYield').textContent = '+' + usd(yieldV);
+    $('rhMatch').textContent = '+' + usd(matchV);
+    $('rhCard').textContent = '+' + usd(cardV);
+    const el = $('rhNet');
+    el.textContent = (net >= 0 ? '+' : '') + usd(net);
+    el.className = 'nv ' + (net >= 0 ? 'pos' : 'neg');
+    $('rhVerdict').textContent = net >= 0
+      ? 'Gold pays for itself at these numbers.'
+      : 'Below break-even; the free tier is enough for you.';
+  }
+
+  function calcSF() {
+    const save = +$('sfSave').value, groc = +$('sfGroc').value, inv = +$('sfInv').value;
+    $('sfSaveOut').textContent = usd(save);
+    $('sfGrocOut').textContent = usd(groc) + '/mo';
+    $('sfInvOut').textContent = usd(inv);
+    const yieldV = Math.min(save, 20000) * 0.014;   // 4.50% vs 3.10% you'd get with DD anyway
+    const grocV = groc * 12 * 0.03;                 // 5% vs 2% baseline card
+    const matchV = inv * 0.01;                      // 1% invest match (5-yr hold)
+    const net = yieldV + grocV + matchV - 120;
+    $('sfYield').textContent = '+' + usd(yieldV);
+    $('sfGrocV').textContent = '+' + usd(grocV);
+    $('sfMatch').textContent = '+' + usd(matchV);
+    const el = $('sfNet');
+    el.textContent = (net >= 0 ? '+' : '') + usd(net);
+    el.className = 'nv ' + (net >= 0 ? 'pos' : 'neg');
+    $('sfVerdict').textContent = net >= 0
+      ? 'Plus pays for itself at these numbers.'
+      : 'Below break-even; direct deposit alone serves you better.';
+  }
+
+  ['rhCash','rhIra','rhSpend'].forEach(id => $(id).addEventListener('input', calcRH));
+  ['sfSave','sfGroc','sfInv'].forEach(id => $(id).addEventListener('input', calcSF));
+  calcRH(); calcSF();
+
+  // scroll reveals
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
