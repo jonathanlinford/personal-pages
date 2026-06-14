@@ -410,7 +410,8 @@
   <div class="footer-section fx">
     <h3>Image &amp; video credits</h3>
     <ul>
-      <li>Lineup and scene illustrations: original images generated for this lesson (generic characters, not real people).</li>
+      <li>"Most Beautiful," King Saul, and the Samuel-anoints-David scene are original generated illustrations.</li>
+      <li>Photos via <a href="https://commons.wikimedia.org" style="color:var(--accent-light);text-decoration:none">Wikimedia Commons</a> under their Creative Commons / public-domain licenses: Strongest (Hafþór Björnsson), Smartest (Albert Einstein), Richest (Elon Musk), Fastest (Usain Bolt), Most Famous (Cristiano Ronaldo), Bravest (firefighters), Smallest (Chandra Bahadur Dangi).</li>
       <li>Video: "David and Goliath," <em>Old Testament Stories for Kids</em>, courtesy Gospel for Kids / <a href="https://www.churchofjesuschrist.org/media" style="color:var(--accent-light);text-decoration:none">churchofjesuschrist.org</a>.</li>
     </ul>
   </div>
@@ -426,14 +427,14 @@
 (() => {
   // ---------- lineup data ----------
   const PEOPLE = [
-    {f:'strongest-person.png', l:'Strongest'},
-    {f:'smartest-person.png', l:'Smartest'},
+    {f:'strongest-real.jpg', l:'Strongest', n:'Hafþór Björnsson, World’s Strongest Man'},
+    {f:'smartest-real.jpg', l:'Smartest', n:'Albert Einstein'},
     {f:'most-beautiful-person.png', l:'Most Beautiful'},
-    {f:'richest-person.png', l:'Richest'},
-    {f:'fastest-person.png', l:'Fastest'},
-    {f:'most-famous-person.png', l:'Most Famous'},
-    {f:'bravest-person.png', l:'Bravest'},
-    {f:'smallest-person.png', l:'Smallest'},
+    {f:'richest-real.jpg', l:'Richest', n:'Elon Musk'},
+    {f:'fastest-real.jpg', l:'Fastest', n:'Usain Bolt, fastest man alive'},
+    {f:'most-famous-real.jpg', l:'Most Famous', n:'Cristiano Ronaldo'},
+    {f:'bravest-real.jpg', l:'Bravest', n:'Firefighters'},
+    {f:'smallest-real.jpg', l:'Smallest', n:'Chandra Bahadur Dangi, world’s shortest man'},
     {f:'saul-tall-king.png', l:'King Saul', saul:true},
   ];
   const base = 'assets/looketh-on-heart-lesson/';
@@ -449,7 +450,7 @@
       const c=document.createElement('div');
       c.className='rcard'+(p.saul?' saul':'');
       c.dataset.f=p.f;
-      c.innerHTML='<span class="rank"></span><img src="'+base+p.f+'" alt="'+p.l+'"><span class="lbl">'+p.l+'</span>';
+      c.innerHTML='<span class="rank"></span><img src="'+base+p.f+'" alt="'+(p.n||p.l)+'"><span class="lbl">'+p.l+'</span>';
       lineup.appendChild(c);
     });
     updateRanks();
