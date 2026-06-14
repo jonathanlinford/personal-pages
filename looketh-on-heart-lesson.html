@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<title>The Lord Looketh on the Heart — Primary Lesson, June 14, 2026</title>
+<meta name="description" content="Primary lesson plan for June 14, 2026. 1 Samuel 8–16. An interactive rank-the-most-impressive-people activity, the choosing of Saul and David, and how the Lord looks past the outside and loves us all the same.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;
+    --card:#12121a;
+    --card-soft:#16161f;
+    --border:#1e1e2e;
+    --border-bright:#2a2a40;
+    --text:#e7e7f0;
+    --text-dim:#9090a8;
+    --text-faint:#6a6a82;
+    --accent:#6366f1;
+    --accent-light:#818cf8;
+    --accent-glow:rgba(99,102,241,0.15);
+    --gold:#f5b942;
+    --gold-glow:rgba(245,185,66,0.18);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(99,102,241,0.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    overflow-x:hidden;
+  }
+  .container{max-width:820px;margin:0 auto;padding:48px 24px 90px}
+  .back{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--text-dim);text-decoration:none;font-size:13px;
+    margin-bottom:32px;transition:color .15s;
+  }
+  .back:hover{color:var(--accent-light)}
+
+  /* ---------- header ---------- */
+  header{margin-bottom:40px;border-bottom:1px solid var(--border);padding-bottom:32px}
+  header .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-light);
+    text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;
+  }
+  header h1{
+    font-size:38px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;
+    background:linear-gradient(115deg,var(--text) 20%,var(--accent-light) 50%,var(--gold) 85%);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:shimmer 8s ease-in-out infinite;
+    margin-bottom:12px;
+  }
+  @keyframes shimmer{0%,100%{background-position:0% center}50%{background-position:100% center}}
+  header .verse{
+    font-size:16px;color:var(--text-dim);font-style:italic;
+    border-left:3px solid var(--accent);padding-left:16px;margin-top:18px;
+  }
+  header .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--text-faint);margin-top:18px}
+
+  .objective{
+    background:var(--card-soft);border:1px solid var(--border);border-left:3px solid var(--gold);
+    border-radius:10px;padding:18px 22px;margin-bottom:28px;font-size:15px;color:var(--text-dim);
+  }
+  .objective strong{color:var(--text);font-weight:600}
+
+  .bridge{
+    background:linear-gradient(135deg,rgba(99,102,241,0.10),rgba(245,185,66,0.06));
+    border:1px solid var(--border-bright);border-radius:12px;padding:18px 22px;margin-bottom:40px;
+    font-size:14.5px;color:var(--text-dim);
+  }
+  .bridge .label{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);
+    text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px;
+  }
+  .bridge a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4)}
+  .bridge a:hover{color:#a5b0ff}
+
+  /* ---------- timeline ---------- */
+  .timeline{
+    display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:26px 0 8px;
+  }
+  .tl-node{
+    flex:1 1 90px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;
+    padding:12px 10px;text-align:center;position:relative;
+  }
+  .tl-node .era{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-node .who{font-size:14px;font-weight:600;color:var(--text)}
+  .tl-node.now{border-color:var(--gold);background:var(--gold-glow)}
+  .tl-node.now .who{color:var(--gold)}
+  .tl-arrow{align-self:center;color:var(--text-faint);font-size:16px}
+  .tl-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);text-align:center;margin-top:4px}
+  .tl-cap span{color:var(--accent-light)}
+
+  /* ---------- sections ---------- */
+  section{margin-bottom:50px}
+  .step-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+  .step-num{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent-light);
+    background:var(--accent-glow);padding:4px 10px;border-radius:6px;font-weight:600;
+  }
+  section h2{font-size:23px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
+  .timing{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);margin-left:auto}
+
+  ul.beats{list-style:none;padding:0}
+  ul.beats > li{padding:10px 0;color:var(--text);font-size:15.5px}
+  ul.beats > li + li{border-top:1px solid var(--border)}
+
+  .scripture{
+    background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;
+    margin:18px 0;font-size:16px;color:var(--text);font-style:italic;line-height:1.6;
+  }
+  .scripture .ref{
+    display:block;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:12px;
+    color:var(--accent-light);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;
+  }
+  .scripture.gold{border-left:3px solid var(--gold)}
+
+  .figure{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+  .figure img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .figure figcaption{padding:10px 14px;font-size:13px;color:var(--text-dim);font-style:italic;border-top:1px solid var(--border);background:var(--card-soft)}
+
+  .qa{margin:14px 0;padding:14px 18px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px}
+  .qa .q{color:var(--accent-light);font-weight:600;font-size:14px;margin-bottom:4px}
+  .qa .a{color:var(--text-dim);font-size:14.5px}
+
+  /* ---------- interactive activity ---------- */
+  .activity{
+    background:radial-gradient(120% 120% at 50% 0%,rgba(99,102,241,0.10),transparent 60%),var(--card);
+    border:1px solid var(--border-bright);border-radius:16px;padding:24px 22px 26px;margin:18px 0;
+  }
+  .activity .a-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);
+    text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px;
+  }
+  .activity h3{font-size:19px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .activity .hint{font-size:14px;color:var(--text-dim);margin-bottom:18px}
+  .activity .hint b{color:var(--accent-light)}
+
+  .rank-scale{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-faint);margin-bottom:10px;padding:0 2px}
+
+  .lineup{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(116px,1fr));gap:12px;
+    touch-action:none;
+  }
+  .rcard{
+    position:relative;background:var(--card-soft);border:1px solid var(--border);border-radius:12px;
+    overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none;
+    transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,opacity .25s;
+    will-change:transform;
+  }
+  .rcard:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.4);transform:translateY(-3px)}
+  .rcard img{display:block;width:100%;height:104px;object-fit:cover;pointer-events:none}
+  .rcard .lbl{display:block;padding:8px 6px;text-align:center;font-size:12.5px;font-weight:600;color:var(--text)}
+  .rcard .rank{
+    position:absolute;top:6px;left:6px;width:24px;height:24px;border-radius:50%;
+    background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.4);
+    transition:opacity .3s,transform .3s;
+  }
+  .rcard.dragging{cursor:grabbing;opacity:.92;box-shadow:0 18px 40px rgba(0,0,0,.55);border-color:var(--accent-light);transform:scale(1.05);z-index:5}
+  .rcard.saul{box-shadow:inset 0 0 0 1px rgba(245,185,66,.35)}
+
+  .a-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .btn{
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;border-radius:10px;
+    padding:11px 18px;cursor:pointer;transition:transform .12s,filter .2s,background .2s;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff}
+  .btn-primary:hover{filter:brightness(1.12)}
+  .btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--border-bright)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--accent)}
+
+  /* reveal state */
+  .lineup.revealed .rcard{cursor:default;border-color:rgba(245,185,66,.45);box-shadow:0 0 0 1px rgba(245,185,66,.25),0 0 26px var(--gold-glow)}
+  .lineup.revealed .rcard:hover{transform:none}
+  .lineup.revealed .rank{opacity:0;transform:scale(.4)}
+  .reveal-banner{
+    margin-top:18px;border:1px solid rgba(245,185,66,.4);border-radius:12px;
+    background:linear-gradient(135deg,rgba(245,185,66,.10),rgba(99,102,241,.08));
+    padding:18px 20px;opacity:0;transform:translateY(10px);transition:opacity .5s ease .15s,transform .5s ease .15s;
+  }
+  .reveal-banner.show{opacity:1;transform:none}
+  .reveal-banner .v{font-style:italic;font-size:16px;color:var(--text);line-height:1.6}
+  .reveal-banner .v .ref{display:block;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:11px;color:var(--gold);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px}
+  .reveal-banner .punch{display:block;margin-top:12px;font-weight:700;font-size:17px;color:var(--gold)}
+
+  /* ---------- video ---------- */
+  .video{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1px solid var(--border);background:#000;margin:18px 0 6px}
+  .video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+  .video-cap{font-size:13px;color:var(--text-faint);font-style:italic;margin:0 0 18px;padding-left:2px}
+
+  /* ---------- footer ---------- */
+  .footer-section{margin-top:64px;padding-top:32px;border-top:1px solid var(--border)}
+  .footer-section h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .footer-section ul{list-style:none;padding:0;color:var(--text-dim);font-size:14px}
+  .footer-section ul li{padding:3px 0}
+
+  strong{color:var(--text);font-weight:600}
+  em{color:var(--text);font-style:italic}
+  a.s{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s;white-space:nowrap}
+  a.s:hover{color:#a5b0ff}
+  .scripture .ref a.s,header .verse a.s{color:inherit;border-bottom-color:rgba(255,255,255,0.18)}
+
+  /* scroll reveal */
+  .fx{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+  .fx.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.fx{opacity:1;transform:none;transition:none}header h1{animation:none}}
+
+  /* lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(5,5,10,0.96);display:none;align-items:center;justify-content:center;z-index:1000;-webkit-user-select:none;user-select:none}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:94vw;max-height:86vh;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .lightbox .lb-close{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(18,18,26,.85);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer}
+  body.lb-open{overflow:hidden}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Back to Jonny's Pages</a>
+
+  <header>
+    <div class="eyebrow">Primary Lesson · June 14, 2026</div>
+    <h1>The Lord Looketh on the Heart</h1>
+    <div class="verse"><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p7#p7">1 Samuel 16:7</a> · <em>"man looketh on the outward appearance, but the Lord looketh on the heart."</em></div>
+    <div class="meta">
+      <span>1 Samuel 8–10; 13; 15–16 · Come Follow Me, Week 24</span>
+      <span>Primary (9-year-olds), Elk Ridge 15th Ward</span>
+      <span>30 min</span>
+    </div>
+  </header>
+
+  <div class="objective fx">
+    <strong>Objective.</strong> Help the kids feel that the Lord does not rank or sort us the way the world does. The world measures the outside (strong, smart, beautiful, rich, fast, famous, big). The Lord <em>"looketh on the heart,"</em> and He loves every one of us the same. Anchor it with God passing over tall, impressive Saul and choosing David, the shepherd boy nobody thought to call in.
+  </div>
+
+  <div class="bridge fx">
+    <span class="label">↩ Where we are on the timeline</span>
+    Two weeks ago was <a target="_blank" rel="noopener" href="joshua-lesson.html">Joshua</a> (<em>"as for me and my house, we will serve the Lord"</em>). Last week was <a target="_blank" rel="noopener" href="judges-lesson.html">the Judges</a>, which ends with <em>"there was no king in Israel: every man did that which was right in his own eyes."</em> In between, God called young <strong>Samuel</strong> (<em>"Speak, Lord, for thy servant heareth"</em>). Today the people get tired of judges and demand a <strong>king</strong>, and God uses that moment to teach the most important rule about how He sees people.
+  </div>
+
+  <div class="timeline fx" aria-hidden="false">
+    <div class="tl-node"><span class="era">Exodus</span><span class="who">Moses</span></div>
+    <span class="tl-arrow">→</span>
+    <div class="tl-node"><span class="era">Conquest</span><span class="who">Joshua</span></div>
+    <span class="tl-arrow">→</span>
+    <div class="tl-node"><span class="era">The cycle</span><span class="who">Judges</span></div>
+    <span class="tl-arrow">→</span>
+    <div class="tl-node"><span class="era">Prophet</span><span class="who">Samuel</span></div>
+    <span class="tl-arrow">→</span>
+    <div class="tl-node now"><span class="era">Kings</span><span class="who">Saul → David</span></div>
+  </div>
+  <p class="tl-cap fx">Israel moves from <span>judges</span> to <span>kings</span>. That switch is what today is about.</p>
+
+  <!-- Step 1: interactive activity -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">01</span>
+      <h2>Opening activity: who is the most impressive?</h2>
+      <span class="timing">~8 min</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:15px;margin-bottom:8px">Here are some of the people the world calls "the best." On the screen (or with the printed cards) put them in order, most impressive first. Let the kids argue about it. Then push the button and see how the <em>Lord</em> sees the very same lineup.</p>
+
+    <div class="activity">
+      <span class="a-tag">Interactive · drag to rank</span>
+      <h3>The Lineup</h3>
+      <p class="hint">Drag the cards to rank them from <b>most impressive</b> to <b>least</b>. Then tap <b>"How does the Lord see them?"</b></p>
+      <div class="rank-scale"><span>◄ most impressive</span><span>least impressive ►</span></div>
+      <div class="lineup" id="lineup"></div>
+      <div class="a-controls">
+        <button class="btn btn-primary" id="revealBtn">How does the Lord see them?</button>
+        <button class="btn btn-ghost" id="shuffleBtn">Shuffle / reset</button>
+      </div>
+      <div class="reveal-banner" id="revealBanner">
+        <p class="v"><span class="ref">1 Samuel 16:7</span>"The Lord seeth not as man seeth; for man looketh on the outward appearance, but the Lord looketh on the heart."</p>
+        <span class="punch">He does not rank them. He looks at the heart, and He loves them all the same.</span>
+      </div>
+    </div>
+    <div class="qa" style="margin-top:18px">
+      <div class="q">Ask (do not answer yet)</div>
+      <div class="a">Does Heavenly Father line us up like this? Does He love the strongest person more than the smallest person? Keep <strong>King Saul</strong> in mind, we are about to find out why he is in the lineup.</div>
+    </div>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">02</span>
+      <h2>Israel picks a king for his looks</h2>
+      <span class="timing">~6 min</span>
+    </div>
+    <ul class="beats">
+      <li>The people come to Samuel: give us <em>"a king to judge us like all the nations"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/8?lang=eng&id=p5#p5">1 Samuel 8:5</a>). They want to look like everybody else.</li>
+      <li>The Lord tells Samuel something sad: <em>"they have not rejected thee, but they have rejected me, that I should not reign over them"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/8?lang=eng&id=p7#p7">8:7</a>). The real King was always supposed to be God.</li>
+    </ul>
+    <div class="scripture">
+      <span class="ref"><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/9?lang=eng&id=p2#p2">1 Samuel 9:2</a></span>
+      "...a choice young man, and a goodly: ...from his shoulders and upward he was higher than any of the people."
+    </div>
+    <figure class="figure">
+      <img src="assets/looketh-on-heart-lesson/saul-tall-king.png" alt="Saul, the tall first king of Israel, standing taller than the men beside him">
+      <figcaption>Saul: the tallest, best-looking man in Israel. That is <em>why</em> he is in our lineup, he is the world's idea of a perfect king.</figcaption>
+    </figure>
+    <ul class="beats">
+      <li><strong>Ask:</strong> why did the people love Saul right away? (He looked the part.)</li>
+      <li>At first Saul is humble (he even hides in the baggage, <a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/10?lang=eng&id=p22#p22">10:22</a>). But once he is king his heart turns proud and he stops obeying God (chapters 13 and 15). Samuel tells him the hard truth: <em>"to obey is better than sacrifice"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/15?lang=eng&id=p22#p22">15:22</a>). A great-looking king with a disobedient heart is not what God wanted.</li>
+    </ul>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">03</span>
+      <h2>The big lesson: the Lord looketh on the heart</h2>
+      <span class="timing">~7 min</span>
+    </div>
+    <ul class="beats">
+      <li>God sends Samuel to a man named <strong>Jesse</strong> in Bethlehem to anoint a new king from his sons. Jesse lines up his sons, just like we lined up our pictures.</li>
+      <li>The oldest, <strong>Eliab</strong>, is tall and impressive. Samuel almost makes the same mistake the people made with Saul, thinking <em>"Surely the Lord's anointed is before him"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p6#p6">16:6</a>).</li>
+    </ul>
+    <div class="scripture gold">
+      <span class="ref"><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p7#p7">1 Samuel 16:7</a></span>
+      "Look not on his countenance, or on the height of his stature... for the Lord seeth not as man seeth; for man looketh on the outward appearance, but the Lord looketh on the heart."
+    </div>
+    <ul class="beats">
+      <li>Samuel goes down the whole line, seven strong sons, and God says no to every one. Finally Samuel asks: are these all your children? Jesse says, well, there is the <strong>youngest</strong>, out keeping the sheep, and he did not even bother to call him in (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p11#p11">16:11</a>).</li>
+      <li>That overlooked shepherd boy is <strong>David</strong>. God says, <em>"Arise, anoint him: for this is he"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p12#p12">16:12</a>). God chose the one nobody else thought to invite, because of his heart.</li>
+    </ul>
+    <figure class="figure">
+      <img src="assets/looketh-on-heart-lesson/samuel-anoints-david.png" alt="The prophet Samuel anoints young David the shepherd with oil">
+      <figcaption>Samuel anoints David, the youngest son, the shepherd. <em>"the Lord looketh on the heart."</em></figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 4 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">04</span>
+      <h2>Back to the lineup: He loves us all the same</h2>
+      <span class="timing">~6 min</span>
+    </div>
+    <ul class="beats">
+      <li>Scroll back up and press the button again, or stack the printed cards into one pile. Ask: now that we know <a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p7#p7">16:7</a>, how does <em>Heavenly Father</em> line these people up? (He does not. He looks at the heart and loves them all the same.)</li>
+    </ul>
+    <div class="qa">
+      <div class="q">What does it mean that God looks on YOUR heart?</div>
+      <div class="a">You do not have to be the best at anything to be loved by Him. You already are, completely. And the kind of heart you are building (kind, honest, willing to obey and serve) is exactly what He is looking at and helping grow.</div>
+    </div>
+    <ul class="beats">
+      <li><strong>Land it:</strong> Saul <em>looked</em> like the best and lost his way. David <em>looked</em> like the least and was <em>"a man after his own heart"</em> (<a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/13?lang=eng&id=p14#p14">13:14</a>). Outsides did not decide it. Hearts did.</li>
+    </ul>
+  </section>
+
+  <!-- Step 5 video -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">05</span>
+      <h2>Watch: the boy God chose for his heart</h2>
+      <span class="timing">~3 min</span>
+    </div>
+    <p style="color:var(--text-dim);font-size:15px;margin:0 0 6px">God picked David for his heart, not his size. The very next thing in David's life shows why that heart mattered: he trusts God against a giant.</p>
+    <div class="video">
+      <iframe src="https://www.youtube-nocookie.com/embed/hOagOguT8Do" title="David and Goliath | Old Testament Stories for Kids" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <p class="video-cap">"David and Goliath," official Old Testament Stories for Kids (Gospel for Kids, the Church's children's channel). About 2.5 min. This is the next chapter (1 Samuel 17), shown to picture the kind of heart God was looking at.</p>
+    <div class="qa">
+      <div class="q">Ask after the video</div>
+      <div class="a">Where did David's courage against Goliath come from? (The same heart God saw when He chose him: a heart that trusts the Lord.)</div>
+    </div>
+  </section>
+
+  <!-- Step 6 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">06</span>
+      <h2>Application and testimony</h2>
+      <span class="timing">~3 min</span>
+    </div>
+    <ul class="beats">
+      <li><strong>Challenge for the week:</strong> twice this week, look at someone the way the Lord does. Be kind to a person who gets left out or "ranked last," and remember God loves them exactly as much as anyone famous. And when <em>you</em> feel like the least impressive one in the room, remember God already chose to love you, heart first.</li>
+      <li>Brief testimony: Heavenly Father and Jesus Christ see past everything the world measures and love each of us the same. Close with prayer.</li>
+    </ul>
+  </section>
+
+  <div class="footer-section fx">
+    <h3>Scriptures referenced</h3>
+    <ul>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/judg/21?lang=eng&id=p25#p25">Judges 21:25</a> (callback: "no king in Israel; every man did that which was right in his own eyes")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/3?lang=eng&id=p9-p10#p9">1 Samuel 3:9–10</a> (young Samuel: "Speak, Lord, for thy servant heareth")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/8?lang=eng&id=p5,p7#p5">1 Samuel 8:5, 7</a> (Israel asks for a king; "they have rejected me")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/9?lang=eng&id=p2#p2">1 Samuel 9:2</a> (Saul: tallest, "a goodlier person than he")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/10?lang=eng&id=p22#p22">1 Samuel 10:22</a> (humble Saul hides in the baggage)</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/15?lang=eng&id=p22#p22">1 Samuel 15:22</a> ("to obey is better than sacrifice")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p6-p7#p6">1 Samuel 16:6–7</a> (the heart of the lesson: "the Lord looketh on the heart")</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/16?lang=eng&id=p11-p12#p11">1 Samuel 16:11–12</a> (David, the overlooked youngest, anointed)</li>
+      <li><a class="s" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/1-sam/13?lang=eng&id=p14#p14">1 Samuel 13:14</a> (David, "a man after his own heart")</li>
+    </ul>
+  </div>
+
+  <div class="footer-section fx">
+    <h3>Image &amp; video credits</h3>
+    <ul>
+      <li>Lineup and scene illustrations: original images generated for this lesson (generic characters, not real people).</li>
+      <li>Video: "David and Goliath," <em>Old Testament Stories for Kids</em>, courtesy Gospel for Kids / <a href="https://www.churchofjesuschrist.org/media" style="color:var(--accent-light);text-decoration:none">churchofjesuschrist.org</a>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <img id="lbImg" alt="">
+</div>
+
+<script>
+(() => {
+  // ---------- lineup data ----------
+  const PEOPLE = [
+    {f:'strongest-person.png', l:'Strongest'},
+    {f:'smartest-person.png', l:'Smartest'},
+    {f:'most-beautiful-person.png', l:'Most Beautiful'},
+    {f:'richest-person.png', l:'Richest'},
+    {f:'fastest-person.png', l:'Fastest'},
+    {f:'most-famous-person.png', l:'Most Famous'},
+    {f:'bravest-person.png', l:'Bravest'},
+    {f:'smallest-person.png', l:'Smallest'},
+    {f:'saul-tall-king.png', l:'King Saul', saul:true},
+  ];
+  const base = 'assets/looketh-on-heart-lesson/';
+  const lineup = document.getElementById('lineup');
+
+  function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
+
+  function build(order){
+    lineup.classList.remove('revealed');
+    document.getElementById('revealBanner').classList.remove('show');
+    lineup.innerHTML='';
+    order.forEach(p=>{
+      const c=document.createElement('div');
+      c.className='rcard'+(p.saul?' saul':'');
+      c.dataset.f=p.f;
+      c.innerHTML='<span class="rank"></span><img src="'+base+p.f+'" alt="'+p.l+'"><span class="lbl">'+p.l+'</span>';
+      lineup.appendChild(c);
+    });
+    updateRanks();
+    wireDrag();
+  }
+  function updateRanks(){
+    [...lineup.querySelectorAll('.rcard')].forEach((c,i)=>{c.querySelector('.rank').textContent=i+1;});
+  }
+
+  // ---------- FLIP animation helper ----------
+  function rects(items){const m=new Map();items.forEach(it=>m.set(it,it.getBoundingClientRect()));return m;}
+  function flip(items,prev){
+    items.forEach(it=>{
+      const p=prev.get(it); if(!p) return;
+      const c=it.getBoundingClientRect();
+      const dx=p.left-c.left, dy=p.top-c.top;
+      if(dx||dy){
+        it.style.transition='none';
+        it.style.transform='translate('+dx+'px,'+dy+'px)';
+        requestAnimationFrame(()=>{it.style.transition='';it.style.transform='';});
+      }
+    });
+  }
+
+  // ---------- pointer drag-sort ----------
+  let dragEl=null;
+  function wireDrag(){
+    lineup.querySelectorAll('.rcard').forEach(card=>{
+      card.addEventListener('pointerdown',e=>{
+        if(lineup.classList.contains('revealed')) return;
+        dragEl=card; card.setPointerCapture(e.pointerId); card.classList.add('dragging');
+      });
+      card.addEventListener('pointermove',e=>{
+        if(!dragEl||dragEl!==card) return;
+        const under=document.elementsFromPoint(e.clientX,e.clientY)
+          .find(el=>el.classList&&el.classList.contains('rcard')&&el!==dragEl);
+        if(under){
+          const items=[...lineup.querySelectorAll('.rcard')];
+          const prev=rects(items);
+          if(items.indexOf(dragEl)<items.indexOf(under)) under.after(dragEl); else under.before(dragEl);
+          flip([...lineup.querySelectorAll('.rcard')],prev);
+          updateRanks();
+        }
+      });
+      const end=()=>{if(dragEl){dragEl.classList.remove('dragging');dragEl=null;updateRanks();}};
+      card.addEventListener('pointerup',end);
+      card.addEventListener('pointercancel',end);
+    });
+  }
+
+  // ---------- reveal ----------
+  const banner=document.getElementById('revealBanner');
+  document.getElementById('revealBtn').addEventListener('click',()=>{
+    const revealed=lineup.classList.toggle('revealed');
+    if(revealed){
+      const items=[...lineup.querySelectorAll('.rcard')];
+      const prev=rects(items);
+      // settle to original (calm) order to visually "un-rank" them
+      PEOPLE.forEach(p=>{const el=lineup.querySelector('.rcard[data-f="'+p.f+'"]');if(el)lineup.appendChild(el);});
+      flip([...lineup.querySelectorAll('.rcard')],prev);
+      banner.classList.add('show');
+    }else{
+      banner.classList.remove('show');
+      updateRanks();
+      wireDrag();
+    }
+  });
+  document.getElementById('shuffleBtn').addEventListener('click',()=>build(shuffle(PEOPLE)));
+
+  build(shuffle(PEOPLE));
+
+  // ---------- lightbox (figures only) ----------
+  const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg');
+  function openLb(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.classList.add('lb-open');}
+  function closeLb(){lb.classList.remove('open');document.body.classList.remove('lb-open');}
+  document.querySelectorAll('.figure img').forEach(img=>img.addEventListener('click',()=>openLb(img.src,img.alt)));
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+  // ---------- scroll reveal ----------
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12});
+  document.querySelectorAll('.fx').forEach(el=>io.observe(el));
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
