@@ -274,7 +274,7 @@
     <div class="activity">
       <span class="a-tag">Interactive · drag to rank</span>
       <h3>The Lineup</h3>
-      <p class="hint">Drag the cards to rank them from <b>most impressive</b> to <b>least</b>. Then tap <b>"How does the Lord see them?"</b></p>
+      <p class="hint">Drag the cards to rank them from <b>most impressive</b> to <b>least</b>. Tap a card to <b>enlarge</b> it. Then tap <b>"How does the Lord see them?"</b></p>
       <div class="rank-scale"><span>◄ most impressive</span><span>least impressive ►</span></div>
       <div class="lineup" id="lineup"></div>
       <div class="a-controls">
@@ -474,16 +474,21 @@
     });
   }
 
-  // ---------- pointer drag-sort ----------
-  let dragEl=null;
+  // ---------- pointer drag-sort + tap-to-enlarge ----------
+  let dragEl=null, startX=0, startY=0, moved=false;
   function wireDrag(){
     lineup.querySelectorAll('.rcard').forEach(card=>{
       card.addEventListener('pointerdown',e=>{
-        if(lineup.classList.contains('revealed')) return;
-        dragEl=card; card.setPointerCapture(e.pointerId); card.classList.add('dragging');
+        dragEl=card; startX=e.clientX; startY=e.clientY; moved=false;
+        try{card.setPointerCapture(e.pointerId);}catch(_){}
       });
       card.addEventListener('pointermove',e=>{
         if(!dragEl||dragEl!==card) return;
+        if(!moved && (Math.abs(e.clientX-startX)>6 || Math.abs(e.clientY-startY)>6)){
+          moved=true;
+          if(!lineup.classList.contains('revealed')) card.classList.add('dragging');
+        }
+        if(lineup.classList.contains('revealed')) return; // ranking is locked after reveal
         const under=document.elementsFromPoint(e.clientX,e.clientY)
           .find(el=>el.classList&&el.classList.contains('rcard')&&el!==dragEl);
         if(under){
@@ -494,9 +499,15 @@
           updateRanks();
         }
       });
-      const end=()=>{if(dragEl){dragEl.classList.remove('dragging');dragEl=null;updateRanks();}};
+      const end=()=>{
+        if(!dragEl) return;
+        const tapped=dragEl, wasTap=!moved;
+        tapped.classList.remove('dragging');
+        dragEl=null; updateRanks();
+        if(wasTap){ const img=tapped.querySelector('img'); openLb(img.src, tapped.querySelector('.lbl').textContent); }
+      };
       card.addEventListener('pointerup',end);
-      card.addEventListener('pointercancel',end);
+      card.addEventListener('pointercancel',()=>{if(dragEl){dragEl.classList.remove('dragging');dragEl=null;}});
     });
   }
 
