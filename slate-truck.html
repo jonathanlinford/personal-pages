@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slate Truck: Should I Keep My Deposit?</title>
+<meta name="description" content="Where the Bezos-backed Slate electric pickup actually stands a week before the June 24 reveal, and whether to turn a refundable $50 reservation into a non-refundable $300 preorder.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Slate Truck: Should I Keep My Deposit?">
+<meta property="og:description" content="Where the Bezos-backed Slate electric pickup actually stands a week before the June 24 reveal, and whether to turn a refundable $50 reservation into a non-refundable $300 preorder.">
+<meta property="og:url" content="https://jonathanlinford.github.io/personal-pages/slate-truck.html">
+<meta property="og:image" content="https://jonathanlinford.github.io/personal-pages/assets/slate-truck/og.png">
+<meta property="og:image:secure_url" content="https://jonathanlinford.github.io/personal-pages/assets/slate-truck/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A minimalist matte-gray Slate electric pickup truck in a dark studio">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --card-hover: #1a1a28;
+    --border: #1e1e2e;
+    --text: #e4e4ef;
+    --text-dim: #8888a0;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --glow: rgba(99, 102, 241, 0.12);
+    --green: #34C759;
+    --green-bg: rgba(52,199,89,0.12);
+    --red: #FF453A;
+    --red-bg: rgba(255,69,58,0.12);
+    --amber: #FF9F0A;
+    --amber-bg: rgba(255,159,10,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+  .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    background: url('assets/slate-truck/hero.png') center 40% / cover no-repeat;
+    transform: scale(1.05);
+    animation: slowZoom 18s ease-out forwards;
+  }
+  @keyframes slowZoom { to { transform: scale(1); } }
+  .hero-fade {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.1) 35%, rgba(10,10,15,0.85) 80%, var(--bg) 100%);
+  }
+  .hero-content { position: relative; padding: 0 24px 60px; max-width: 880px; margin: 0 auto; width: 100%; }
+  .kicker {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.25);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 7vw, 62px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(120deg, #fff, var(--accent-light));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero .sub { font-size: clamp(16px, 2.4vw, 20px); color: #c8c8da; max-width: 620px; }
+
+  /* ===== COUNTDOWN ===== */
+  .countdown {
+    margin-top: 30px;
+    display: inline-flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: rgba(10,10,15,0.5);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    backdrop-filter: blur(8px);
+  }
+  .cd-label { font-size: 12px; color: var(--text-dim); align-self: center; margin-right: 6px; max-width: 120px; line-height: 1.3; }
+  .cd-unit { text-align: center; min-width: 58px; }
+  .cd-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 30px; font-weight: 600; color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+  .cd-unit span { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 64px 0; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-light); margin-bottom: 12px;
+  }
+  h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 16px; }
+  h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+  p.lead { font-size: 17px; color: #c8c8da; margin-bottom: 14px; }
+  p { color: var(--text-dim); margin-bottom: 12px; }
+  p strong, li strong { color: var(--text); font-weight: 600; }
+  a.inline { color: var(--accent-light); text-decoration: none; border-bottom: 1px solid rgba(129,140,248,0.3); }
+  a.inline:hover { border-color: var(--accent-light); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ===== THE SITUATION CARD ===== */
+  .situation {
+    background: linear-gradient(160deg, rgba(99,102,241,0.10), rgba(99,102,241,0.02));
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .flip {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: stretch;
+    margin: 24px 0 8px;
+  }
+  .flip-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+  .flip-card.now { border-color: rgba(52,199,89,0.4); }
+  .flip-card.then { border-color: rgba(255,159,10,0.45); }
+  .flip-card .tag { font-family:'JetBrains Mono',monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .flip-card.now .tag { color: var(--green); }
+  .flip-card.then .tag { color: var(--amber); }
+  .flip-card .big { font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .flip-arrow { display:flex; align-items:center; color: var(--accent-light); font-size: 26px; }
+  @media (max-width: 620px){
+    .flip { grid-template-columns: 1fr; }
+    .flip-arrow { transform: rotate(90deg); justify-content:center; }
+  }
+
+  /* ===== STAT DIALS ===== */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 14px; margin-top: 24px; }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px 18px; text-align: center;
+    transition: border-color .25s, transform .25s;
+  }
+  .stat:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .stat .num { font-family:'JetBrains Mono',monospace; font-size: 32px; font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; }
+  .stat .unit { font-size: 14px; color: var(--accent-light); font-weight: 600; }
+  .stat .cap { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+
+  /* toggle */
+  .toggle-row { display:flex; gap:10px; justify-content:center; margin: 26px 0 0; }
+  .toggle-btn {
+    font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    padding: 10px 22px; border-radius: 100px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text-dim); transition: all .2s;
+  }
+  .toggle-btn.active { background: rgba(99,102,241,0.15); color: var(--accent-light); border-color: var(--accent); }
+
+  .figure { margin-top: 26px; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); }
+  .figure img { width: 100%; display: block; }
+  .figure figcaption { font-size: 13px; color: var(--text-dim); padding: 12px 16px; background: var(--card); text-align: center; }
+
+  /* ===== PRICE BAR ===== */
+  .pricebar { margin-top: 24px; }
+  .pb-row { margin-bottom: 18px; }
+  .pb-head { display:flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+  .pb-head .label { color: var(--text); font-weight: 600; }
+  .pb-head .val { font-family:'JetBrains Mono',monospace; color: var(--text-dim); }
+  .pb-track { height: 30px; background: var(--card); border:1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .pb-fill { height: 100%; width: 0; border-radius: 8px 0 0 8px; transition: width 1.4s cubic-bezier(.2,.8,.2,1); }
+  .pb-fill.old { background: linear-gradient(90deg, #34C759, #2aa34a); }
+  .pb-fill.new { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; margin-top: 30px; padding-left: 28px; }
+  .timeline::before { content:''; position:absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
+  .tl-item { position: relative; padding: 0 0 26px 22px; }
+  .tl-item::before {
+    content:''; position:absolute; left: -28px; top: 4px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--accent);
+  }
+  .tl-item.flag::before { border-color: var(--amber); }
+  .tl-item.future::before { border-color: var(--green); background: var(--green); }
+  .tl-date { font-family:'JetBrains Mono',monospace; font-size: 13px; color: var(--accent-light); margin-bottom: 3px; }
+  .tl-item.flag .tl-date { color: var(--amber); }
+  .tl-item h3 { font-size: 16px; margin-bottom: 4px; }
+  .tl-item p { font-size: 14px; margin: 0; }
+
+  /* ===== FLAGS ===== */
+  .flags { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  @media (max-width: 620px){ .flags { grid-template-columns: 1fr; } }
+  .flag-col { border-radius: 18px; padding: 22px; border: 1px solid var(--border); }
+  .flag-col.good { background: var(--green-bg); border-color: rgba(52,199,89,0.3); }
+  .flag-col.bad { background: var(--red-bg); border-color: rgba(255,69,58,0.3); }
+  .flag-col h3 { display:flex; align-items:center; gap:8px; }
+  .flag-col.good h3 { color: var(--green); }
+  .flag-col.bad h3 { color: #ff8078; }
+  .flag-col ul { list-style: none; margin-top: 10px; }
+  .flag-col li { font-size: 14px; color: #c8c8da; padding: 8px 0 8px 22px; position: relative; border-top: 1px solid rgba(255,255,255,0.05); }
+  .flag-col li:first-of-type { border-top: none; }
+  .flag-col.good li::before { content:'+'; position:absolute; left:0; color: var(--green); font-weight: 700; }
+  .flag-col.bad li::before { content:'!'; position:absolute; left:2px; color: var(--red); font-weight: 700; }
+
+  /* ===== DECISION ===== */
+  .decider { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-top: 26px; }
+  .check-group { margin-bottom: 22px; }
+  .check-group h4 { font-size: 13px; font-family:'JetBrains Mono',monospace; letter-spacing:1px; text-transform: uppercase; margin-bottom: 12px; }
+  .check-group.convert h4 { color: var(--green); }
+  .check-group.wait h4 { color: var(--amber); }
+  .chk { display:flex; gap:12px; align-items:flex-start; padding: 11px 14px; border-radius: 12px; cursor: pointer; transition: background .15s; border: 1px solid transparent; margin-bottom:6px; }
+  .chk:hover { background: rgba(255,255,255,0.03); }
+  .chk.on { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.25); }
+  .chk input { display:none; }
+  .box { flex-shrink:0; width: 22px; height: 22px; border-radius: 7px; border: 2px solid var(--border); display:flex; align-items:center; justify-content:center; margin-top:1px; transition: all .15s; font-size: 14px; color: #fff; }
+  .chk.on .box { background: var(--accent); border-color: var(--accent); }
+  .chk .txt { font-size: 14.5px; color: #d4d4e4; }
+
+  .verdict { margin-top: 8px; text-align: center; }
+  .meter { height: 14px; border-radius: 100px; background: linear-gradient(90deg, var(--amber), #3a3a4a 50%, var(--green)); position: relative; margin: 18px 0 14px; }
+  .needle { position: absolute; top: -7px; width: 4px; height: 28px; background: #fff; border-radius: 4px; left: 50%; transform: translateX(-50%); transition: left .5s cubic-bezier(.2,.8,.2,1); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  .verdict-text { font-size: 20px; font-weight: 800; margin-top: 6px; }
+  .verdict-sub { font-size: 13px; color: var(--text-dim); }
+  .meter-ends { display:flex; justify-content: space-between; font-size:11px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:1px; }
+  .meter-ends .l { color: var(--amber); } .meter-ends .r { color: var(--green); }
+
+  .callout { background: var(--amber-bg); border:1px solid rgba(255,159,10,0.3); border-radius: 14px; padding: 16px 18px; font-size: 14px; color: #e8d9bf; margin-top: 20px; }
+
+  /* sources */
+  .sources { font-size: 13px; }
+  .sources a { display:block; color: var(--accent-light); text-decoration: none; padding: 7px 0; border-top: 1px solid var(--border); }
+  .sources a:hover { color: #fff; }
+
+  .footer { text-align:center; padding: 50px 0 70px; color: var(--text-dim); font-size: 12px; }
+  .backlink { display:inline-block; margin-top:10px; color: var(--accent-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-content">
+      <span class="kicker">Your $50 reservation, a week from a decision</span>
+      <h1>The Slate truck is<br><span class="grad">almost real.</span> Now what?</h1>
+      <p class="sub">You put down a refundable deposit and went quiet on it. Here is where the Bezos-backed $25k electric pickup actually stands, and what changes on June 24.</p>
+      <div class="countdown" id="countdown">
+        <div class="cd-label">Until the reveal and the preorder switch</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-d">0</div><span>days</span></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">0</div><span>hrs</span></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">0</div><span>min</span></div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">0</div><span>sec</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SITUATION -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">Start here</div>
+      <h2>What June 24 actually does to your deposit</h2>
+      <div class="situation">
+        <p class="lead" style="margin-bottom:0">Right now you are holding a <strong>reservation</strong>. On June 24 Slate reveals the final price, opens its order books, and asks reservation holders to convert into a <strong>preorder</strong>. That is the moment the money stops being yours to get back.</p>
+        <div class="flip">
+          <div class="flip-card now">
+            <div class="tag">What you have today</div>
+            <div class="big">$50</div>
+            <p style="margin:0; font-size:14px;">A reservation. <strong>Fully refundable.</strong> Holds your place in line and your priority timing. Walk away any time, get it back.</p>
+          </div>
+          <div class="flip-arrow">&rarr;</div>
+          <div class="flip-card then">
+            <div class="tag">What June 24 asks for</div>
+            <div class="big">$300</div>
+            <p style="margin:0; font-size:14px;">A preorder deposit, <strong>non-refundable</strong>. Your $50 carries over, so it is another <strong>$250</strong> to convert. You get roughly 30 days to decide, and it applies to the purchase price.</p>
+          </div>
+        </div>
+        <div class="callout">The price is revealed the same day the deposit turns non-refundable. Expect the mid-$20,000s, not the under-$20,000 number that first got everyone excited. More on why below.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT IS -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">The vehicle</div>
+      <h2>A truck stripped back to the studs, on purpose</h2>
+      <p class="lead">Slate calls it the "Blank Slate." There is no paint, just gray composite panels you can wrap yourself. No touchscreen either, you bring your own phone, and the windows are hand cranks on plain steel wheels. The whole pitch is that keeping it this simple is what keeps it cheap, and that you finish the truck however you want from a catalog of more than 100 accessories.</p>
+
+      <div class="toggle-row">
+        <button class="toggle-btn active" id="t-truck" onclick="setForm('truck')">Pickup</button>
+        <button class="toggle-btn" id="t-suv" onclick="setForm('suv')">SUV kit</button>
+      </div>
+
+      <div class="stat-grid" id="specs">
+        <div class="stat"><div class="num" data-to="150" id="s-range">0</div><div class="unit">mi range</div><div class="cap" id="s-range-cap">52.7 kWh standard pack</div></div>
+        <div class="stat"><div class="num" data-to="201">0</div><div class="unit">horsepower</div><div class="cap">single rear motor, RWD</div></div>
+        <div class="stat"><div class="num" data-to="2" id="s-seats">0</div><div class="unit" id="s-seats-unit">seats</div><div class="cap" id="s-seats-cap">two-seat pickup</div></div>
+        <div class="stat"><div class="num" data-to="30">0</div><div class="unit">min to 80%</div><div class="cap">120 kW DC fast charge</div></div>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/slate-truck/transform.png" alt="The gray Slate pickup converting into a five-seat SUV with a hardtop and rear bench">
+        <figcaption>Same vehicle, two shapes. A roughly $5,000 conversion kit adds a roll cage, hardtop, rear bench and extra airbags to make it a five-seat SUV. An 84.3 kWh pack option pushes range toward 240 miles.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PRICE CREEP -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">The number moved</div>
+      <h2>Why "under $20k" quietly became "mid-$20k"</h2>
+      <p class="lead">The headline that pulled in 160,000 reservations leaned on a $7,500 federal EV tax credit. That credit ended, so the math changed. Slate now guides to a starting price in the mid-$20,000s, with a target around $27,500 before any accessories.</p>
+      <div class="pricebar" id="pricebar">
+        <div class="pb-row">
+          <div class="pb-head"><span class="label">Original pitch, with the tax credit</span><span class="val">under $20,000</span></div>
+          <div class="pb-track"><div class="pb-fill old" data-w="58"></div></div>
+        </div>
+        <div class="pb-row">
+          <div class="pb-head"><span class="label">Where it sits now, credit gone</span><span class="val">~$27,500</span></div>
+          <div class="pb-track"><div class="pb-fill new" data-w="82"></div></div>
+        </div>
+      </div>
+      <p style="margin-top:16px">Still cheap for a new EV, and still well under an entry-level gas pickup. Just know the truck you reserved on a sub-$20k dream is now a high-$20k truck, and the final figure lands on June 24.</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">How we got here</div>
+      <h2>The story so far</h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-date">2022</div><h3>Born inside Re:Build Manufacturing</h3><p>Started as a project called "Re:Car" by Miles Arnone, William Barker and Jeff Wilke, the ex-Amazon consumer boss. Spun out as its own company in 2023.</p></div>
+        <div class="tl-item"><div class="tl-date">Apr 24, 2025</div><h3>The big reveal in Los Angeles</h3><p>After a teaser stunt with wrapped prototypes, Slate showed the truck and the under-$20k-with-credit story. Reservations took off.</p></div>
+        <div class="tl-item flag"><div class="tl-date">Mar 9, 2026</div><h3>New CEO, months before launch</h3><p>Christine Barman, the Chrysler veteran who had been the face of the company, handed the CEO seat to ex-Amazon executive Peter Faricy and moved to President of Vehicles.</p></div>
+        <div class="tl-item"><div class="tl-date">Apr 2026</div><h3>$650M Series C</h3><p>TWG Global led another round, bringing total money raised to about $1.4 billion. The CEO said it funds production "on time and on budget."</p></div>
+        <div class="tl-item flag"><div class="tl-date">May 2026</div><h3>Bezos's board rep steps off</h3><p>The Bezos family office representative left the board. Bezos has been pouring attention into a new robotics venture, which raised questions about how engaged he still is here.</p></div>
+        <div class="tl-item future"><div class="tl-date">Jun 24, 2026</div><h3>Price reveal and preorders open</h3><p>Final pricing announced. Reservations convert to non-refundable $300 preorders. This is your decision point.</p></div>
+        <div class="tl-item future"><div class="tl-date">Late 2026, into 2027</div><h3>Production and first deliveries</h3><p>Trucks are meant to start coming off the Indiana line in Q4 2026. Some reporting suggests newer reservation holders may not see one until 2027.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCALE COUNTERS -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">The scale</div>
+      <h2>This is not two people in a garage</h2>
+      <p class="lead">Whatever the risks, real money and a real factory are behind it. Slate is retrofitting a former printing plant in Warsaw, Indiana, with hundreds of millions of dollars and plans for thousands of jobs.</p>
+      <div class="stat-grid">
+        <div class="stat"><div class="num" data-prefix="$" data-to="1.4" data-dec="1">0</div><div class="unit">billion raised</div><div class="cap">across Series A, B and C</div></div>
+        <div class="stat"><div class="num" data-to="160" data-suffix="K+">0</div><div class="unit">reservations</div><div class="cap">in the first year</div></div>
+        <div class="stat"><div class="num" data-to="150" data-suffix="K">0</div><div class="unit">trucks / year</div><div class="cap">planned plant capacity</div></div>
+        <div class="stat"><div class="num" data-to="2000">0</div><div class="unit">jobs</div><div class="cap">targeted in Warsaw, IN</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAGS -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">The honest scorecard</div>
+      <h2>Green flags and red flags</h2>
+      <div class="flags">
+        <div class="flag-col good">
+          <h3>Reasons for confidence</h3>
+          <ul>
+            <li>$1.4 billion raised and serious backers, including Bezos and TWG Global.</li>
+            <li>An actual factory being retrofitted, not just renderings.</li>
+            <li>160,000+ reservations show real demand at this price.</li>
+            <li>A deal with Carvana to help handle sales and delivery.</li>
+            <li>Leadership keeps saying late-2026 production is on track.</li>
+          </ul>
+        </div>
+        <div class="flag-col bad">
+          <h3>Reasons for caution</h3>
+          <ul>
+            <li>They have never built a car before. First vehicles from startups slip.</li>
+            <li>The price already rose once, from under $20k to the mid-$20k range.</li>
+            <li>CEO swapped out months before launch.</li>
+            <li>Bezos's board representative left, and his focus seems to be elsewhere.</li>
+            <li>You commit a non-refundable $300 before a single truck has shipped.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISION -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">Your call</div>
+      <h2>A gut-check, not financial advice</h2>
+      <p class="lead">Tick whichever lines ring true for you. The needle leans toward putting the $300 down or toward taking your $50 back and waiting for real trucks and real reviews.</p>
+      <div class="decider">
+        <div class="check-group convert">
+          <h4>Pushes toward "convert to $300"</h4>
+          <label class="chk" data-w="convert"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">A late-2026 or 2027 delivery window is fine with me.</span></label>
+          <label class="chk" data-w="convert"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">Losing $300 would sting but would not actually hurt me.</span></label>
+          <label class="chk" data-w="convert"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">I genuinely want a cheap, simple truck with no screen or paint.</span></label>
+          <label class="chk" data-w="convert"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">A mid-$20k price still fits my budget.</span></label>
+          <label class="chk" data-w="convert"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">I want an early build slot and like being first.</span></label>
+        </div>
+        <div class="check-group wait">
+          <h4>Pushes toward "take the $50 back"</h4>
+          <label class="chk" data-w="wait"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">I would rather see reviews from real owners first.</span></label>
+          <label class="chk" data-w="wait"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">The CEO change and board exit make me nervous.</span></label>
+          <label class="chk" data-w="wait"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">A non-refundable deposit on an unbuilt car is not for me.</span></label>
+          <label class="chk" data-w="wait"><input type="checkbox"><span class="box">&#10003;</span><span class="txt">I am not in a hurry and can buy later if it ships well.</span></label>
+        </div>
+        <div class="verdict">
+          <div class="meter-ends"><span class="l">Take the $50 back</span><span class="r">Put $300 down</span></div>
+          <div class="meter"><div class="needle" id="needle"></div></div>
+          <div class="verdict-text" id="verdict-text">Tick a few boxes</div>
+          <div class="verdict-sub" id="verdict-sub">The needle moves as you go.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM LINE -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">Bottom line</div>
+      <h2>How I would think about it</h2>
+      <p class="lead">The simplest read: your $50 is doing real work right now, holding a priority slot at zero risk. The only thing June 24 forces is whether you want to pay $250 more to keep that slot once the deposit goes non-refundable.</p>
+      <p>If you can comfortably lose $300 and you actually want this exact truck, converting buys you an early delivery slot and locks in your spot in line. If any of the flags bother you, there is a clean middle path: wait, let the price land on the 24th, let the first trucks ship and get reviewed, and buy then. You give up early-slot priority, not the truck itself. Given that this is a company's first-ever vehicle and the deposit is non-refundable, waiting is the lower-regret move unless you are genuinely excited to be an early adopter.</p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section>
+    <div class="container reveal">
+      <div class="eyebrow">Where this came from</div>
+      <h2>Sources</h2>
+      <div class="sources">
+        <a href="https://techcrunch.com/2026/05/28/slate-auto-will-announce-pricing-and-take-preorders-for-its-ev-on-june-24/" target="_blank" rel="noopener">TechCrunch: Slate to announce pricing and take preorders June 24</a>
+        <a href="https://www.cars.com/articles/slate-ev-moves-past-reservations-and-into-preorders-what-that-means-525314/" target="_blank" rel="noopener">Cars.com: Reservations vs preorders, what changes</a>
+        <a href="https://www.carscoops.com/2026/05/slate-ev-preorders/" target="_blank" rel="noopener">Carscoops: $300 non-refundable preorders, price sold separately</a>
+        <a href="https://techcrunch.com/2026/04/13/slate-auto-raises-650m-to-fund-its-affordable-ev-truck-plans/" target="_blank" rel="noopener">TechCrunch: Slate raises $650M Series C</a>
+        <a href="https://techcrunch.com/2026/03/09/slate-auto-changes-ceo-months-ahead-of-affordable-ev-launch/" target="_blank" rel="noopener">TechCrunch: Slate changes CEO ahead of launch</a>
+        <a href="https://techcrunch.com/2026/05/07/jeff-bezos-rep-leaves-slate-autos-board/" target="_blank" rel="noopener">TechCrunch: Bezos rep leaves Slate's board</a>
+        <a href="https://www.carscoops.com/2026/04/slate-ev-truck-update/" target="_blank" rel="noopener">Carscoops: A year on, the silence is becoming deafening</a>
+        <a href="https://electrek.co/2026/02/19/slate-pricing-junetruck-expected-mid-20k-range/" target="_blank" rel="noopener">Electrek: Pricing in June, mid-$20k expected</a>
+        <a href="https://insideevs.com/reviews/786896/slate-ev-pickup-truck-everything-we-know/" target="_blank" rel="noopener">InsideEVs: Everything we know, specs and features</a>
+        <a href="https://wsbt.com/news/local/slate-auto-factory-brings-jobs-low-cost-truck-production-basic-kosciusko-county-car-electric-building-northern-indiana-rr-donnelly-plant" target="_blank" rel="noopener">WSBT: The Warsaw, Indiana plant and jobs</a>
+        <a href="https://en.wikipedia.org/wiki/Slate_Auto" target="_blank" rel="noopener">Wikipedia: Slate Auto company background</a>
+        <a href="https://www.slate.auto/en/faq" target="_blank" rel="noopener">Slate Auto: official FAQ and preorder terms</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Built June 17, 2026 from public reporting. Not affiliated with Slate Auto, and not financial advice.
+    <br><a class="backlink" href="index.html">&larr; back to Jonny's pages</a>
+  </div>
+
+</div>
+
+<script>
+  /* ---- Countdown to June 24, 2026, local time ---- */
+  const target = new Date(2026, 5, 24, 0, 0, 0).getTime();
+  function tick() {
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff / 86400000); diff -= d*86400000;
+    const h = Math.floor(diff / 3600000); diff -= h*3600000;
+    const m = Math.floor(diff / 60000); diff -= m*60000;
+    const s = Math.floor(diff / 1000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---- Reveal on scroll ---- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---- Count-up numbers ---- */
+  function countUp(el) {
+    const to = parseFloat(el.dataset.to);
+    const dec = parseInt(el.dataset.dec || '0', 10);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const dur = 1300; const start = performance.now();
+    function frame(t) {
+      const p = Math.min(1, (t - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const v = to * eased;
+      el.textContent = prefix + (dec ? v.toFixed(dec) : Math.round(v).toLocaleString()) + suffix;
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = prefix + (dec ? to.toFixed(dec) : Math.round(to).toLocaleString()) + suffix;
+    }
+    requestAnimationFrame(frame);
+  }
+  const numObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.done) { e.target.dataset.done = '1'; countUp(e.target); numObs.unobserve(e.target); } });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.num[data-to]').forEach(el => numObs.observe(el));
+
+  /* ---- Price bars ---- */
+  const barObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.pb-fill').forEach(f => f.style.width = f.dataset.w + '%'); barObs.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  const pb = document.getElementById('pricebar'); if (pb) barObs.observe(pb);
+
+  /* ---- Truck / SUV toggle ---- */
+  function setForm(mode) {
+    const truck = mode === 'truck';
+    document.getElementById('t-truck').classList.toggle('active', truck);
+    document.getElementById('t-suv').classList.toggle('active', !truck);
+    const seats = document.getElementById('s-seats');
+    const seatsCap = document.getElementById('s-seats-cap');
+    seats.dataset.done = ''; seats.dataset.to = truck ? '2' : '5';
+    countUp(seats);
+    seatsCap.textContent = truck ? 'two-seat pickup' : 'five seats, ~$5k kit';
+  }
+
+  /* ---- Decision needle ---- */
+  const checks = document.querySelectorAll('.chk');
+  function updateVerdict() {
+    let convert = 0, wait = 0;
+    checks.forEach(c => {
+      const on = c.querySelector('input').checked;
+      c.classList.toggle('on', on);
+      if (on) { c.dataset.w === 'convert' ? convert++ : wait++; }
+    });
+    const total = convert + wait;
+    const needle = document.getElementById('needle');
+    const vt = document.getElementById('verdict-text');
+    const vs = document.getElementById('verdict-sub');
+    if (total === 0) { needle.style.left = '50%'; vt.textContent = 'Tick a few boxes'; vs.textContent = 'The needle moves as you go.'; return; }
+    const score = convert / total; // 0 = wait, 1 = convert
+    needle.style.left = (8 + score * 84) + '%';
+    if (score >= 0.66) { vt.textContent = 'Leaning: put the $300 down'; vs.textContent = 'You want this truck and the risk fits you.'; }
+    else if (score <= 0.34) { vt.textContent = 'Leaning: take the $50 back'; vs.textContent = 'Waiting for real trucks looks like the lower-regret call.'; }
+    else { vt.textContent = 'Genuinely a toss-up'; vs.textContent = 'No rush. You can let June 24 happen and decide with the price in hand.'; }
+  }
+  checks.forEach(c => c.querySelector('input').addEventListener('change', updateVerdict));
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
