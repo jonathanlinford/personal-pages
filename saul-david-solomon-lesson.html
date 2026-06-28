@@ -135,20 +135,52 @@
   .rf{background:radial-gradient(120% 120% at 50% 0%,rgba(99,102,241,0.10),transparent 60%),var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px 20px 22px;margin:18px 0}
   .rf-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:10px}
   .rf h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:14px}
-  .meter{position:relative;height:42px;background:var(--card-soft);border:1px solid var(--border);border-radius:999px;overflow:hidden;margin-bottom:8px}
-  .meter-fill{position:absolute;left:0;top:0;bottom:0;width:8%;border-radius:999px;background:linear-gradient(90deg,#4b5563,#64748b);transition:width 1.1s cubic-bezier(.4,.1,.2,1),background 1.1s}
-  .meter.rise .meter-fill{width:92%;background:linear-gradient(90deg,var(--accent),var(--gold))}
-  .meter.fall .meter-fill{width:14%;background:linear-gradient(90deg,#7f1d1d,var(--red))}
-  .meter-crown{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:22px;left:8%;transition:left 1.1s cubic-bezier(.4,.1,.2,1),transform .3s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
-  .meter.rise .meter-crown{left:88%}
-  .meter.fall .meter-crown{left:14%;transform:translate(-50%,-50%) rotate(150deg)}
-  .meter-state{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);min-height:18px;margin-bottom:14px;transition:color .4s}
-  .meter-state.up{color:var(--green)}
-  .meter-state.down{color:var(--red)}
+  /* SAUL activity: obedience stamps + crown */
+  .saul-stage{display:flex;gap:16px;align-items:center;margin:10px 0 16px}
+  .saul-crown{font-size:42px;filter:grayscale(1) brightness(.6);transition:filter .6s,transform .6s;flex:0 0 auto}
+  .saul-crown.up{filter:drop-shadow(0 0 12px var(--gold))}
+  .saul-crown.down{filter:grayscale(1) brightness(.5);transform:rotate(30deg)}
+  ul.stamps{list-style:none;padding:0;margin:0;flex:1}
+  ul.stamps li{font-size:14px;color:var(--text-faint);padding:5px 0 5px 28px;position:relative;opacity:.35;transition:opacity .35s,color .35s}
+  ul.stamps li:before{content:"○";position:absolute;left:5px;color:var(--text-faint)}
+  ul.stamps li.on{opacity:1}
+  ul.stamps li.on.good{color:var(--green)}
+  ul.stamps li.on.good:before{content:"✓";color:var(--green)}
+  ul.stamps li.on.bad{color:var(--red)}
+  ul.stamps li.on.bad:before{content:"✗";color:var(--red)}
+
+  /* DAVID activity: climb + fork choice */
+  .david-stage{margin:10px 0 16px}
+  .climb{display:flex;gap:8px;flex-wrap:wrap}
+  .climb .rung{font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card-soft);color:var(--text-faint);opacity:.4;transition:opacity .4s,border-color .4s,color .4s}
+  .climb .rung.on{opacity:1;border-color:var(--green);color:var(--green)}
+  .fork{margin-top:16px;padding:14px 16px;border:1px dashed var(--border-bright);border-radius:10px;animation:fadeIn .4s ease}
+  .fork[hidden]{display:none}
+  .fork-q{font-size:14.5px;color:var(--text);font-weight:600;margin-bottom:10px}
+  .fork-btns{display:flex;gap:10px;flex-wrap:wrap}
+  .fork-out{margin-top:12px;display:none;font-size:14px;padding:12px 14px;border-radius:10px;background:var(--card-soft);border:1px solid var(--border)}
+  .fork-out.show{display:block;animation:fadeIn .4s ease}
+  .fork-out p{display:none;color:var(--text-dim)}
+  .fork-out b{color:var(--text)}
+
+  /* SOLOMON activity: heart fill then leak */
+  .sol-stage{display:flex;align-items:center;gap:14px;margin:10px 0 4px}
+  .sol-heart{font-size:36px;transition:filter .5s;flex:0 0 auto}
+  .sol-heart.down{filter:grayscale(1) brightness(.8)}
+  .heartbar{flex:1;height:26px;border-radius:999px;background:var(--card-soft);border:1px solid var(--border);overflow:hidden;position:relative}
+  .heartfill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width 1s cubic-bezier(.4,.1,.2,1),background 1s}
+  .heartbar.fall .heartfill{background:linear-gradient(90deg,#7f1d1d,var(--red))}
+  .heart-idols{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:15px;letter-spacing:3px;opacity:0;transition:opacity .6s}
+  .heart-idols.show{opacity:1}
+  .heart-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);margin:0 0 14px;min-height:16px;transition:color .4s}
+  .heart-label.up{color:var(--green)}
+  .heart-label.down{color:var(--red)}
   .rf-controls{display:flex;gap:10px;flex-wrap:wrap}
   .rf-reveal{margin-top:14px;border-left:3px solid var(--red);background:var(--card-soft);border-radius:0 10px 10px 0;padding:12px 16px;font-size:14.5px;color:var(--text-dim);display:none}
   .rf-reveal.show{display:block;animation:fadeIn .5s ease}
+  .rf-reveal.up{border-left-color:var(--green)}
   .rf-reveal b{color:var(--text)}
+  .rf-reveal.up b{color:var(--green)}
 
   .btn{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;transition:transform .12s,filter .2s,background .2s,opacity .2s}
   .btn:active{transform:scale(.96)}
@@ -224,11 +256,12 @@
   a.s{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s;white-space:nowrap}
   a.s:hover{color:#a5b0ff}
 
-  .fx{opacity:0}
-  .fx.in{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
-  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  /* content is always visible; the IntersectionObserver adds a gentle one-time entrance and can never leave anything hidden */
+  .fx{opacity:1}
+  .fx.in{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fadeUp{from{opacity:.2;transform:translateY(16px)}to{opacity:1;transform:none}}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){.fx{opacity:1}.fx.in{animation:none}header h1{animation:none}.flip-inner,.meter-fill,.meter-crown{transition:none}}
+  @media (prefers-reduced-motion:reduce){.fx.in{animation:none}header h1{animation:none}.flip-inner,.meter-fill,.meter-crown{transition:none}}
 
   /* lightbox */
   .lightbox{position:fixed;inset:0;background:rgba(5,5,10,0.96);display:none;align-items:center;justify-content:center;z-index:1000;user-select:none}
@@ -361,15 +394,23 @@
     <!-- SAUL -->
     <h3 style="color:var(--gold);font-size:17px;margin:24px 0 4px">👑 King Saul</h3>
     <div class="rf" data-king="saul">
-      <span class="rf-tag">Interactive · tap the buttons</span>
+      <span class="rf-tag">Activity · stamp his story</span>
       <h3>Chosen by God… then he stopped obeying</h3>
-      <div class="meter"><div class="meter-fill"></div><div class="meter-crown">👑</div></div>
-      <div class="meter-state">Just a regular man</div>
+      <div class="saul-stage">
+        <div class="saul-crown">👑</div>
+        <ul class="stamps">
+          <li data-good="1">Chosen by God to be king</li>
+          <li data-good="1">Humble at the start</li>
+          <li data-good="1">Led Israel to victory</li>
+          <li data-good="0">Disobeyed God's command</li>
+        </ul>
+      </div>
       <div class="rf-controls">
-        <button class="btn btn-primary rise-btn">▲ Watch his rise</button>
+        <button class="btn btn-primary rise-btn">▲ Stamp his rise</button>
         <button class="btn btn-danger fall-btn" disabled>▼ What happened?</button>
       </div>
-      <div class="rf-reveal"><b>His heart problem: pride and disobedience.</b> God gave Saul clear instructions, but Saul got impatient and did things his own way. He thought a big offering would make up for not obeying. He even grew so jealous of David that he tried to hurt him. A great-looking king with a disobedient heart is not what God wanted.</div>
+      <div class="rf-reveal up rise-reveal"><b>His rise:</b> God chose Saul as the very first king of Israel. He was tall, strong, and so humble at the start that he hid instead of bragging. The Spirit of God came upon him, and he began really well.</div>
+      <div class="rf-reveal fall-reveal"><b>His heart problem: pride and disobedience.</b> God gave Saul clear instructions, but Saul got impatient and did things his own way. He thought a big offering would make up for not obeying. He even grew so jealous of David that he tried to hurt him. A great-looking king with a disobedient heart is not what God wanted.</div>
     </div>
     <div class="read">
       <span class="read-tag">📖 Read together</span>
@@ -392,15 +433,31 @@
       <figcaption>Young David trusted God and beat the giant Goliath. <span class="lds-badge">Gospel Art · the Church</span></figcaption>
     </figure>
     <div class="rf" data-king="david">
-      <span class="rf-tag">Interactive · tap the buttons</span>
-      <h3>A great king… who did not turn away in time</h3>
-      <div class="meter"><div class="meter-fill"></div><div class="meter-crown">👑</div></div>
-      <div class="meter-state">A beloved, godly king</div>
-      <div class="rf-controls">
-        <button class="btn btn-primary rise-btn">▲ Watch his rise</button>
-        <button class="btn btn-danger fall-btn" disabled>▼ What happened?</button>
+      <span class="rf-tag">Activity · you decide</span>
+      <h3>A great king… at a fork in the road</h3>
+      <div class="david-stage">
+        <div class="climb">
+          <span class="rung">🐑 Shepherd boy</span>
+          <span class="rung">🪨 Beat Goliath</span>
+          <span class="rung">👑 Great king</span>
+        </div>
+        <div class="fork" hidden>
+          <p class="fork-q">One evening David saw something he knew he should not. What should he do?</p>
+          <div class="fork-btns">
+            <button class="choice good" data-c="away">🚪 Turn away</button>
+            <button class="choice bad" data-c="look">👀 Keep looking</button>
+          </div>
+          <div class="fork-out">
+            <p data-c="away"><b>That is exactly right.</b> Turning away early is how you keep your heart safe. Sadly, the real David kept looking…</p>
+            <p data-c="look"><b>That is the road David took.</b> He did not turn away, and one wrong choice grew into a terrible one…</p>
+          </div>
+        </div>
       </div>
-      <div class="rf-reveal"><b>His heart problem: he did not guard his heart.</b> One evening David stayed home when he should have been with his army. He saw a woman named Bathsheba, another man's wife, and instead of turning away, he kept wanting her. One wrong choice grew into a worse one, and then a terrible one, when he had her husband, Uriah, sent to die in battle. A small wrong choice that he did not stop grew into a huge one.</div>
+      <div class="rf-controls">
+        <button class="btn btn-primary rise-btn">▲ Watch him rise</button>
+      </div>
+      <div class="rf-reveal up rise-reveal"><b>His rise:</b> a shepherd boy God Himself called "a man after his own heart." He trusted God to beat the giant Goliath, wrote beautiful songs to the Lord, and became Israel's greatest king, with a promise that the Savior would one day come through his family. <em>Now you choose what comes next…</em></div>
+      <div class="rf-reveal fall-reveal"><b>His heart problem: he did not guard his heart.</b> One evening David stayed home when he should have been with his army. He saw a woman named Bathsheba, another man's wife, and instead of turning away, he kept wanting her. One wrong choice grew into a worse one, and then a terrible one, when he had her husband, Uriah, sent to die in battle. A small wrong choice that he did not stop grew into a huge one.</div>
     </div>
     <div class="read">
       <span class="read-tag">📖 Read together</span>
@@ -450,15 +507,19 @@
       <div class="focus"><span class="flabel">🔎 Focus question</span><p>Solomon built a holy temple so people could feel close to God. Why is it good to have a special, holy place like the temple today?</p></div>
     </div>
     <div class="rf" data-king="solomon">
-      <span class="rf-tag">Interactive · tap the buttons</span>
+      <span class="rf-tag">Activity · fill it, then watch it leak</span>
       <h3>The wisest man… let his heart drift away</h3>
-      <div class="meter"><div class="meter-fill"></div><div class="meter-crown">👑</div></div>
-      <div class="meter-state">The wisest king of all</div>
+      <div class="sol-stage">
+        <div class="sol-heart">💛</div>
+        <div class="heartbar"><div class="heartfill"></div><div class="heart-idols">🗿 🗿 🗿</div></div>
+      </div>
+      <div class="heart-label">How full of God is his heart?</div>
       <div class="rf-controls">
-        <button class="btn btn-primary rise-btn">▲ Watch his rise</button>
+        <button class="btn btn-primary rise-btn">▲ Fill his heart with wisdom</button>
         <button class="btn btn-danger fall-btn" disabled>▼ What happened?</button>
       </div>
-      <div class="rf-reveal"><b>His heart problem: he let other loves crowd out God.</b> Solomon married many wives from lands that worshipped idols, and little by little they turned his heart to worship those false gods too. The <em>wisest</em> man in the world stopped putting God first, one small compromise at a time.</div>
+      <div class="rf-reveal up rise-reveal"><b>His rise:</b> when God offered him anything, Solomon humbly asked for wisdom to lead well. God made him the wisest person on earth, gave him great riches too, and Solomon built a beautiful temple so the people could be close to the Lord.</div>
+      <div class="rf-reveal fall-reveal"><b>His heart problem: he let other loves crowd out God.</b> Solomon married many wives from lands that worshipped idols, and little by little they turned his heart to worship those false gods too. The <em>wisest</em> man in the world stopped putting God first, one small compromise at a time.</div>
     </div>
     <div class="read">
       <span class="read-tag">📖 Read together</span>
@@ -703,30 +764,78 @@
     card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
   });
 
-  // ---------- rise & fall meters ----------
-  const RISE={saul:'Chosen king of Israel!',david:'A great and godly king!',solomon:'The wisest king of all!'};
-  document.querySelectorAll('.rf[data-king]').forEach(panel=>{
-    const meter=panel.querySelector('.meter');
-    const state=panel.querySelector('.meter-state');
-    const riseBtn=panel.querySelector('.rise-btn');
-    const fallBtn=panel.querySelector('.fall-btn');
-    const reveal=panel.querySelector('.rf-reveal');
-    const king=panel.dataset.king;
+  // ---------- rise & fall: a different little activity per king ----------
+  const showRise=p=>{const r=p.querySelector('.rise-reveal');if(r)r.classList.add('show');};
+  const showFall=p=>{const f=p.querySelector('.fall-reveal');if(f)f.classList.add('show');};
+
+  // SAUL · stamp his obedience, then the disobedience stamp + the crown dims
+  (()=>{
+    const p=document.querySelector('.rf[data-king="saul"]'); if(!p) return;
+    const crown=p.querySelector('.saul-crown');
+    const stamps=[...p.querySelectorAll('.stamps li')];
+    const goods=stamps.filter(li=>li.dataset.good==='1');
+    const bad=stamps.find(li=>li.dataset.good==='0');
+    const riseBtn=p.querySelector('.rise-btn'), fallBtn=p.querySelector('.fall-btn');
     riseBtn.addEventListener('click',()=>{
-      meter.classList.remove('fall');meter.classList.add('rise');
-      state.textContent=RISE[king]||'He rose to the top!';
-      state.classList.remove('down');state.classList.add('up');
-      reveal.classList.remove('show');
-      riseBtn.disabled=true;fallBtn.disabled=false;
+      goods.forEach((li,i)=>setTimeout(()=>li.classList.add('on','good'),i*260));
+      crown.classList.add('up');
+      showRise(p); riseBtn.disabled=true; fallBtn.disabled=false;
     });
     fallBtn.addEventListener('click',()=>{
-      meter.classList.remove('rise');meter.classList.add('fall');
-      state.textContent='…then his heart fell';
-      state.classList.remove('up');state.classList.add('down');
-      reveal.classList.add('show');
-      fallBtn.disabled=true;
+      if(bad) bad.classList.add('on','bad');
+      crown.classList.remove('up'); crown.classList.add('down');
+      showFall(p); fallBtn.disabled=true;
     });
-  });
+  })();
+
+  // DAVID · climb the rungs, then the player chooses at the fork
+  (()=>{
+    const p=document.querySelector('.rf[data-king="david"]'); if(!p) return;
+    const rungs=[...p.querySelectorAll('.climb .rung')];
+    const fork=p.querySelector('.fork');
+    const out=p.querySelector('.fork-out');
+    const riseBtn=p.querySelector('.rise-btn');
+    riseBtn.addEventListener('click',()=>{
+      rungs.forEach((r,i)=>setTimeout(()=>r.classList.add('on'),i*300));
+      showRise(p);
+      setTimeout(()=>{fork.hidden=false;}, rungs.length*300+250);
+      riseBtn.disabled=true;
+    });
+    p.querySelectorAll('.fork .choice').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const choices=p.querySelectorAll('.fork .choice');
+        if([...choices].some(c=>c.dataset.done)) return;
+        choices.forEach(c=>{c.dataset.done='1';c.classList.add('locked');if(c!==btn)c.classList.add('dim');});
+        btn.classList.add('picked');
+        const pick=btn.dataset.c;
+        out.querySelectorAll('p').forEach(o=>o.style.display=o.dataset.c===pick?'block':'none');
+        out.classList.add('show');
+        showFall(p);
+      });
+    });
+  })();
+
+  // SOLOMON · fill the heart with wisdom, then watch other loves drain it
+  (()=>{
+    const p=document.querySelector('.rf[data-king="solomon"]'); if(!p) return;
+    const bar=p.querySelector('.heartbar'), fill=p.querySelector('.heartfill');
+    const idols=p.querySelector('.heart-idols'), heart=p.querySelector('.sol-heart');
+    const label=p.querySelector('.heart-label');
+    const riseBtn=p.querySelector('.rise-btn'), fallBtn=p.querySelector('.fall-btn');
+    riseBtn.addEventListener('click',()=>{
+      fill.style.width='100%';
+      label.textContent='100% God-first: full of wisdom';
+      label.classList.add('up');
+      showRise(p); riseBtn.disabled=true; fallBtn.disabled=false;
+    });
+    fallBtn.addEventListener('click',()=>{
+      bar.classList.add('fall'); fill.style.width='28%';
+      idols.classList.add('show'); heart.classList.add('down');
+      label.textContent='Other loves crowded God out';
+      label.classList.remove('up'); label.classList.add('down');
+      showFall(p); fallBtn.disabled=true;
+    });
+  })();
 
   // ---------- heart choice game ----------
   document.querySelectorAll('.scenario').forEach(sc=>{
@@ -783,7 +892,7 @@
   // ---------- scroll reveal ----------
   const io=new IntersectionObserver((entries)=>{
     entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
-  },{threshold:0.04});
+  },{threshold:0, rootMargin:'200px 0px 200px 0px'});
   document.querySelectorAll('.fx').forEach(el=>io.observe(el));
 })();
 </script>
