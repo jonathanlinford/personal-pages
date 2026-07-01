@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyprus HELOC :: Linford</title>
+<meta name="description" content="Private, password-protected status page for the Linford Cyprus HELOC.">
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0f1512; --panel:#151d19; --panel2:#1a231e; --border:#2a352e;
+    --ink:#e9efe9; --dim:#a9b6ac; --faint:#71806f;
+    --green:#4fae7a; --green2:#6fd39a; --gold:#d3b062; --gold2:#ecc97d;
+    --glow:rgba(79,174,122,0.15);
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;line-height:1.55}
+  a{color:var(--green2);text-decoration:none} a:hover{text-decoration:underline}
+
+  /* gate */
+  #gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;
+    background:radial-gradient(1100px 560px at 50% -10%, var(--glow), transparent), var(--bg);z-index:1000}
+  .gate-card{width:100%;max-width:420px;background:linear-gradient(180deg,var(--panel2),var(--panel));
+    border:1px solid var(--border);border-radius:18px;padding:40px 30px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+  .gate-emblem{font-size:44px;line-height:1;margin-bottom:14px}
+  .gate-card h1{font-family:'Fraunces',serif;font-size:23px;letter-spacing:.3px;color:var(--gold2);margin-bottom:6px}
+  .gate-card p{color:var(--dim);font-size:13.5px;margin-bottom:22px}
+  .gate-card input{width:100%;padding:13px 15px;background:#0b100d;border:1px solid var(--border);border-radius:11px;
+    color:var(--ink);font-size:15px;font-family:inherit;outline:none;text-align:center;letter-spacing:.5px}
+  .gate-card input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--glow)}
+  .gate-card button{width:100%;margin-top:12px;padding:13px;border:none;border-radius:11px;cursor:pointer;
+    background:linear-gradient(180deg,var(--green2),var(--green));color:#08130c;font-weight:700;font-size:15px;font-family:'Fraunces',serif}
+  .gate-card button:hover{filter:brightness(1.07)}
+  .gate-err{color:#e08a6a;font-size:13px;margin-top:14px;min-height:18px;font-weight:600}
+  .gate-foot{margin-top:18px;color:var(--faint);font-size:11px;font-family:ui-monospace,monospace}
+
+  /* app */
+  #app{display:none} #app.live{display:block}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 22px 70px}
+  .hd{text-align:center;margin-bottom:30px}
+  .hd-eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;color:var(--faint);margin-bottom:10px}
+  .hd h1{font-family:'Fraunces',serif;font-size:38px;color:var(--gold2);letter-spacing:.3px}
+  .hd-sub{color:var(--dim);margin-top:8px;font-size:15px}
+  .status{display:inline-flex;align-items:center;gap:9px;margin-top:16px;padding:8px 15px;border:1px solid var(--border);
+    border-radius:999px;background:var(--panel);font-size:13px;color:var(--ink)}
+  .status .dot{width:9px;height:9px;border-radius:50%;background:var(--green2);box-shadow:0 0 0 4px var(--glow)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--border);
+    border-radius:16px;padding:24px 24px;margin-bottom:18px}
+  .card h2{font-family:'Fraunces',serif;font-size:19px;color:var(--ink);margin-bottom:14px}
+  .muted{color:var(--dim);font-size:14px} .muted.sm{font-size:12.5px;margin-top:10px;color:var(--faint)}
+  .lender{font-size:18px;font-weight:700;color:var(--green2)}
+  .contact{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:12px;background:#0d1310}
+  .contact .who{font-weight:700;font-size:15px}
+  .contact .role{color:var(--faint);font-size:12px;margin:3px 0 9px}
+  .contact .lines a{display:block;font-size:14px;margin:3px 0}
+
+  table.terms{width:100%;border-collapse:collapse}
+  table.terms td{padding:9px 4px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+  table.terms td:first-child{color:var(--dim)} table.terms td:last-child{text-align:right;font-weight:600}
+  table.terms tr:last-child td{border-bottom:none}
+
+  .timeline{list-style:none;margin-top:4px}
+  .timeline li{padding:10px 0;border-bottom:1px solid var(--border);font-size:14.5px;display:flex;gap:14px}
+  .timeline li:last-child{border-bottom:none}
+  .timeline .when{flex:0 0 62px;color:var(--gold);font-weight:600;font-size:12.5px;padding-top:1px}
+  .callout{margin-top:16px;padding:14px 16px;border-left:3px solid var(--gold);background:#0d1310;border-radius:0 10px 10px 0;font-size:14px;color:var(--ink)}
+
+  ul.checks{list-style:none;margin-top:6px} ul.checks li{position:relative;padding:7px 0 7px 26px;font-size:14.5px;border-bottom:1px solid var(--border)}
+  ul.checks li:last-child{border-bottom:none}
+  ul.checks li:before{content:'';position:absolute;left:2px;top:12px;width:8px;height:8px;border-radius:50%;background:var(--green)}
+  ul.checks.arrow li:before{content:'\2192';top:6px;left:0;width:auto;height:auto;background:none;color:var(--gold);font-weight:700}
+
+  .ft{margin-top:30px;text-align:center;color:var(--faint);font-size:12px}
+
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}.hd h1{font-size:30px}.wrap{padding:28px 16px 60px}}
+</style>
+</head>
+<body>
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-emblem">&#127968;</div>
+    <h1>Cyprus HELOC</h1>
+    <p>Private page for Lauren &amp; Jonny. Enter the passphrase.</p>
+    <input id="pw" type="password" placeholder="passphrase" autocomplete="off" autofocus>
+    <button id="unlock">Unlock</button>
+    <div class="gate-err" id="err"></div>
+    <div class="gate-foot">AES-256 / encrypted client-side</div>
+  </div>
+</div>
+
+<div id="app"><div class="wrap"><div id="main"></div></div></div>
+
+<script type="application/json" id="payload">{"salt":"UJ9/8Pu5YVnHT/Gox8Kdiw==","iv":"BSvl2s9NMPtfoMOL","ct":"/EO4e+CM8s6Q1vQg0VxP8eXXJFi08RVTPbdrQJIQWy6b6CwsHQhvmbQWHeXjsiPGQcCXluDUGdA8h3x+ZnnVn5TMdnpZi6jUUrMkaDI0G3WRYWMS68D89j8FxX48tTrmHkqo0OT4riYhqTobwlUD7HeFQH9oMgdWFqmN4vrv1sYrVbA4v1jVNlOawCabkNubaExk8LqXEVzNePKWdOGiusCPfICwZoHq1FnGl1u+km1pccROF9I0BOCgwXcWUGXPZa4ikVvIMRE9PRZpxUjZhekoQGRR79nlhtwx0NVwqN6hafhFboM+2vyP/PR/rwPCdK8lWD856SkV7sXreLBBiL4JQXv/SeB+fi/23ek36tEv8qfgZbKaFrNBpVSfgfSv2+eGryj4ErPyf8Lek/hE8dPRE0x4GU7jAyCRpqAHBb5Cw6+jWRTX8m9fj8wco+41YO3o8DOU7RMQudmsQUKuH5DbnOCs2m+b9YNavzoCNqAghvWqTPNtv6xQ+tEbRjzxoHfJdB9/PaklOj6pwsW7PG6KAr0ix5dMrOPhK7jTttCp8wnga8F1E0UalGZ5bar9KPcemwwuWUl8cChdCtcG4ldI0c0wYlh8WyWREsJvqNbRlwLt1sMex9qtCtAFMhUkQ2mI28CwfeXYc5EQJyY9QiWN2ru2acY9OY3Qj2qcOR/bWC/BQx7cekn0FmJx20x7DxGxRyBci8fsEta9NdbON13FQtszL1Ct/mEP07K1xtox3Wxd4RrhzUxwOqB/HQrQH2qqtQEalqJQVMVKwo3c3B96lQxIitKG/YoqZTIhIrsFm+JOuETJvZPXvXL8SOSR5vqy6kcWZ77sRXrJI6GWItWwwsiSp1AF7gjEgzWbKppiZSC9g3q4l1Lmky6hovntRld7NN4ltOR5zHgUcYrgkGmVPHXtOVkDkSYYfnP6B7s9WoUXicj3ge10BY6rKXpC7MaPtNo4OEdIKYe9M8vV84bmxzM4bO0wfyh0B+D14gQPgOxm6is0lGzCr0TJsJolb5Km7onhVKWH/8SjaF92FNHMWMnEmH0tqtAY3vYJtlJoMpJ7/WOnTtZfUn38H1EuSqi6tqP9sgq23TvpbVl1SusTMr/nUpOCgRHtyLkHfWPYaOJdQPG/k5XqFfGznu93zT4741pf6I2rtUnn622Q8/zIvSP5qD7KnEFZghh79vFulaV45WKcOJJHl9LFUfWsZPV5aA0La7GcP2Hn5iO8sipOXm0zK4/3q9bahVnnny8/tJIYLxrIVugWwKmfp9t/8NTdIU93NS7E5cvzC/Qx1gTLE+Ig7KhUB7JCk2IcE19I5YuXMsC0x0dAwDloKcTyibYRH8ddqPP5Uuk6DsPPODPcn73dp9xHoh7eiG8y5MYi6KPEoltsMWhImyj4xEhdDixUU1UJs3vlRmHDDq+6WNvAcBT/fN5JLRpSOq5HfO6QlL2297haoCdrDflERNt4XAig3QaGYENEZTIPFbB8olwRJfGhVCMrmIfzgM8xQRFtKXqNUrONU4uzOwCRHCitUllmv+8t0+PTqvgxH7/eoprH1omu37DLqPuu5BaHwI2+Dqc8IJTqQcOWbjR3cv5wqyMA22PDWUORkP0OGIr7/y/Cu0a0CuqRA87EkZI7ZPkSW9M4B7TV7PI0y3PGytm6Ot27FPfRcueBE0QvraetYOODc9snu9k7iGF6jiZwB2AL1Jj7ipXXXa5IVRCX7shIeoMWCuJyIxzqqUmVp5OGXkLMtB+u4ms35gBY8CGDhiMbVDtHB/kS5Abrp1qCo/I6V+jDWCly95LZs4YAPAKtXVPzkxQnKJe8mVuh25JNPotPskMPWsWQEGAHoW+hi1WqttA9QdscpW7HrEoVij1JTx0sCFu8r+g5HHJ3LSK9R8xtFs8Yt49mN984X9VR9Xv9rpTXpZnWoJ9hy0IXPDJCpBTbcRVhieQ6kDqpKeveA+nEFd38p8GewMDCQp32KmiiKE0f77q1UOBVWDYEViJ0ZqB5PSprKMGnhfSHxfDSgtcn1MhpKpDhpDoJEbB3YOEN16KmOWRswe/32g3Ogyvn/Hx63IhV8spuuoexsWeZqQclGWXTfdaqEJccNeVP0Oed7rCkJDS2AfVDFv/WiNL/tzVwpXptcWSsLUs0qBt2ss/3sPU2NS6fd1lfijWkH4+KNHN4YT4bfXEt0R9Rr+Pw2AIfqqGf9+aJAp/OC3YHCdH0sfXzssPohPhAHV7Ka/zGrj1f40CBj574e3xBQ+TH9mC1HDEeZ1Huhr+Q3ZWOluuRTMbbK279X2ExLb+m2ytwNMg+h90kEZU4J8h3dRtfujs+2JCp/f8XeUsNfYqjAtaUEVqdPXSBKg+3gG5RCuLHDhRX0w/A4NunpgyykUMvCxqlno9bzOxut2XLRxerJHQ4U4khOyujgwKvANK3cqdecsw4NU4vndT7kMh9ci0CKq0D7/uY58UhgsSRfQLLutRXJE9YZUjzifaDXkZXxEROqAWY67grHdOMswKtVlkMJPGWTyKSX6aKp9v8fH3XzLcZPpg6qvFhN4wQA3nG47Jho9c6ahOdFLBUYJKAGx3MZW+7HIIUsQ+QmpyUbeWcr6eRFfXKh95mRVQQkId32yxW22OhV9SekrkYNn4TlKTtdPgIgpovnNv1g5yC6MhNOmgjriVUFbnFxvC8A05r4W/rnOiwZN2pUxESBGwkrSOdIW+2yNy5aS69BUZlb9JRgNxFt0mzFPvhDUeqrDwlbXZOw6OP0h1cTEunk2A4FxVoa4cUi1MZBWpC0kbU+HFk4FgqC8dF8RvF6z3H6ht4w/ujf5KuauAdNcb/boDP1qM3lUH7j+tLgODlhmDbBAiQtXwt6rYoD1x8Xcm9NYeJp+XiRAEJO/1o0auuPyXrOXdEZVQB1jA76b52SZZpH62vQPM53qTM5dag3VGcrmWCICrO+pWxtKmy8iU2EchhlUoeEpHsxAimD7FXkicvHmxnzhOnxcKwue1MHkP5bARw91CbKugdaR8pdHmbz/9sosfWWdpFnlHk59xaVlgsrkRRg4nvjnbYFVX+qcAfmSxqXLnVJTaBly2ZYuqoXzs2ogIImA9WBnGP9JAG+9Ddr9mglPcTOdtYa/AGxy43cH4OkHrtmcT8QRfK3qRYIsCzH3vTkbLmd60c/bgdAbXBtSb+o6yiqsiYKufnlJGrg5/G36zylJXF64Uay/F1kHodfnk614FyTxHPYXyPi+cgoH8YU8NX9G6Ik45YCq5G5LEx0pKZ7hKUoJK7WO95uJiFEDfE/7cu5XrNJhuxLGnhJd5tNth97RahKBCA8B84Gfmxip1hUD964DMLuTvOudpZl0YQYpa6Po+uo1k9QtbxQKqVN0AGX4cyieIHZCu7avO1IjNM9MH/xMeeNGTP/AEwDOP/ggppSHfd1NGC2lSdiWrCjPtOq3s9irya49xTJUXOGsU1iYZ11aq1+5itLnarXStPPxOj/8gU7VnDTriK7zkd1bUX+Kxr7nJ/0hHmUj7zejVwgrLkTpZmvho1mbr77UIcXTG4p7t28RJgEnl3uCnp6pGiPsN3lLRx2n5SDveka297aUuOdEN1JsqHsVE3l32t1EvufVmDkIuzp5le/QE0zAlBxRnOsFFFc/QHnf89fDhgRE5pynvXGzI2itFEo6P+wbyRXgkufw0yQaWGiR8sz8Wp/5FWRYhwwzAZkhnFNFIFIKdpsEVAZGnpsHawfudTZd8EAARa0+2OPhCUtUd20UZRkpADAsExjCWZmipxCE06hPFrS8KAM0rNX+75w4lwBxAWttAF4GDcAf13fdi7mof8umglR6+lMuJV+0rzJyIzcidIAaton2kW2YEg7sILhX5XiaTqpJMw35fv+DXX17I+Oj53+odhOuwianEXmXm7MTLl+05pW5uIK/sDHAvbSngeYS4kSw7K6Gj++1IKRgF7eJFtn0o4eb14OTCmmiQy7WFiUCC0WAXSpgNhbmUyJH2St/eYyYvPqh/zkNDZcI0hUo2dGXKcQy6iv/OroT4bA1I1Lp7RYAzK+6ZNH4RwuTU21ytCl/R6BwN2PWyZdb4WognkYa4ODbRsAoN1rBJ62Tb5iPIfMfngXsH1pvO9poRQPZIR8GcPvsA8REUuI3vOjSfGAnNwV9KgkciixJMstl8jn5HoBUlFem9OV6SQUPTj3U5LGRLHoxsYpKh6ApIz1zclhkg606fUqjtthEwy/QYEYfx+NvFtPgWoNdYkcpZ4sn+xdSTnZjEqEOoTFtPHBNkpQXF1yft0RufWLW6YjfwRLayLIRmB6f1kzY+T1IkDuOU1I/dipcMweyGn42Bmlx8wX06LX4fvbO4kwK6vT30u0PFPcKV0KNmv7mfF9z4TtHvgDS+WnBi2H18ttWq6p8f2fMT+EEgScdfLKqdP6C9WxHPhQNY4rzlnThMIDwBRr1BSaWY8niFfTVZoAODS4jRZfXqh1CnTRUEMqj7ktoanEX75zAT7RUJHyc/zOU3z6CMySFc+lIVgEH9ksu6ASoPMCIzbppY7CalS3V2wfB3I1U/gl2O9J8y3JXuBz5mTf4/WFEhDLNJZvyjSVDljNznPoq9moZwd1Yup3dZ+w9TU/rMBichKGhXfs2w5Z7DhVBFoOcF7IqPJIXK4mAngN5Fk9Y8zG7FGU2Je1jchqfaCL4kwSMGuUngRV16H5qcgs6u2Mp56wus5GKhbQd+O3k0FbQhVs9dpVbgGaZRDILc28XqnzzoYSx+sudtawyw1dKrl6XTwqWpsxezICzYyVieRzrJXUNvVDTECFOBuGk0sc765nogw11N+hAPz46eEf77qZ/ppwTbu98GouFomTe4uraiII9D4CiHV0iPA0jrxWgfrTvoK7AV2mTtQY91ZHeO4oUDcKvcLzfJKhrcThHRql9dw9ec8HdSoxhYkugkiws6IBsDof4emuZQFCa0KAae3YEQZnDcaRTc86nP4IukCOvX3b7RLhKw9RK2liY78GCI7puw++O1UaFeNrVXngroWi+ZK/R2L5VU7/53OC2jfdWGEdq5MdbIQ2zYlTwx4cyzgzHzWot0inQz5r8rIsLtC023YF8DEPvITstbJMG5SZpfn7BdjkqL6CENOKK5jzX35qTZZRtkQBpDnBKBN","iterations":250000}</script>
+<script>
+(function(){
+  var gate=document.getElementById('gate'),pw=document.getElementById('pw'),
+      err=document.getElementById('err'),app=document.getElementById('app');
+  function b64(s){var bin=atob(s),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return u;}
+  async function decrypt(password){
+    var p=JSON.parse(document.getElementById('payload').textContent);
+    var enc=new TextEncoder();
+    var km=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveKey']);
+    var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(p.salt),iterations:p.iterations,hash:'SHA-256'},
+      km,{name:'AES-GCM',length:256},false,['decrypt']);
+    var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(p.iv)},key,b64(p.ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  }
+  function boot(data){document.getElementById('main').innerHTML=data.content;app.classList.add('live');}
+  async function attempt(){
+    err.textContent='';var val=pw.value.trim();
+    if(!val){err.textContent='Enter the passphrase.';return;}
+    document.getElementById('unlock').textContent='Unlocking...';
+    try{var data=await decrypt(val);try{localStorage.setItem('heloc-pw',val);}catch(e){}gate.style.display='none';boot(data);}
+    catch(e){err.textContent='That passphrase did not work. Try again.';document.getElementById('unlock').textContent='Unlock';pw.value='';pw.focus();}
+  }
+  document.getElementById('unlock').addEventListener('click',attempt);
+  pw.addEventListener('keydown',function(e){if(e.key==='Enter')attempt();});
+  (function(){var saved=null;try{saved=localStorage.getItem('heloc-pw');}catch(e){}if(!saved)return;
+    decrypt(saved).then(function(d){gate.style.display='none';boot(d);}).catch(function(){try{localStorage.removeItem('heloc-pw');}catch(e){}});})();
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
