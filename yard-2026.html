@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Backyard, 2026 :: Linford</title>
+<meta name="description" content="Private project ledger for the Linford backyard build: budget, scope, crew, sod, and financing.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#f3ecdd; --paper2:#ece2ce; --card:#fbf7ee; --ink:#23291f; --dim:#5c6350; --faint:#8a8a72;
+    --forest:#1f3a2b; --forest2:#2f5539; --leaf:#5c9147; --leaf2:#7fb35a;
+    --soil:#a9552f; --soil2:#c26a3c; --wheat:#c69a3d; --wheat2:#e0bd6a;
+    --line:#d8ccb2; --line2:#c8b998;
+    --shadow:0 18px 44px rgba(43,35,15,0.14);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Hanken Grotesk',-apple-system,sans-serif;line-height:1.55;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(124,161,90,0.10), transparent 42%),
+      radial-gradient(circle at 88% 4%, rgba(198,154,61,0.12), transparent 40%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'DM Mono',ui-monospace,monospace}
+  a{color:var(--forest2);text-decoration:none;border-bottom:1px solid var(--line2)}
+  a:hover{color:var(--soil)}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  section{padding:14px 0}
+
+  /* reveal */
+  .rise{opacity:0;transform:translateY(18px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:64px 0 34px;text-align:center;overflow:hidden}
+  .seedtag{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border:1.5px solid var(--forest);
+    border-radius:999px;background:rgba(255,255,255,0.4);font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--forest);font-weight:600}
+  .seedtag .sprout{width:8px;height:8px;border-radius:50%;background:var(--leaf);box-shadow:0 0 0 4px rgba(124,161,90,.25)}
+  .hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(46px,9vw,104px);line-height:.92;letter-spacing:-.02em;color:var(--forest);margin:22px 0 10px}
+  .hero h1 em{font-style:italic;color:var(--soil)}
+  .hero .addr{font-size:15px;color:var(--dim);letter-spacing:.4px}
+  .hero .lede{max-width:620px;margin:20px auto 0;font-size:18px;color:var(--ink)}
+  .rule{width:100%;height:2px;margin:34px 0;background:
+    repeating-linear-gradient(90deg,var(--line2) 0 18px,transparent 18px 30px)}
+
+  /* ---------- BIG FIGURES ---------- */
+  .figs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .fig{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;position:relative;box-shadow:var(--shadow)}
+  .fig .k{font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .fig .v{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(30px,4.4vw,46px);line-height:1;margin-top:12px;letter-spacing:-.01em}
+  .fig .s{font-size:12.5px;color:var(--dim);margin-top:9px}
+  .fig.total .v{color:var(--forest)} .fig.paid .v{color:var(--leaf)}
+  .fig.due .v{color:var(--soil)} .fig.fin .v{color:var(--wheat)}
+  .fig .corner{position:absolute;top:14px;right:16px;font-size:20px;opacity:.5}
+
+  h2.sec{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(26px,3.6vw,36px);color:var(--forest);letter-spacing:-.01em;display:flex;align-items:baseline;gap:14px}
+  h2.sec .no{font-family:'DM Mono',monospace;font-size:14px;color:var(--soil);letter-spacing:1px;border:1px solid var(--line2);border-radius:6px;padding:2px 8px}
+  .sub{color:var(--dim);margin:8px 0 22px;font-size:15px;max-width:640px}
+
+  /* ---------- SCOPE GRID ---------- */
+  .scope{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .job{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s}
+  .job:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--leaf)}
+  .job .ico{font-size:30px;line-height:1}
+  .job .t{font-weight:700;margin-top:12px;font-size:15.5px}
+  .job .d{color:var(--dim);font-size:13px;margin-top:4px}
+  .job .num{font-family:'DM Mono',monospace;font-size:11px;color:var(--faint);margin-top:12px}
+
+  /* ---------- MONEY ---------- */
+  .money{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
+  .bar{height:26px;border-radius:8px;background:var(--paper2);overflow:hidden;display:flex;margin:8px 0 6px;border:1px solid var(--line)}
+  .bar span{display:block;height:100%}
+  .seg-paid{background:var(--leaf)} .seg-due{background:var(--soil2)} .seg-bal{background:repeating-linear-gradient(45deg,var(--wheat) 0 8px,var(--wheat2) 8px 16px)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;font-size:13px;color:var(--dim)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+  .payrow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--line2);font-size:14.5px}
+  .payrow:last-child{border-bottom:none} .payrow .amt{font-family:'DM Mono',monospace;font-weight:500}
+  .heloc{background:linear-gradient(160deg,var(--forest),var(--forest2));color:#eef1e6;border:none}
+  .heloc h3{font-family:'Fraunces',serif;font-weight:600;font-size:23px;color:#fff}
+  .heloc .tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--wheat2);font-weight:600}
+  .heloc .big{font-family:'Fraunces',serif;font-size:44px;font-weight:600;margin:8px 0 2px}
+  .heloc ul{list-style:none;margin-top:14px}
+  .heloc li{padding:7px 0;border-top:1px solid rgba(255,255,255,.14);font-size:13.5px;display:flex;justify-content:space-between;gap:12px}
+  .heloc li b{color:#fff;font-weight:600}
+  .heloc .who{margin-top:16px;font-size:12.5px;color:#cfd8c2}
+
+  /* ---------- CREW ---------- */
+  .crew{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .contact{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative;overflow:hidden}
+  .contact:before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--line2)}
+  .contact.lead:before{background:var(--soil)} .contact.sod:before{background:var(--leaf)} .contact.fin:before{background:var(--wheat)}
+  .contact .role{font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .contact .name{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:6px 0 2px;color:var(--ink)}
+  .contact .org{font-size:13px;color:var(--dim)}
+  .contact .lines{margin-top:12px;font-size:13.5px}
+  .contact .lines div{padding:3px 0}
+  .contact .lines .mono{font-size:13px}
+  .badge{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;letter-spacing:.4px;padding:4px 10px;border-radius:999px;background:var(--leaf);color:#fff}
+  .badge.pick{background:var(--soil)}
+
+  /* ---------- hydroseed callout ---------- */
+  .todo{background:repeating-linear-gradient(135deg,rgba(198,154,61,.10) 0 14px,transparent 14px 28px),var(--card);
+    border:1.5px dashed var(--wheat);border-radius:16px;padding:24px 26px;display:flex;gap:18px;align-items:center}
+  .todo .mk{font-size:34px}
+  .todo h3{font-family:'Fraunces',serif;font-weight:600;font-size:20px;color:var(--forest)}
+  .todo p{font-size:14px;color:var(--dim);margin-top:4px}
+
+  /* ---------- timeline ---------- */
+  .time{position:relative;margin-left:8px;padding-left:26px;border-left:2px solid var(--line2)}
+  .ev{position:relative;padding:12px 0 12px 6px}
+  .ev:before{content:'';position:absolute;left:-33px;top:16px;width:13px;height:13px;border-radius:50%;background:var(--paper);border:3px solid var(--leaf)}
+  .ev.done:before{background:var(--leaf)} .ev.now:before{background:var(--soil);border-color:var(--soil);box-shadow:0 0 0 5px rgba(194,106,60,.2)}
+  .ev .when{font-family:'DM Mono',monospace;font-size:12px;color:var(--soil);letter-spacing:.4px}
+  .ev .what{font-size:15px;font-weight:600;margin-top:2px}
+  .ev .note{font-size:13px;color:var(--dim)}
+
+  footer{text-align:center;color:var(--faint);font-size:12.5px;padding:44px 0 40px}
+  footer .mono{color:var(--dim)}
+
+  @media(max-width:860px){
+    .figs{grid-template-columns:repeat(2,1fr)}
+    .scope{grid-template-columns:repeat(2,1fr)}
+    .money{grid-template-columns:1fr}
+    .crew{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){.crew{grid-template-columns:1fr}.scope{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="seedtag rise"><span class="sprout"></span> Backyard Build &middot; Season 2026</div>
+    <h1 class="rise" style="animation-delay:.05s">From dirt<br>to <em>green</em>.</h1>
+    <div class="addr mono rise" style="animation-delay:.1s">1574 S 130 W &middot; Salem, Utah 84653</div>
+    <p class="lede rise" style="animation-delay:.16s">Every figure, every name, and every step of turning the back lot into a finished yard this year, in one place for Jonny &amp; Lauren.</p>
+  </header>
+
+  <div class="rule rise" style="animation-delay:.2s"></div>
+
+  <!-- BIG FIGURES -->
+  <section>
+    <div class="figs">
+      <div class="fig total rise" style="animation-delay:.22s"><span class="corner">&#128220;</span><div class="k">Contract Total</div><div class="v mono">$26,300</div><div class="s">Sam's Landscaping, signed 6/29/26</div></div>
+      <div class="fig paid rise" style="animation-delay:.28s"><span class="corner">&#9989;</span><div class="k">Paid So Far</div><div class="v mono">$500</div><div class="s">Deposit, at the verbal agreement</div></div>
+      <div class="fig due rise" style="animation-delay:.34s"><span class="corner">&#128176;</span><div class="k">Due At Start</div><div class="v mono">$12,650</div><div class="s">50% ($13,150) minus deposit</div></div>
+      <div class="fig fin rise" style="animation-delay:.4s"><span class="corner">&#127974;</span><div class="k">Financed By</div><div class="v mono">HELOC</div><div class="s">Cyprus line, $33k available</div></div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- SCOPE -->
+  <section>
+    <h2 class="sec"><span class="no">01</span> The Plan</h2>
+    <p class="sub">Eight pieces of work in the signed scope. Sam's crew handles all of it: grading through grass.</p>
+    <div class="scope">
+      <div class="job rise"><div class="ico">&#129521;</div><div class="t">Concrete Pad</div><div class="d">Poured slab</div><div class="num mono">01 / 08</div></div>
+      <div class="job rise" style="animation-delay:.05s"><div class="ico">&#128679;</div><div class="t">Spread &amp; Grade</div><div class="d">Level and shape the earth</div><div class="num mono">02 / 08</div></div>
+      <div class="job rise" style="animation-delay:.1s"><div class="ico">&#128166;</div><div class="t">Sprinklers</div><div class="d">Full irrigation system</div><div class="num mono">03 / 08</div></div>
+      <div class="job rise" style="animation-delay:.15s"><div class="ico">&#127793;</div><div class="t">Topsoil &amp; Sod Prep</div><div class="d">Soil in, graded for sod</div><div class="num mono">04 / 08</div></div>
+      <div class="job rise" style="animation-delay:.2s"><div class="ico">&#129704;</div><div class="t">Gravel</div><div class="d">South end of the lot</div><div class="num mono">05 / 08</div></div>
+      <div class="job rise" style="animation-delay:.25s"><div class="ico">&#12336;&#65039;</div><div class="t">Curbing</div><div class="d">Border all the way around</div><div class="num mono">06 / 08</div></div>
+      <div class="job rise" style="animation-delay:.3s"><div class="ico">&#127804;</div><div class="t">Flower Bed</div><div class="d">Bed edged with bark</div><div class="num mono">07 / 08</div></div>
+      <div class="job rise" style="animation-delay:.35s"><div class="ico">&#129355;</div><div class="t">Trampoline</div><div class="d">Set into the yard</div><div class="num mono">08 / 08</div></div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- MONEY -->
+  <section>
+    <h2 class="sec"><span class="no">02</span> The Money</h2>
+    <p class="sub">A $26,300 job on a 50%-up-front contract, funded by the Cyprus home equity line.</p>
+    <div class="money">
+      <div class="panel">
+        <div style="font-weight:700;font-size:15px">Payment schedule</div>
+        <div class="bar" title="Paid / due at start / final balance">
+          <span class="seg-paid" style="width:1.9%"></span>
+          <span class="seg-due" style="width:48.1%"></span>
+          <span class="seg-bal" style="width:50%"></span>
+        </div>
+        <div class="legend">
+          <span><i class="seg-paid"></i>Deposit paid</span>
+          <span><i class="seg-due"></i>Balance of first 50%</span>
+          <span><i style="background:var(--wheat)"></i>Final 50% on completion</span>
+        </div>
+        <div style="margin-top:18px">
+          <div class="payrow"><span>Deposit (already paid)</span><span class="amt" style="color:var(--leaf)">$500</span></div>
+          <div class="payrow"><span>Due at start (balance of 50%)</span><span class="amt" style="color:var(--soil)">$12,650</span></div>
+          <div class="payrow"><span>Final balance, on completion</span><span class="amt" style="color:var(--wheat)">$13,150</span></div>
+          <div class="payrow" style="border-top:2px solid var(--line2);margin-top:6px;padding-top:12px"><span style="font-weight:700">Total</span><span class="amt" style="font-weight:700">$26,300</span></div>
+        </div>
+        <p style="font-size:12.5px;color:var(--faint);margin-top:14px">Contract terms: 50% up front, 24-hour written cancel notice ($85 fee), lien clause if unpaid. Confirm the $500 deposit covers the deposit line in writing.</p>
+      </div>
+
+      <div class="panel heloc">
+        <div class="tag">The Fuel</div>
+        <h3>Cyprus HELOC</h3>
+        <div class="big mono">$33,000</div>
+        <div style="font-size:13px;color:#cfd8c2">credit limit &middot; covers the build with ~$6,700 to spare</div>
+        <ul>
+          <li><span>Rate</span><b>7.75% var &middot; 4.99% promo 6mo</b></li>
+          <li><span>Structure</span><b>10yr draw + 10yr repay</b></li>
+          <li><span>Payment</span><b>Interest only, min $50</b></li>
+          <li><span>Early close</span><b>$300 if under 2 yrs</b></li>
+        </ul>
+        <div class="who">Andrea Aguilar &middot; Home Equity Officer<br>801-260-7600 ext 5333</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- CREW -->
+  <section>
+    <h2 class="sec"><span class="no">03</span> The Crew</h2>
+    <p class="sub">Everyone gathered along the way. Sam holds the contract; the rest are quotes, referrals, and the sod shortlist.</p>
+    <div class="crew">
+      <div class="contact lead rise">
+        <div class="role">The Contractor</div>
+        <div class="name">Sam Carreno</div>
+        <div class="org">Sam's Landscaping Services</div>
+        <div class="lines">
+          <div class="mono">&#128222; 801-691-6854</div>
+          <div><a href="mailto:samuelcarreno1@yahoo.com">samuelcarreno1@yahoo.com</a></div>
+          <div style="color:var(--faint);font-size:12.5px">1164 E Russell Rd, Eagle Mountain 84005</div>
+        </div>
+        <span class="badge pick">Signed &middot; $26,300</span>
+      </div>
+
+      <div class="contact sod rise" style="animation-delay:.05s">
+        <div class="role">Sod</div>
+        <div class="name">Tim Osgood</div>
+        <div class="org">"Sod Guy"</div>
+        <div class="lines"><div class="mono">&#128222; 801-699-3442</div></div>
+        <span class="badge">Best on cost</span>
+      </div>
+
+      <div class="contact sod rise" style="animation-delay:.1s">
+        <div class="role">Sod / Turf</div>
+        <div class="name">Preston Watton</div>
+        <div class="org">FRDM Turf</div>
+        <div class="lines">
+          <div><a href="mailto:preston.watton@frdmturf.com">preston.watton@frdmturf.com</a></div>
+          <div style="color:var(--faint);font-size:12.5px">On-site consult 5/17/25 &middot; proposal sent</div>
+        </div>
+      </div>
+
+      <div class="contact rise" style="animation-delay:.15s">
+        <div class="role">Sprinklers + Sod</div>
+        <div class="name">John Barrett</div>
+        <div class="org">Estimate, June 2025</div>
+        <div class="lines"><div class="mono">&#128222; 801-471-3874</div><div style="color:var(--faint);font-size:12.5px">Quote emailed; noted bed + patio edging</div></div>
+      </div>
+
+      <div class="contact rise" style="animation-delay:.2s">
+        <div class="role">Referrals</div>
+        <div class="name">Nick Nadauld</div>
+        <div class="org">Sent Tim (sod) &amp; Soni (concrete)</div>
+        <div class="lines"><div class="mono">&#128222; 801-931-8004</div></div>
+      </div>
+
+      <div class="contact rise" style="animation-delay:.25s">
+        <div class="role">Concrete</div>
+        <div class="name">Soni Concrete</div>
+        <div class="org">Poured the backyard pad</div>
+        <div class="lines"><div style="color:var(--faint);font-size:12.5px">Does not do curbing (Sam's covers that)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- HYDROSEED TODO -->
+  <section>
+    <h2 class="sec"><span class="no">04</span> Sod vs. Seed</h2>
+    <p class="sub">Sod is in the plan and priced. Hydroseeding is the cheaper alternative worth pricing out, but the referrals aren't gathered yet.</p>
+    <div class="todo rise">
+      <div class="mk">&#127793;</div>
+      <div>
+        <h3>Hydroseeding referrals: still to gather</h3>
+        <p>No hydroseed contacts turned up in a full search of iMessages or Contacts. When you have a name or number (or point me to Lauren's phone or email), it drops in right here.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- TIMELINE -->
+  <section>
+    <h2 class="sec"><span class="no">05</span> The Timeline</h2>
+    <p class="sub">Roughly a year from first quotes to finished grass.</p>
+    <div class="time">
+      <div class="ev done rise"><div class="when">MAY 2025</div><div class="what">Gathered quotes &amp; sod referrals</div><div class="note">FRDM Turf consult, John Barrett estimate, Tim Osgood via Nick Nadauld.</div></div>
+      <div class="ev done rise" style="animation-delay:.05s"><div class="when">JUN 2026</div><div class="what">Financing lined up</div><div class="note">Shopped 5 lenders, chose Cyprus. Terms received 6/26.</div></div>
+      <div class="ev now rise" style="animation-delay:.1s"><div class="when">JUN 29, 2026</div><div class="what">Contract signed, work begins</div><div class="note">Sam's contract signed, $500 deposit down, HELOC disclosures out for e-sign. First payment due at start.</div></div>
+      <div class="ev rise" style="animation-delay:.15s"><div class="when">+ 2 TO 4 WEEKS</div><div class="what">Grade, pour, plumb, sod</div><div class="note">Concrete, grading, sprinklers, topsoil, curbing, beds, trampoline, grass.</div></div>
+      <div class="ev rise" style="animation-delay:.2s"><div class="when">ON COMPLETION</div><div class="what">Final $13,150 &middot; yard done</div><div class="note">Finished this year.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="mono">PRIVATE LEDGER &middot; LINFORD BACKYARD 2026</div>
+    <div style="margin-top:6px">Unlisted and not indexed. Figures from the Sam's Landscaping contract, the Cyprus HELOC terms, and your own notes.</div>
+  </footer>
+
+</div>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
