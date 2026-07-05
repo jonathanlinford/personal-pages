@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFC Book Club — 2026</title>
+<meta name="description" content="The Linford family book club's 2026 reading year: ten books, ten hosts, cover art, listen links, and every meeting's Google Meet and notes.">
+<meta property="og:title" content="LFC Book Club — 2026 Reading Year">
+<meta property="og:description" content="Ten books, ten hosts, one year. Covers, listen links, Meet links, and meeting notes.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="book-club-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #100e14;
+    --bg-2: #16131c;
+    --card: #1a1622;
+    --card-hover: #221c2e;
+    --border: #2a2436;
+    --border-soft: #211b2c;
+    --text: #ece7f2;
+    --text-dim: #9b93ac;
+    --text-faint: #6a6379;
+    --brass: #d8a657;
+    --brass-light: #eec27e;
+    --accent: #8b7ff0;
+    --accent-light: #a99cff;
+    --read: #6bbf78;
+    --live: #ef6f6f;
+    --glow: rgba(139,127,240,0.14);
+    --brass-glow: rgba(216,166,87,0.16);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient background */
+  .bg-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .bg-wrap::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 500px at 15% -5%, rgba(139,127,240,0.10), transparent 60%),
+      radial-gradient(800px 500px at 95% 0%, rgba(216,166,87,0.08), transparent 55%);
+  }
+  .bg-wrap::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .container { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  /* Header */
+  header { margin-bottom: 40px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--brass); margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--brass); opacity: 0.6; }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(38px, 7vw, 68px);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.01em;
+    background: linear-gradient(120deg, var(--text) 30%, var(--brass-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px;
+  }
+  header .lede { color: var(--text-dim); font-size: 17px; max-width: 620px; line-height: 1.6; }
+  header .lede b { color: var(--text); font-weight: 600; }
+
+  /* Progress row */
+  .progress-row {
+    display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+    margin-top: 28px; padding-top: 26px; border-top: 1px solid var(--border-soft);
+  }
+  .progress-track { flex: 1; min-width: 220px; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+  .progress-labels b { color: var(--brass-light); font-weight: 600; }
+  .bar { height: 8px; border-radius: 99px; background: var(--bg-2); border: 1px solid var(--border-soft); overflow: hidden; }
+  .bar > span { display: block; height: 100%; width: 0; border-radius: 99px;
+    background: linear-gradient(90deg, var(--brass), var(--brass-light)); transition: width 1.1s cubic-bezier(.2,.8,.2,1); }
+  .stat-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+    background: var(--bg-2); border: 1px solid var(--border-soft); padding: 8px 12px; border-radius: 10px;
+  }
+  .chip b { color: var(--text); font-weight: 500; }
+
+  /* Spotlight (next meeting) */
+  .spotlight {
+    margin: 40px 0 44px; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: auto 1fr; gap: 28px;
+    padding: 28px; border-radius: 20px;
+    background: linear-gradient(135deg, rgba(216,166,87,0.10), rgba(139,127,240,0.06)), var(--card);
+    border: 1px solid var(--border);
+  }
+  .spotlight .glowline { position: absolute; inset: 0; border-radius: 20px; padding: 1px;
+    background: linear-gradient(135deg, rgba(216,166,87,0.5), transparent 40%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .spotlight .cover-mini { width: 120px; }
+  .spotlight .cover-mini img { width: 100%; border-radius: 8px; display: block;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+  .spot-body { min-width: 0; }
+  .spot-tag {
+    display: inline-flex; align-items: center; gap: 7px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--brass);
+    margin-bottom: 12px;
+  }
+  .spot-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brass);
+    box-shadow: 0 0 0 0 var(--brass); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(216,166,87,.5)} 70%{box-shadow:0 0 0 9px rgba(216,166,87,0)} 100%{box-shadow:0 0 0 0 rgba(216,166,87,0)} }
+  .spot-body h2 { font-family: 'Fraunces', serif; font-size: 27px; font-weight: 600; line-height: 1.15; margin-bottom: 4px; }
+  .spot-body .byline { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; }
+  .spot-body .byline .host { color: var(--brass-light); }
+  .countdown { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .cd-cell { text-align: center; background: var(--bg-2); border: 1px solid var(--border-soft);
+    border-radius: 10px; padding: 8px 12px; min-width: 62px; }
+  .cd-cell .num { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 500; color: var(--text); line-height: 1; }
+  .cd-cell .lbl { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-faint); margin-top: 5px; }
+  .cd-note { font-size: 14px; color: var(--text-dim); align-self: center; }
+  .spot-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    font-size: 13.5px; font-weight: 500; padding: 10px 16px; border-radius: 11px;
+    border: 1px solid var(--border); color: var(--text); background: var(--bg-2);
+    transition: all .2s ease; cursor: pointer; white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--accent); background: var(--card-hover); transform: translateY(-1px); }
+  .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .btn.primary { background: linear-gradient(135deg, var(--brass), #c68f3e); color: #241a08; border-color: transparent; font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.08); box-shadow: 0 8px 22px var(--brass-glow); }
+  .btn.meet { background: linear-gradient(135deg, var(--accent), #6f61e6); color: #fff; border-color: transparent; }
+  .btn.meet:hover { filter: brightness(1.08); box-shadow: 0 8px 22px var(--glow); }
+
+  /* Section head + filters */
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .section-head h3 { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; }
+  .filters { display: flex; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .filters button { background: none; border: none; border-right: 1px solid var(--border);
+    color: var(--text-dim); font-family: inherit; font-size: 13px; font-weight: 500; padding: 9px 15px; cursor: pointer; transition: all .2s; }
+  .filters button:last-child { border-right: none; }
+  .filters button:hover { color: var(--text); background: rgba(139,127,240,0.06); }
+  .filters button.active { color: var(--brass-light); background: rgba(216,166,87,0.10); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 22px; }
+
+  .book {
+    position: relative; text-align: left; cursor: pointer;
+    background: none; border: none; padding: 0; font-family: inherit; color: inherit;
+    animation: rise .5s ease backwards;
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .cover {
+    position: relative; aspect-ratio: 2/3; border-radius: 10px; overflow: hidden;
+    background: var(--bg-2); border: 1px solid var(--border-soft);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.42);
+    transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s, border-color .28s;
+  }
+  .cover::after { content: ""; position: absolute; inset: 0; border-radius: 10px;
+    box-shadow: inset 3px 0 8px rgba(0,0,0,0.35), inset -1px 0 2px rgba(255,255,255,0.05); pointer-events: none; }
+  .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .book:hover .cover { transform: translateY(-6px) rotate(-.6deg); box-shadow: 0 22px 44px rgba(0,0,0,0.55); border-color: var(--brass); }
+  .book:focus-visible { outline: none; }
+  .book:focus-visible .cover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+
+  .cover .placeholder { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px; text-align: center; padding: 18px;
+    background: repeating-linear-gradient(45deg, #1c1726, #1c1726 10px, #1a1523 10px, #1a1523 20px); }
+  .cover .placeholder .q { font-family: 'Fraunces', serif; font-size: 46px; color: var(--brass); opacity: .7; }
+  .cover .placeholder .t { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+  .badge {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: .5px;
+    padding: 4px 9px; border-radius: 99px; backdrop-filter: blur(6px);
+    text-transform: uppercase;
+  }
+  .badge.read { background: rgba(107,191,120,0.2); color: #a8e6b3; border: 1px solid rgba(107,191,120,0.3); }
+  .badge.live { background: rgba(239,111,111,0.22); color: #ffb3b3; border: 1px solid rgba(239,111,111,0.35); }
+  .badge.next { background: rgba(216,166,87,0.22); color: var(--brass-light); border: 1px solid rgba(216,166,87,0.4); }
+  .badge.upcoming { background: rgba(20,18,26,0.6); color: var(--text-dim); border: 1px solid var(--border); }
+
+  .book-meta { padding: 13px 2px 0; }
+  .book-meta .m-month { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--brass); margin-bottom: 5px; }
+  .book-meta .m-title { font-family: 'Fraunces', serif; font-size: 16.5px; font-weight: 600; line-height: 1.22; margin-bottom: 3px; }
+  .book-meta .m-author { font-size: 13px; color: var(--text-dim); }
+  .book-meta .m-host { font-size: 12px; color: var(--text-faint); margin-top: 7px; }
+  .book-meta .m-host b { color: var(--text-dim); font-weight: 500; }
+
+  /* Modal */
+  .modal-scrim { position: fixed; inset: 0; z-index: 50; background: rgba(6,5,9,0.72); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity .25s; }
+  .modal-scrim.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    position: relative; width: 100%; max-width: 660px; max-height: 90vh; overflow-y: auto;
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    transform: translateY(16px) scale(.98); transition: transform .28s cubic-bezier(.2,.8,.2,1);
+  }
+  .modal-scrim.open .modal { transform: translateY(0) scale(1); }
+  .modal-hero { display: grid; grid-template-columns: 132px 1fr; gap: 22px; padding: 28px 28px 22px;
+    background: linear-gradient(135deg, rgba(139,127,240,0.08), transparent); border-bottom: 1px solid var(--border-soft); }
+  .modal-hero .mcover { width: 132px; }
+  .modal-hero .mcover img, .modal-hero .mcover .ph { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: 9px; display: block;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.5); }
+  .modal-hero .mcover .ph { background: repeating-linear-gradient(45deg, #1c1726, #1c1726 10px, #1a1523 10px, #1a1523 20px);
+    display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 44px; color: var(--brass); }
+  .m-info .m-month { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brass); margin-bottom: 8px; }
+  .m-info h2 { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; line-height: 1.12; margin-bottom: 4px; }
+  .m-info .m-author { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; }
+  .m-info .m-stats { display: flex; flex-wrap: wrap; gap: 8px; }
+  .m-info .m-stats span { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--text-dim);
+    background: var(--bg-2); border: 1px solid var(--border-soft); padding: 5px 10px; border-radius: 8px; }
+  .modal-body { padding: 22px 28px 28px; }
+  .modal-body .blurb { font-size: 15.5px; line-height: 1.65; color: var(--text); margin-bottom: 22px; }
+  .modal-body .blurb.tbd { color: var(--text-dim); font-style: italic; }
+  .link-group { margin-bottom: 20px; }
+  .link-group h4 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint);
+    font-weight: 600; margin-bottom: 11px; }
+  .link-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .modal-close { position: absolute; top: 16px; right: 16px; z-index: 3; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(20,18,26,0.7); border: 1px solid var(--border); color: var(--text-dim); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all .2s; }
+  .modal-close:hover { color: var(--text); border-color: var(--accent); transform: rotate(90deg); }
+
+  .footer { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--border-soft);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    font-size: 13px; color: var(--text-faint); }
+  .footer a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1px; }
+  .footer a:hover { color: var(--brass-light); border-color: var(--brass); }
+
+  @media (max-width: 620px) {
+    .spotlight { grid-template-columns: 1fr; }
+    .spotlight .cover-mini { width: 100px; }
+    .modal-hero { grid-template-columns: 100px 1fr; gap: 16px; padding: 22px 20px 18px; }
+    .modal-hero .mcover { width: 100px; }
+    .modal-body { padding: 20px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+    .container { padding: 40px 18px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-wrap"></div>
+
+<div class="container">
+  <header>
+    <div class="eyebrow">Linford Family &middot; Reading Year 2026</div>
+    <h1>The Book Club</h1>
+    <p class="lede">Ten books, ten hosts, one Sunday a month. <b>The rule:</b> you have to have read it already, or it has to be a classic. Tap any cover for the story, where to listen, the meeting link, and notes.</p>
+
+    <div class="progress-row">
+      <div class="progress-track">
+        <div class="progress-labels"><span>Meetings done</span><span><b id="doneCount">0</b> of 10</span></div>
+        <div class="bar"><span id="progFill"></span></div>
+      </div>
+      <div class="stat-chips">
+        <div class="chip"><b id="pagesTotal">0</b> pages this year</div>
+        <div class="chip"><b id="audioTotal">0h</b> of audio</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="spotlight-wrap"></section>
+
+  <div class="section-head">
+    <h3>The 2026 Shelf</h3>
+    <div class="filters" id="filters">
+      <button data-f="all" class="active">All</button>
+      <button data-f="read">Read</button>
+      <button data-f="upcoming">Upcoming</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer">
+    <span>Built from the club spreadsheet &amp; calendar &middot; updates itself as meetings pass</span>
+    <span>
+      <a href="https://docs.google.com/spreadsheets/d/13iZMwy-we1t41gN2m_cMhUBmJ-WkBqDK0cI94JeZhi4/edit" target="_blank" rel="noopener">Book list</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://docs.google.com/document/d/14lTROyrqvLNncxvcAzBgTAJRnz4d5e2ypDHxpvz2Pak/edit" target="_blank" rel="noopener">Club notes</a>
+    </span>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-scrim" id="scrim" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const MEET = "https://meet.google.com/xiz-ymcw-jui";
+const CLUB_NOTES = "https://docs.google.com/document/d/14lTROyrqvLNncxvcAzBgTAJRnz4d5e2ypDHxpvz2Pak/edit";
+
+const books = [
+  { month:"March", when:"2026-03-01T19:00:00-07:00", host:"Nancy", title:"My Name Is Asher Lev", author:"Chaim Potok",
+    pages:369, audio:"9h 35m", audioH:9.58, cover:"assets/book-club/asher-lev.jpg",
+    blurb:"A Hasidic boy in postwar Brooklyn is born with a gift for painting that his faith and his father cannot hold. Chaim Potok's quiet, aching novel about the cost of a calling.",
+    gemini:"https://docs.google.com/document/d/1s9eQraK6-16d5ylC7lW__PniluKMFXmId3xgazFB7Xk/edit",
+    recording:"https://drive.google.com/file/d/1WBLLSRLV3FGvCbBQIGzPp_qgKV2BAXG_/view" },
+
+  { month:"April", when:"2026-04-05T19:00:00-06:00", host:"Eden", title:"Extremely Loud & Incredibly Close", author:"Jonathan Safran Foer",
+    pages:368, audio:"10h 56m", audioH:10.93, cover:"assets/book-club/extremely-loud.jpg",
+    blurb:"Nine-year-old Oskar Schell searches all five boroughs of New York for the lock that matches a key his father left behind on 9/11. Inventive, funny, and heartbreaking.",
+    gemini:"https://docs.google.com/document/d/1fVcVjQ2pGIw8prU6hHe126szInK0Rt2cvtY1GCRLP8c/edit",
+    recording:"https://drive.google.com/file/d/1s3esP-wcUWyNilk19VVvpiIcGJSFnpEW/view" },
+
+  { month:"May", when:"2026-05-03T19:00:00-06:00", host:"Mom", title:"Jane Eyre", author:"Charlotte Brontë",
+    pages:532, audio:"19h 10m", audioH:19.17, cover:"assets/book-club/jane-eyre.jpg",
+    blurb:"An orphaned, plain, penniless governess who refuses to be anyone's but her own. Charlotte Brontë's 1847 classic still burns with conscience, temper, and love." },
+
+  { month:"June", when:"2026-06-07T21:00:00-06:00", host:"Taylor", title:"Flowers for Algernon", author:"Daniel Keyes",
+    pages:311, audio:"8h 59m", audioH:8.98, cover:"assets/book-club/algernon.jpg",
+    blurb:"An experimental surgery makes Charlie Gordon a genius, and a lab mouse named Algernon shows him exactly where the road leads. Told in Charlie's own progress reports.",
+    gemini:"https://docs.google.com/document/d/1dckadAK8Csq2ebMXe0zI4XyfTMow-YKP_O7qYnwwnj8/edit",
+    recording:"https://drive.google.com/file/d/1vku_PiuyKm4rp3U87SSWbdkqnqxF7BeF/view" },
+
+  { month:"July", when:"2026-07-05T19:00:00-06:00", host:"Dad", title:"Leadership and Self-Deception", author:"The Arbinger Institute",
+    pages:240, audio:"6h 1m", audioH:6.02, cover:"assets/book-club/leadership.jpg",
+    blurb:"A business parable about the 'box' we climb into the moment we betray what we know is right, and how self-deception quietly wrecks the people around us." },
+
+  { month:"August", when:"2026-08-02T19:00:00-06:00", host:"Daniel", title:"Man's Search for Meaning", author:"Viktor E. Frankl",
+    pages:184, audio:"5h 43m", audioH:5.72, cover:"assets/book-club/mans-search.jpg",
+    blurb:"A psychiatrist survives the concentration camps and builds a philosophy from what he saw there: that meaning, not comfort, is what keeps a person alive." },
+
+  { month:"September", when:"2026-09-06T19:00:00-06:00", host:"Spencer", title:"Lord of the Flies", author:"William Golding",
+    pages:224, audio:"6h 35m", audioH:6.58, cover:"assets/book-club/lord-of-flies.jpg",
+    blurb:"Schoolboys stranded on an island build a society and then take it apart. Golding's Nobel-winning parable of the savage waiting under the civilized skin." },
+
+  { month:"October", when:"2026-10-04T19:00:00-06:00", host:"Sarah", title:"Frankenstein", author:"Mary Shelley",
+    pages:280, audio:"8h 35m", audioH:8.58, cover:"assets/book-club/frankenstein.jpg",
+    blurb:"Mary Shelley was eighteen when she imagined a creature that asks its maker the oldest question there is: why give me life only to abandon me? The original science-fiction novel." },
+
+  { month:"November", when:"2026-11-01T19:00:00-07:00", host:"Lizzy", title:null, author:null,
+    pages:null, audio:null, audioH:0, cover:null,
+    blurb:"Lizzy's pick — still to be announced. Check back once the choice is in." },
+
+  { month:"December", when:"2026-12-06T19:00:00-07:00", host:"Jonny", title:"The Terminal List", author:"Jack Carr",
+    pages:416, audio:"12h 24m", audioH:12.40, cover:"assets/book-club/terminal-list.jpg",
+    blurb:"A Navy SEAL comes home to find his men and his family gone and the record rewritten to blame him. He starts a list of the names responsible and works his way down it." },
+];
+
+/* ---------- state + helpers ---------- */
+const now = new Date();
+function startDate(b){ return new Date(b.when); }
+function endDate(b){ return new Date(startDate(b).getTime() + 2*60*60*1000); }
+function state(b){
+  const s = startDate(b), e = endDate(b);
+  if (now > e) return "read";
+  if (now >= s && now <= e) return "live";
+  return "upcoming";
+}
+const nextIdx = books.findIndex(b => state(b) !== "read");
+
+function fmtDate(b){
+  return startDate(b).toLocaleDateString('en-US',{weekday:'long', month:'long', day:'numeric', year:'numeric'});
+}
+function fmtTime(b){
+  return startDate(b).toLocaleTimeString('en-US',{hour:'numeric', minute:'2-digit'}) + " MT";
+}
+function enc(s){ return encodeURIComponent(s); }
+function audibleUrl(b){ return "https://www.audible.com/search?keywords=" + enc(b.title + " " + b.author); }
+function spotifyUrl(b){ return "https://open.spotify.com/search/" + enc(b.title + " " + b.author) + "/audiobooks"; }
+function libbyUrl(b){ return "https://libbyapp.com/search/query-" + enc(b.title + " " + b.author) + "/page-1"; }
+function gcalUrl(b){
+  const s = startDate(b), e = endDate(b);
+  const z = d => d.getUTCFullYear() + pad(d.getUTCMonth()+1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z";
+  const pad = n => String(n).padStart(2,'0');
+  const text = "LFC Book Club: " + (b.title || (b.host + "'s pick"));
+  return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + enc(text) +
+         "&dates=" + z(s) + "/" + z(e) + "&details=" + enc("Hosted by " + b.host + "\n" + MEET);
+}
+
+/* ---------- SVG icons ---------- */
+const IC = {
+  meet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>',
+  audible: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+  spotify: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 11.5c2.5-.7 5.5-.4 7.7.9M8.2 14.6c2-.5 4-.3 5.6.7M7.8 8.5c3-.8 6.6-.4 9.2 1.1"/></svg>',
+  libby: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  notes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>',
+  rec: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+};
+
+/* ---------- render grid ---------- */
+const grid = document.getElementById('grid');
+let filter = "all";
+
+function badgeFor(b, idx){
+  const st = state(b);
+  if (st === "live") return '<span class="badge live">● Meeting now</span>';
+  if (st === "read") return '<span class="badge read">✓ Read</span>';
+  if (idx === nextIdx) return '<span class="badge next">Up next</span>';
+  return '<span class="badge upcoming">Upcoming</span>';
+}
+function coverHtml(b){
+  if (b.cover) return '<img src="'+b.cover+'" alt="'+b.title+' cover" loading="lazy">';
+  return '<div class="placeholder"><div class="q">?</div><div class="t">'+b.host+"'s pick<br>coming soon</div></div>";
+}
+
+function renderGrid(){
+  grid.innerHTML = books.map((b, idx) => {
+    const st = state(b);
+    const show = filter === "all" || (filter === "read" && st === "read") || (filter === "upcoming" && st !== "read");
+    if (!show) return "";
+    return `
+      <button class="book" data-idx="${idx}" style="animation-delay:${idx*40}ms">
+        <div class="cover">${badgeFor(b, idx)}${coverHtml(b)}</div>
+        <div class="book-meta">
+          <div class="m-month">${b.month}</div>
+          <div class="m-title">${b.title || b.host + "'s pick"}</div>
+          <div class="m-author">${b.author || "To be announced"}</div>
+          <div class="m-host">Hosted by <b>${b.host}</b></div>
+        </div>
+      </button>`;
+  }).join("");
+  document.querySelectorAll('.book').forEach(el => el.addEventListener('click', () => openModal(+el.dataset.idx)));
+}
+
+/* ---------- filters ---------- */
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('button'); if (!btn) return;
+  filter = btn.dataset.f;
+  document.querySelectorAll('#filters button').forEach(b => b.classList.toggle('active', b === btn));
+  renderGrid();
+});
+
+/* ---------- modal ---------- */
+const scrim = document.getElementById('scrim');
+const modalContent = document.getElementById('modalContent');
+
+function linkBtn(href, cls, icon, label){ return `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${icon}${label}</a>`; }
+
+function openModal(idx){
+  const b = books[idx];
+  const st = state(b);
+  const hasBook = !!b.title;
+
+  const cover = b.cover
+    ? `<img src="${b.cover}" alt="${b.title} cover">`
+    : `<div class="ph">?</div>`;
+
+  const stats = hasBook ? `
+    <div class="m-stats">
+      <span>${b.pages} pages</span>
+      <span>${b.audio} audio</span>
+    </div>` : "";
+
+  // Listen links
+  let listen = "";
+  if (hasBook) {
+    listen = `
+      <div class="link-group">
+        <h4>Listen &amp; Read</h4>
+        <div class="link-row">
+          ${linkBtn(audibleUrl(b), "", IC.audible, "Audible")}
+          ${linkBtn(spotifyUrl(b), "", IC.spotify, "Spotify")}
+          ${linkBtn(libbyUrl(b), "", IC.libby, "Libby")}
+        </div>
+      </div>`;
+  }
+
+  // Meeting links
+  let meeting = "";
+  if (st === "read") {
+    const notes = [];
+    if (b.gemini) notes.push(linkBtn(b.gemini, "", IC.notes, "AI recap"));
+    notes.push(linkBtn(CLUB_NOTES, "", IC.notes, "Club notes"));
+    if (b.recording) notes.push(linkBtn(b.recording, "", IC.rec, "Recording"));
+    meeting = `
+      <div class="link-group">
+        <h4>Meeting &middot; ${fmtDate(b)}</h4>
+        <div class="link-row">${notes.join("")}</div>
+      </div>`;
+  } else {
+    const live = st === "live";
+    meeting = `
+      <div class="link-group">
+        <h4>${live ? "Happening now" : "Meeting"} &middot; ${fmtDate(b)} &middot; ${fmtTime(b)}</h4>
+        <div class="link-row">
+          ${linkBtn(MEET, "meet", IC.meet, live ? "Join now" : "Google Meet")}
+          ${linkBtn(gcalUrl(b), "", IC.cal, "Add to calendar")}
+        </div>
+      </div>`;
+  }
+
+  modalContent.innerHTML = `
+    <div class="modal-hero">
+      <div class="mcover">${cover}</div>
+      <div class="m-info">
+        <div class="m-month">${b.month} &middot; ${b.host} hosts</div>
+        <h2>${hasBook ? b.title : b.host + "'s pick"}</h2>
+        <div class="m-author">${b.author || "To be announced"}</div>
+        ${stats}
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="blurb${hasBook ? "" : " tbd"}">${b.blurb}</p>
+      ${listen}
+      ${meeting}
+    </div>`;
+
+  scrim.classList.add('open');
+  scrim.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  scrim.classList.remove('open');
+  scrim.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+scrim.addEventListener('click', e => { if (e.target === scrim) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ---------- spotlight (next / current meeting) ---------- */
+function renderSpotlight(){
+  if (nextIdx === -1) return; // all done
+  const b = books[nextIdx];
+  const st = state(b);
+  const hasBook = !!b.title;
+  const cover = b.cover ? `<img src="${b.cover}" alt="${b.title} cover">` : `<div class="ph" style="aspect-ratio:2/3;background:repeating-linear-gradient(45deg,#1c1726,#1c1726 10px,#1a1523 10px,#1a1523 20px);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-size:40px;color:var(--brass)">?</div>`;
+
+  const tag = st === "live" ? "Meeting in progress" : "Up next";
+  const html = `
+    <div class="spotlight">
+      <div class="glowline"></div>
+      <div class="cover-mini">${cover}</div>
+      <div class="spot-body">
+        <div class="spot-tag"><span class="dot"></span>${tag}</div>
+        <h2>${hasBook ? b.title : b.host + "'s pick — TBA"}</h2>
+        <div class="byline">${b.author ? b.author + " &middot; " : ""}hosted by <span class="host">${b.host}</span> &middot; ${fmtDate(b)}</div>
+        <div class="countdown" id="countdown"></div>
+        <div class="spot-actions">
+          ${linkBtn(MEET, "meet", IC.meet, st === "live" ? "Join the meeting" : "Google Meet link")}
+          <button class="btn primary" onclick="openModal(${nextIdx})">${IC.audible}Details &amp; listen links</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('spotlight-wrap').innerHTML = html;
+  tickCountdown();
+}
+
+function tickCountdown(){
+  const el = document.getElementById('countdown');
+  if (!el || nextIdx === -1) return;
+  const b = books[nextIdx];
+  const target = startDate(b).getTime();
+  const diff = target - Date.now();
+  if (diff <= 0) {
+    el.innerHTML = `<div class="cd-note">🔴 Live now — jump into the Meet.</div>`;
+    return;
+  }
+  const d = Math.floor(diff / 864e5);
+  const h = Math.floor((diff % 864e5) / 36e5);
+  const m = Math.floor((diff % 36e5) / 6e4);
+  const s = Math.floor((diff % 6e4) / 1e3);
+  const cell = (n,l) => `<div class="cd-cell"><div class="num">${String(n).padStart(2,'0')}</div><div class="lbl">${l}</div></div>`;
+  el.innerHTML = (d>0?cell(d,'days'):'') + cell(h,'hrs') + cell(m,'min') + cell(s,'sec');
+}
+setInterval(tickCountdown, 1000);
+
+/* ---------- header stats ---------- */
+function renderStats(){
+  const done = books.filter(b => state(b) === "read").length;
+  const pages = books.reduce((a,b) => a + (b.pages||0), 0);
+  const audio = books.reduce((a,b) => a + (b.audioH||0), 0);
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('pagesTotal').textContent = pages.toLocaleString();
+  document.getElementById('audioTotal').textContent = Math.round(audio) + "h";
+  setTimeout(() => { document.getElementById('progFill').style.width = (done/10*100) + "%"; }, 200);
+}
+
+renderStats();
+renderSpotlight();
+renderGrid();
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
