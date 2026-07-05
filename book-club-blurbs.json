@@ -1,0 +1,39 @@
+{
+  "_comment": "Hand-written author + blurb per book, keyed by normalized title (lowercase, apostrophes removed, alphanumerics only). build-book-club.py reads this and preserves it across rebuilds. Add an entry for a new book to give it a real author/blurb; otherwise the script falls back to an Open Library description or a placeholder. Cover art is looked up automatically by title from Open Library and stored under assets/book-club/<slug>.jpg.",
+  "mynameisasherlev": {
+    "author": "Chaim Potok",
+    "blurb": "A Hasidic boy in postwar Brooklyn is born with a gift for painting that his faith and his father cannot hold. Chaim Potok's quiet, aching novel about the cost of a calling."
+  },
+  "extremelyloudincrediblyclose": {
+    "author": "Jonathan Safran Foer",
+    "blurb": "Nine-year-old Oskar Schell searches all five boroughs of New York for the lock that matches a key his father left behind on 9/11. Inventive, funny, and heartbreaking."
+  },
+  "janeeyre": {
+    "author": "Charlotte Brontë",
+    "blurb": "An orphaned, plain, penniless governess who refuses to be anyone's but her own. Charlotte Brontë's 1847 classic still burns with conscience, temper, and love."
+  },
+  "flowersforalgernon": {
+    "author": "Daniel Keyes",
+    "blurb": "An experimental surgery makes Charlie Gordon a genius, and a lab mouse named Algernon shows him exactly where the road leads. Told in Charlie's own progress reports."
+  },
+  "leadershipandselfdeception": {
+    "author": "The Arbinger Institute",
+    "blurb": "A business parable about the 'box' we climb into the moment we betray what we know is right, and how self-deception quietly wrecks the people around us."
+  },
+  "manssearchformeaning": {
+    "author": "Viktor E. Frankl",
+    "blurb": "A psychiatrist survives the concentration camps and builds a philosophy from what he saw there: that meaning, not comfort, is what keeps a person alive."
+  },
+  "lordoftheflies": {
+    "author": "William Golding",
+    "blurb": "Schoolboys stranded on an island build a society and then take it apart. Golding's Nobel-winning parable of the savage waiting under the civilized skin."
+  },
+  "frankenstein": {
+    "author": "Mary Shelley",
+    "blurb": "Mary Shelley was eighteen when she imagined a creature that asks its maker the oldest question there is: why give me life only to abandon me? The original science-fiction novel."
+  },
+  "theterminallist": {
+    "author": "Jack Carr",
+    "blurb": "A Navy SEAL comes home to find his men and his family gone and the record rewritten to blame him. He starts a list of the names responsible and works his way down it."
+  }
+}
