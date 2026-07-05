@@ -215,6 +215,12 @@
   .watch-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
   .watch-sub{font-size:13px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
 
+  /* ---------- sound toggle ---------- */
+  .sound-toggle{position:fixed;right:16px;bottom:16px;z-index:900;display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);background:rgba(18,18,26,.9);border:1px solid var(--border-bright);border-radius:999px;padding:9px 14px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 18px rgba(0,0,0,.4);transition:border-color .2s,color .2s,transform .12s}
+  .sound-toggle:hover{border-color:var(--accent);color:var(--accent-light)}
+  .sound-toggle:active{transform:scale(.95)}
+  .sound-toggle.off{color:var(--text-faint)}
+
   /* ---------- footer ---------- */
   .footer-section{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
   .footer-section h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
@@ -247,6 +253,8 @@
 </style>
 </head>
 <body>
+<button class="sound-toggle" id="soundToggle" aria-label="Toggle activity sound">🔊 Sound on</button>
+
 <div class="container">
   <a class="back" href="index.html">← Back to Jonny's Pages</a>
 
@@ -524,6 +532,40 @@
 
 <script>
 (() => {
+  // ---------- sound effects (Web Audio, synthesized on the fly, no audio files) ----------
+  const SFX = (() => {
+    let ctx=null, muted=false;
+    const ensure=()=>{ try{ if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); }catch(e){} return ctx; };
+    const noiseBuf=(c,dur)=>{ const n=Math.max(1,Math.floor(c.sampleRate*dur)); const b=c.createBuffer(1,n,c.sampleRate); const d=b.getChannelData(0); for(let i=0;i<n;i++) d[i]=Math.random()*2-1; return b; };
+    const tone=(freq,dur,type,gain,slideTo,delay)=>{ const c=ensure(); if(!c||muted) return; type=type||'sine'; gain=gain||0.2; delay=delay||0; const t0=c.currentTime+delay; const o=c.createOscillator(); const g=c.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t0); if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,t0+dur); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gain,t0+0.012); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); o.connect(g).connect(c.destination); o.start(t0); o.stop(t0+dur+0.03); };
+    const noise=(dur,o)=>{ const c=ensure(); if(!c||muted) return; o=o||{}; const t0=c.currentTime+(o.delay||0); const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur); const f=c.createBiquadFilter(); f.type=o.type||'bandpass'; f.frequency.setValueAtTime(o.freq||1000,t0); if(o.slideTo) f.frequency.exponentialRampToValueAtTime(o.slideTo,t0+dur); f.Q.value=o.q||1; const g=c.createGain(); const gv=o.gain||0.2; g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gv,t0+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); src.connect(f).connect(g).connect(c.destination); src.start(t0); src.stop(t0+dur+0.03); };
+    return {
+      setMuted:m=>{muted=m;}, isMuted:()=>muted, resume:ensure,
+      shout(){ noise(0.65,{type:'bandpass',freq:520,q:0.6,gain:0.16,slideTo:360}); tone(180,0.5,'sawtooth',0.05,150); },
+      silence(){ tone(300,0.5,'sine',0.06,175); },
+      splash(){ noise(0.13,{type:'highpass',freq:1900,q:0.4,gain:0.11}); },
+      fire(){ noise(0.95,{type:'lowpass',freq:1400,q:0.5,gain:0.32,slideTo:180}); tone(68,0.7,'sine',0.35,40); for(let i=0;i<7;i++) noise(0.05,{type:'highpass',freq:3200,gain:0.09,delay:0.18+i*0.09}); },
+      wobble(){ tone(500,0.24,'square',0.12,150); tone(300,0.2,'square',0.09,520,0.14); },
+      settle(){ tone(160,0.18,'sine',0.24,88); tone(523,0.4,'sine',0.11,null,0.13); tone(784,0.5,'sine',0.09,null,0.2); },
+      correct(){ tone(523,0.15,'triangle',0.14); tone(659,0.15,'triangle',0.14,null,0.1); tone(784,0.32,'triangle',0.14,null,0.2); },
+      wrong(){ tone(210,0.28,'sawtooth',0.11,150); },
+      wind(){ noise(1.2,{type:'bandpass',freq:380,q:0.8,gain:0.22,slideTo:1300}); noise(1.2,{type:'bandpass',freq:600,q:0.5,gain:0.1,slideTo:300}); },
+      quake(){ noise(1.3,{type:'lowpass',freq:130,q:0.7,gain:0.34}); tone(44,1.2,'sine',0.3); },
+      crackle(){ noise(0.7,{type:'lowpass',freq:900,q:0.5,gain:0.2,slideTo:280}); for(let i=0;i<6;i++) noise(0.05,{type:'highpass',freq:3000,gain:0.08,delay:0.05+i*0.1}); },
+      peace(){ tone(660,1.3,'sine',0.06); tone(990,1.5,'sine',0.045,null,0.22); tone(1320,1.4,'sine',0.03,null,0.4); }
+    };
+  })();
+
+  // sound on/off toggle (classroom-friendly)
+  (()=>{
+    const btn=document.getElementById('soundToggle'); if(!btn) return;
+    let on=true;
+    try{ if(localStorage.getItem('elijahSound')==='off') on=false; }catch(e){}
+    const paint=()=>{ SFX.setMuted(!on); btn.textContent=on?'🔊 Sound on':'🔇 Sound off'; btn.classList.toggle('off',!on); };
+    paint();
+    btn.addEventListener('click',()=>{ on=!on; if(on) SFX.resume(); try{localStorage.setItem('elijahSound',on?'on':'off');}catch(e){} paint(); });
+  })();
+
   // ---------- Mount Carmel contest ----------
   (()=>{
     const baalBtn=document.getElementById('baalBtn');
@@ -538,9 +580,10 @@
 
     baalBtn.addEventListener('click',()=>{
       baalBtn.disabled=true;
+      SFX.shout();
       status.textContent='The prophets of Baal shout: "O Baal, hear us!" …';
       status.classList.add('silent');
-      setTimeout(()=>{ status.textContent='…they shout louder and dance all day… still nothing. Silence.'; },1400);
+      setTimeout(()=>{ status.textContent='…they shout louder and dance all day… still nothing. Silence.'; SFX.silence(); },1400);
       setTimeout(()=>{ status.textContent='Step 2: now it is Elijah’s turn. Soak the altar so it cannot catch fire on its own.'; status.classList.remove('silent'); waterBtn.disabled=false; },2900);
     });
 
@@ -549,7 +592,7 @@
       barrels.innerHTML='';
       for(let i=0;i<12;i++){const s=document.createElement('span');s.textContent='🪣';barrels.appendChild(s);}
       const spans=[...barrels.children];
-      spans.forEach((s,i)=>setTimeout(()=>s.classList.add('on'), i*160));
+      spans.forEach((s,i)=>setTimeout(()=>{s.classList.add('on');SFX.splash();}, i*160));
       water.style.height='70%';
       setTimeout(()=>{ status.textContent='Twelve barrels of water poured. The altar is soaked. Step 3: say Elijah’s short prayer.'; prayBtn.disabled=false; }, 12*160+300);
     });
@@ -559,6 +602,7 @@
       status.textContent='Elijah prays: "Lord God… let it be known this day that thou art God."';
       setTimeout(()=>{
         altar.classList.add('strike');
+        SFX.fire();
         setTimeout(()=>{ altar.classList.add('lit'); water.style.height='0%'; },350);
         status.textContent='🔥 FIRE FALLS FROM HEAVEN! 🔥';
         status.classList.add('win');
@@ -576,12 +620,14 @@
     if(!img) return;
     const base='assets/elijah-lesson/';
     bothBtn.addEventListener('click',()=>{
+      SFX.wobble();
       img.src=base+'sitting-on-both.png';
       img.classList.add('wob');
       verdict.className='chair-verdict bad';
       verdict.innerHTML='<b>Wobbly and uncomfortable.</b> You cannot really sit on either one. You just fall.';
     });
     oneBtn.addEventListener('click',()=>{
+      SFX.settle();
       img.src=base+'sitting-on-one.png';
       img.classList.remove('wob');
       verdict.className='chair-verdict good';
@@ -598,6 +644,7 @@
         choices.forEach(c=>{c.classList.add('dim');});
         ch.classList.remove('dim');ch.classList.add('picked');
         outcome.classList.add('show');
+        if(ch.classList.contains('good')) SFX.correct(); else SFX.wrong();
       });
     });
   });
@@ -612,6 +659,8 @@
     vbtns.forEach(b=>{
       b.addEventListener('click',()=>{
         if(b.classList.contains('tried')) return;
+        const v=b.dataset.voice;
+        if(v==='wind') SFX.wind(); else if(v==='quake') SFX.quake(); else SFX.crackle();
         b.classList.add('tried');
         tried++;
         if(tried>=vbtns.length) listenBtn.disabled=false;
@@ -620,7 +669,7 @@
     listenBtn.addEventListener('click',()=>{
       listenBtn.disabled=true;
       listenBtn.textContent='🤫 shhh…';
-      setTimeout(()=>whisper.classList.add('show'),400);
+      setTimeout(()=>{whisper.classList.add('show');SFX.peace();},400);
     });
   })();
 
