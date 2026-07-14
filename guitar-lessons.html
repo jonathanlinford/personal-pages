@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guitar Lessons — Payson to Provo</title>
+
+<!-- Social preview -->
+<meta property="og:title" content="Guitar Lessons: Payson to Provo Corridor">
+<meta property="og:description" content="A researched shortlist of guitar teachers between Payson and Provo, Utah — reviews, pricing, media, and contacts. Two tracks: classical for me, a bridge program for a 5-year-old.">
+<meta property="og:image" content="https://jonathanlinford.github.io/personal-pages/guitar-lessons-og.png">
+<meta property="og:url" content="https://jonathanlinford.github.io/personal-pages/guitar-lessons.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Guitar Lessons: Payson to Provo Corridor">
+<meta name="twitter:description" content="A researched shortlist of guitar teachers between Payson and Provo, Utah — reviews, pricing, media, and contacts.">
+<meta name="twitter:image" content="https://jonathanlinford.github.io/personal-pages/guitar-lessons-og.png">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0c0a08;
+    --bg-2: #12100c;
+    --card: #17130d;
+    --card-hover: #1e1810;
+    --border: #2a2118;
+    --border-lit: #3a2e1f;
+    --text: #f2ece2;
+    --text-dim: #a89b86;
+    --text-faint: #6f6552;
+    --amber: #e0a458;
+    --amber-bright: #f2b968;
+    --amber-deep: #c9822f;
+    --green: #6bbf7a;
+    --red: #e07a5f;
+    --blue: #7aa2e0;
+    --glow: rgba(224, 164, 88, 0.14);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(224,164,88,0.06), transparent 40%),
+      radial-gradient(circle at 85% 10%, rgba(201,130,47,0.05), transparent 45%);
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 940px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 88px 0 52px;
+    text-align: left;
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(42px, 8vw, 76px);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.02em;
+    margin-bottom: 22px;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(120deg, var(--amber-bright), var(--amber-deep));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .lede {
+    font-size: 18px; color: var(--text-dim); max-width: 620px; margin-bottom: 28px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .chip {
+    font-size: 12.5px; font-weight: 500;
+    padding: 7px 13px; border-radius: 100px;
+    background: var(--card); border: 1px solid var(--border-lit); color: var(--text-dim);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip b { color: var(--text); font-weight: 600; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding: 30px 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+  .sec-head h2 {
+    font-family: 'Fraunces', serif; font-size: 30px; font-weight: 600; letter-spacing: -0.01em;
+  }
+  .sec-head .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--amber-deep);
+  }
+  .sec-head p { color: var(--text-dim); font-size: 14.5px; flex-basis: 100%; margin-top: 2px; }
+
+  /* ---------- TRACKS ---------- */
+  .tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .track {
+    background: linear-gradient(160deg, var(--card), var(--bg-2));
+    border: 1px solid var(--border-lit); border-radius: 18px; padding: 26px;
+    position: relative; overflow: hidden;
+  }
+  .track::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+  }
+  .track .who { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--amber); margin-bottom:10px; }
+  .track h3 { font-size: 21px; font-weight: 700; margin-bottom: 8px; }
+  .track p { font-size: 14px; color: var(--text-dim); margin-bottom: 14px; }
+  .track .pick {
+    display: block; font-size: 13.5px; color: var(--text); padding-top: 12px; border-top: 1px solid var(--border);
+  }
+  .track .pick b { color: var(--amber-bright); }
+
+  /* ---------- OPTION CARDS ---------- */
+  .cards { display: flex; flex-direction: column; gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 24px 24px 20px; transition: border-color .25s, transform .25s, box-shadow .25s;
+    scroll-margin-top: 20px;
+  }
+  .card:hover { border-color: var(--border-lit); box-shadow: 0 8px 40px rgba(0,0,0,.35); }
+  .card.feat { border-color: var(--amber-deep); box-shadow: 0 0 0 1px rgba(224,164,88,.15), 0 10px 50px var(--glow); }
+
+  .card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 6px; }
+  .rank {
+    flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif; font-size: 19px; font-weight: 700;
+    background: rgba(224,164,88,.1); border: 1px solid rgba(224,164,88,.25); color: var(--amber-bright);
+  }
+  .card.dim .rank { background: rgba(120,110,90,.08); border-color: var(--border); color: var(--text-faint); }
+  .card-title { flex: 1; min-width: 0; }
+  .card-title h3 { font-size: 20px; font-weight: 700; line-height: 1.2; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+  .card-title .loc { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+  .card-title .loc b { color: var(--text); font-weight: 600; }
+
+  .badges { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
+  .stars {
+    font-size: 13px; font-weight: 700; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 8px;
+    background: rgba(224,164,88,.1); color: var(--amber-bright); border: 1px solid rgba(224,164,88,.2);
+  }
+  .stars .cnt { color: var(--text-dim); font-weight: 500; font-size: 11.5px; }
+  .status { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; padding: 4px 9px; border-radius: 6px; white-space: nowrap; }
+  .st-open { background: rgba(107,191,122,.12); color: var(--green); }
+  .st-verify { background: rgba(122,162,224,.12); color: var(--blue); }
+  .st-closed { background: rgba(224,122,95,.12); color: var(--red); }
+  .st-online { background: rgba(224,164,88,.1); color: var(--amber); }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 4px; }
+  .tag { font-size: 11.5px; font-weight: 500; padding: 4px 10px; border-radius: 100px; background: var(--bg-2); border: 1px solid var(--border); color: var(--text-dim); }
+  .tag.hot { background: rgba(224,164,88,.1); border-color: rgba(224,164,88,.25); color: var(--amber-bright); }
+
+  .card p.blurb { font-size: 14.5px; color: var(--text); margin: 14px 0; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px 20px; margin: 14px 0; }
+  .fact { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .fact .k { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .5px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 3px; }
+  .fact .v { font-size: 13.5px; color: var(--text); }
+
+  /* reviews */
+  .reviews { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+  .reviews .rlabel { font-family:'JetBrains Mono',monospace; font-size: 11px; letter-spacing:1px; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .quote { font-size: 13.5px; color: var(--text-dim); font-style: italic; padding: 5px 0 5px 14px; border-left: 2px solid var(--border-lit); margin: 8px 0; }
+  .quote b { color: var(--text); font-style: normal; font-weight: 600; }
+  .quote .src { display: block; font-style: normal; font-size: 11.5px; color: var(--text-faint); margin-top: 3px; }
+
+  .verdict { font-size: 13.5px; padding: 12px 14px; border-radius: 10px; margin: 14px 0 2px; display: flex; gap: 9px; }
+  .verdict.good { background: rgba(107,191,122,.07); border: 1px solid rgba(107,191,122,.18); }
+  .verdict.warn { background: rgba(224,164,88,.06); border: 1px solid rgba(224,164,88,.16); }
+  .verdict.bad { background: rgba(224,122,95,.06); border: 1px solid rgba(224,122,95,.16); }
+  .verdict b { color: var(--text); }
+  .verdict .ico { flex-shrink: 0; }
+
+  .card-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--border); }
+  a.btn {
+    font-size: 12.5px; font-weight: 600; text-decoration: none;
+    padding: 8px 13px; border-radius: 9px; display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border-lit); color: var(--text-dim); background: var(--bg-2); transition: all .18s;
+  }
+  a.btn:hover { color: var(--text); border-color: var(--amber-deep); background: var(--card-hover); }
+  a.btn.primary { background: rgba(224,164,88,.12); border-color: rgba(224,164,88,.3); color: var(--amber-bright); }
+  a.btn.primary:hover { background: rgba(224,164,88,.2); }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+  a.slink { font-size: 11.5px; color: var(--text-faint); text-decoration: none; padding: 6px 8px; border-radius: 7px; transition: all .18s; }
+  a.slink:hover { color: var(--amber); background: var(--bg-2); }
+
+  /* ---------- GUIDANCE / KIDS ---------- */
+  .panel { background: linear-gradient(160deg, var(--card), var(--bg-2)); border: 1px solid var(--border-lit); border-radius: 18px; padding: 26px; }
+  .panel h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .panel .sub { color: var(--text-dim); font-size: 14px; margin-bottom: 18px; }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 6px; }
+  .gitem { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .gitem .gt { font-size: 14px; font-weight: 700; color: var(--amber-bright); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .gitem p { font-size: 13px; color: var(--text-dim); }
+  .gitem p b { color: var(--text); }
+
+  /* ---------- CALL LIST ---------- */
+  .calllist { display: flex; flex-direction: column; gap: 10px; }
+  .callrow { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; flex-wrap: wrap; }
+  .callrow .cname { font-weight: 700; font-size: 15px; flex: 1; min-width: 140px; }
+  .callrow .cname small { display: block; font-weight: 400; font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .callrow a.tel { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; color: var(--amber-bright); text-decoration: none; padding: 7px 12px; border: 1px solid rgba(224,164,88,.25); border-radius: 9px; background: rgba(224,164,88,.07); white-space: nowrap; }
+  .callrow a.tel:hover { background: rgba(224,164,88,.15); }
+  .ask { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .ask li { font-size: 14px; color: var(--text-dim); padding-left: 26px; position: relative; }
+  .ask li::before { content: '✓'; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+  .ask li b { color: var(--text); }
+
+  .note { font-size: 12.5px; color: var(--text-faint); background: var(--bg-2); border: 1px dashed var(--border-lit); border-radius: 10px; padding: 12px 15px; margin-top: 18px; line-height: 1.55; }
+
+  footer { text-align: center; padding: 50px 0 60px; color: var(--text-faint); font-size: 12.5px; border-top: 1px solid var(--border); margin-top: 40px; }
+  footer a { color: var(--amber-deep); text-decoration: none; }
+
+  .divider-label { font-family:'JetBrains Mono',monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); text-align: center; margin: 8px 0 20px; }
+
+  @media (max-width: 680px) {
+    .tracks { grid-template-columns: 1fr; }
+    .badges { flex-direction: row; }
+    .card-top { flex-wrap: wrap; }
+    .hero { padding-top: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="wrap">
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="eyebrow">Personal research · Salem, Utah</div>
+    <h1>Finding a <span class="accent">guitar teacher</span></h1>
+    <p class="lede">A worked-through shortlist of teachers and studios in the Payson-to-Provo corridor. Two tracks: classical lessons for me now, and a path for the boys, starting with the almost-5-year-old. Every option below was checked for reviews, pricing, format, and whether it is actually still open.</p>
+    <div class="chips">
+      <span class="chip">🎻 <b>10 yrs cello</b>, reads &amp; sight-reads</span>
+      <span class="chip">🎶 Choir background</span>
+      <span class="chip">📍 Home base: <b>Salem 84653</b></span>
+      <span class="chip">👦 Son turns <b>5 in September</b></span>
+    </div>
+  </header>
+
+  <!-- ===== THE TWO TRACKS ===== -->
+  <section id="tracks">
+    <div class="sec-head">
+      <span class="num">01</span>
+      <h2>Two tracks, one search</h2>
+      <p>What I want is not what a 5-year-old needs, so the shortlist splits cleanly.</p>
+    </div>
+    <div class="tracks">
+      <div class="track">
+        <div class="who">For me · now</div>
+        <h3>Classical guitar, adult</h3>
+        <p>Cello for a decade, reads and sight-reads, choir ear. The natural jump is classical guitar (nylon string, read-music, fingerstyle technique) rather than a strum-along beginner track. I want a teacher who can skip the fundamentals.</p>
+        <span class="pick">Top pick: <b>Sophie Stanley</b>, BYU classical guitar professor. Backup: <b>Hatch Guitar Studio</b> (closest serious private studio) or a Thumbtack classical pro like <b>Bradley B. Stone</b>.</span>
+      </div>
+      <div class="track">
+        <div class="who">For my son · soon</div>
+        <h3>Almost 5, first instrument</h3>
+        <p>Here is the honest part: almost no studio in the corridor teaches guitar under 6, and the expert sweet spot is 7 to 9. The winning move is a music-readiness bridge now, then a small nylon guitar around 6 or 7.</p>
+        <span class="pick">Top pick: <b>Let's Play Music</b> (Spanish Fork, ages 4-6) as the bridge. If he must have guitar sooner: <b>Mark Alger</b> (Suzuki guitar) or <b>Hatch</b> at 6.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOR ME: OPTIONS ===== -->
+  <section id="for-me">
+    <div class="sec-head">
+      <span class="num">02</span>
+      <h2>Teachers for me (classical / advanced adult)</h2>
+      <p>Ranked by fit for a music-literate adult. Star ratings and quoted reviews are pulled from Google, Yelp, Facebook, and Thumbtack where available.</p>
+    </div>
+
+    <div class="cards">
+
+      <!-- Sophie Stanley -->
+      <article class="card feat" id="stanley">
+        <div class="card-top">
+          <div class="rank">1</div>
+          <div class="card-title">
+            <h3>Sophie Stanley <span class="tag hot">Classical specialist</span></h3>
+            <div class="loc"><b>BYU / Provo</b> · ~15 mi, ~20 min · private studio + university faculty</div>
+          </div>
+          <div class="badges">
+            <span class="status st-verify">Email to confirm</span>
+          </div>
+        </div>
+
+        <p class="blurb">The single best classical match in the county, and the reason this whole search got easier. A professional classical guitarist with a full private studio alongside her university posts. Exactly the teacher for someone who already reads music and wants real repertoire and technique, not a beginner strum course.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Credentials</div><div class="v">B.A. Weber State (magna cum laude); M.M. New England Conservatory (Jerome Mouffe, Eliot Fisk)</div></div>
+          <div class="fact"><div class="k">Teaches at</div><div class="v">Adjunct Prof. of Classical Guitar, BYU; faculty at Weber State &amp; Gifted Music School</div></div>
+          <div class="fact"><div class="k">Trained with</div><div class="v">David Russell, Grisha Goryachev, Benjamin Verdery, Jason Vieaux, Ana Vidovic</div></div>
+          <div class="fact"><div class="k">Best for</div><div class="v">Serious adult learners; classical repertoire, technique, sight-reading</div></div>
+          <div class="fact"><div class="k">Pricing</div><div class="v">Not published, ask by email</div></div>
+          <div class="fact"><div class="k">Also</div><div class="v">Board member, Utah Classical Guitar Society</div></div>
+        </div>
+
+        <div class="tag-row">
+          <span class="tag">Classical</span><span class="tag">Adult-friendly</span><span class="tag">Reads music</span><span class="tag">Concert performer</span>
+        </div>
+
+        <div class="verdict good">
+          <span class="ico">✅</span>
+          <span><b>Verdict:</b> Start here. Email her first. If she is full or too conservatory-focused, ask her to refer you through the Utah Classical Guitar Society or BYU's guitar pedagogy course. Buy a nylon-string classical guitar to match.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="mailto:sophie.stanley@byu.edu">✉ sophie.stanley@byu.edu</a>
+          <a class="btn" href="https://sophiestanleyguitar.com/" target="_blank" rel="noopener">Website</a>
+          <div class="foot-links">
+            <a class="slink" href="https://music.byu.edu/directory/sophie-stanley" target="_blank" rel="noopener">BYU profile ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Hatch -->
+      <article class="card" id="hatch">
+        <div class="card-top">
+          <div class="rank">2</div>
+          <div class="card-title">
+            <h3>Hatch Guitar Studio</h3>
+            <div class="loc"><b>Springville</b> · ~9 mi, ~13 min · home studio, McKay Hatch</div>
+          </div>
+          <div class="badges">
+            <span class="stars">★ 5.0 <span class="cnt">Yelp</span></span>
+            <span class="status st-open">Open</span>
+          </div>
+        </div>
+
+        <p class="blurb">The closest serious private studio, and it explicitly serves Salem. One instructor, acoustic and electric only, which he markets as a feature ("really accelerate"). Contemporary and singer-songwriter leaning, not classical, but he covers theory, reading, all-12-key scales, blues, and improv, so it works for an advanced adult who wants to branch into pop, blues, and songwriting.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Instructor</div><div class="v">McKay Hatch, Commercial Music at UVU; 50+ original songs, two albums, gigging artist</div></div>
+          <div class="fact"><div class="k">Ages</div><div class="v">6 to 75 (below 6 not addressed, ask)</div></div>
+          <div class="fact"><div class="k">Format</div><div class="v">In-person or Zoom; private 1:1</div></div>
+          <div class="fact"><div class="k">Pricing</div><div class="v">Custom per student, not published; call</div></div>
+          <div class="fact"><div class="k">Style</div><div class="v">Folk, rock, blues, country, pop, songwriting</div></div>
+          <div class="fact"><div class="k">Hours</div><div class="v">Mon-Fri 11a-7p, Sat 12-1p</div></div>
+        </div>
+
+        <div class="tag-row">
+          <span class="tag">Acoustic + electric</span><span class="tag">Theory + reading</span><span class="tag">Songwriting</span><span class="tag">Not classical</span>
+        </div>
+
+        <div class="reviews">
+          <div class="rlabel">★ Reviews</div>
+          <p style="font-size:13px;color:var(--text-dim);margin:0;">Uniformly <b style="color:var(--amber-bright)">5.0 on Yelp</b> and self-branded "Utah's #1 Guitar Lessons," but the volume of verifiable written reviews is thin, and his own site's testimonials are video/dynamic (worth watching live). Yelp and Google both blocked automated reading, so check the live listings for the real count and quotes. Treat the "39 reviews" number on aggregator sites as unverified.</p>
+        </div>
+
+        <div class="verdict warn">
+          <span class="ico">⚠️</span>
+          <span><b>Verdict:</b> Best convenience play and a strong backup for me. Great for the contemporary side; not the pick if I want strict classical. Also the realistic in-corridor option for my son once he hits 6.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="tel:8015154595">📞 (801) 515-4595</a>
+          <a class="btn" href="mailto:hatchguitarstudio@gmail.com">✉ Email</a>
+          <a class="btn" href="https://www.hatchguitarstudio.com/" target="_blank" rel="noopener">Website</a>
+          <div class="foot-links">
+            <a class="slink" href="https://www.youtube.com/c/McKayHatchMusic" target="_blank" rel="noopener">YouTube ↗</a>
+            <a class="slink" href="https://www.instagram.com/hatchguitarstudio/" target="_blank" rel="noopener">Instagram ↗</a>
+            <a class="slink" href="https://www.yelp.com/biz/hatch-guitar-studio-springville" target="_blank" rel="noopener">Yelp ↗</a>
+            <a class="slink" href="https://open.spotify.com/artist/5yfogJKwtiyrwvSz9Pvdx3" target="_blank" rel="noopener">Spotify ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Thumbtack pros -->
+      <article class="card" id="thumbtack">
+        <div class="card-top">
+          <div class="rank">3</div>
+          <div class="card-title">
+            <h3>Top-rated independent teachers <span class="tag hot">via Thumbtack</span></h3>
+            <div class="loc"><b>Provo / Spanish Fork</b> · many teach online, some in-person · request a quote</div>
+          </div>
+          <div class="badges">
+            <span class="stars">★ 5.0 <span class="cnt">multiple</span></span>
+            <span class="status st-online">In-person / online</span>
+          </div>
+        </div>
+
+        <p class="blurb">Deep bench of highly-rated private teachers. Market rate in the corridor runs about $37 per half hour, roughly $40-90/hr. Two stand out for my needs: a classical specialist and, for later, a teacher great with kids.</p>
+
+        <div class="reviews">
+          <div class="rlabel">★ The standouts</div>
+          <div class="quote"><b>Bradley B. Stone</b> — 5.0, 46 reviews, 79 hires. Classical specialist.<br>"Patient and very well versed in classical guitar."<span class="src">Thumbtack review</span></div>
+          <div class="quote"><b>Scott Elliott</b> — 5.0, 28 reviews. "Great value."<br>"Able to diagnose fairly quickly where you are and what would be the next best step to improve."<span class="src">Thumbtack review</span></div>
+          <div class="quote"><b>Alon Mei-Tal</b> — 5.0, 47 reviews, 105 hires. Best with kids (see the kids section).<br>"My son has grown musically and gained confidence with his teaching."<span class="src">Thumbtack review</span></div>
+          <div class="quote"><b>Advantage Guitar Lessons</b> — 5.0, 43 reviews. "Very professional, organized and a great teacher."<span class="src">Thumbtack review</span></div>
+        </div>
+
+        <div class="verdict good">
+          <span class="ico">✅</span>
+          <span><b>Verdict:</b> If Sophie Stanley does not work out, <b>Bradley B. Stone</b> is the classical backup with a real review record. Filter Thumbtack's <a href="https://www.thumbtack.com/ut/provo/classical-guitar-lessons/" target="_blank" rel="noopener" style="color:var(--amber-bright)">classical guitar</a> category to compare.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="https://www.thumbtack.com/ut/provo/classical-guitar-lessons/" target="_blank" rel="noopener">Browse classical pros ↗</a>
+          <a class="btn" href="https://www.thumbtack.com/ut/spanish-fork/guitar-lessons" target="_blank" rel="noopener">Spanish Fork list ↗</a>
+          <div class="foot-links">
+            <a class="slink" href="https://www.wyzant.com/Utah_County_UT_guitar_lessons.aspx" target="_blank" rel="noopener">Wyzant tutors ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== STUDIOS (both / family) ===== -->
+  <section id="studios">
+    <div class="sec-head">
+      <span class="num">03</span>
+      <h2>Store studios (closest, family-friendly)</h2>
+      <p>Brick-and-mortar shops with a bench of teachers. Good "grows with the family" options and the shortest drives. Confirm minimum age for the 5-year-old by phone.</p>
+    </div>
+
+    <div class="cards">
+
+      <!-- Boothe -->
+      <article class="card" id="boothe">
+        <div class="card-top">
+          <div class="rank">4</div>
+          <div class="card-title">
+            <h3>Boothe Music (Boothe Brothers) <span class="tag hot">Deep roster</span></h3>
+            <div class="loc"><b>Spanish Fork</b> · ~7 mi, ~12 min · full-service store since 1983</div>
+          </div>
+          <div class="badges">
+            <span class="stars">★ ~ <span class="cnt">Yelp ~11</span></span>
+            <span class="status st-open">Open</span>
+          </div>
+        </div>
+
+        <p class="blurb">The closest real teaching studio to Salem with the deepest guitar bench (five-plus instructors). Owner Steve Boothe has 30 years teaching and an elementary-ed degree, a genuine plus for starting a young kid. Beginner to advanced, in-person at the store.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Guitar teachers</div><div class="v">Steve Boothe, Alex Donahue, Lew Woolford, Winfield Ivers, Chance Palfreyman</div></div>
+          <div class="fact"><div class="k">Steve Boothe</div><div class="v">30 yrs teaching, BFA BYU-Hawaii (elementary ed), 2 albums</div></div>
+          <div class="fact"><div class="k">Styles covered</div><div class="v">Rock, punk, country, classical, pop, Latin, theory, improv</div></div>
+          <div class="fact"><div class="k">Pricing</div><div class="v">Not published, call for rates + min age</div></div>
+          <div class="fact"><div class="k">Hours</div><div class="v">Mon-Fri 10a-7p, Sat 10a-6p</div></div>
+          <div class="fact"><div class="k">Format</div><div class="v">In-person private, store studio</div></div>
+        </div>
+
+        <div class="tag-row"><span class="tag">Closest studio</span><span class="tag">5+ guitar teachers</span><span class="tag">Kid-capable</span><span class="tag">All styles</span></div>
+
+        <div class="verdict good">
+          <span class="ico">✅</span>
+          <span><b>Verdict:</b> Best single call to make for a family plan. One roster covers my styles and, with Steve's elementary background, the on-ramp for my son. Ask about minimum age and whether anyone teaches classical seriously.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="tel:8017987650">📞 (801) 798-7650</a>
+          <a class="btn" href="https://boothemusic.com/pages/lessons" target="_blank" rel="noopener">Lessons page</a>
+          <a class="btn" href="https://boothemusic.com/pages/teachers" target="_blank" rel="noopener">Meet teachers</a>
+          <div class="foot-links">
+            <a class="slink" href="https://www.yelp.com/biz/boothe-music-spanish-fork" target="_blank" rel="noopener">Yelp ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mountain Rock -->
+      <article class="card" id="mountainrock">
+        <div class="card-top">
+          <div class="rank">5</div>
+          <div class="card-title">
+            <h3>Mountain Rock Music</h3>
+            <div class="loc"><b>Springville</b> · ~13 mi, ~18 min · full-line music store since 2006</div>
+          </div>
+          <div class="badges">
+            <span class="stars">★ 84% <span class="cnt">FB, 47 rev</span></span>
+            <span class="status st-open">Open</span>
+          </div>
+        </div>
+
+        <p class="blurb">Well-liked neighborhood store with lessons, repairs, and a community feel. Multiple parents report their kids taking guitar there for years, a good signal for young learners.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Lead noted</div><div class="v">"Pascal" (repeatedly praised)</div></div>
+          <div class="fact"><div class="k">Pricing</div><div class="v">Not published, call</div></div>
+          <div class="fact"><div class="k">Format</div><div class="v">In-person private lessons</div></div>
+          <div class="fact"><div class="k">Hours</div><div class="v">Mon-Fri 11a-7p, Sat 10a-5p</div></div>
+        </div>
+
+        <div class="reviews">
+          <div class="rlabel">★ Reviews · 84% recommend, 47 FB reviews</div>
+          <div class="quote">"Pascal and the staff are talented at music and customer service."<span class="src">Facebook</span></div>
+          <div class="quote">"It feels like a little community." Parents note their children "have taken guitar lessons there for years and enjoyed it."<span class="src">Aggregated reviews</span></div>
+        </div>
+
+        <div class="verdict good">
+          <span class="ico">✅</span>
+          <span><b>Verdict:</b> Solid, kid-friendly, well-reviewed. A worthy backup to Boothe. Confirm minimum age.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="tel:8014893000">📞 (801) 489-3000</a>
+          <div class="foot-links">
+            <a class="slink" href="https://www.facebook.com/mountainrockmusic/" target="_blank" rel="noopener">Facebook ↗</a>
+            <a class="slink" href="https://www.yelp.com/biz/mountain-rock-music-springville" target="_blank" rel="noopener">Yelp ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== FOR MY SON ===== -->
+  <section id="for-son">
+    <div class="sec-head">
+      <span class="num">04</span>
+      <h2>For my son (turning 5 in September)</h2>
+      <p>The reality: guitar at 5 is the young edge. Expert consensus puts the sweet spot at 7 to 9. Best plan is a music-readiness bridge now, then a small nylon guitar around 6-7.</p>
+    </div>
+
+    <!-- readiness guidance -->
+    <div class="panel" style="margin-bottom:16px;">
+      <h3>When is a kid ready for guitar?</h3>
+      <p class="sub">From concert guitarist Douglas Niedt, Music Pandit, School of Rock, and Fender.</p>
+      <div class="guide-grid">
+        <div class="gitem"><div class="gt">🎯 Age</div><p>Most teachers start around <b>7-9</b>. Age 5 is the young edge only some specialists take. Readiness (focus, following direction, interest) matters more than the birthday.</p></div>
+        <div class="gitem"><div class="gt">🎸 The guitar</div><p>Use a <b>nylon-string</b> (softer on little fingers) in <b>1/2 or 3/4 size</b>. Niedt: cheap guitars are "little more than toys," and do not buy one "too large, thinking they will grow into it."</p></div>
+        <div class="gitem"><div class="gt">⏱️ Practice</div><p>Short sessions of <b>2-4x the child's age in minutes</b>, about 5 days a week, with a parent working alongside them.</p></div>
+        <div class="gitem"><div class="gt">🌉 The bridge</div><p>At 5, a <b>music-readiness or piano-based program</b> is the standard on-ramp (ear, rhythm, reading) until hands and attention are guitar-ready.</p></div>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <!-- Let's Play Music -->
+      <article class="card feat" id="lpm">
+        <div class="card-top">
+          <div class="rank">A</div>
+          <div class="card-title">
+            <h3>Let's Play Music <span class="tag hot">Best bridge</span></h3>
+            <div class="loc"><b>Spanish Fork</b> · ~6 mi · ages 4-8, 3-year curriculum · originated in Utah</div>
+          </div>
+          <div class="badges">
+            <span class="status st-open">Enrolling</span>
+          </div>
+        </div>
+
+        <p class="blurb">The strongest bridge for a just-turned-5 child. Piano-and-theory foundation that builds the exact music-reading and aural skills that make guitar far easier at 6-7. Parent-involved, group format, year-end recital. Two teachers near Salem.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Amy Clements</div><div class="v">Spanish Fork (Canyon Rd &amp; 1400 E), ~6 mi · (801) 376-6922</div></div>
+          <div class="fact"><div class="k">Rosalyn Francis</div><div class="v">"Let's Play Music with Ros," Spanish Fork · message via Facebook</div></div>
+          <div class="fact"><div class="k">Ages</div><div class="v">Sound Beginnings 2-4; Let's Play Music 4-6</div></div>
+          <div class="fact"><div class="k">Tuition</div><div class="v">~$180-280/semester (varies by teacher); includes instruments + parent training</div></div>
+        </div>
+
+        <div class="reviews">
+          <div class="rlabel">★ Parent reviews</div>
+          <div class="quote">"He has learned SO much. As we are finishing his 3rd year, I honestly had no idea how much he would learn and be able to do."<span class="src">Program testimonial</span></div>
+          <div class="quote">(Music teacher) "I am amazed at the wonderful musical foundation Let's Play Music gives its students. It is so fun and yet so comprehensive."<span class="src">Program testimonial</span></div>
+        </div>
+
+        <div class="verdict good">
+          <span class="ico">✅</span>
+          <span><b>Verdict:</b> Enroll him now as the bridge; plan guitar at ~6.5-7 on a 1/2 or 3/4 nylon. Call Amy Clements or message Ros for the current semester and pricing.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="tel:8013766922">📞 Amy Clements (801) 376-6922</a>
+          <a class="btn" href="https://www.letsplaymusicsite.com/" target="_blank" rel="noopener">Find a teacher (ZIP 84660)</a>
+          <div class="foot-links">
+            <a class="slink" href="https://www.facebook.com/LetsPlayMusicwithRos/" target="_blank" rel="noopener">Ros on FB ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mark Alger / Suzuki -->
+      <article class="card" id="alger">
+        <div class="card-top">
+          <div class="rank">B</div>
+          <div class="card-title">
+            <h3>Mark Alger <span class="tag">Suzuki guitar</span></h3>
+            <div class="loc"><b>Utah County</b> · the only Suzuki guitar teacher in the county</div>
+          </div>
+          <div class="badges">
+            <span class="status st-verify">Via SAU directory</span>
+          </div>
+        </div>
+
+        <p class="blurb">If we want actual guitar sooner rather than a bridge, Suzuki is built for young, parent-involved beginners. Mark Alger is the only Suzuki guitar teacher in Utah County and is listed as accepting students. Contact and pricing come through the Suzuki Association of Utah directory.</p>
+
+        <div class="verdict warn">
+          <span class="ico">⚠️</span>
+          <span><b>Verdict:</b> The one real "guitar now" path for a 5-year-old locally. Worth a direct call. Look him up in the SAU teacher directory for contact info.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="https://suzukimusicutah.org/teacher-directory/" target="_blank" rel="noopener">SAU teacher directory ↗</a>
+        </div>
+      </article>
+
+      <!-- The HeART Collective -->
+      <article class="card" id="heart">
+        <div class="card-top">
+          <div class="rank">C</div>
+          <div class="card-title">
+            <h3>The HeART Collective <span class="tag hot">Closest of all</span></h3>
+            <div class="loc"><b>Payson</b> · ~5 mi, ~9 min · community arts school</div>
+          </div>
+          <div class="badges">
+            <span class="status st-open">Open</span>
+          </div>
+        </div>
+
+        <p class="blurb">Literally the nearest option, and explicitly kid-focused. Group semester classes for kids, teens, and adults in guitar, ukulele, piano, voice, and more. Guitar at 5 is a physical stretch, so ask about starting on ukulele first (they teach both).</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Founder</div><div class="v">Katie D. Higley (voice, uke, guitar, piano, musical theater)</div></div>
+          <div class="fact"><div class="k">Format</div><div class="v">Group, semester-based; kids/teens/adults</div></div>
+          <div class="fact"><div class="k">Ask about</div><div class="v">Ukulele-first for a 5-year-old; current guitar offering + price</div></div>
+        </div>
+
+        <div class="verdict warn">
+          <span class="ico">⚠️</span>
+          <span><b>Verdict:</b> Great convenience and kid-friendly, but group (not private) and guitar-at-5 is a stretch. Best as a fun, close entry point, likely via ukulele.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="https://www.paysonheartcollective.com/classes" target="_blank" rel="noopener">Classes ↗</a>
+          <a class="btn" href="https://www.paysonheartcollective.com/team-4" target="_blank" rel="noopener">Teachers ↗</a>
+        </div>
+      </article>
+
+      <!-- Art City -->
+      <article class="card" id="artcity">
+        <div class="card-top">
+          <div class="rank">D</div>
+          <div class="card-title">
+            <h3>Art City Music Academy <span class="tag">Piano, not guitar</span></h3>
+            <div class="loc"><b>Springville</b> · ~9 mi, ~13 min · award-winning, since 1987</div>
+          </div>
+          <div class="badges">
+            <span class="status st-open">Open</span>
+          </div>
+        </div>
+
+        <p class="blurb">Worth naming so it is not a surprise: <b>they do not teach guitar</b> (piano, violin, voice only). But their early-childhood track is strong, and a child turning 5 in September fits their "Piano Stars" age-5 class. A credible piano-first path if we go that route.</p>
+
+        <div class="facts">
+          <div class="fact"><div class="k">Early childhood</div><div class="v">"Piano Stars" (age 5); group musicianship, not Suzuki, not guitar</div></div>
+          <div class="fact"><div class="k">Private tuition</div><div class="v">$145 (30m) / $180 (45m) / $225 (60m) per month + $25 reg</div></div>
+          <div class="fact"><div class="k">Young beginners</div><div class="v">$85/mo (age 5+) + materials</div></div>
+          <div class="fact"><div class="k">Recognition</div><div class="v">"Best Music Instruction," Utah Valley, multiple years</div></div>
+        </div>
+
+        <div class="verdict bad">
+          <span class="ico">🚫</span>
+          <span><b>Verdict:</b> Not for guitar. Only relevant if we decide piano-first for my son. Free 30-min preview class available.</span>
+        </div>
+
+        <div class="card-foot">
+          <a class="btn primary" href="tel:8014898027">📞 (801) 489-8027</a>
+          <a class="btn" href="https://www.artcitymusic.com/young-beginners/" target="_blank" rel="noopener">Young beginners ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== RULED OUT ===== -->
+  <section id="ruled-out">
+    <div class="sec-head">
+      <span class="num">05</span>
+      <h2>Checked and ruled out</h2>
+      <p>Options that came up in searches but did not survive a closer look. Saved here so I do not re-chase them.</p>
+    </div>
+    <div class="cards">
+      <article class="card dim">
+        <div class="card-top">
+          <div class="rank">✕</div>
+          <div class="card-title">
+            <h3>Great Salt Lake Guitar Co. <span class="status st-closed">Closed</span></h3>
+            <div class="loc">Provo · beloved handmade-guitar shop, but the retail/lessons business wound down; the shop that took over the space (Boothe's Provo location) is also marked closed as of Feb 2026. Website dead.</div>
+          </div>
+        </div>
+      </article>
+      <article class="card dim">
+        <div class="card-top">
+          <div class="rank">✕</div>
+          <div class="card-title">
+            <h3>Gil Olivera <span class="status st-closed">Moved to CA</span></h3>
+            <div class="loc">Old Spanish Fork listing is stale; his active profile is now Cathedral City / Palm Desert, California. Only pursue if he offers online lessons.</div>
+          </div>
+        </div>
+      </article>
+      <article class="card dim">
+        <div class="card-top">
+          <div class="rank">✕</div>
+          <div class="card-title">
+            <h3>Dave Cipriani <span class="status st-closed">California</span></h3>
+            <div class="loc">Ojai/Ventura, CA. Zoom-only for us. Rates $40 (30m) / $60 (45m) / $80 (60m) if online is acceptable.</div>
+          </div>
+        </div>
+      </article>
+      <article class="card dim">
+        <div class="card-top">
+          <div class="rank">✕</div>
+          <div class="card-title">
+            <h3>Summerhays Music (Orem) &amp; Tasha's Tutoring (Payson) <span class="status st-closed">No / far</span></h3>
+            <div class="loc">Summerhays: farthest store (~25 min), teacher directory is self-submitted and not vetted. Tasha's: no guitar (piano, percussion, violin only).</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== CALL LIST ===== -->
+  <section id="calls">
+    <div class="sec-head">
+      <span class="num">06</span>
+      <h2>The call list</h2>
+      <p>Everything I need is a few short calls away. Numbers are tap-to-dial.</p>
+    </div>
+
+    <div class="calllist">
+      <div class="callrow">
+        <div class="cname">Sophie Stanley <small>My classical top pick (email, not phone)</small></div>
+        <a class="tel" href="mailto:sophie.stanley@byu.edu">sophie.stanley@byu.edu</a>
+      </div>
+      <div class="callrow">
+        <div class="cname">Boothe Music <small>Best family call: closest studio, deep roster</small></div>
+        <a class="tel" href="tel:8017987650">(801) 798-7650</a>
+      </div>
+      <div class="callrow">
+        <div class="cname">Hatch Guitar Studio <small>Closest private studio, me + son at 6</small></div>
+        <a class="tel" href="tel:8015154595">(801) 515-4595</a>
+      </div>
+      <div class="callrow">
+        <div class="cname">Let's Play Music (Amy Clements) <small>Bridge program for my son</small></div>
+        <a class="tel" href="tel:8013766922">(801) 376-6922</a>
+      </div>
+      <div class="callrow">
+        <div class="cname">Mountain Rock Music <small>Well-reviewed backup studio</small></div>
+        <a class="tel" href="tel:8014893000">(801) 489-3000</a>
+      </div>
+    </div>
+
+    <ul class="ask">
+      <li><b>For me:</b> Do you teach classical / read-from-notation repertoire, and can we skip beginner fundamentals given a cello background?</li>
+      <li><b>Rate &amp; length:</b> weekly cost, 30 vs 60 minutes, and any registration fee.</li>
+      <li><b>For my son:</b> true minimum age, and do you recommend a 1/2 or 3/4 nylon guitar (or ukulele / piano first)?</li>
+      <li><b>Parent involvement:</b> do you want a parent in the lesson for a young child?</li>
+    </ul>
+
+    <div class="note">
+      <b>Research notes:</b> Ratings and quotes are pulled from Google, Yelp, Facebook, and Thumbtack as of July 2026. Yelp and Google blocked automated review scraping for several listings, so a couple of star counts are marked "verify" and are worth a 30-second look on the live page. Pricing is unpublished at most private studios (call to confirm). Everything here is a starting point, not gospel.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Put together for a Salem, Utah family search · July 2026 · <a href="index.html">← back to Jonny's pages</a>
+</footer>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
