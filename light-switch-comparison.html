@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<title>Light Switch Comparison: Motion, Timer &amp; Smart</title>
+<meta name="description" content="Side-by-side of three light switches: Inovelli Blue mmWave smart presence dimmer, Lutron Maestro motion sensor, and Honeywell Econoswitch programmable timer.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;
+    --card:#12121a;
+    --card-soft:#16161f;
+    --border:#1e1e2e;
+    --border-bright:#2a2a40;
+    --text:#e7e7f0;
+    --text-dim:#9090a8;
+    --text-faint:#6a6a82;
+    --accent:#6366f1;
+    --accent-light:#818cf8;
+    --accent-glow:rgba(99,102,241,0.15);
+    --gold:#f5b942;
+    --green:#34d399;
+    --teal:#2dd4bf;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(99,102,241,0.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    overflow-x:hidden;
+  }
+  .container{max-width:860px;margin:0 auto;padding:40px 24px 90px}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-dim);text-decoration:none;font-size:13px;margin-bottom:28px;transition:color .15s}
+  .back:hover{color:var(--accent-light)}
+
+  header{margin-bottom:28px;border-bottom:1px solid var(--border);padding-bottom:26px}
+  header .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+  header h1{
+    font-size:38px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;
+    background:linear-gradient(115deg,var(--text) 25%,var(--accent-light) 60%,var(--gold) 95%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px;
+  }
+  header .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--text-faint);margin-top:14px;font-family:'JetBrains Mono',monospace}
+
+  p{color:var(--text-dim);font-size:15.5px;margin-bottom:14px}
+  p strong,li strong{color:var(--text);font-weight:600}
+  em{color:var(--text);font-style:italic}
+  a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s}
+  a:hover{color:#a5b0ff}
+
+  h2{font-size:23px;font-weight:700;letter-spacing:-0.01em;color:var(--text);margin:42px 0 6px;padding-left:12px;border-left:3px solid var(--accent)}
+
+  ul.lead-list{list-style:none;padding:0;margin:14px 0 8px}
+  ul.lead-list li{padding:10px 0 10px 26px;position:relative;color:var(--text-dim);font-size:15.5px;border-top:1px solid var(--border)}
+  ul.lead-list li:first-child{border-top:none}
+  ul.lead-list li:before{content:"›";position:absolute;left:8px;color:var(--accent-light);font-weight:700}
+
+  /* option cards */
+  .cards{display:flex;flex-wrap:wrap;gap:18px;margin:22px 0 8px}
+  .swcard{flex:1 1 240px;border:1px solid var(--border-bright);border-radius:14px;padding:18px;background:var(--card);display:flex;flex-direction:column}
+  .sw-icon{height:150px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:66px;margin-bottom:14px;border:1px solid var(--border);position:relative;overflow:hidden}
+  .sw-icon .cat{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint)}
+  .sw-icon.smart{background:radial-gradient(circle at 50% 40%,rgba(99,102,241,0.22),rgba(99,102,241,0.05))}
+  .sw-icon.motion{background:radial-gradient(circle at 50% 40%,rgba(45,212,191,0.20),rgba(45,212,191,0.04))}
+  .sw-icon.timer{background:radial-gradient(circle at 50% 40%,rgba(245,185,66,0.20),rgba(245,185,66,0.04))}
+  .swcard h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .swcard .model{color:var(--text-dim);font-size:13.5px;margin-bottom:10px}
+  .swcard .price{font-size:1.5em;font-weight:700;color:var(--text);margin-bottom:4px}
+  .swcard .avail{color:var(--text-faint);font-size:13px;margin-bottom:14px}
+  .swcard .go{margin-top:auto}
+
+  /* table */
+  .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin:18px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:620px}
+  th,td{padding:11px 12px;text-align:left;vertical-align:top}
+  thead tr{border-bottom:2px solid var(--border-bright);background:var(--card-soft)}
+  th{color:var(--text);font-weight:700;font-size:13.5px}
+  tbody tr{border-bottom:1px solid var(--border)}
+  tbody tr:last-child{border-bottom:none}
+  tbody tr:nth-child(even){background:var(--card-soft)}
+  td.rowlbl{color:var(--text-dim)}
+  td.rowlbl strong{color:var(--text)}
+  td.hi{color:var(--text)}
+
+  .callout-list{list-style:none;padding:0;margin:14px 0}
+  .callout-list li{padding:12px 0 12px 26px;position:relative;color:var(--text-dim);font-size:15px;border-top:1px solid var(--border)}
+  .callout-list li:first-child{border-top:none}
+  .callout-list li:before{content:"→";position:absolute;left:4px;color:var(--gold);font-weight:700}
+
+  .note{color:var(--text-faint);font-size:13px;margin-top:30px;font-family:'JetBrains Mono',monospace}
+  @media (max-width:600px){header h1{font-size:29px}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a class="back" href="index.html">← Back to Jonny's Pages</a>
+
+  <header>
+    <div class="eyebrow">Home · Smart Home · Shopping</div>
+    <h1>Light Switch Comparison: Motion, Timer &amp; Smart</h1>
+    <div class="meta">
+      <span>Three ways to make the lights handle themselves</span>
+      <span>Prices &amp; ratings pulled 2026-07-18</span>
+    </div>
+  </header>
+
+  <p>Three different ways to solve "I want the lights to handle themselves." They are genuinely different classes of product, so the right pick depends on <em>how</em> you want them to turn on and off.</p>
+
+  <ul class="lead-list">
+    <li><strong>Presence-based (smart):</strong> Inovelli Blue mmWave, the one you signed up for</li>
+    <li><strong>Motion-based (standalone):</strong> Lutron Maestro occupancy sensor</li>
+    <li><strong>Time-based (standalone):</strong> Honeywell Econoswitch programmable timer, the "on/off at set times" ask</li>
+  </ul>
+
+  <h2>The three options</h2>
+
+  <div class="cards">
+
+    <div class="swcard">
+      <div class="sw-icon smart">📡<span class="cat">Presence · smart</span></div>
+      <h3>Inovelli Blue Series mmWave</h3>
+      <p class="model">Smart Zigbee presence-sensing dimmer · VZM32-SN</p>
+      <p class="price">$99.00</p>
+      <p class="avail">In stock at inovelli.com</p>
+      <p class="go"><a href="https://inovelli.com/products/zigbee-blue-series-mmwave-presence-sensor-smart-dimmer-switch">View at Inovelli →</a></p>
+    </div>
+
+    <div class="swcard">
+      <div class="sw-icon motion">🚶<span class="cat">Motion · PIR</span></div>
+      <h3>Lutron Maestro Motion Sensor</h3>
+      <p class="model">Standalone PIR occupancy switch · MS-OPS2H-2-WH (2-pack)</p>
+      <p class="price">$39.98</p>
+      <p class="avail">4.6 ★ (13,755 ratings)</p>
+      <p class="go"><a href="https://www.amazon.com/Lutron-Maestro-Required-Single-Pole-MS-OPS2-WH/dp/B00L43RTSS">View on Amazon →</a></p>
+    </div>
+
+    <div class="swcard">
+      <div class="sw-icon timer">⏱️<span class="cat">Timer · clock</span></div>
+      <h3>Honeywell Econoswitch RPLS740B</h3>
+      <p class="model">7-day programmable timer · sunrise/sunset</p>
+      <p class="price">$54.89</p>
+      <p class="avail">4.6 ★ (11,317 ratings)</p>
+      <p class="go"><a href="https://www.amazon.com/Honeywell-Econoswitch-RPLS740B-Programmable-Switch/dp/B004AP92N2">View on Amazon →</a></p>
+    </div>
+
+  </div>
+
+  <h2>Side-by-side comparison</h2>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Inovelli Blue mmWave</th>
+        <th>Lutron Maestro</th>
+        <th>Honeywell Econoswitch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="rowlbl"><strong>Turns on/off by</strong></td><td class="hi">Presence (mmWave) + automations</td><td>Motion / occupancy (PIR)</td><td>Programmed clock times / sunrise-sunset</td></tr>
+      <tr><td class="rowlbl"><strong>Price</strong></td><td class="hi">$99 (each)</td><td>$39.98 (2-pack, ~$20 ea)</td><td>$54.89 (each)</td></tr>
+      <tr><td class="rowlbl"><strong>Sensor</strong></td><td class="hi">mmWave radar (detects you even when still)</td><td>PIR infrared (can time out if you sit still)</td><td>None, clock/astronomic</td></tr>
+      <tr><td class="rowlbl"><strong>Smart / connected</strong></td><td class="hi">Yes, Zigbee, Home Assistant, Hubitat, SmartThings</td><td>No</td><td>No</td></tr>
+      <tr><td class="rowlbl"><strong>Dimming</strong></td><td class="hi">Yes</td><td>No (on/off)</td><td>No (on/off)</td></tr>
+      <tr><td class="rowlbl"><strong>Hub required</strong></td><td class="hi">Yes (Zigbee coordinator)</td><td>No</td><td>No</td></tr>
+      <tr><td class="rowlbl"><strong>Neutral wire</strong></td><td class="hi">Required</td><td>Not required</td><td>Required</td></tr>
+      <tr><td class="rowlbl"><strong>Rating</strong></td><td class="hi">New product (shipping since ~Dec 2025)</td><td>4.6 ★ (13,755)</td><td>4.6 ★ (11,317)</td></tr>
+      <tr><td class="rowlbl"><strong>Best for</strong></td><td class="hi">Presence + dimming + full automation</td><td>Cheap, no-hassle auto on/off in bath/closet/garage</td><td>"Lights on/off at set times" with zero fuss</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>Which one for you</h2>
+  <ul class="callout-list">
+    <li><strong>Just want lights on/off at set times</strong> → <strong>Honeywell Econoswitch</strong>. Set up to 7 on/off events per day, repeat daily or weekly, plus a sunrise/sunset astronomic mode and a random "looks lived-in" vacation mode. No hub, no app. This is the direct answer to the programmable-timer ask.</li>
+    <li><strong>Want auto on/off from motion, cheap and simple</strong> → <strong>Lutron Maestro</strong>. Dumb but bulletproof; no hub, no neutral. Weakness: PIR can shut lights off if you sit still (reading, at a desk).</li>
+    <li><strong>Want presence detection + dimming + Home Assistant automations</strong> → <strong>Inovelli Blue mmWave</strong>. The one you subscribed to. mmWave beats PIR at the "I'm here but not moving" problem, and it can also do time-based schedules through Home Assistant, so it can technically do everything the other two do, at 2-5x the price and with a hub + neutral wire required.</li>
+  </ul>
+
+  <h2>Backstory: the Inovelli mmWave is "Project Linus"</h2>
+  <p>The Inovelli mmWave switch is codenamed <strong>Project Linus</strong>. In June 2022, Linus (Linus Tech Tips) posted <em>"I've been defeated… 'Smart' lighting in my new house"</em> about his smart-lighting struggles. Inovelli was his #2 pick for the build but lost the deal because they had no motion/presence switch at the time. In response, Inovelli built exactly that switch, named the effort after him, announced it on the WAN Show, and launched it on Indiegogo.</p>
+  <p><strong>Current status:</strong> It made it through certification and into production; Blue Series (Zigbee) units air-freighted to the California warehouse in Nov 2025 and started reaching backers around <strong>Dec 2025</strong>. It's now for sale on the store at $99. The Red Series (Z-Wave 800) version has trailed behind. You signed up on the Blue/Zigbee + Home Assistant list back in Feb 2025, but there's no order/payment on file, you were on the updates list, not a backer.</p>
+
+  <h2>Before you buy, check the box</h2>
+  <ul class="callout-list">
+    <li><strong>Neutral wire:</strong> both the Inovelli and the Honeywell need a neutral in the box. Your Visionary Homes build almost certainly has this. The Lutron does <em>not</em> need one.</li>
+    <li><strong>Zigbee hub:</strong> the Inovelli needs a Zigbee coordinator (e.g. a SkyConnect/Sonoff dongle on Home Assistant via ZHA or Zigbee2MQTT). The other two are standalone.</li>
+  </ul>
+
+  <p class="note">Prices and ratings pulled 2026-07-18. Amazon prices fluctuate.</p>
+</div>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
