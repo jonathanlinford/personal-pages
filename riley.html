@@ -159,6 +159,23 @@
   .lb.open{opacity:1;pointer-events:auto}
   .lb img{max-width:94vw;max-height:90vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:scale(.94);transition:transform .4s}
   .lb.open img{transform:scale(1)}
+  /* ---------- SECTION TITLE + VIDEOS ---------- */
+  .section-title{font-family:'Fraunces',serif;font-weight:400;text-align:center;font-size:clamp(1.7rem,4.5vw,2.5rem);margin-bottom:.4rem}
+  .section-sub{text-align:center;color:var(--dim);font-size:.98rem;margin-bottom:2.6rem}
+  .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:start}
+  .clip{position:relative;break-inside:avoid;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#000;line-height:0}
+  .clip video{display:block;width:100%;height:auto;border-radius:14px;background:#000}
+
+  /* ---------- MOBILE HERO (keep Riley in frame) ---------- */
+  @media(max-width:720px){
+    .hero__bg{background-image:url('assets/riley/riley-hero-mobile.png');background-position:center center}
+    .hero{align-items:flex-end}
+    .hero__inner{padding-bottom:13vh}
+    .hero__scrim{background:linear-gradient(to bottom,rgba(35,25,8,.22) 0%,rgba(35,25,8,.04) 30%,rgba(35,25,8,.10) 55%,rgba(35,25,8,.5) 82%,var(--cream) 100%)}
+    .hero__name{text-shadow:0 4px 26px rgba(20,12,0,.75)}
+    section{padding:clamp(2.6rem,9vw,4rem) 0}
+  }
+
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
@@ -196,6 +213,27 @@
       <figure class="shot reveal"><img src="assets/riley/riley-family.jpg" alt="Riley in the living room while a grandmother hugs a grandchild" loading="lazy"><figcaption>Always underfoot, always loved.</figcaption></figure>
       <figure class="shot reveal"><img src="assets/riley/riley-couch.jpg" alt="Riley resting on the couch beside her person" loading="lazy"><figcaption>Never far from her people.</figcaption></figure>
       <figure class="shot reveal"><img src="assets/riley/riley-door.jpg" alt="Riley waiting at the sliding glass door to come inside" loading="lazy"><figcaption>Waiting at the door for whoever came home.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-reindeer.jpg" alt="Close-up of Riley in a reindeer costume looking up" loading="lazy"><figcaption>Christmas best.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-dress.jpg" alt="Riley wearing a peach dress with a polka-dot skirt" loading="lazy"><figcaption>Dressed to impress.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-lauren-couch.jpg" alt="Riley cuddled in a lap on the couch" loading="lazy"><figcaption>Lap of choice.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-blanket.jpg" alt="Riley curled up on a fuzzy blanket in a recliner" loading="lazy"><figcaption>Blanket privileges: unlimited.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-reindeer-full.jpg" alt="Riley in a full reindeer costume with bells" loading="lazy"><figcaption>Reindeer duty.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-guitars.jpg" alt="A young Riley held close in front of guitars" loading="lazy"><figcaption>Couch buddy.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-pillow.jpg" alt="Riley resting her head on a pillow on the bed" loading="lazy"><figcaption>Pillow thief, forgiven every time.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-christmas-pair.jpg" alt="Riley in a reindeer costume beside another dog in a Santa costume" loading="lazy"><figcaption>Holidays with her partner in crime.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title reveal">Riley, in motion</h2>
+    <p class="section-sub reveal">Tap to play &mdash; the wiggles, the zoomies, the tug-of-war.</p>
+    <div class="videos">
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-4-poster.jpg"><source src="assets/riley/vid/riley-video-4.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-6-poster.jpg"><source src="assets/riley/vid/riley-video-6.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-1-poster.jpg"><source src="assets/riley/vid/riley-video-1.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-3-poster.jpg"><source src="assets/riley/vid/riley-video-3.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-2-poster.jpg"><source src="assets/riley/vid/riley-video-2.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-5-poster.jpg"><source src="assets/riley/vid/riley-video-5.mp4" type="video/mp4"></video></figure>
     </div>
   </section>
 
