@@ -186,16 +186,16 @@
     </div>
   </section>
 
-  <section class="reveal">
+  <section>
     <div class="gallery" id="gallery">
-      <figure class="shot"><img src="assets/riley/riley-adoption.jpg" alt="A man in red glasses joyfully holding Riley on adoption day" loading="lazy"><figcaption>The day you found your people.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-portrait.jpg" alt="Riley sitting on a bed, ears up, looking at the camera" loading="lazy"><figcaption>Those ears. That face.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-autumn.jpg" alt="Riley on a walk down a path covered in autumn leaves" loading="lazy"><figcaption>Walks through the falling leaves.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-snuggle.jpg" alt="Riley snuggling a smiling child on a bed" loading="lazy"><figcaption>Naptime supervisor.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-waterfall.jpg" alt="Riley on a leash with family in front of a waterfall" loading="lazy"><figcaption>Along for every adventure.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-family.jpg" alt="Riley in the living room while a grandmother hugs a grandchild" loading="lazy"><figcaption>Always underfoot, always loved.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-couch.jpg" alt="Riley resting on the couch beside her person" loading="lazy"><figcaption>Never far from her people.</figcaption></figure>
-      <figure class="shot"><img src="assets/riley/riley-door.jpg" alt="Riley waiting at the sliding glass door to come inside" loading="lazy"><figcaption>Waiting at the door for whoever came home.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-adoption.jpg" alt="A man in red glasses joyfully holding Riley on adoption day" loading="lazy"><figcaption>The day you found your people.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-portrait.jpg" alt="Riley sitting on a bed, ears up, looking at the camera" loading="lazy"><figcaption>Those ears. That face.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-autumn.jpg" alt="Riley on a walk down a path covered in autumn leaves" loading="lazy"><figcaption>Walks through the falling leaves.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-snuggle.jpg" alt="Riley snuggling a smiling child on a bed" loading="lazy"><figcaption>Naptime supervisor.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-waterfall.jpg" alt="Riley on a leash with family in front of a waterfall" loading="lazy"><figcaption>Along for every adventure.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-family.jpg" alt="Riley in the living room while a grandmother hugs a grandchild" loading="lazy"><figcaption>Always underfoot, always loved.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-couch.jpg" alt="Riley resting on the couch beside her person" loading="lazy"><figcaption>Never far from her people.</figcaption></figure>
+      <figure class="shot reveal"><img src="assets/riley/riley-door.jpg" alt="Riley waiting at the sliding glass door to come inside" loading="lazy"><figcaption>Waiting at the door for whoever came home.</figcaption></figure>
     </div>
   </section>
 
@@ -230,9 +230,21 @@
 <div class="lb" id="lb"><img src="" alt="Riley, enlarged"></div>
 
 <script>
-  /* scroll reveals */
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  /* scroll reveals — low threshold + rootMargin so items reveal as they enter */
+  var reveals=[].slice.call(document.querySelectorAll('.reveal'));
+  function show(el){el.classList.add('in')}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target)}})},{threshold:.05,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el)});
+  } else {
+    reveals.forEach(show);
+  }
+  /* safety net: never let anything stay invisible */
+  function sweep(){var vh=window.innerHeight||800;reveals.forEach(function(el){var r=el.getBoundingClientRect();if(r.top<vh*0.95){show(el)}})}
+  window.addEventListener('scroll',sweep,{passive:true});
+  window.addEventListener('load',sweep);
+  setTimeout(sweep,400);
+  setTimeout(function(){reveals.forEach(show)},4000);
 
   /* lightbox */
   var lb=document.getElementById('lb'),lbImg=lb.querySelector('img');
