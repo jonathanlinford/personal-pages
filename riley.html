@@ -439,21 +439,23 @@
 
   var REGIONS=[
     {name:'Wisconsin', at:0,   sky:['#bfe3f0','#eaf6ee'], ground:'#6f9e4b', dark:'#4f7a34'},
-    {name:'Oregon',    at:200, sky:['#a7c6d4','#d2e2dd'], ground:'#4f7d5a', dark:'#2f5a3d'},
-    {name:'Arizona',   at:500, sky:['#f6d29e','#f2b184'], ground:'#d7a066', dark:'#b5714a'}
+    {name:'Oregon',    at:120, sky:['#a7c6d4','#d2e2dd'], ground:'#4f7d5a', dark:'#2f5a3d'},
+    {name:'Arizona',   at:300, sky:['#f6d29e','#f2b184'], ground:'#d7a066', dark:'#b5714a'}
   ];
   var best=+(localStorage.getItem('rylee_run_best')||0); if(bestEl)bestEl.textContent=best;
 
-  var state='ready', score=0, dist=0, speed=300, dogY=0, vy=0, onGround=true, obstacles=[], spawnT=0, legPhase=0, last=0, curRegion=0, bgc={s0:'#bfe3f0',s1:'#eaf6ee',g:'#6f9e4b',d:'#4f7a34'};
+  var state='ready', score=0, dist=0, speed=300, dogY=0, vy=0, onGround=true, obstacles=[], spawnT=0, legPhase=0, last=0, curRegion=0,
+      bgc={s0:hx('#bfe3f0'),s1:hx('#eaf6ee'),g:hx('#6f9e4b'),d:hx('#4f7a34')};
 
   function reset(){score=0;dist=0;speed=300;dogY=0;vy=0;onGround=true;obstacles=[];spawnT=0.8;legPhase=0;curRegion=0;
-    bgc={s0:REGIONS[0].sky[0],s1:REGIONS[0].sky[1],g:REGIONS[0].ground,d:REGIONS[0].dark};regionEl.textContent='Wisconsin';regionEl.style.opacity=1;}
+    bgc={s0:hx(REGIONS[0].sky[0]),s1:hx(REGIONS[0].sky[1]),g:hx(REGIONS[0].ground),d:hx(REGIONS[0].dark)};regionEl.textContent='Wisconsin';regionEl.style.opacity=1;}
   function start(){reset();state='playing';startOv.classList.add('hide');overOv.classList.add('hide');last=0;requestAnimationFrame(loop);}
   function jump(){if(state==='playing'&&onGround){vy=-820;onGround=false;}}
 
   function regionIndexFor(s){var idx=0;for(var i=0;i<REGIONS.length;i++){if(s>=REGIONS[i].at)idx=i;}return idx;}
   function hx(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)];}
-  function mix(a,b,t){var x=hx(a),y=hx(b);return 'rgb('+Math.round(x[0]+(y[0]-x[0])*t)+','+Math.round(x[1]+(y[1]-x[1])*t)+','+Math.round(x[2]+(y[2]-x[2])*t)+')';}
+  function rgb(a){return 'rgb('+(a[0]|0)+','+(a[1]|0)+','+(a[2]|0)+')';}
+  function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
 
   function spawn(){
     var r=REGIONS[curRegion].name, h, w;
@@ -499,12 +501,12 @@
   function drawScenery(){
     // distant hills (parallax)
     var off=(dist*0.3)%180;
-    ctx.fillStyle=bgc.d;ctx.globalAlpha=.35;
+    ctx.fillStyle=rgb(bgc.d);ctx.globalAlpha=.35;
     for(var i=-1;i<7;i++){var bx=i*180-off;ctx.beginPath();ctx.arc(bx+90,GY,120,Math.PI,0);ctx.fill();}
     ctx.globalAlpha=1;
     // themed midground props scrolling
     var r=REGIONS[curRegion].name, off2=(dist*0.6)%240;
-    ctx.fillStyle=bgc.d;
+    ctx.fillStyle=rgb(bgc.d);
     for(var j=-1;j<6;j++){var px=j*240-off2+40;
       if(r==='Wisconsin'){ // maple trees
         ctx.fillStyle='#6b4a2a';ctx.fillRect(px-3,GY-40,6,40);ctx.fillStyle='#c85b3c';ctx.beginPath();ctx.arc(px,GY-48,20,0,7);ctx.fill();ctx.fillStyle='#d98a3d';ctx.beginPath();ctx.arc(px-12,GY-42,14,0,7);ctx.fill();
@@ -525,9 +527,9 @@
     var ri=regionIndexFor(score);
     if(ri!==curRegion){curRegion=ri;regionEl.textContent=REGIONS[ri].name;regionEl.style.opacity=0;setTimeout(function(){regionEl.style.opacity=1;},60);}
     // lerp bg toward current region palette
-    var R=REGIONS[curRegion];
-    bgc.s0=mix(bgc.s0,R.sky[0],Math.min(1,dt*1.5));bgc.s1=mix(bgc.s1,R.sky[1],Math.min(1,dt*1.5));
-    bgc.g=mix(bgc.g,R.ground,Math.min(1,dt*1.5));bgc.d=mix(bgc.d,R.dark,Math.min(1,dt*1.5));
+    var R=REGIONS[curRegion], kf=Math.min(1,dt*1.5);
+    bgc.s0=lerp(bgc.s0,hx(R.sky[0]),kf);bgc.s1=lerp(bgc.s1,hx(R.sky[1]),kf);
+    bgc.g=lerp(bgc.g,hx(R.ground),kf);bgc.d=lerp(bgc.d,hx(R.dark),kf);
     // physics
     vy+=2400*dt; dogY+=vy*dt; if(dogY>=0){dogY=0;vy=0;onGround=true;}
     // spawn
@@ -544,13 +546,13 @@
   }
 
   function render(){
-    var g=ctx.createLinearGradient(0,0,0,GY+20);g.addColorStop(0,bgc.s0);g.addColorStop(1,bgc.s1);
+    var g=ctx.createLinearGradient(0,0,0,GY+20);g.addColorStop(0,rgb(bgc.s0));g.addColorStop(1,rgb(bgc.s1));
     ctx.fillStyle=g;ctx.fillRect(0,0,W,GY+20);
     // sun/soft light
     ctx.fillStyle='rgba(255,246,220,.5)';ctx.beginPath();ctx.arc(760,80,46,0,7);ctx.fill();
     drawScenery();
     // ground
-    ctx.fillStyle=bgc.g;ctx.fillRect(0,GY,W,H-GY);
+    ctx.fillStyle=rgb(bgc.g);ctx.fillRect(0,GY,W,H-GY);
     ctx.fillStyle='rgba(0,0,0,.08)';ctx.fillRect(0,GY,W,4);
     // ground texture dashes moving
     ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=3;var o=(dist)%60;
