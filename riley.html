@@ -280,6 +280,9 @@
       <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-3-poster.jpg"><source src="assets/riley/vid/riley-video-3.mp4" type="video/mp4"></video></figure>
       <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-2-poster.jpg"><source src="assets/riley/vid/riley-video-2.mp4" type="video/mp4"></video></figure>
       <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-5-poster.jpg"><source src="assets/riley/vid/riley-video-5.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-7-poster.jpg"><source src="assets/riley/vid/riley-video-7.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video controls preload="none" playsinline poster="assets/riley/vid/riley-video-8-poster.jpg"><source src="assets/riley/vid/riley-video-8.mp4" type="video/mp4"></video></figure>
+      <figure class="clip reveal"><video autoplay loop muted playsinline preload="metadata" poster="assets/riley/vid/riley-gif-1-poster.jpg"><source src="assets/riley/vid/riley-gif-1.mp4" type="video/mp4"></video></figure>
     </div>
   </section>
 
@@ -443,14 +446,15 @@
   var REGIONS=[
     {name:'Wisconsin', at:0,   sky:['#bfe3f0','#eaf6ee'], ground:'#6f9e4b', dark:'#4f7a34'},
     {name:'Oregon',    at:120, sky:['#a7c6d4','#d2e2dd'], ground:'#4f7d5a', dark:'#2f5a3d'},
-    {name:'Arizona',   at:300, sky:['#f6d29e','#f2b184'], ground:'#d7a066', dark:'#b5714a'}
+    {name:'Arizona',   at:300, sky:['#f6d29e','#f2b184'], ground:'#d7a066', dark:'#b5714a'},
+    {name:'Heaven',    at:1000,sky:['#fff6db','#ffe7b8'], ground:'#f3ead2', dark:'#ffffff'}
   ];
   var best=+(localStorage.getItem('rylee_run_best')||0); if(bestEl)bestEl.textContent=best;
 
   var state='ready', score=0, dist=0, speed=300, dogY=0, vy=0, onGround=true, obstacles=[], spawnT=0, legPhase=0, last=0, curRegion=0,
       bgc={s0:hx('#bfe3f0'),s1:hx('#eaf6ee'),g:hx('#6f9e4b'),d:hx('#4f7a34')};
 
-  function reset(){score=0;dist=0;speed=300;dogY=0;vy=0;onGround=true;obstacles=[];spawnT=0.8;legPhase=0;curRegion=0;
+  function reset(){score=0;dist=0;speed=300;dogY=0;vy=0;onGround=true;obstacles=[];spawnT=0.8;legPhase=0;curRegion=0;burstT=0;angelSince=0;
     bgc={s0:hx(REGIONS[0].sky[0]),s1:hx(REGIONS[0].sky[1]),g:hx(REGIONS[0].ground),d:hx(REGIONS[0].dark)};regionEl.textContent='Wisconsin';regionEl.style.opacity=1;}
   function start(){reset();state='playing';startOv.classList.add('hide');overOv.classList.add('hide');last=0;requestAnimationFrame(loop);}
   function jump(){if(state==='playing'&&onGround){vy=-820;onGround=false;}}
@@ -462,9 +466,10 @@
 
   function spawn(){
     var r=REGIONS[curRegion].name, h, w;
-    if(r==='Arizona'){w=22+Math.random()*16;h=34+Math.random()*30;obstacles.push({x:W+20,w:w,h:h,type:'cactus'});}
+    if(r==='Heaven'){w=28+Math.random()*16;h=26+Math.random()*22;obstacles.push({x:W+20,w:w,h:h,type:'starcloud'});}
+    else if(r==='Arizona'){w=22+Math.random()*16;h=34+Math.random()*30;obstacles.push({x:W+20,w:w,h:h,type:'cactus'});}
     else if(r==='Oregon'){w=30+Math.random()*22;h=22+Math.random()*16;obstacles.push({x:W+20,w:w,h:h,type:'log'});}
-    else {w:0;h=26+Math.random()*20;w=26+Math.random()*18;obstacles.push({x:W+20,w:w,h:h,type:'bush'});}
+    else {h=26+Math.random()*20;w=26+Math.random()*18;obstacles.push({x:W+20,w:w,h:h,type:'bush'});}
   }
 
   function drawDog(x,feetY){
@@ -515,34 +520,27 @@
         ctx.fillStyle='#6b4a2a';ctx.fillRect(px-3,GY-40,6,40);ctx.fillStyle='#c85b3c';ctx.beginPath();ctx.arc(px,GY-48,20,0,7);ctx.fill();ctx.fillStyle='#d98a3d';ctx.beginPath();ctx.arc(px-12,GY-42,14,0,7);ctx.fill();
       } else if(r==='Oregon'){ // evergreens
         ctx.fillStyle='#2f5a3d';ctx.beginPath();ctx.moveTo(px,GY-64);ctx.lineTo(px-16,GY);ctx.lineTo(px+16,GY);ctx.closePath();ctx.fill();ctx.beginPath();ctx.moveTo(px,GY-84);ctx.lineTo(px-12,GY-40);ctx.lineTo(px+12,GY-40);ctx.closePath();ctx.fill();
-      } else { // arizona mesas
+      } else if(r==='Arizona'){ // arizona mesas
         ctx.fillStyle='#b5714a';ctx.fillRect(px-30,GY-54,60,54);ctx.fillRect(px-14,GY-74,42,20);
+      } else { // heaven clouds
+        ctx.fillStyle='rgba(255,255,255,.85)';puff(px,GY-46,30);
       }
     }
   }
 
-  var GOAL=1000, ascendT=0, HEAVEN={s0:'#fff6db',s1:'#ffe7b8'};
-
-  function beginAscend(){state='ascend';ascendT=0;score=GOAL;hud.textContent=GOAL;obstacles=[];regionEl.textContent='Heaven';}
+  var burstT=0, angelSince=0;
 
   function loop(ts){
-    if(state!=='playing'&&state!=='ascend')return;
+    if(state!=='playing')return;
     if(!last)last=ts; var dt=Math.min((ts-last)/1000,0.05); last=ts;
-
-    if(state==='ascend'){
-      ascendT+=dt; legPhase+=dt*4;
-      var kh=Math.min(1,dt*1.4);
-      bgc.s0=lerp(bgc.s0,hx(HEAVEN.s0),kh);bgc.s1=lerp(bgc.s1,hx(HEAVEN.s1),kh);
-      if(ascendT>=3.4){win();return;}
-      render();requestAnimationFrame(loop);return;
-    }
-
-    dist+=speed*dt; score=Math.floor(dist/20); speed=Math.min(640,300+dist*0.02);
+    dist+=speed*dt; score=Math.floor(dist/20); speed=Math.min(680,300+dist*0.02);
     legPhase+=dt*speed*0.045;
-    if(score>=GOAL){beginAscend();render();requestAnimationFrame(loop);return;}
-    // region change
+    if(burstT>0)burstT-=dt;
+    if(score>=1000)angelSince+=dt;
+    // region change (Heaven at 1000 is permanent; run stays endless)
     var ri=regionIndexFor(score);
-    if(ri!==curRegion){curRegion=ri;regionEl.textContent=REGIONS[ri].name;regionEl.style.opacity=0;setTimeout(function(){regionEl.style.opacity=1;},60);}
+    if(ri!==curRegion){curRegion=ri;regionEl.textContent=REGIONS[ri].name;regionEl.style.opacity=0;setTimeout(function(){regionEl.style.opacity=1;},60);
+      if(REGIONS[ri].name==='Heaven')burstT=1.1;}
     // lerp bg toward current region palette
     var R=REGIONS[curRegion], kf=Math.min(1,dt*1.5);
     bgc.s0=lerp(bgc.s0,hx(R.sky[0]),kf);bgc.s1=lerp(bgc.s1,hx(R.sky[1]),kf);
@@ -574,37 +572,23 @@
     ctx.beginPath();ctx.ellipse(-9,12,12,6,-0.15,0,7);ctx.fill();
     ctx.strokeStyle='rgba(214,204,172,.6)';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(-18,-10,21,10,-0.5,0,7);ctx.stroke();
     ctx.restore();}
-  function drawAngel(x,feetY,t,alpha){
-    ctx.save();ctx.globalAlpha=alpha;
-    var gr=ctx.createRadialGradient(x+8,feetY-40,8,x+8,feetY-40,130);
-    gr.addColorStop(0,'rgba(255,246,206,.9)');gr.addColorStop(1,'rgba(255,246,206,0)');
-    ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x+8,feetY-40,130,0,7);ctx.fill();
-    var flap=Math.sin(t)*0.28;
-    drawWing(x-2,feetY-32,-1,flap);drawWing(x+20,feetY-32,1,flap);
-    ctx.restore();
-    var saved=onGround;onGround=false;drawDog(x,feetY);onGround=saved;
-    ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle='#f4d06a';ctx.lineWidth=5;ctx.shadowColor='rgba(244,208,106,.9)';ctx.shadowBlur=14;
-    ctx.beginPath();ctx.ellipse(x+28,feetY-90,17,6,0,0,7);ctx.stroke();ctx.restore();
+  function drawStar(cx,cy,r){ctx.beginPath();for(var i=0;i<10;i++){var ang=Math.PI/5*i-Math.PI/2;var rr=(i%2)?r*0.45:r;ctx.lineTo(cx+Math.cos(ang)*rr,cy+Math.sin(ang)*rr);}ctx.closePath();ctx.fill();}
+  function drawWingsHalo(x,feetY,t){
     ctx.save();
-    for(var i=0;i<7;i++){var a2=t*1.2+i*1.0;var sx=x+8+Math.cos(a2)*(52+i*6);var sy=feetY-40+Math.sin(a2*1.3)*(42+i*4);
-      ctx.globalAlpha=0.4+0.6*Math.abs(Math.sin(t*3+i));ctx.fillStyle='rgba(255,247,214,.95)';
-      ctx.beginPath();ctx.arc(sx,sy,1.4+Math.abs(Math.sin(t*2+i))*1.6,0,7);ctx.fill();}
-    ctx.restore();}
-  function renderHeaven(){
-    var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,rgb(bgc.s0));g.addColorStop(1,rgb(bgc.s1));
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    ctx.save();ctx.globalAlpha=.14;ctx.fillStyle='#fff';
-    for(var i=0;i<7;i++){var rx=110+i*115;ctx.beginPath();ctx.moveTo(rx,-20);ctx.lineTo(rx+34,-20);ctx.lineTo(rx+130,H);ctx.lineTo(rx-50,H);ctx.closePath();ctx.fill();}
+    var gr=ctx.createRadialGradient(x+10,feetY-30,6,x+10,feetY-30,86);
+    gr.addColorStop(0,'rgba(255,246,206,.5)');gr.addColorStop(1,'rgba(255,246,206,0)');
+    ctx.fillStyle=gr;ctx.beginPath();ctx.arc(x+10,feetY-30,86,0,7);ctx.fill();
+    var flap=Math.sin(t*0.9)*0.22;
+    drawWing(x-4,feetY-30,-1,flap);drawWing(x+22,feetY-30,1,flap);
     ctx.restore();
-    drawClouds();
-    var p=Math.min(ascendT/2.8,1), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
-    var feetY=(GY+40)-e*(GY+190);
-    var cx=140+(W/2-140)*e;
-    drawAngel(cx,feetY,legPhase,1-Math.min(ascendT/3.4,1)*0.12);
   }
+  function drawHalo(x,feetY){ctx.save();ctx.strokeStyle='#f4d06a';ctx.lineWidth=4.5;ctx.shadowColor='rgba(244,208,106,.9)';ctx.shadowBlur=12;
+    ctx.beginPath();ctx.ellipse(x+28,feetY-88,16,5.5,0,0,7);ctx.stroke();ctx.restore();}
+  function drawBurst(x,y,p){ctx.save();var R=18+p*80;ctx.globalAlpha=1-p;ctx.fillStyle='rgba(255,244,200,.95)';
+    for(var i=0;i<12;i++){var a=i/12*6.283;ctx.beginPath();ctx.arc(x+Math.cos(a)*R,y+Math.sin(a)*R,3*(1-p)+1,0,7);ctx.fill();}ctx.restore();}
 
   function render(){
-    if(state==='ascend'){renderHeaven();return;}
+    var inHeaven=score>=1000;
     var g=ctx.createLinearGradient(0,0,0,GY+20);g.addColorStop(0,rgb(bgc.s0));g.addColorStop(1,rgb(bgc.s1));
     ctx.fillStyle=g;ctx.fillRect(0,0,W,GY+20);
     // sun/soft light
@@ -612,17 +596,21 @@
     drawScenery();
     // ground
     ctx.fillStyle=rgb(bgc.g);ctx.fillRect(0,GY,W,H-GY);
-    ctx.fillStyle='rgba(0,0,0,.08)';ctx.fillRect(0,GY,W,4);
-    // ground texture dashes moving
-    ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=3;var o=(dist)%60;
-    for(var i=-1;i<16;i++){var lx=i*60-o;ctx.beginPath();ctx.moveTo(lx,GY+28);ctx.lineTo(lx+22,GY+28);ctx.stroke();}
+    if(inHeaven){ctx.fillStyle='rgba(255,255,255,.95)';var oc=(dist*0.5)%120;for(var c=-1;c<10;c++){puff(c*120-oc+40,GY+8,30);}}
+    else{ctx.fillStyle='rgba(0,0,0,.08)';ctx.fillRect(0,GY,W,4);
+      ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=3;var o=(dist)%60;
+      for(var i=-1;i<16;i++){var lx=i*60-o;ctx.beginPath();ctx.moveTo(lx,GY+28);ctx.lineTo(lx+22,GY+28);ctx.stroke();}}
     // obstacles
     for(var k=0;k<obstacles.length;k++){var ob=obstacles[k],ox=ob.x,otop=GY-ob.h;
       if(ob.type==='cactus'){ctx.fillStyle='#3f7d43';ctx.fillRect(ox+ob.w/2-5,otop,10,ob.h);ctx.fillRect(ox,otop+ob.h*0.35,6,ob.h*0.4);ctx.fillRect(ox+ob.w-6,otop+ob.h*0.25,6,ob.h*0.45);}
       else if(ob.type==='log'){ctx.fillStyle='#6b4a2a';ctx.fillRect(ox,otop,ob.w,ob.h);ctx.fillStyle='#8a6238';ctx.beginPath();ctx.ellipse(ox,otop+ob.h/2,5,ob.h/2,0,0,7);ctx.fill();}
+      else if(ob.type==='starcloud'){ctx.fillStyle='rgba(255,255,255,.98)';puff(ox+ob.w/2,otop+ob.h*0.55,ob.h*0.6);ctx.fillStyle='#f4d06a';drawStar(ox+ob.w/2,otop+ob.h*0.4,ob.h*0.34);}
       else {ctx.fillStyle='#4f7a34';ctx.beginPath();ctx.arc(ox+ob.w/2,GY,ob.w/2,Math.PI,0);ctx.fill();ctx.beginPath();ctx.arc(ox+ob.w*0.25,GY-2,ob.w*0.28,Math.PI,0);ctx.fill();}
     }
+    if(inHeaven)drawWingsHalo(140,GY+dogY,angelSince*6);
     drawDog(140,GY+dogY);
+    if(inHeaven)drawHalo(140,GY+dogY);
+    if(burstT>0)drawBurst(140,(GY+dogY)-38,1-(burstT/1.1));
   }
 
   function gameOver(){
@@ -630,25 +618,16 @@
     if(score>best){best=score;localStorage.setItem('rylee_run_best',best);}
     bestEl.textContent=best;scoreEl.textContent=score+' pts';
     var reached=regionIndexFor(score);
-    var msgs=['She had a good run around the yard. 🐾','She made it to Oregon, evergreens and all. 🌲','She ran the whole way to Arizona. What a girl. 🌵'];
-    overOv.querySelector('h3').textContent='Good girl, Rylee.';
-    overOv.classList.remove('heaven');
+    var msgs=['She had a good run around the yard. 🐾','She made it to Oregon, evergreens and all. 🌲','She ran the whole way to Arizona. What a girl. 🌵','She earned her wings and soared through heaven. 😇'];
+    if(reached>=3){overOv.querySelector('h3').textContent='Good girl, angel.';overOv.classList.add('heaven');}
+    else{overOv.querySelector('h3').textContent='Good girl, Rylee.';overOv.classList.remove('heaven');}
     msgEl.textContent=msgs[reached];
-    overOv.classList.remove('hide');
-  }
-  function win(){
-    state='over';
-    best=Math.max(best,GOAL);localStorage.setItem('rylee_run_best',best);bestEl.textContent=best;
-    scoreEl.textContent=GOAL+' pts';
-    overOv.querySelector('h3').textContent='She earned her wings.';
-    msgEl.textContent='Rylee ran all the way home. Rest easy, sweet girl. 🕊️';
-    overOv.classList.add('heaven');
     overOv.classList.remove('hide');
   }
 
   function shareText(){
     var url=location.origin+location.pathname;
-    if(score>=GOAL){return "Rylee's Run 🐾\n1000 pts · she earned her wings 🕊️\n🍁🟩 🌲🟩 🌵🟩 ☁️😇\n"+url;}
+    if(score>=1000){return "Rylee's Run 🐾\n"+score+" pts · flying free in heaven 😇\n🍁🟩 🌲🟩 🌵🟩 ☁️😇\n"+url;}
     var reached=regionIndexFor(score);
     var legs=['🍁','🌲','🌵'];
     var row=legs.map(function(e,i){return e+(i<=reached?'🟩':'⬜');}).join(' ');
