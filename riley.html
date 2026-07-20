@@ -438,6 +438,7 @@
   var cv=document.getElementById('game'); if(!cv) return;
   var ctx=cv.getContext('2d'), W=900, H=450, GY=372;
   var stage=document.getElementById('stage');
+  var TRUCK117=(function(){try{return new URLSearchParams(location.search).get('truck')==='117';}catch(e){return false;}})();
   var hud=document.getElementById('gHud'), regionEl=document.getElementById('gRegion');
   var startOv=document.getElementById('gStart'), overOv=document.getElementById('gOver');
   var startBtn=document.getElementById('gStartBtn'), retryBtn=document.getElementById('gRetry'), shareBtn=document.getElementById('gShare');
@@ -460,7 +461,7 @@
   var state='ready', score=0, dist=0, speed=300, dogY=0, vy=0, onGround=true, obstacles=[], spawnT=0, legPhase=0, last=0, curRegion=0,
       bgc={s0:hx('#bfe3f0'),s1:hx('#eaf6ee'),g:hx('#6f9e4b'),d:hx('#4f7a34')};
 
-  function reset(){score=0;dist=0;speed=300;dogY=0;vy=0;onGround=true;obstacles=[];spawnT=0.8;legPhase=0;curRegion=0;burstT=0;angelSince=0;
+  function reset(){score=0;dist=0;speed=300;dogY=0;vy=0;onGround=true;obstacles=[];spawnT=0.8;legPhase=0;curRegion=0;burstT=0;angelSince=0;truckActive=false;truckP=0;
     bgc={s0:hx(REGIONS[0].sky[0]),s1:hx(REGIONS[0].sky[1]),g:hx(REGIONS[0].ground),d:hx(REGIONS[0].dark)};regionEl.textContent='Wisconsin';regionEl.style.opacity=1;}
   function start(){reset();state='playing';startOv.classList.add('hide');overOv.classList.add('hide');last=0;requestAnimationFrame(loop);}
   function jump(){if(state==='playing'&&onGround){vy=-820;onGround=false;}}
@@ -534,7 +535,8 @@
     }
   }
 
-  var burstT=0, angelSince=0;
+  var burstT=0, angelSince=0, truckActive=false, truckP=0;
+  var TRUCK_DUR=1.7;
 
   function loop(ts){
     if(state!=='playing')return;
@@ -546,19 +548,20 @@
     // region change (Heaven at 1000 is permanent; run stays endless)
     var ri=regionIndexFor(score);
     if(ri!==curRegion){curRegion=ri;regionEl.textContent=REGIONS[ri].name;regionEl.style.opacity=0;setTimeout(function(){regionEl.style.opacity=1;},60);
-      if(REGIONS[ri].name==='Heaven')burstT=1.1;}
+      if(REGIONS[ri].name==='Heaven'){burstT=1.1;if(TRUCK117){truckActive=true;truckP=0;obstacles.length=0;spawnT=Math.max(spawnT,1.2);}}}
+    if(truckActive){truckP+=dt/TRUCK_DUR;if(truckP>=1){truckActive=false;truckP=0;}}
     // lerp bg toward current region palette
     var R=REGIONS[curRegion], kf=Math.min(1,dt*1.5);
     bgc.s0=lerp(bgc.s0,hx(R.sky[0]),kf);bgc.s1=lerp(bgc.s1,hx(R.sky[1]),kf);
     bgc.g=lerp(bgc.g,hx(R.ground),kf);bgc.d=lerp(bgc.d,hx(R.dark),kf);
     // physics
     vy+=2400*dt; dogY+=vy*dt; if(dogY>=0){dogY=0;vy=0;onGround=true;}
-    // spawn
-    spawnT-=dt; if(spawnT<=0){spawn();spawnT=(1.05+Math.random()*0.85)*(300/speed)+0.35;}
+    // spawn (paused during the truck sweep cinematic)
+    if(!truckActive){spawnT-=dt; if(spawnT<=0){spawn();spawnT=(1.05+Math.random()*0.85)*(300/speed)+0.35;}}
     for(var i=obstacles.length-1;i>=0;i--){obstacles[i].x-=speed*dt;if(obstacles[i].x+obstacles[i].w<0)obstacles.splice(i,1);}
-    // collision
+    // collision (disabled during the truck sweep so it's never an unfair death)
     var dogX=140,dw=44,dh=44,dtop=(GY+dogY)-dh, dl=dogX-18;
-    for(var k=0;k<obstacles.length;k++){var o=obstacles[k],otop=GY-o.h;
+    if(!truckActive)for(var k=0;k<obstacles.length;k++){var o=obstacles[k],otop=GY-o.h;
       if(dl+dw-8>o.x+3 && dl+8<o.x+o.w-3 && dtop+dh-6>otop+3){gameOver();return;}
     }
     hud.textContent=score;
@@ -590,6 +593,37 @@
   }
   function drawHalo(x,feetY){ctx.save();ctx.strokeStyle='#f4d06a';ctx.lineWidth=4.5;ctx.shadowColor='rgba(244,208,106,.9)';ctx.shadowBlur=12;
     ctx.beginPath();ctx.ellipse(x+28,feetY-88,16,5.5,0,0,7);ctx.stroke();ctx.restore();}
+  function drawTruck(p){
+    // full-width sweep: enters off the right, drives left, exits off the left
+    var L=640, x=(W+90)+((-L-90)-(W+90))*p, gy=GY;
+    ctx.save();
+    // soft dust/light kicked up behind
+    ctx.fillStyle='rgba(255,246,206,.45)';var dl=x+L+10;
+    for(var d=0;d<6;d++){ctx.beginPath();ctx.arc(dl+d*22,gy-10-((d*13)%26),9-d,0,7);ctx.fill();}
+    // chassis rail
+    ctx.fillStyle='#2f343a';ctx.fillRect(x+120,gy-30,L-120,12);
+    // trailer box
+    var tX=x+150, tW=L-160, tTop=gy-152, tH=140;
+    ctx.fillStyle='#e6eaef';roundRect(tX,tTop,tW,tH,10);ctx.fill();
+    ctx.strokeStyle='#b9c0c9';ctx.lineWidth=3;roundRect(tX,tTop,tW,tH,10);ctx.stroke();
+    ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=2;
+    for(var i=1;i<9;i++){var rx=tX+i*(tW/9);ctx.beginPath();ctx.moveTo(rx,tTop+7);ctx.lineTo(rx,tTop+tH-7);ctx.stroke();}
+    // cab (leading, on the left since we travel left)
+    var cX=x+16, cTop=gy-122, cW=118, cH=104;
+    ctx.fillStyle='#c0392b';roundRect(cX,cTop,cW,cH,12);ctx.fill();
+    ctx.fillStyle='#a93226';roundRect(cX-8,gy-60,46,54,7);ctx.fill();
+    // windshield + side window
+    ctx.fillStyle='#9cc3dd';roundRect(cX+14,cTop+12,74,42,6);ctx.fill();
+    ctx.fillStyle='#7b7f86';ctx.fillRect(cX-10,gy-22,22,16);
+    // exhaust stack
+    ctx.fillStyle='#4a4f57';ctx.fillRect(cX+cW-8,cTop-26,7,30);
+    // wheels
+    var wheels=[cX+36, tX+56, tX+tW-96, tX+tW-42];
+    for(var w=0;w<wheels.length;w++){var wx=wheels[w];
+      ctx.fillStyle='#20242a';ctx.beginPath();ctx.arc(wx,gy-6,19,0,7);ctx.fill();
+      ctx.fillStyle='#4a4f57';ctx.beginPath();ctx.arc(wx,gy-6,7,0,7);ctx.fill();}
+    ctx.restore();
+  }
   function drawBurst(x,y,p){ctx.save();var R=18+p*80;ctx.globalAlpha=1-p;ctx.fillStyle='rgba(255,244,200,.95)';
     for(var i=0;i<12;i++){var a=i/12*6.283;ctx.beginPath();ctx.arc(x+Math.cos(a)*R,y+Math.sin(a)*R,3*(1-p)+1,0,7);ctx.fill();}ctx.restore();}
 
@@ -642,6 +676,7 @@
     drawDog(140,GY+dogY);
     if(inHeaven)drawHalo(140,GY+dogY);
     if(burstT>0)drawBurst(140,(GY+dogY)-38,1-(burstT/1.1));
+    if(truckActive)drawTruck(truckP);
   }
 
   function gameOver(){
