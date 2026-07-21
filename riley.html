@@ -594,33 +594,46 @@
   function drawHalo(x,feetY){ctx.save();ctx.strokeStyle='#f4d06a';ctx.lineWidth=4.5;ctx.shadowColor='rgba(244,208,106,.9)';ctx.shadowBlur=12;
     ctx.beginPath();ctx.ellipse(x+28,feetY-88,16,5.5,0,0,7);ctx.stroke();ctx.restore();}
   function drawTruck(p){
-    // full-width sweep: enters off the right, drives left, exits off the left
-    var L=640, x=(W+90)+((-L-90)-(W+90))*p, gy=GY;
+    // full-width sweep: a pickup truck towing a trailer, entering off the
+    // right, driving left, exiting off the left. Pickup leads on the left.
+    var L=480, x=(W+90)+((-L-90)-(W+90))*p, gy=GY;
     ctx.save();
     // soft dust/light kicked up behind
-    ctx.fillStyle='rgba(255,246,206,.45)';var dl=x+L+10;
-    for(var d=0;d<6;d++){ctx.beginPath();ctx.arc(dl+d*22,gy-10-((d*13)%26),9-d,0,7);ctx.fill();}
-    // chassis rail
-    ctx.fillStyle='#2f343a';ctx.fillRect(x+120,gy-30,L-120,12);
-    // trailer box
-    var tX=x+150, tW=L-160, tTop=gy-152, tH=140;
-    ctx.fillStyle='#e6eaef';roundRect(tX,tTop,tW,tH,10);ctx.fill();
-    ctx.strokeStyle='#b9c0c9';ctx.lineWidth=3;roundRect(tX,tTop,tW,tH,10);ctx.stroke();
+    ctx.fillStyle='rgba(255,246,206,.45)';var dx=x+L+10;
+    for(var d=0;d<6;d++){ctx.beginPath();ctx.arc(dx+d*22,gy-10-((d*13)%26),9-d,0,7);ctx.fill();}
+
+    // ---- trailer (behind, on the right) ----
+    var trX=x+250, trW=L-256, trTop=gy-104, trH=94;
+    ctx.fillStyle='#2f343a';ctx.fillRect(trX-4,gy-28,trW+8,10);           // trailer frame
+    ctx.fillStyle='#e6eaef';roundRect(trX,trTop,trW,trH,9);ctx.fill();    // enclosed box
+    ctx.strokeStyle='#b9c0c9';ctx.lineWidth=3;roundRect(trX,trTop,trW,trH,9);ctx.stroke();
     ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=2;
-    for(var i=1;i<9;i++){var rx=tX+i*(tW/9);ctx.beginPath();ctx.moveTo(rx,tTop+7);ctx.lineTo(rx,tTop+tH-7);ctx.stroke();}
-    // cab (leading, on the left since we travel left)
-    var cX=x+16, cTop=gy-122, cW=118, cH=104;
-    ctx.fillStyle='#c0392b';roundRect(cX,cTop,cW,cH,12);ctx.fill();
-    ctx.fillStyle='#a93226';roundRect(cX-8,gy-60,46,54,7);ctx.fill();
-    // windshield + side window
-    ctx.fillStyle='#9cc3dd';roundRect(cX+14,cTop+12,74,42,6);ctx.fill();
-    ctx.fillStyle='#7b7f86';ctx.fillRect(cX-10,gy-22,22,16);
-    // exhaust stack
-    ctx.fillStyle='#4a4f57';ctx.fillRect(cX+cW-8,cTop-26,7,30);
-    // wheels
-    var wheels=[cX+36, tX+56, tX+tW-96, tX+tW-42];
+    for(var i=1;i<6;i++){var rx=trX+i*(trW/6);ctx.beginPath();ctx.moveTo(rx,trTop+6);ctx.lineTo(rx,trTop+trH-6);ctx.stroke();}
+    // tongue + hitch from truck to trailer
+    ctx.strokeStyle='#3a3f45';ctx.lineWidth=6;ctx.lineCap='round';
+    ctx.beginPath();ctx.moveTo(x+218,gy-16);ctx.lineTo(trX+2,gy-20);ctx.stroke();
+
+    // ---- pickup truck (leading, on the left) ----
+    var pX=x+14;
+    // bed (open cargo box, behind cab)
+    ctx.fillStyle='#c0392b';roundRect(pX+96,gy-74,122,60,6);ctx.fill();
+    ctx.fillStyle='#7f2a20';roundRect(pX+104,gy-64,106,40,4);ctx.fill();  // bed interior
+    // cab
+    ctx.fillStyle='#c0392b';roundRect(pX+40,gy-104,66,90,10);ctx.fill();
+    // hood
+    ctx.fillStyle='#a93226';roundRect(pX-6,gy-58,54,52,7);ctx.fill();
+    // windshield + door window
+    ctx.fillStyle='#9cc3dd';roundRect(pX+30,gy-96,20,36,4);ctx.fill();    // windshield
+    ctx.fillStyle='#9cc3dd';roundRect(pX+56,gy-96,44,36,5);ctx.fill();    // cab side window
+    ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(pX+76,gy-96,3,36);       // door pillar
+    // bumper / grille
+    ctx.fillStyle='#7b7f86';ctx.fillRect(pX-10,gy-22,20,16);
+    ctx.fillStyle='#f4e6a8';ctx.beginPath();ctx.arc(pX-2,gy-40,4,0,7);ctx.fill(); // headlight
+
+    // ---- wheels (2 truck, 2 trailer) ----
+    var wheels=[pX+34, pX+150, trX+trW*0.34, trX+trW*0.72];
     for(var w=0;w<wheels.length;w++){var wx=wheels[w];
-      ctx.fillStyle='#20242a';ctx.beginPath();ctx.arc(wx,gy-6,19,0,7);ctx.fill();
+      ctx.fillStyle='#20242a';ctx.beginPath();ctx.arc(wx,gy-6,18,0,7);ctx.fill();
       ctx.fillStyle='#4a4f57';ctx.beginPath();ctx.arc(wx,gy-6,7,0,7);ctx.fill();}
     ctx.restore();
   }
