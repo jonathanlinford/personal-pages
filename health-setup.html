@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Sync Setup</title>
+<meta name="description" content="Private, password-protected setup guide.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128241;</text></svg>">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    color-scheme: dark;
+    --plane: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #222221;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --hairline: rgba(255,255,255,0.10);
+    --series: #3987e5;
+    --miss: #d03b3b;
+    --good: #0ca30c;
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:where(:not([data-theme="dark"])) {
+      color-scheme: light;
+      --plane: #f9f9f7; --surface: #fcfcfb; --surface-2: #f2f1ed;
+      --ink: #0b0b0b; --ink-2: #52514e; --grid: #e1e0d9;
+      --hairline: rgba(11,11,11,0.10); --series: #2a78d6; --good: #006300;
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --plane: #f9f9f7; --surface: #fcfcfb; --surface-2: #f2f1ed;
+    --ink: #0b0b0b; --ink-2: #52514e; --grid: #e1e0d9;
+    --hairline: rgba(11,11,11,0.10); --series: #2a78d6; --good: #006300;
+  }
+
+  body {
+    background: var(--plane); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* gate */
+  #gate { min-height: 100vh; display: grid; place-items: center; padding: 22px; }
+  .gate-card {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 18px; padding: 30px 24px; width: 100%; max-width: 380px; text-align: center;
+  }
+  .gate-emblem { font-size: 32px; margin-bottom: 12px; }
+  .gate-card h1 { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+  .gate-card p { font-size: 13px; color: var(--ink-2); margin-bottom: 16px; }
+  .gate-card input {
+    width: 100%; padding: 13px 14px; border-radius: 10px; font: inherit; font-size: 16px;
+    background: var(--plane); color: var(--ink); border: 1px solid var(--hairline);
+  }
+  .gate-card button {
+    width: 100%; margin-top: 10px; padding: 13px; border-radius: 10px; border: 0;
+    background: var(--series); color: #fff; font: inherit; font-weight: 700; font-size: 16px;
+  }
+  .gate-err { min-height: 20px; font-size: 12.5px; color: var(--miss); margin-top: 9px; font-weight: 600; }
+  .gate-foot { font-size: 11px; color: var(--muted); margin-top: 13px; }
+
+  #app { display: none; }
+  #app.live { display: block; }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 26px 16px 90px; }
+
+  header { margin-bottom: 8px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 25px; font-weight: 800; letter-spacing: -0.01em; }
+  .sub { font-size: 14px; color: var(--ink-2); margin-top: 8px; }
+  .stamp { font-size: 11.5px; color: var(--muted); margin-top: 12px; }
+
+  .toolbar { display: flex; gap: 8px; margin: 16px 0 4px; flex-wrap: wrap; }
+  .btn-sm {
+    background: var(--surface); color: var(--ink-2); border: 1px solid var(--hairline);
+    border-radius: 999px; padding: 6px 13px; font: inherit; font-size: 12px;
+  }
+
+  /* progress */
+  .progress { margin: 18px 0 6px; }
+  .progress-bar { height: 6px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .progress-bar > i { display: block; height: 100%; background: var(--good); border-radius: 4px; transition: width .2s; }
+  .progress-text { font-size: 12px; color: var(--muted); margin-top: 7px; }
+
+  h2 {
+    font-size: 17px; font-weight: 800; margin: 34px 0 4px;
+    display: flex; align-items: center; gap: 9px;
+  }
+  h2 .num {
+    flex: none; width: 25px; height: 25px; border-radius: 999px; background: var(--series);
+    color: #fff; font-size: 13px; display: grid; place-items: center; font-weight: 800;
+  }
+  .section-note { font-size: 13.5px; color: var(--ink-2); margin-bottom: 14px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: var(--radius); padding: 15px 16px; margin-bottom: 12px;
+  }
+
+  /* copy rows */
+  .copy-row { display: flex; align-items: stretch; gap: 8px; margin: 9px 0; }
+  .copy-val {
+    flex: 1; min-width: 0; background: var(--surface-2); border: 1px solid var(--hairline);
+    border-radius: 9px; padding: 10px 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px;
+    overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;
+  }
+  .copy-val.wrap-ok { white-space: pre-wrap; word-break: break-all; overflow-x: visible; }
+  button.copy {
+    flex: none; border: 0; border-radius: 9px; background: var(--series); color: #fff;
+    font: inherit; font-size: 13px; font-weight: 700; padding: 0 15px; min-width: 74px;
+  }
+  button.copy.done { background: var(--good); }
+  .copy-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+
+  /* steps */
+  ol.steps { list-style: none; counter-reset: s; }
+  ol.steps > li {
+    counter-increment: s; position: relative; padding: 11px 0 11px 34px;
+    border-bottom: 1px solid var(--grid); font-size: 14.5px;
+  }
+  ol.steps > li:last-child { border-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 11px;
+    width: 22px; height: 22px; border-radius: 999px; background: var(--surface-2);
+    color: var(--ink-2); font-size: 11.5px; font-weight: 700; display: grid; place-items: center;
+  }
+
+  /* checkable steps */
+  label.check {
+    display: flex; gap: 11px; align-items: flex-start; padding: 12px 0;
+    border-bottom: 1px solid var(--grid); font-size: 14.5px; cursor: pointer;
+  }
+  label.check:last-child { border-bottom: 0; }
+  label.check input { flex: none; width: 21px; height: 21px; margin-top: 1px; accent-color: var(--good); }
+  label.check input:checked + span { color: var(--muted); text-decoration: line-through; }
+  label.check span { min-width: 0; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 7px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  thead th { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  td .chip, .chip {
+    display: inline-block; background: var(--surface-2); border: 1px solid var(--hairline);
+    border-radius: 6px; padding: 1px 6px; font-size: 11.5px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap;
+  }
+  .chip.var { background: rgba(57,135,229,0.16); border-color: rgba(57,135,229,0.4); color: var(--series); }
+  .yes { color: var(--good); font-weight: 700; }
+  .no { color: var(--muted); }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; background: var(--surface-2); padding: 1px 5px; border-radius: 5px; }
+  b { font-weight: 700; }
+
+  .callout {
+    border-left: 3px solid var(--series); background: var(--surface);
+    border-radius: 10px; padding: 12px 14px; font-size: 13.5px; color: var(--ink-2); margin: 12px 0;
+  }
+  .callout.warn { border-left-color: var(--miss); }
+  .callout b { color: var(--ink); }
+
+  details { border-top: 1px solid var(--grid); }
+  details summary { padding: 12px 0; font-size: 14px; font-weight: 600; color: var(--ink-2); cursor: pointer; }
+  details p, details ul { font-size: 13.5px; color: var(--ink-2); padding-bottom: 10px; }
+  details ul { padding-left: 20px; }
+  details li { margin-bottom: 7px; }
+
+  footer { margin-top: 44px; padding-top: 15px; border-top: 1px solid var(--grid); font-size: 12px; color: var(--muted); }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(70px);
+    background: var(--good); color: #fff; font-size: 13.5px; font-weight: 700;
+    padding: 10px 18px; border-radius: 999px; opacity: 0; transition: all .2s; z-index: 20;
+  }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-emblem">&#128241;</div>
+    <h1>Health Sync Setup</h1>
+    <p>Private page. Enter the passphrase.</p>
+    <input id="pw" type="password" placeholder="passphrase" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button id="unlock" type="button">Unlock</button>
+    <div class="gate-err" id="err"></div>
+    <div class="gate-foot">AES-256-GCM / decrypted on your device</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Personal</div>
+      <h1>Health Sync Setup</h1>
+      <div class="sub">
+        Building the two Shortcuts that connect Apple Health to the Fitness Tracker
+        sheet. Everything you need to type has a copy button. Your progress is saved
+        on this device, so you can stop and come back.
+      </div>
+      <div class="stamp" id="stamp"></div>
+    </header>
+
+    <div class="toolbar">
+      <button class="btn-sm" id="themeToggle" type="button">Theme</button>
+      <button class="btn-sm" id="resetProgress" type="button">Reset checklist</button>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar"><i id="progressFill" style="width:0%"></i></div>
+      <div class="progress-text" id="progressText"></div>
+    </div>
+
+    <div id="content"></div>
+
+    <footer>
+      Regenerate this page with <code>health setup-page</code>. The token and URL below
+      are live values, so treat this page like a password.
+    </footer>
+  </div>
+</div>
+
+<div id="toast">Copied</div>
+
+<script type="application/json" id="payload">{"salt":"JNkx50PWOtp5dJSRL1E2aA==","iv":"ySommGcCN1yKnsJ2","ct":"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","iterations":250000}</script>
+<script>
+(function () {
+  "use strict";
+
+  var D = null;
+  var STORE_KEY = "health-setup-progress-v1";
+
+  /* --------------------------------------------------------------- gate */
+  function b64(text) {
+    var raw = atob(text);
+    var out = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  }
+
+  async function decrypt(password) {
+    var envelope = JSON.parse(document.getElementById("payload").textContent);
+    var enc = new TextEncoder();
+    var material = await crypto.subtle.importKey(
+      "raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]
+    );
+    var key = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt: b64(envelope.salt), iterations: envelope.iterations, hash: "SHA-256" },
+      material, { name: "AES-GCM", length: 256 }, false, ["decrypt"]
+    );
+    var plain = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: b64(envelope.iv) }, key, b64(envelope.ct)
+    );
+    return JSON.parse(new TextDecoder().decode(plain));
+  }
+
+  var input = document.getElementById("pw");
+  var errBox = document.getElementById("err");
+  var unlockBtn = document.getElementById("unlock");
+
+  async function attempt() {
+    if (!input.value) return;
+    unlockBtn.disabled = true;
+    errBox.textContent = "";
+    try {
+      D = await decrypt(input.value);
+    } catch (e) {
+      errBox.textContent = "Wrong passphrase.";
+      unlockBtn.disabled = false;
+      input.select();
+      return;
+    }
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("app").classList.add("live");
+    build();
+  }
+
+  unlockBtn.addEventListener("click", attempt);
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter") attempt(); });
+
+  /* ------------------------------------------------------------ helpers */
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("on"); }, 1400);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    // Fallback for older iOS Safari.
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "absolute";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  }
+
+  /** A labelled value with a copy button. */
+  function copyRow(label, value, opts) {
+    opts = opts || {};
+    var box = el("div");
+    if (label) box.appendChild(el("div", "copy-label", label));
+    var row = el("div", "copy-row");
+    var val = el("div", "copy-val" + (opts.wrap ? " wrap-ok" : ""));
+    val.textContent = opts.display || value;
+    var btn = el("button", "copy", "Copy");
+    btn.type = "button";
+    btn.addEventListener("click", function () {
+      copyText(value).then(function () {
+        btn.textContent = "Copied";
+        btn.classList.add("done");
+        showToast(opts.toast || "Copied");
+        setTimeout(function () {
+          btn.textContent = "Copy";
+          btn.classList.remove("done");
+        }, 1600);
+      });
+    });
+    row.appendChild(val);
+    row.appendChild(btn);
+    box.appendChild(row);
+    return box;
+  }
+
+  function html(tag, cls, markup) {
+    var n = el(tag, cls);
+    n.innerHTML = markup;
+    return n;
+  }
+
+  /* ---------------------------------------------------------- checklist */
+  var progress = {};
+
+  function loadProgress() {
+    try { progress = JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
+    catch (e) { progress = {}; }
+  }
+
+  function saveProgress() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(progress)); } catch (e) {}
+  }
+
+  function refreshProgress() {
+    var boxes = document.querySelectorAll('input[type="checkbox"][data-key]');
+    var done = 0;
+    boxes.forEach(function (b) { if (b.checked) done++; });
+    var pct = boxes.length ? Math.round(100 * done / boxes.length) : 0;
+    document.getElementById("progressFill").style.width = pct + "%";
+    document.getElementById("progressText").textContent =
+      done + " of " + boxes.length + " steps done" + (pct === 100 ? " — all set" : "");
+  }
+
+  function check(key, markup) {
+    var label = el("label", "check");
+    var box = document.createElement("input");
+    box.type = "checkbox";
+    box.setAttribute("data-key", key);
+    box.checked = !!progress[key];
+    box.addEventListener("change", function () {
+      progress[key] = box.checked;
+      saveProgress();
+      refreshProgress();
+    });
+    var span = el("span");
+    span.innerHTML = markup;
+    label.appendChild(box);
+    label.appendChild(span);
+    return label;
+  }
+
+  function card(children) {
+    var c = el("div", "card");
+    children.forEach(function (child) { if (child) c.appendChild(child); });
+    return c;
+  }
+
+  function section(num, title, note) {
+    var frag = document.createDocumentFragment();
+    var h = el("h2");
+    h.appendChild(el("span", "num", String(num)));
+    h.appendChild(document.createTextNode(title));
+    frag.appendChild(h);
+    if (note) frag.appendChild(html("div", "section-note", note));
+    return frag;
+  }
+
+  /* --------------------------------------------------------------- build */
+  function build() {
+    loadProgress();
+    document.getElementById("stamp").textContent = "Generated " + D.generated;
+
+    var root = document.getElementById("content");
+    root.innerHTML = "";
+
+    /* ---- credentials ---- */
+    root.appendChild(section(1, "Your credentials",
+      "Tap Copy rather than typing these. The token is 43 characters and a single " +
+      "wrong character just produces <code>bad token</code>."));
+    root.appendChild(card([
+      copyRow("Sync token", D.token, { toast: "Token copied" }),
+      copyRow("Web app URL", D.webAppUrl, { wrap: true, toast: "URL copied" })
+    ]));
+
+    /* ---- Health Push ---- */
+    root.appendChild(section(2, "Shortcut: Health Push",
+      "Reads Apple Health and sends it to the sheet. It sends <b>today and " +
+      "yesterday</b> on purpose, because sleep and food data often finish writing " +
+      "after midnight. Re-sending a day is free: the sheet only fills blanks and " +
+      "never overwrites."));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step A &mdash; create it"),
+      check("push-create",
+        "Shortcuts app &rarr; <b>+</b> &rarr; rename it <b>Health Push</b>")
+    ]));
+
+    var metricRows = "";
+    D.pushMetrics.forEach(function (m) {
+      metricRows +=
+        "<tr><td><b>" + m.label + "</b></td>" +
+        "<td><span class='chip'>" + m.healthType + "</span></td>" +
+        "<td>" + m.statistic + "</td>" +
+        "<td>" + (m.todayOnly ? "<span class='yes'>yes</span>" : "<span class='no'>no</span>") + "</td>" +
+        "<td><span class='chip var'>" + m.key + "</span></td></tr>";
+      if (m.note) {
+        metricRows += "<tr><td colspan='5' style='color:var(--muted);font-size:12.5px;padding-top:0'>" +
+          m.note + "</td></tr>";
+      }
+    });
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step B &mdash; today's numbers"),
+      html("div", "section-note",
+        "For each row: <b>Find Health Samples</b> &rarr; <b>Calculate Statistics</b> " +
+        "&rarr; <b>Set Variable</b>. The last column is the variable name to use."),
+      html("div", "scroll",
+        "<table><thead><tr><th>Metric</th><th>Sample type</th><th>Stat</th>" +
+        "<th>Date is today</th><th>Variable</th></tr></thead><tbody>" +
+        metricRows + "</tbody></table>"),
+      check("push-today", "All eight of today's blocks added")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step C &mdash; yesterday's numbers"),
+      html("div", "section-note",
+        "Repeat the same block with <b>Date is yesterday</b>, naming the variables " +
+        "<span class='chip var'>yCalories</span> <span class='chip var'>yProtein</span> " +
+        "<span class='chip var'>ySleep</span> <span class='chip var'>yExercise</span> " +
+        "<span class='chip var'>ySteps</span> <span class='chip var'>yActiveCal</span> " +
+        "<span class='chip var'>yRestingHr</span>. Skip weight."),
+      check("push-yesterday", "Yesterday's blocks added")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step D &mdash; the two dates"),
+      html("div", "section-note",
+        "Two <b>Format Date</b> actions with format <code>yyyy-MM-dd</code>:<br>" +
+        "&bull; Current Date &rarr; Set Variable <span class='chip var'>todayISO</span><br>" +
+        "&bull; <b>Adjust Date</b> minus 1 day &rarr; Format Date &rarr; Set Variable " +
+        "<span class='chip var'>yesterdayISO</span>"),
+      check("push-dates", "Both date variables set")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step E &mdash; the request body"),
+      html("div", "section-note",
+        "Add a <b>Text</b> action and paste this. Then replace each " +
+        "<span class='chip var'>&laquo;name&raquo;</span> by tapping the matching " +
+        "variable chip. Do not leave the guillemets in."),
+      copyRow(null, D.pushBody, { wrap: true, toast: "Body copied" }),
+      html("div", "callout",
+        "If a metric has no samples Shortcuts inserts <code>0</code>. That is fine: " +
+        "zero is a real value for calories or steps, and a number you typed into the " +
+        "sheet yourself still will not be overwritten."),
+      check("push-body", "Text action built with all variables swapped in")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step F &mdash; send it"),
+      html("div", "section-note",
+        "<b>Get Contents of URL</b>, with the URL from section 1:"),
+      html("div", "scroll",
+        "<table><tbody>" +
+        "<tr><td>Method</td><td><span class='chip'>POST</span></td></tr>" +
+        "<tr><td>Request Body</td><td><span class='chip'>File</span>, passing the Text action</td></tr>" +
+        "<tr><td>Header</td><td><span class='chip'>Content-Type: application/json</span></td></tr>" +
+        "</tbody></table>"),
+      copyRow("Header value", "application/json", { toast: "Copied" }),
+      check("push-send", "Get Contents of URL configured")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step G &mdash; run it once"),
+      html("div", "section-note",
+        "Run it by hand and grant every Health permission it asks for. A good run " +
+        "returns something like <code>{\"ok\":true,\"added\":1,...}</code>. Add a " +
+        "<b>Show Notification</b> with the response while testing if you want to see it."),
+      check("push-run", "Ran once, permissions granted, got <code>ok:true</code>")
+    ]));
+
+    var autoRows = "";
+    D.pushAutomations.forEach(function (a) {
+      autoRows += "<tr><td><b>" + a.time + "</b></td><td>" + a.why + "</td></tr>";
+    });
+    root.appendChild(card([
+      html("div", "copy-label", "Step H &mdash; automate it"),
+      html("div", "section-note",
+        "Shortcuts &rarr; <b>Automation</b> &rarr; <b>+</b> &rarr; <b>Time of Day</b>. " +
+        "One per time, each set to <b>Run Immediately</b> with Notify When Run off."),
+      html("div", "scroll", "<table><tbody>" + autoRows + "</tbody></table>"),
+      check("push-auto", "Three time automations created")
+    ]));
+
+    /* ---- Health Pull ---- */
+    root.appendChild(section(3, "Shortcut: Health Pull",
+      "Takes anything logged on the Mac and writes it into Apple Health."));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step A &mdash; fetch the queue"),
+      html("div", "section-note",
+        "New shortcut named <b>Health Pull</b>. Add <b>Get Contents of URL</b> with " +
+        "<b>GET</b> and this full URL, token already included:"),
+      copyRow(null, D.pullUrl, { wrap: true, toast: "Pull URL copied" }),
+      check("pull-fetch", "GET request added")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step B &mdash; read the items"),
+      html("div", "section-note",
+        "<b>Get Dictionary from Input</b>, then <b>Get Dictionary Value</b> for key " +
+        "<span class='chip'>items</span> &rarr; Set Variable " +
+        "<span class='chip var'>items</span>"),
+      check("pull-parse", "items variable set")
+    ]));
+
+    var pullRows = "";
+    D.pullMetrics.forEach(function (m) {
+      pullRows += "<tr><td><span class='chip'>" + m.metric + "</span></td>" +
+        "<td>&rarr;</td><td><span class='chip'>" + m.healthType + "</span></td></tr>";
+    });
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step C &mdash; write each sample"),
+      html("div", "section-note",
+        "Inside an <b>If</b> (items has any value), add <b>Repeat with Each</b> over " +
+        "<span class='chip var'>items</span>. For each item pull out " +
+        "<span class='chip'>metric</span>, <span class='chip'>value</span>, " +
+        "<span class='chip'>date</span>, and add <span class='chip'>row</span> to a " +
+        "list variable <span class='chip var'>ackRows</span>. Then a stack of " +
+        "If / Otherwise branches on <span class='chip var'>metric</span>, each doing " +
+        "<b>Log Health Sample</b>:"),
+      html("div", "scroll", "<table><tbody>" + pullRows + "</tbody></table>"),
+      html("div", "callout",
+        "<b>Exercise minutes are deliberately absent.</b> Apple only lets a real " +
+        "workout write to the green ring, so <code>health log exercise</code> records " +
+        "to the sheet and leaves the ring as Apple's own number."),
+      check("pull-write", "Repeat loop with a Log Health Sample per metric")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step D &mdash; acknowledge"),
+      html("div", "section-note",
+        "After the repeat, a <b>Text</b> action with this, swapping in " +
+        "<span class='chip var'>ackRows</span>, then <b>Get Contents of URL</b> to the " +
+        "web app URL as <b>POST</b> with <span class='chip'>Content-Type: application/json</span>:"),
+      copyRow(null, D.ackBody, { wrap: true, toast: "Ack body copied" }),
+      html("div", "callout warn",
+        "<b>Do not skip this.</b> Without the ack, rows stay pending and the same " +
+        "values get written into Apple Health again on every single run."),
+      check("pull-ack", "Ack POST added")
+    ]));
+
+    root.appendChild(card([
+      html("div", "copy-label", "Step E &mdash; run and automate"),
+      html("div", "section-note",
+        "Run once by hand to grant write permissions. Then one <b>Time of Day</b> " +
+        "automation at <b>10:00 pm</b>, after the evening push."),
+      check("pull-run", "Ran once and automated")
+    ]));
+
+    /* ---- verify ---- */
+    root.appendChild(section(4, "Check it worked",
+      "On the Mac, from <code>~/pws/health-sync</code>:"));
+    root.appendChild(card([
+      copyRow("See today's data", "uv run health today", { toast: "Copied" }),
+      copyRow("Queue a value", "uv run health log weight 205.4", { toast: "Copied" }),
+      copyRow("See it pending", "uv run health queue", { toast: "Copied" }),
+      html("div", "section-note",
+        "Run <b>Health Pull</b> on the phone, then <code>health queue</code> again. " +
+        "It should be empty, and the weight should appear in the Health app under " +
+        "Body Measurements."),
+      check("verified", "Round trip confirmed both directions")
+    ]));
+
+    /* ---- troubleshooting ---- */
+    var t = el("div");
+    t.appendChild(html("h2", null, "Troubleshooting"));
+
+    [
+      ["<code>bad token</code>",
+       "The token does not match. Re-copy it from section 1; watch for a trailing " +
+       "space or a missing character when pasting on the phone."],
+      ["HTML comes back instead of JSON",
+       "The deployment's access is not <b>Anyone</b>, or it is the <code>/dev</code> " +
+       "URL rather than <code>/exec</code>."],
+      ["Nothing happens, no error",
+       "Almost always a missing Health permission. Settings &rarr; Privacy &amp; " +
+       "Security &rarr; Health &rarr; Shortcuts, and confirm read and write are on."],
+      ["Every value is zero",
+       "The Find Health Samples date filter is not matching. Check it says " +
+       "\"is today\" and not a fixed date."],
+      ["A value keeps reappearing in Apple Health",
+       "The ack POST in Health Pull is failing, so rows never leave pending. " +
+       "Check with <code>health queue --all</code>."],
+      ["Two rows for the same day in the sheet",
+       "That was a real bug, fixed on 2026-07-30. Run <code>health sync</code>, which " +
+       "now reports duplicated dates, and tell Claude."]
+    ].forEach(function (pair) {
+      var d = document.createElement("details");
+      d.appendChild(html("summary", null, pair[0]));
+      d.appendChild(html("p", null, pair[1]));
+      t.appendChild(d);
+    });
+    root.appendChild(t);
+
+    refreshProgress();
+  }
+
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var root = document.documentElement;
+    var now = root.getAttribute("data-theme");
+    if (!now) now = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    root.setAttribute("data-theme", now === "dark" ? "light" : "dark");
+  });
+
+  document.getElementById("resetProgress").addEventListener("click", function () {
+    progress = {};
+    saveProgress();
+    document.querySelectorAll('input[type="checkbox"][data-key]').forEach(function (b) {
+      b.checked = false;
+    });
+    refreshProgress();
+    showToast("Checklist reset");
+  });
+})();
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script>
+</body>
+</html>
