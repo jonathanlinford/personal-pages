@@ -31,7 +31,7 @@
     --royal:#a855f7;
     --royal-glow:rgba(168,85,247,0.16);
   }
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{
     background:var(--bg);
     color:var(--text);
@@ -263,6 +263,8 @@
   em{color:var(--text);font-style:italic}
   a.s{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s;white-space:nowrap}
   a.s:hover{color:#a5b0ff}
+  /* long prose links (credits) must wrap; only short scripture refs stay nowrap */
+  .footer-section a.s,.bridge a.s,.objective a.s{white-space:normal;overflow-wrap:anywhere}
 
   .fx{opacity:1}
   .fx.in{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1)}
