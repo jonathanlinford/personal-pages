@@ -1509,7 +1509,9 @@ $("roster").addEventListener("dragend", () => {
     const li = grip.closest("li.seat");
     if (!li) return;
     e.preventDefault();
-    grip.setPointerCapture(e.pointerId);
+    // Capture keeps the drag alive if the finger slides off the grip. If the
+    // browser refuses it, carry on: the drag still works, just less forgivingly.
+    try { grip.setPointerCapture(e.pointerId); } catch (err){ /* not fatal */ }
     active = li;
     startY = e.clientY;
     fromIndex = toIndex = +li.dataset.i;
@@ -1542,9 +1544,11 @@ $("roster").addEventListener("dragend", () => {
     if (!active) return;
     if (e && e.pointerId !== undefined){
       const grip = active.querySelector(".grip");
-      if (grip && grip.hasPointerCapture && grip.hasPointerCapture(e.pointerId)){
-        grip.releasePointerCapture(e.pointerId);
-      }
+      try {
+        if (grip && grip.hasPointerCapture && grip.hasPointerCapture(e.pointerId)){
+          grip.releasePointerCapture(e.pointerId);
+        }
+      } catch (err){ /* nothing to release */ }
     }
     active.classList.remove("lifted");
     roster.classList.remove("reordering");
