@@ -1097,7 +1097,11 @@ function renderSeeding(){
       (dbl
         ? "Winners bracket, losers bracket and the grand final, "
         : "Every matchup, ") +
-      "not counting walkovers. This counts matches, not games: set a round to best of 3 and each of these is up to three games.");
+      "not counting walkovers. This counts matches, not games: set a round to best of 3 and each of these is up to three games.") +
+    row("Games played", n >= 2 ? `${real} to ${real * 5}` : "n/a",
+      `Low end is every match settled in one game: ${real}. High end is every ` +
+      `round set to best of 5 and every one going the distance: ${real} x 5 = ${real * 5}. ` +
+      "Neither end includes a grand final bracket reset, because there is not one.");
   $("btnGenerate").disabled = n < 2;
 }
 
