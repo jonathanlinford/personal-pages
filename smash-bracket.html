@@ -392,6 +392,7 @@
         <button class="btn sm ghost" id="btnShuffle" title="Randomise the seed order for everyone">Shuffle seeds</button>
       </div>
       <p style="color:var(--faint);font-size:13.5px;margin-bottom:8px">Order is seeding. Top seed draws the lowest seed, and byes land on the players at the top.</p>
+      <p class="micro hide" id="sfxHint" style="color:var(--lime);margin-bottom:10px">Sound editing unlocked</p>
       <ol class="roster" id="roster"></ol>
       <div class="addrow">
         <input id="newName" type="text" placeholder="Add a player" autocomplete="off" maxlength="28" title="Type a name and press Enter">
@@ -498,6 +499,12 @@ const SFX = "assets/smash-bracket/sfx/";
 const SHARE_URL = "https://jonathanlinford.github.io/personal-pages/smash-bracket.html";
 const POLL_MS = 2500;
 const LS = { mode: "smash:mode", muted: "smash:muted", state: "smash:state" };
+
+/* The win stings play for everybody, but only whoever has ?sound=117 on the
+   URL gets the controls to reassign them. Keeps twelve people from quietly
+   swapping each other's sounds all night. */
+const CAN_SET_SOUNDS =
+  new URLSearchParams(location.search).get("sound") === "117";
 
 const DEFAULT_PLAYERS = [
   "Benji Dazey", "Jonny Linford", "Jax Ruff", "Steven Foote",
@@ -994,12 +1001,14 @@ function renderSeeding(){
       `<span class="grip">&#8942;&#8942;</span>` +
       `<span class="seedno num">${i + 1}</span>` +
       `<input class="nm" value="${esc(p.name)}" maxlength="28" aria-label="Player ${i + 1} name">` +
-      `<span class="sfx">` +
-        `<select data-sfx="${p.id}" aria-label="Win sound for ${esc(p.name)}" title="Plays on every phone when ${esc(p.name)} wins a game">` +
-          soundGroups(p.id) +
-        `</select>` +
-        `<button class="btn icon ghost" data-play="${p.id}" title="Hear this sound">&#9654;</button>` +
-      `</span>` +
+      (CAN_SET_SOUNDS
+        ? `<span class="sfx">` +
+            `<select data-sfx="${p.id}" aria-label="Win sound for ${esc(p.name)}" title="Plays on every phone when ${esc(p.name)} wins a game">` +
+              soundGroups(p.id) +
+            `</select>` +
+            `<button class="btn icon ghost" data-play="${p.id}" title="Hear this sound">&#9654;</button>` +
+          `</span>`
+        : "") +
       `<span class="seat-tools">` +
         `<button class="btn icon ghost" data-up="${i}" title="Move up a seed" ${i === 0 ? "disabled" : ""}>&#9650;</button>` +
         `<button class="btn icon ghost" data-down="${i}" title="Move down a seed" ${i === state.players.length - 1 ? "disabled" : ""}>&#9660;</button>` +
@@ -1007,6 +1016,9 @@ function renderSeeding(){
       `</span>`;
     ol.appendChild(li);
   });
+
+  const hint = $("sfxHint");
+  if (hint) hint.classList.toggle("hide", !CAN_SET_SOUNDS);
 
   document.querySelectorAll("#fmt .opt").forEach((el) => {
     const on = el.dataset.fmt === state.format;
@@ -1599,7 +1611,10 @@ $("uClose").addEventListener("click", () => $("usedModal").close());
 
 /* ---------- share sheet ---------- */
 function currentUrl(){
-  return location.protocol === "https:" ? SHARE_URL : location.href.split("#")[0];
+  // Always drop the query so the ?sound=117 unlock never rides along in a
+  // shared link or QR code.
+  if (location.protocol === "https:") return SHARE_URL;
+  return location.origin + location.pathname;
 }
 function drawQR(text){
   const cv = $("qr");
