@@ -114,7 +114,13 @@
   li.seat:hover{background:var(--panel2)}
   li.seat.drag-over{background:rgba(200,240,66,.07);box-shadow:inset 2px 0 0 var(--lime)}
   li.seat.dragging{opacity:.35}
-  .grip{color:var(--faint);cursor:grab;flex:none;font-size:13px;line-height:1}
+  .grip{color:var(--faint);cursor:grab;flex:none;font-size:13px;line-height:1;
+    touch-action:none;user-select:none;-webkit-user-select:none}
+  li.seat.lifted{background:var(--panel3);position:relative;z-index:2;
+    box-shadow:0 8px 22px rgba(0,0,0,.5)}
+  li.seat.lifted .grip{color:var(--lime)}
+  ol.roster.reordering{cursor:grabbing}
+  ol.roster.reordering li.seat{transition:transform .12s ease}
   .seedno{width:26px;flex:none;text-align:right;font-size:13px;font-weight:700;color:var(--faint)}
   li.seat input.nm{flex:1;min-width:0;background:transparent;border:0;color:var(--ink);
     font-size:15px;font-weight:500;padding:5px 4px;outline:none;border-bottom:1px solid transparent}
@@ -324,7 +330,7 @@
     li.seat{padding:6px 4px;gap:8px}
     li.seat input.nm{font-size:16px}        /* 16px keeps iOS from zooming on focus */
     .addrow input,.search{font-size:16px}
-    .grip{display:none}                      /* no drag on touch; arrows handle it */
+    .grip{padding:6px 4px;font-size:15px}    /* big enough to grab with a thumb */
 
     .round{min-width:min(80vw,272px);padding:12px 12px 0}
     .champ{padding:16px;gap:13px}
@@ -493,7 +499,7 @@
    ============================================================ */
 /* Where the shared board lives. Read from api.json at boot so the endpoint can
    be repointed by editing that file, without republishing this page. */
-let API = "https://smash-bracket.humble-specialist.workers.dev";
+let API = "https://smash-bracket.decisive-almandine.workers.dev";
 const ICONS = "assets/smash-bracket/fighters/";
 const SFX = "assets/smash-bracket/sfx/";
 const SHARE_URL = "https://jonathanlinford.github.io/personal-pages/smash-bracket.html";
@@ -673,6 +679,7 @@ let shownChampion = null, firstPaint = true;
 let sounds = [], muted = localStorage.getItem(LS.muted) === "1";
 let localMode = localStorage.getItem(LS.mode) === "local";
 let failStreak = 0, audioUnlocked = false;
+let ws = null, wsAlive = false, wsTries = 0, wsTimer = null;
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const $ = (id) => document.getElementById(id);
@@ -854,13 +861,74 @@ function setMode(next, seedFromMemory){
   failStreak = 0;
   setBanner(null);
   if (next){
+    closeSocket();
     if (seedFromMemory && state) writeLocal(rev, state);
     else if (!readLocal() && state) writeLocal(rev, state);
     toast("Running on this device only.");
   } else {
     toast("Back on the shared board.");
+    openSocket();
   }
   pull();
+}
+
+/* ---------- live socket ----------
+   One socket per device beats one request every couple of seconds. Twelve
+   phones polling all evening is tens of thousands of requests, which is how
+   the first deploy hit Cloudflare's daily cap mid-setup. Polling stays as a
+   fallback for anything that blocks websockets. */
+function applyRecord(d){
+  if (!d || typeof d.rev !== "number") return;
+  if (state !== null && d.rev <= rev) return;      // never go backwards
+  const prev = state;
+  rev = d.rev;
+  state = d.state ? normalize(d.state) : blankState();
+  lastSync = Date.now();
+  syncBad = false;
+  failStreak = 0;
+  setBanner(null);
+  render();
+  announce(prev, state);
+  setSync();
+}
+
+function openSocket(){
+  if (localMode || ws) return;
+  let url;
+  try {
+    url = new URL(API);
+  } catch (e){ return; }
+  url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
+  url.pathname = "/ws";
+  try {
+    ws = new WebSocket(url.toString());
+  } catch (e){ ws = null; return; }
+
+  ws.addEventListener("open", () => { wsAlive = true; wsTries = 0; setSync(); });
+  ws.addEventListener("message", (ev) => {
+    try { applyRecord(JSON.parse(ev.data)); } catch (e){ /* ignore junk */ }
+  });
+  const gone = () => {
+    wsAlive = false;
+    ws = null;
+    setSync();
+    if (localMode) return;
+    // back off, but keep trying; the polling fallback covers the gap
+    const wait = Math.min(30000, 1500 * Math.pow(2, Math.min(wsTries++, 4)));
+    clearTimeout(wsTimer);
+    wsTimer = setTimeout(openSocket, wait);
+  };
+  ws.addEventListener("close", gone);
+  ws.addEventListener("error", gone);
+}
+
+function closeSocket(){
+  clearTimeout(wsTimer);
+  wsAlive = false;
+  if (ws){
+    try { ws.close(); } catch (e){ /* already gone */ }
+    ws = null;
+  }
 }
 
 async function pull(){
@@ -886,16 +954,7 @@ async function pull(){
     failStreak = 0;
     setBanner(null);
     lastSync = Date.now();
-    // Only ever move forwards. A GET issued before somebody else's write can
-    // land after it, and applying that older copy would undo the newer one on
-    // this device and then write the stale version back on the next commit.
-    if (state === null || d.rev > rev){
-      const prev = state;
-      rev = d.rev;
-      state = d.state ? normalize(d.state) : blankState();
-      render();
-      announce(prev, state);
-    }
+    applyRecord(d);
   } catch (e){
     syncBad = true;
     failStreak++;
@@ -1438,6 +1497,65 @@ $("roster").addEventListener("dragend", () => {
   dragFrom = null;
 });
 
+/* Touch drag. HTML5 drag events never fired on phones, so the grip runs on
+   pointer events instead: grab it, slide up or down, and rows swap live. */
+(function touchReorder(){
+  const roster = $("roster");
+  let active = null, startY = 0, fromIndex = 0, toIndex = 0, rowH = 0;
+
+  roster.addEventListener("pointerdown", (e) => {
+    const grip = e.target.closest(".grip");
+    if (!grip || active) return;
+    const li = grip.closest("li.seat");
+    if (!li) return;
+    e.preventDefault();
+    grip.setPointerCapture(e.pointerId);
+    active = li;
+    startY = e.clientY;
+    fromIndex = toIndex = +li.dataset.i;
+    rowH = li.getBoundingClientRect().height || 44;
+    li.classList.add("lifted");
+    roster.classList.add("reordering");
+  });
+
+  roster.addEventListener("pointermove", (e) => {
+    if (!active) return;
+    e.preventDefault();
+    const dy = e.clientY - startY;
+    active.style.transform = `translateY(${dy}px)`;
+    const wanted = Math.max(0, Math.min(
+      state.players.length - 1, fromIndex + Math.round(dy / rowH)));
+    if (wanted === toIndex) return;
+    toIndex = wanted;
+    // shift the rows we are displacing so the gap follows your thumb
+    [...roster.children].forEach((row) => {
+      if (row === active) return;
+      const i = +row.dataset.i;
+      let shift = 0;
+      if (fromIndex < toIndex && i > fromIndex && i <= toIndex) shift = -rowH;
+      if (fromIndex > toIndex && i < fromIndex && i >= toIndex) shift = rowH;
+      row.style.transform = shift ? `translateY(${shift}px)` : "";
+    });
+  });
+
+  const drop = (e) => {
+    if (!active) return;
+    if (e && e.pointerId !== undefined){
+      const grip = active.querySelector(".grip");
+      if (grip && grip.hasPointerCapture && grip.hasPointerCapture(e.pointerId)){
+        grip.releasePointerCapture(e.pointerId);
+      }
+    }
+    active.classList.remove("lifted");
+    roster.classList.remove("reordering");
+    [...roster.children].forEach((row) => { row.style.transform = ""; });
+    active = null;
+    if (toIndex !== fromIndex) move(fromIndex, toIndex);
+  };
+  roster.addEventListener("pointerup", drop);
+  roster.addEventListener("pointercancel", drop);
+})();
+
 function move(from, to){
   if (to < 0) return;
   commit((s) => {
@@ -1754,13 +1872,21 @@ function fireConfetti(){
   // Foreground tabs poll fast. Hidden ones still poll, just lazily, because
   // somebody's laptop is going to be sitting on the TV showing the board
   // while they use another tab.
+  openSocket();
+
+  // With the socket up this is just a heartbeat. Without it, it is the sync.
   let ticks = 0;
   setInterval(() => {
     ticks++;
     if (inFlight) return;
-    if (!document.hidden || ticks % 4 === 0) pull();
+    const every = wsAlive ? 24 : document.hidden ? 4 : 1;   // 60s / 10s / 2.5s
+    if (ticks % every === 0) pull();
   }, POLL_MS);
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) pull(); });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    pull();
+    if (!wsAlive) openSocket();
+  });
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->

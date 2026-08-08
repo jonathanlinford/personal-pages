@@ -52,9 +52,44 @@ export class BracketRoom {
     return rec || { rev: 0, state: null, updatedAt: null };
   }
 
+  // Push the new record to everybody who is holding a socket open.
+  broadcast(record) {
+    const msg = JSON.stringify(record);
+    for (const ws of this.ctx.getWebSockets()) {
+      try {
+        ws.send(msg);
+      } catch {
+        // socket is gone; the runtime will clean it up
+      }
+    }
+  }
+
+  async webSocketMessage(ws) {
+    // Clients only listen. A stray message just gets the current record back.
+    ws.send(JSON.stringify(await this.read()));
+  }
+
   async fetch(request) {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
+
+    // A socket per device instead of a poll every couple of seconds. Twelve
+    // phones polling all evening is tens of thousands of requests; this is
+    // twelve. Hibernation means an idle room costs nothing.
+    if (url.pathname === "/ws") {
+      if (request.headers.get("Upgrade") !== "websocket") {
+        return json({ error: "expected websocket" }, { status: 426 }, origin);
+      }
+      const pair = new WebSocketPair();
+      this.ctx.acceptWebSocket(pair[1]);
+      const record = await this.read();
+      try {
+        pair[1].send(JSON.stringify(record));
+      } catch {
+        // client vanished mid-handshake
+      }
+      return new Response(null, { status: 101, webSocket: pair[0] });
+    }
 
     if (url.pathname === "/state" && request.method === "GET") {
       return json(await this.read(), { status: 200 }, origin);
@@ -88,6 +123,7 @@ export class BracketRoom {
         updatedAt: new Date().toISOString(),
       };
       await this.ctx.storage.put("record", next);
+      this.broadcast(next);
       return json(next, { status: 200 }, origin);
     }
 
