@@ -4,7 +4,8 @@
  *   GET  /state          -> { rev, state }
  *   PUT  /state          <- { rev, state }   optimistic concurrency on rev
  *                        -> { rev, state } (200) or 409 with the current copy
- *   POST /reset          -> wipes back to an empty tournament
+ *
+ * Resetting is just a PUT of a fresh state, so there is no reset route.
  *
  * The page owns all bracket logic; this only stores the blob and serializes
  * writes so two people reporting a result at once cannot clobber each other.
@@ -86,13 +87,6 @@ export class BracketRoom {
         state: body.state,
         updatedAt: new Date().toISOString(),
       };
-      await this.ctx.storage.put("record", next);
-      return json(next, { status: 200 }, origin);
-    }
-
-    if (url.pathname === "/reset" && request.method === "POST") {
-      const current = await this.read();
-      const next = { rev: current.rev + 1, state: null, updatedAt: new Date().toISOString() };
       await this.ctx.storage.put("record", next);
       return json(next, { status: 200 }, origin);
     }

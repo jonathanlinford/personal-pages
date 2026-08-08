@@ -490,7 +490,9 @@
 /* ============================================================
    Config
    ============================================================ */
-const API = "https://smash-bracket.jonathanlinford.workers.dev";
+/* Where the shared board lives. Read from api.json at boot so the endpoint can
+   be repointed by editing that file, without republishing this page. */
+let API = "https://smash-bracket.humble-specialist.workers.dev";
 const ICONS = "assets/smash-bracket/fighters/";
 const SFX = "assets/smash-bracket/sfx/";
 const SHARE_URL = "https://jonathanlinford.github.io/personal-pages/smash-bracket.html";
@@ -1716,10 +1718,13 @@ function fireConfetti(){
     try { const r = await fetch(url, { cache: "no-cache" }); return await r.json(); }
     catch (e){ return fallback; }
   };
-  [fighters, sounds] = await Promise.all([
+  const [f, s, cfg] = await Promise.all([
     grab("assets/smash-bracket/fighters.json", []),
     grab("assets/smash-bracket/sfx/index.json", []),
+    grab("assets/smash-bracket/api.json", null),
   ]);
+  fighters = f; sounds = s;
+  if (cfg && typeof cfg.api === "string" && /^https:\/\//.test(cfg.api)) API = cfg.api;
   fighters.forEach((f) => { fighterBySlug[f.slug] = f; });
   paintSoundBtn();
   $("btnMode").innerHTML = localMode ? "&#9743;" : "&#9729;";
