@@ -1731,7 +1731,16 @@ function fireConfetti(){
 
   await pull();
   firstPaint = false;
-  setInterval(() => { if (!document.hidden && !inFlight) pull(); }, POLL_MS);
+
+  // Foreground tabs poll fast. Hidden ones still poll, just lazily, because
+  // somebody's laptop is going to be sitting on the TV showing the board
+  // while they use another tab.
+  let ticks = 0;
+  setInterval(() => {
+    ticks++;
+    if (inFlight) return;
+    if (!document.hidden || ticks % 4 === 0) pull();
+  }, POLL_MS);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) pull(); });
 })();
 </script>
