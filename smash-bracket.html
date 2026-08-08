@@ -143,6 +143,10 @@
   .fact{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:13.5px}
   .fact span{color:var(--faint)}
   .fact b{font-weight:600}
+  .qm{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;
+    border:1px solid var(--border2);color:var(--faint);font-size:10px;font-weight:700;
+    line-height:1;vertical-align:1px;transition:border-color .12s,color .12s}
+  .qm:hover{border-color:var(--lime);color:var(--lime)}
 
   /* ---------- bracket ---------- */
   .champ{display:flex;align-items:center;gap:18px;padding:20px 22px;border-radius:var(--r);
@@ -287,8 +291,10 @@
   .hide{display:none!important}
 
   /* ---------- motion: only where it says something ---------- */
-  .match{animation:in .28s ease-out both;animation-delay:calc(var(--i,0) * 26ms)}
-  li.seat{animation:in .22s ease-out both;animation-delay:calc(var(--i,0) * 16ms)}
+  /* Only things arriving for the first time animate. Re-rendering after an
+     unrelated change should not replay the whole list. */
+  .match.fresh{animation:in .28s ease-out both;animation-delay:calc(var(--i,0) * 26ms)}
+  li.seat.fresh{animation:in .22s ease-out both;animation-delay:calc(var(--i,0) * 16ms)}
   @keyframes in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
   .match.live .m-top .st.on{animation:tick 1.6s steps(1) infinite}
   @keyframes tick{0%,60%{opacity:1}61%,100%{opacity:.35}}
@@ -1047,12 +1053,60 @@ function render(){
   if (openMatchId) refreshModal();
 }
 
+let rosterSig = "";
+const seenRows = new Set();
+const seenCards = new Set();
+
 function renderSeeding(){
   const ol = $("roster");
+
+  // Rebuilding the list throws away focus and replays the animations, so only
+  // do it when the roster itself actually changed.
+  const sig = JSON.stringify([
+    state.players.map((p) => [p.id, p.name]),
+    CAN_SET_SOUNDS ? state.players.map((p) => soundFor(p.id)) : 0,
+  ]);
+  if (sig !== rosterSig){
+    rosterSig = sig;
+    buildRoster(ol);
+  }
+
+  document.querySelectorAll("#fmt .opt").forEach((el) => {
+    const on = el.dataset.fmt === state.format;
+    el.classList.toggle("on", on);
+    el.querySelector("input").checked = on;
+  });
+
+  const hint = $("sfxHint");
+  if (hint) hint.classList.toggle("hide", !CAN_SET_SOUNDS);
+
+  const n = state.players.length;
+  const size = bracketSize(Math.max(n, 2));
+  const b = buildMatches(Math.max(n, 2), state.format);
+  const real = n >= 2 ? b.matches.length - countByeMatches(b, n) : 0;
+  const dbl = state.format === "double";
+  $("facts").innerHTML =
+    row("Players", n, "Everyone on the seed list, byes included in the count below.") +
+    row("Bracket size", n >= 2 ? size : "n/a",
+      `A bracket has to be a power of two, so ${n} players run in a ${size}-slot bracket.`) +
+    row("Byes", n >= 2 ? size - n : "n/a",
+      size - n > 0
+        ? `${size - n} empty slots. The top ${size - n} seeds skip round one and walk straight into round two.`
+        : "No empty slots, so everybody plays in round one.") +
+    row("Matches to play", n >= 2 ? real : "n/a",
+      (dbl
+        ? "Winners bracket, losers bracket and the grand final, "
+        : "Every matchup, ") +
+      "not counting walkovers. This counts matches, not games: set a round to best of 3 and each of these is up to three games.");
+  $("btnGenerate").disabled = n < 2;
+}
+
+function buildRoster(ol){
   ol.innerHTML = "";
   state.players.forEach((p, i) => {
     const li = document.createElement("li");
-    li.className = "seat";
+    li.className = "seat" + (seenRows.has(p.id) ? "" : " fresh");
+    seenRows.add(p.id);
     li.draggable = true;
     li.dataset.i = i;
     li.style.setProperty("--i", Math.min(i, 12));
@@ -1076,25 +1130,6 @@ function renderSeeding(){
     ol.appendChild(li);
   });
 
-  const hint = $("sfxHint");
-  if (hint) hint.classList.toggle("hide", !CAN_SET_SOUNDS);
-
-  document.querySelectorAll("#fmt .opt").forEach((el) => {
-    const on = el.dataset.fmt === state.format;
-    el.classList.toggle("on", on);
-    el.querySelector("input").checked = on;
-  });
-
-  const n = state.players.length;
-  const size = bracketSize(Math.max(n, 2));
-  const b = buildMatches(Math.max(n, 2), state.format);
-  const real = n >= 2 ? b.matches.length - countByeMatches(b, n) : 0;
-  $("facts").innerHTML =
-    row("Players", n) +
-    row("Bracket size", n >= 2 ? size : "n/a") +
-    row("Byes", n >= 2 ? size - n : "n/a") +
-    row("Matches to play", n >= 2 ? real : "n/a");
-  $("btnGenerate").disabled = n < 2;
 }
 
 function countByeMatches(built, n){
@@ -1108,7 +1143,13 @@ function countByeMatches(built, n){
   return c;
 }
 
-function row(k, v){ return `<div class="fact"><span>${k}</span><b class="num">${v}</b></div>`; }
+function row(k, v, help){
+  const q = help
+    ? ` <button class="qm" type="button" title="${esc(help)}" data-help="${esc(help)}" ` +
+      `aria-label="What does ${esc(k)} mean?">?</button>`
+    : "";
+  return `<div class="fact"><span>${k}${q}</span><b class="num">${v}</b></div>`;
+}
 function esc(s){
   return String(s).replace(/[&<>"']/g, (c) =>
     ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -1279,7 +1320,10 @@ function iconTag(slug, size){
 function matchCard(built, m){
   const el = document.createElement("button");
   const dead = m.bye && !m.winner;
-  el.className = "match" + (m.live ? " live" : "") + (dead ? " bye" : "") + (!m.ready ? " pending" : "");
+  const key = `${state.players.length}:${state.format}:${m.id}`;
+  el.className = "match" + (m.live ? " live" : "") + (dead ? " bye" : "") +
+    (!m.ready ? " pending" : "") + (seenCards.has(key) ? "" : " fresh");
+  seenCards.add(key);
   el.type = "button";
   el.dataset.mid = m.id;
   el.title = dead ? "Nobody is in this slot"
@@ -1579,6 +1623,12 @@ function addPlayer(){
 }
 $("btnAdd").addEventListener("click", addPlayer);
 $("newName").addEventListener("keydown", (e) => { if (e.key === "Enter") addPlayer(); });
+
+// Phones have no hover, so tapping the ? says the same thing in a toast.
+$("facts").addEventListener("click", (e) => {
+  const q = e.target.closest(".qm");
+  if (q) toast(q.dataset.help);
+});
 
 $("btnShuffle").addEventListener("click", () => {
   commit((s) => {
