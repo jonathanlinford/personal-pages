@@ -862,7 +862,8 @@ async function pull(){
     if (!d){ d = { rev: 0, state: blankState() }; writeLocal(d.rev, d.state); }
     syncBad = false;
     lastSync = Date.now();
-    if (d.rev !== rev || state === null){
+    // localStorage is the only writer here, so take it as read.
+    if (state === null || d.rev !== rev){
       rev = d.rev;
       state = normalize(d.state);
       render();
@@ -878,7 +879,10 @@ async function pull(){
     failStreak = 0;
     setBanner(null);
     lastSync = Date.now();
-    if (d.rev !== rev || state === null){
+    // Only ever move forwards. A GET issued before somebody else's write can
+    // land after it, and applying that older copy would undo the newer one on
+    // this device and then write the stale version back on the next commit.
+    if (state === null || d.rev > rev){
       const prev = state;
       rev = d.rev;
       state = d.state ? normalize(d.state) : blankState();
