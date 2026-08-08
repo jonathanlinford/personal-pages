@@ -145,7 +145,13 @@ export default {
     }
 
     // One room, one tournament.
+    //
+    // Forward on an internal hostname rather than passing the original request
+    // through. Handing a Durable Object a request still addressed to this
+    // Worker's own public URL reads as a Worker calling itself, which
+    // Cloudflare rejects (1042 on the plain routes, 1101 on the upgrade).
     const id = env.BRACKET.idFromName("bro-down");
-    return env.BRACKET.get(id).fetch(request);
+    const inner = new Request(`https://bracket.internal${url.pathname}${url.search}`, request);
+    return env.BRACKET.get(id).fetch(inner);
   },
 };
