@@ -1,0 +1,212 @@
+[
+ {
+  "slug": "amogus",
+  "label": "Among Us role reveal sound",
+  "wild": true,
+  "seconds": 4.02
+ },
+ {
+  "slug": "bombastic",
+  "label": "BOMBASTIC SIDE EYE",
+  "wild": true,
+  "seconds": 3.94
+ },
+ {
+  "slug": "boom-headshot",
+  "label": "Boom headshot",
+  "seconds": 1.62,
+  "wild": true
+ },
+ {
+  "slug": "bruh",
+  "label": "Bruh",
+  "seconds": 0.86,
+  "wild": true
+ },
+ {
+  "slug": "chipi-chapa",
+  "label": "Chipi chipi chapa chapa",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "crab-rave",
+  "label": "Crab Rave",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "discord",
+  "label": "Discord Notification",
+  "wild": true,
+  "seconds": 0.52
+ },
+ {
+  "slug": "emotional-damage",
+  "label": "Emotional damage",
+  "seconds": 3.37,
+  "wild": true
+ },
+ {
+  "slug": "what-the-sigma",
+  "label": "erm what the sigma",
+  "wild": true,
+  "seconds": 1.44
+ },
+ {
+  "slug": "fein",
+  "label": "FEIN FEIN FEIN FEIN",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "goofy-ahh",
+  "label": "goofy ahh runnin",
+  "wild": true,
+  "seconds": 1.75
+ },
+ {
+  "slug": "gyatt",
+  "label": "Gyatt",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "huh-cat",
+  "label": "Huh Cat",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "metal-pipe",
+  "label": "Metal pipe",
+  "seconds": 3.21,
+  "wild": true
+ },
+ {
+  "slug": "moai",
+  "label": "moai",
+  "wild": true,
+  "seconds": 3.89
+ },
+ {
+  "slug": "nuh-uh",
+  "label": "NUH UH MEME",
+  "wild": true,
+  "seconds": 1.07
+ },
+ {
+  "slug": "hell-nah",
+  "label": "Oh hell nah",
+  "seconds": 4.39,
+  "wild": true
+ },
+ {
+  "slug": "wow",
+  "label": "Owen Wilson wow",
+  "seconds": 0.55,
+  "wild": true
+ },
+ {
+  "slug": "rizz",
+  "label": "Rizz",
+  "seconds": 1.96,
+  "wild": true
+ },
+ {
+  "slug": "sheesh",
+  "label": "Sheesh",
+  "seconds": 1.65,
+  "wild": true
+ },
+ {
+  "slug": "sigma-boy",
+  "label": "sigma boy",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "skibidi",
+  "label": "skibidi toilet",
+  "wild": true,
+  "seconds": 4.05
+ },
+ {
+  "slug": "get-out",
+  "label": "Vai fuori get out",
+  "wild": true,
+  "seconds": 1.8
+ },
+ {
+  "slug": "vine-boom",
+  "label": "Vine boom",
+  "seconds": 1.31,
+  "wild": true
+ },
+ {
+  "slug": "we-are-charlie-kirk",
+  "label": "We are Charlie Kirk",
+  "seconds": 5.04,
+  "wild": true
+ },
+ {
+  "slug": "what-the-dog",
+  "label": "what da dog doin",
+  "wild": true,
+  "seconds": 1.28
+ },
+ {
+  "slug": "boomshakalaka",
+  "label": "Boomshakalaka",
+  "seconds": 2.87,
+  "wild": false
+ },
+ {
+  "slug": "victory-fanfare",
+  "label": "FF victory fanfare",
+  "seconds": 4.36,
+  "wild": false
+ },
+ {
+  "slug": "mission-passed",
+  "label": "Mission passed",
+  "seconds": 4.96,
+  "wild": false
+ },
+ {
+  "slug": "airhorn",
+  "label": "MLG airhorn",
+  "seconds": 1.62,
+  "wild": false
+ },
+ {
+  "slug": "sportscenter",
+  "label": "SportsCenter",
+  "seconds": 3.42,
+  "wild": false
+ },
+ {
+  "slug": "taco-bell",
+  "label": "Taco Bell bong",
+  "seconds": 1.96,
+  "wild": false
+ },
+ {
+  "slug": "that-was-easy",
+  "label": "That was easy",
+  "seconds": 0.84,
+  "wild": false
+ },
+ {
+  "slug": "to-be-continued",
+  "label": "To be continued",
+  "seconds": 5.04,
+  "wild": false
+ },
+ {
+  "slug": "wasted",
+  "label": "Wasted",
+  "seconds": 4.99,
+  "wild": false
+ }
+]

@@ -1,0 +1,362 @@
+[
+{
+"name": "Mario",
+"slug": "mario"
+},
+{
+"name": "Donkey Kong",
+"slug": "donkey-kong"
+},
+{
+"name": "Link",
+"slug": "link"
+},
+{
+"name": "Samus",
+"slug": "samus"
+},
+{
+"name": "Dark Samus",
+"slug": "dark-samus"
+},
+{
+"name": "Yoshi",
+"slug": "yoshi"
+},
+{
+"name": "Kirby",
+"slug": "kirby"
+},
+{
+"name": "Fox",
+"slug": "fox"
+},
+{
+"name": "Pikachu",
+"slug": "pikachu"
+},
+{
+"name": "Luigi",
+"slug": "luigi"
+},
+{
+"name": "Ness",
+"slug": "ness"
+},
+{
+"name": "Captain Falcon",
+"slug": "captain-falcon"
+},
+{
+"name": "Jigglypuff",
+"slug": "jigglypuff"
+},
+{
+"name": "Peach",
+"slug": "peach"
+},
+{
+"name": "Daisy",
+"slug": "daisy"
+},
+{
+"name": "Bowser",
+"slug": "bowser"
+},
+{
+"name": "Ice Climbers",
+"slug": "ice-climbers"
+},
+{
+"name": "Sheik",
+"slug": "sheik"
+},
+{
+"name": "Zelda",
+"slug": "zelda"
+},
+{
+"name": "Dr. Mario",
+"slug": "dr-mario"
+},
+{
+"name": "Pichu",
+"slug": "pichu"
+},
+{
+"name": "Falco",
+"slug": "falco"
+},
+{
+"name": "Marth",
+"slug": "marth"
+},
+{
+"name": "Lucina",
+"slug": "lucina"
+},
+{
+"name": "Young Link",
+"slug": "young-link"
+},
+{
+"name": "Ganondorf",
+"slug": "ganondorf"
+},
+{
+"name": "Mewtwo",
+"slug": "mewtwo"
+},
+{
+"name": "Roy",
+"slug": "roy"
+},
+{
+"name": "Chrom",
+"slug": "chrom"
+},
+{
+"name": "Mr. Game & Watch",
+"slug": "mr-game-watch"
+},
+{
+"name": "Meta Knight",
+"slug": "meta-knight"
+},
+{
+"name": "Pit",
+"slug": "pit"
+},
+{
+"name": "Dark Pit",
+"slug": "dark-pit"
+},
+{
+"name": "Zero Suit Samus",
+"slug": "zero-suit-samus"
+},
+{
+"name": "Wario",
+"slug": "wario"
+},
+{
+"name": "Snake",
+"slug": "snake"
+},
+{
+"name": "Ike",
+"slug": "ike"
+},
+{
+"name": "Pokemon Trainer",
+"slug": "pokemon-trainer"
+},
+{
+"name": "Squirtle",
+"slug": "squirtle"
+},
+{
+"name": "Ivysaur",
+"slug": "ivysaur"
+},
+{
+"name": "Charizard",
+"slug": "charizard"
+},
+{
+"name": "Diddy Kong",
+"slug": "diddy-kong"
+},
+{
+"name": "Lucas",
+"slug": "lucas"
+},
+{
+"name": "Sonic",
+"slug": "sonic"
+},
+{
+"name": "King Dedede",
+"slug": "king-dedede"
+},
+{
+"name": "Olimar",
+"slug": "olimar"
+},
+{
+"name": "Lucario",
+"slug": "lucario"
+},
+{
+"name": "R.O.B.",
+"slug": "r-o-b"
+},
+{
+"name": "Toon Link",
+"slug": "toon-link"
+},
+{
+"name": "Wolf",
+"slug": "wolf"
+},
+{
+"name": "Villager",
+"slug": "villager"
+},
+{
+"name": "Mega Man",
+"slug": "mega-man"
+},
+{
+"name": "Wii Fit Trainer",
+"slug": "wii-fit-trainer"
+},
+{
+"name": "Rosalina & Luma",
+"slug": "rosalina-luma"
+},
+{
+"name": "Little Mac",
+"slug": "little-mac"
+},
+{
+"name": "Greninja",
+"slug": "greninja"
+},
+{
+"name": "Palutena",
+"slug": "palutena"
+},
+{
+"name": "Pac-Man",
+"slug": "pac-man"
+},
+{
+"name": "Robin",
+"slug": "robin"
+},
+{
+"name": "Shulk",
+"slug": "shulk"
+},
+{
+"name": "Bowser Jr.",
+"slug": "bowser-jr"
+},
+{
+"name": "Duck Hunt",
+"slug": "duck-hunt"
+},
+{
+"name": "Ryu",
+"slug": "ryu"
+},
+{
+"name": "Ken",
+"slug": "ken"
+},
+{
+"name": "Cloud",
+"slug": "cloud"
+},
+{
+"name": "Corrin",
+"slug": "corrin"
+},
+{
+"name": "Bayonetta",
+"slug": "bayonetta"
+},
+{
+"name": "Inkling",
+"slug": "inkling"
+},
+{
+"name": "Ridley",
+"slug": "ridley"
+},
+{
+"name": "Simon",
+"slug": "simon"
+},
+{
+"name": "Richter",
+"slug": "richter"
+},
+{
+"name": "King K. Rool",
+"slug": "king-k-rool"
+},
+{
+"name": "Isabelle",
+"slug": "isabelle"
+},
+{
+"name": "Incineroar",
+"slug": "incineroar"
+},
+{
+"name": "Piranha Plant",
+"slug": "piranha-plant"
+},
+{
+"name": "Joker",
+"slug": "joker"
+},
+{
+"name": "Hero",
+"slug": "hero"
+},
+{
+"name": "Banjo & Kazooie",
+"slug": "banjo-kazooie"
+},
+{
+"name": "Terry",
+"slug": "terry"
+},
+{
+"name": "Byleth",
+"slug": "byleth"
+},
+{
+"name": "Min Min",
+"slug": "min-min"
+},
+{
+"name": "Steve",
+"slug": "steve"
+},
+{
+"name": "Sephiroth",
+"slug": "sephiroth"
+},
+{
+"name": "Pyra",
+"slug": "pyra"
+},
+{
+"name": "Mythra",
+"slug": "mythra"
+},
+{
+"name": "Kazuya",
+"slug": "kazuya"
+},
+{
+"name": "Sora",
+"slug": "sora"
+},
+{
+"name": "Mii Brawler",
+"slug": "mii-brawler"
+},
+{
+"name": "Mii Swordfighter",
+"slug": "mii-swordfighter"
+},
+{
+"name": "Mii Gunner",
+"slug": "mii-gunner"
+}
+]

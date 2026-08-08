@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<!-- og-check-skip: build-time source for the link preview card, not a published page -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{background:#0a0b0c;color:#f2f3f1;font-family:'Archivo',sans-serif;position:relative}
+  .bg{position:absolute;inset:0;background:url('/assets/smash-bracket/hero.jpg') center/cover}
+  .scrim{position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,11,12,.55) 0%,rgba(10,11,12,.2) 34%,rgba(10,11,12,.88) 74%,rgba(10,11,12,.97) 100%)}
+  .inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 58px 46px}
+  .kicker{font-size:16px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#c8f042;
+    margin-bottom:12px}
+  h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:112px;
+    line-height:.9;letter-spacing:.01em}
+  .sub{font-size:23px;color:#cdd2cc;margin-top:14px}
+  .strip{position:absolute;top:34px;left:58px;display:flex;gap:11px}
+  .strip img{width:56px;height:56px;filter:drop-shadow(0 3px 10px rgba(0,0,0,.7))}
+  .badge{position:absolute;top:34px;right:58px;font-family:'Anton',sans-serif;text-transform:uppercase;
+    font-size:21px;letter-spacing:.05em;border:2px solid #c8f042;color:#c8f042;padding:7px 15px}
+</style></head>
+<body>
+  <div class="bg"></div>
+  <div class="scrim"></div>
+  <div class="strip">
+    <img src="/assets/smash-bracket/fighters/mario.webp">
+    <img src="/assets/smash-bracket/fighters/fox.webp">
+    <img src="/assets/smash-bracket/fighters/kirby.webp">
+    <img src="/assets/smash-bracket/fighters/pikachu.webp">
+    <img src="/assets/smash-bracket/fighters/link.webp">
+    <img src="/assets/smash-bracket/fighters/bowser.webp">
+  </div>
+  <div class="badge">Bro-Down</div>
+  <div class="inner">
+    <div class="kicker">Super Smash Bros. Ultimate &middot; Live bracket</div>
+    <h1>Settle it<br>in Smash.</h1>
+    <div class="sub">Seed it, run it, crown somebody.</div>
+  </div>
+</body></html>
