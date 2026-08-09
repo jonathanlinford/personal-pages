@@ -245,30 +245,17 @@
   .gm-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.8px;display:block}
   .gm-stat .v{font-size:17px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace}
 
-  .hall{position:relative;height:96px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,#14141d,#0d0d14);overflow:hidden;margin:6px 0 4px}
-  .hall .floor{position:absolute;left:0;right:0;bottom:22px;height:1px;background:var(--border-bright)}
-  .hall .throne{position:absolute;right:8px;bottom:16px;font-size:30px;line-height:1;transition:filter .18s}
-  .hall .throne.open{filter:drop-shadow(0 0 10px rgba(245,185,66,.95))}
-  .hall .esther{position:absolute;bottom:16px;font-size:26px;line-height:1;transition:left .22s cubic-bezier(.2,.9,.3,1)}
-  .hall .esther.hit{animation:shake .34s}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-  .hall .sc{position:absolute;bottom:44px;height:5px;border-radius:99px;background:linear-gradient(90deg,rgba(245,185,66,0),var(--gold));transition:width .12s linear,opacity .12s}
-  .hall .marks{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:space-between;padding:0 10px}
-  .hall .marks i{width:2px;height:5px;background:var(--border-bright);border-radius:2px}
+  .stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#0b0b12;touch-action:none;user-select:none;-webkit-user-select:none}
+  .stage canvas{display:block;width:100%;height:auto;cursor:pointer}
+  .stage .veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(8,8,14,.82);backdrop-filter:blur(3px);text-align:center;padding:20px}
+  .stage .veil.hide{display:none}
+  .stage .veil h5{font-size:19px;font-weight:800;color:var(--text)}
+  .stage .veil p{font-size:14px;color:var(--text-dim);max-width:420px}
+  .stage .veil .big{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:1px}
 
-  .gate{margin:12px 0 4px;border-radius:10px;padding:10px 14px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.5px;border:1px solid var(--border-bright);background:var(--card-soft);color:var(--text-faint);transition:background .12s,color .12s,border-color .12s}
-  .gate.open{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,.18),rgba(168,85,247,.06));color:var(--gold)}
-  .gate.shut{border-color:rgba(248,113,113,.4);color:#f8a1a1}
-
-  .gm-step{width:100%;font-family:'Inter',sans-serif;font-size:17px;font-weight:800;border:none;border-radius:12px;padding:16px;cursor:pointer;background:linear-gradient(135deg,#7c3aed,var(--royal));color:#fff;transition:transform .1s,filter .2s,opacity .2s;touch-action:manipulation}
-  .gm-step:hover:not(:disabled){filter:brightness(1.12)}
-  .gm-step:active:not(:disabled){transform:scale(.98)}
-  .gm-step:disabled{opacity:.45;cursor:default}
-  .gm-hint{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:8px}
-  .gm-msg{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-dim);text-align:center;min-height:20px;margin:10px 0}
-  .gm-msg.good{color:var(--gold)}
-  .gm-msg.bad{color:var(--red)}
-  .gm-tape{font-size:19px;letter-spacing:2px;text-align:center;margin:10px 0;min-height:24px;word-break:break-all}
+  .gm-hint{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:10px;line-height:1.9}
+  .gm-hint kbd{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--card-soft);border:1px solid var(--border-bright);border-bottom-width:2px;border-radius:5px;padding:2px 6px;color:var(--text);margin:0 2px}
+  .gm-tape{font-size:19px;letter-spacing:2px;text-align:center;margin:12px 0 0;min-height:24px;word-break:break-all}
   .gm-over{display:none;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
   .gm-over.show{display:block;animation:fadeIn .4s ease}
   .gm-over p{font-size:14.5px;color:var(--text-dim);margin-bottom:12px;text-align:center}
@@ -620,27 +607,27 @@
     <h3>One more thing</h3>
     <div class="gm">
       <h4>Esther's Long Walk 👑</h4>
-      <p class="gm-sub">In Persia, walking into the king's inner court uninvited meant death. The one exception: if he held out the golden scepter, you lived. <strong>Step only while the scepter is out.</strong> Each hall is longer than the last, and the king gets harder to read.</p>
+      <p class="gm-sub">Walking into the king's inner court uninvited meant death. The one exception: if he held out the golden scepter, you lived. <strong>Hold to walk while the scepter is out. Let go and freeze before it drops.</strong> Grab the crowns on the way. Every hall is longer, and the king gets harder to read.</p>
 
       <div class="gm-hud">
         <div class="gm-stat"><span class="k">Hall</span><span class="v" id="gmLevel">1</span></div>
-        <div class="gm-stat"><span class="k">Steps left</span><span class="v" id="gmLeft">5</span></div>
+        <div class="gm-stat"><span class="k">Score</span><span class="v" id="gmScore">0</span></div>
         <div class="gm-stat"><span class="k">Courage</span><span class="v" id="gmHearts">♥♥♥</span></div>
       </div>
 
-      <div class="hall" id="gmHall">
-        <div class="floor"></div>
-        <div class="sc" id="gmSc"></div>
-        <div class="throne" id="gmThrone">🤴</div>
-        <div class="esther" id="gmEsther">👸</div>
-        <div class="marks" id="gmMarks"></div>
+      <div class="stage" id="gmStage">
+        <canvas id="gmCanvas" width="780" height="300" aria-label="Esther walking the throne hall"></canvas>
+        <div class="veil" id="gmVeil">
+          <h5 id="gmVeilTitle">Esther's Long Walk</h5>
+          <p id="gmVeilText">Hold to walk. Freeze when the scepter drops. Reach the throne.</p>
+          <p class="big" id="gmVeilCta">Click or tap to begin</p>
+        </div>
       </div>
 
-      <div class="gate" id="gmGate">Press start</div>
-      <div class="gm-msg" id="gmMsg" role="status" aria-live="polite">Thirty days since he called for her.</div>
-
-      <button class="gm-step" id="gmStep">▶ Start the walk</button>
-      <p class="gm-hint">Tap the button, or press <strong>space</strong> / <strong>→</strong></p>
+      <p class="gm-hint">
+        Hold <kbd>space</kbd> or <kbd>→</kbd> to walk, or press and hold anywhere on the hall.<br>
+        Gold scepter means go. When it starts to dip, you have a moment to stop.
+      </p>
 
       <div class="gm-tape" id="gmTape"></div>
 
@@ -795,150 +782,357 @@
 })();
 </script>
 <script>
-/* ---------- Esther's Long Walk ---------- */
+/* ---------- Esther's Long Walk (canvas) ---------- */
 (() => {
   const $ = id => document.getElementById(id);
-  const hall=$('gmHall'), esther=$('gmEsther'), throne=$('gmThrone'), sc=$('gmSc'),
-        marks=$('gmMarks'), gate=$('gmGate'), msg=$('gmMsg'), stepBtn=$('gmStep'),
+  const cv=$('gmCanvas'), stage=$('gmStage'), veil=$('gmVeil'),
+        veilTitle=$('gmVeilTitle'), veilText=$('gmVeilText'), veilCta=$('gmVeilCta'),
+        elLevel=$('gmLevel'), elScore=$('gmScore'), elHearts=$('gmHearts'),
         tape=$('gmTape'), over=$('gmOver'), overText=$('gmOverText'),
-        shareBtn=$('gmShare'), againBtn=$('gmAgain'),
-        elLevel=$('gmLevel'), elLeft=$('gmLeft'), elHearts=$('gmHearts');
-  if(!hall) return;
+        shareBtn=$('gmShare'), againBtn=$('gmAgain');
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
 
   const URL_SELF='https://jonathanlinford.github.io/personal-pages/esther-lesson.html';
-  const MAX_HEARTS=3;
+  const VW=780, VH=300, GROUND=232, MAX_HEARTS=3;
 
-  // small self-contained beeps that honor the page's sound toggle
+  /* ---- crisp rendering on retina ---- */
+  function fit(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=VW*dpr; cv.height=VH*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  fit();
+  window.addEventListener('resize',fit);
+
+  /* ---- sound, honoring the page toggle ---- */
   let actx=null;
   const muted=()=>{ try{ return localStorage.getItem('jhSound')==='off'; }catch(e){ return false; } };
-  const beep=(f,d,type,g,slide)=>{
+  function tone(f,d,type,g,slide){
     if(muted()) return;
     try{
       if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
       if(actx.state==='suspended') actx.resume();
-      const t0=actx.currentTime, o=actx.createOscillator(), gn=actx.createGain();
-      o.type=type||'triangle'; o.frequency.setValueAtTime(f,t0);
+      const t0=actx.currentTime,o=actx.createOscillator(),gn=actx.createGain();
+      o.type=type||'sine'; o.frequency.setValueAtTime(f,t0);
       if(slide) o.frequency.exponentialRampToValueAtTime(slide,t0+d);
       gn.gain.setValueAtTime(0.0001,t0);
-      gn.gain.exponentialRampToValueAtTime(g||0.12,t0+0.01);
+      gn.gain.exponentialRampToValueAtTime(g||0.1,t0+0.01);
       gn.gain.exponentialRampToValueAtTime(0.0001,t0+d);
       o.connect(gn).connect(actx.destination); o.start(t0); o.stop(t0+d+0.03);
     }catch(e){}
-  };
-  const sfxStep =()=>beep(620,0.09,'triangle',0.11);
-  const sfxMiss =()=>{ beep(200,0.26,'sawtooth',0.13,140); };
-  const sfxClear=()=>{ beep(523,0.14,'triangle',0.12); setTimeout(()=>beep(784,0.3,'triangle',0.12),110); };
-  const sfxDead =()=>{ beep(300,0.5,'sine',0.12,110); };
-
-  let level=1, pos=0, need=5, hearts=MAX_HEARTS, misses=0,
-      totalSteps=0, results=[], running=false, open=false, timer=null, best=0;
-
-  const stepsFor = L => Math.min(14, 4+L);
-  const openMs   = L => Math.max(300, Math.round(1500*Math.pow(0.88,L-1)));
-  const shutMs   = L => Math.max(430, Math.round(950 *Math.pow(0.95,L-1)));
-  const jitter   = L => L<4 ? 1 : (0.72+Math.random()*0.56);
-
-  function drawMarks(){
-    marks.innerHTML='';
-    for(let i=0;i<=need;i++) marks.appendChild(document.createElement('i'));
   }
-  function placeEsther(){
-    const pct = need? (pos/need)*78 : 0;
-    esther.style.left = 'calc(8px + '+pct+'%)';
+  const sCoin =()=>{ tone(1050,0.09,'triangle',0.09); setTimeout(()=>tone(1560,0.16,'sine',0.07),60); };
+  const sDip  =()=>tone(430,0.14,'sine',0.06,330);
+  const sCaught=()=>{ tone(220,0.34,'sawtooth',0.13,120); };
+  const sClear=()=>{ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,i===3?0.6:0.16,'triangle',0.11),i*110)); };
+  const sDead =()=>{ tone(300,0.7,'sine',0.12,90); };
+
+  /* ---- state ---- */
+  let level, score, hearts, catches, results, hallLen, tokens, esther,
+      phase, phaseT, running, dead, holding, camX, shake, flash, lastT, raf=null, sparks;
+
+  const speed      = L => 150 + Math.min(60, L*5);
+  const greenMs    = L => Math.max(750, 2400 - 150*L);
+  const amberMs    = L => Math.max(240, 820 - 48*L);
+  const redMs      = L => Math.max(600, 1500 - 60*L);
+  const hallLength = L => 900 + 250*(L-1);
+
+  function newTokens(){
+    const arr=[], n=Math.min(9, 3+Math.floor(level*0.8));
+    for(let i=0;i<n;i++){
+      const t=(i+1)/(n+1);
+      arr.push({x: 130 + t*(hallLen-240), y: GROUND-56-Math.round(Math.sin(i*1.7)*22), got:false, ph:i*0.9});
+    }
+    return arr;
+  }
+  function setPhase(p){
+    phase=p;
+    phaseT = p==='green' ? greenMs(level)*(0.75+Math.random()*0.5)
+           : p==='amber' ? amberMs(level)
+           : redMs(level)*(0.7+Math.random()*0.6);
+    if(p==='amber') sDip();
+  }
+  function beginLevel(){
+    hallLen=hallLength(level);
+    tokens=newTokens();
+    esther={x:60,y:GROUND,vx:0,walk:0,stun:0};
+    camX=0; catches=0; sparks=[];
+    setPhase('green'); phaseT=1100;
+    paintHud();
+  }
+  function reset(){
+    level=1; score=0; hearts=MAX_HEARTS; results=[];
+    running=false; dead=false; holding=false; shake=0; flash=0;
+    tape.textContent=''; over.classList.remove('show');
+    beginLevel();
+    veil.classList.remove('hide');
+    veilTitle.textContent="Esther's Long Walk";
+    veilText.textContent='Hold to walk. Freeze when the scepter drops. Reach the throne.';
+    veilCta.textContent='Click or tap to begin';
+    draw(0);
   }
   function paintHud(){
     elLevel.textContent=level;
-    elLeft.textContent=Math.max(0,need-pos);
-    elHearts.textContent='♥'.repeat(hearts)+'♡'.repeat(MAX_HEARTS-hearts);
+    elScore.textContent=score;
+    elHearts.textContent='♥'.repeat(Math.max(0,hearts))+'♡'.repeat(Math.max(0,MAX_HEARTS-hearts));
   }
-  function paintGate(){
-    gate.classList.toggle('open',open);
-    gate.classList.toggle('shut',!open);
-    gate.textContent = open ? '🪄 THE SCEPTER IS OUT. GO.' : '✋ WITHDRAWN. WAIT.';
-    throne.classList.toggle('open',open);
-    sc.style.right='46px';
-    sc.style.width = open ? '32%' : '0%';
-    sc.style.opacity = open ? '1' : '0';
+  function start(){
+    if(running||dead) return;
+    running=true; veil.classList.add('hide');
+    lastT=performance.now();
+    if(!raf) raf=requestAnimationFrame(loop);
   }
-  function cycle(){
-    if(!running) return;
-    open=!open;
-    paintGate();
-    const base = open ? openMs(level) : shutMs(level);
-    timer=setTimeout(cycle, Math.round(base*jitter(level)));
-  }
-  function startCycle(){ clearTimeout(timer); open=false; paintGate(); timer=setTimeout(cycle, 700); }
-
-  function beginLevel(){
-    need=stepsFor(level); pos=0; misses=0;
-    drawMarks(); placeEsther(); paintHud();
-    msg.className='gm-msg';
-    msg.textContent = level===1 ? 'Thirty days since he called for her.' : 'Hall '+level+'. Longer, and he is harder to read.';
-    startCycle();
+  function caught(){
+    hearts--; catches++; sCaught();
+    shake=16; flash=1;
+    esther.stun=800; esther.vx=0;
+    esther.x=Math.max(20, esther.x-52);
+    paintHud();
+    if(hearts<=0) gameOver();
   }
   function levelCleared(){
-    running=false; clearTimeout(timer);
-    results.push(misses===0?'🟩':(misses<=2?'🟨':'🟧'));
+    running=false;
+    results.push(catches===0?'🟩':(catches===1?'🟨':'🟧'));
     tape.textContent=results.join('');
-    sfxClear();
-    msg.className='gm-msg good';
-    msg.textContent='The scepter went out. She lived. Hall '+level+' cleared.';
-    if(level%3===0 && hearts<MAX_HEARTS){ hearts++; msg.textContent+=' (+1 courage)'; }
-    level++; best=Math.max(best,level-1);
-    stepBtn.disabled=true;
-    stepBtn.textContent='▶ Walk into hall '+level;
-    setTimeout(()=>{ stepBtn.disabled=false; paintHud(); },900);
+    score += 100 + hearts*25;
+    sClear();
+    level++;
+    if(level%3===0 && hearts<MAX_HEARTS) hearts++;
+    beginLevel();
+    veil.classList.remove('hide');
+    veilTitle.textContent='The scepter went out. She lived.';
+    veilText.textContent='Hall '+level+'. Longer, and he is harder to read.';
+    veilCta.textContent='Click or tap to keep walking';
   }
   function gameOver(){
-    running=false; clearTimeout(timer); open=false; paintGate();
+    running=false; dead=true;
     results.push('🟥'); tape.textContent=results.join('');
-    sfxDead();
-    msg.className='gm-msg bad';
-    msg.textContent='Guards. The walk ends here.';
-    stepBtn.disabled=true; stepBtn.textContent='✕ Out of courage';
-    overText.textContent='You made it through '+(level-1)+' hall'+(level-1===1?'':'s')+' and took '+totalSteps+' steps.';
+    sDead();
+    overText.textContent='You reached hall '+level+' and scored '+score+' points.';
     over.classList.add('show');
-  }
-  function doStep(){
-    if(over.classList.contains('show')) return;
-    if(!running){
-      running=true; over.classList.remove('show');
-      stepBtn.textContent='👣 Step';
-      beginLevel();
-      return;
-    }
-    if(open){
-      pos++; totalSteps++; sfxStep(); placeEsther(); paintHud();
-      if(pos>=need) levelCleared();
-    } else {
-      hearts--; misses++; sfxMiss();
-      esther.classList.remove('hit'); void esther.offsetWidth; esther.classList.add('hit');
-      paintHud();
-      msg.className='gm-msg bad';
-      msg.textContent='You moved while it was withdrawn.';
-      if(hearts<=0) gameOver();
-    }
-  }
-  function reset(){
-    level=1; pos=0; hearts=MAX_HEARTS; misses=0; totalSteps=0;
-    results=[]; running=false; open=false; clearTimeout(timer);
-    tape.textContent=''; over.classList.remove('show');
-    stepBtn.disabled=false; stepBtn.textContent='▶ Start the walk';
-    need=stepsFor(1); drawMarks(); placeEsther(); paintHud(); paintGate();
-    msg.className='gm-msg'; msg.textContent='Thirty days since he called for her.';
+    veil.classList.remove('hide');
+    veilTitle.textContent='Guards.';
+    veilText.textContent='She moved while the scepter was down.';
+    veilCta.textContent='Walk again below';
   }
 
+  /* ---- input: hold to walk ---- */
+  const down=e=>{ if(dead) return; if(!running){ start(); } holding=true; if(e.cancelable) e.preventDefault(); };
+  const up  =e=>{ holding=false; if(e&&e.cancelable) e.preventDefault(); };
+  stage.addEventListener('pointerdown',down);
+  window.addEventListener('pointerup',up);
+  window.addEventListener('pointercancel',up);
+  const onScreen=()=>{ const r=stage.getBoundingClientRect(); return r.bottom>0 && r.top<window.innerHeight; };
+  window.addEventListener('keydown',e=>{
+    if(e.key!==' '&&e.key!=='ArrowRight'&&e.key!=='Spacebar') return;
+    if(!onScreen()) return;
+    e.preventDefault();
+    if(dead) return;
+    if(!running) start();
+    holding=true;
+  });
+  window.addEventListener('keyup',e=>{
+    if(e.key===' '||e.key==='ArrowRight'||e.key==='Spacebar') holding=false;
+  });
+
+  /* ---- update ---- */
+  function update(dt){
+    if(!running) return;
+    phaseT-=dt*1000;
+    if(phaseT<=0) setPhase(phase==='green'?'amber':phase==='amber'?'red':'green');
+
+    if(esther.stun>0) esther.stun-=dt*1000;
+    const canMove = holding && esther.stun<=0;
+    const target = canMove ? speed(level) : 0;
+    esther.vx += (target-esther.vx)*Math.min(1,dt*14);
+    if(esther.vx<1.5) esther.vx=canMove?esther.vx:0;
+    esther.x += esther.vx*dt;
+    if(esther.vx>3) esther.walk += dt*esther.vx*0.05;
+
+    if(phase==='red' && esther.vx>12 && esther.stun<=0) caught();
+
+    tokens.forEach(t=>{
+      if(!t.got && Math.abs(t.x-esther.x)<24 && Math.abs((GROUND-30)-t.y)<70){
+        t.got=true; score+=15; sCoin(); paintHud();
+        for(let i=0;i<10;i++) sparks.push({x:t.x,y:t.y,vx:(Math.random()-0.5)*90,vy:-Math.random()*90-20,life:0.6});
+      }
+    });
+    sparks.forEach(s=>{ s.x+=s.vx*dt; s.y+=s.vy*dt; s.vy+=260*dt; s.life-=dt; });
+    sparks=sparks.filter(s=>s.life>0);
+
+    if(esther.x >= hallLen-70){ levelCleared(); return; }
+
+    const want=Math.max(0,Math.min(esther.x-VW*0.38, hallLen-VW+130));
+    camX += (want-camX)*Math.min(1,dt*7);
+    if(shake>0) shake=Math.max(0,shake-dt*46);
+    if(flash>0) flash=Math.max(0,flash-dt*2.4);
+  }
+
+  /* ---- drawing ---- */
+  function pillar(x,h){
+    ctx.fillStyle='#171725'; ctx.fillRect(x,GROUND-h,26,h);
+    ctx.fillStyle='#1f1f31'; ctx.fillRect(x,GROUND-h,7,h);
+    ctx.fillStyle='#252539'; ctx.fillRect(x-5,GROUND-h-11,36,11);
+    ctx.fillRect(x-5,GROUND-12,36,12);
+  }
+  function torch(x,y,t){
+    const f=0.7+Math.sin(t*7+x)*0.3;
+    const g=ctx.createRadialGradient(x,y,1,x,y,44);
+    g.addColorStop(0,'rgba(255,183,74,'+(0.36*f)+')');
+    g.addColorStop(1,'rgba(255,150,40,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,44,0,7); ctx.fill();
+    ctx.fillStyle='#ffb74a'; ctx.beginPath(); ctx.ellipse(x,y,4,7*f,0,0,7); ctx.fill();
+  }
+  function drawEsther(x,y,t){
+    const moving=esther.vx>6, sw=moving?Math.sin(esther.walk*2.2):0;
+    const bob=moving?Math.abs(Math.sin(esther.walk*2.2))*2:0;
+    ctx.save(); ctx.translate(x,y-bob);
+    if(esther.stun>0 && Math.floor(t*14)%2===0) ctx.globalAlpha=0.45;
+    // legs
+    ctx.strokeStyle='#e7c9a6'; ctx.lineWidth=4; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(-2,-14); ctx.lineTo(-2+sw*7,0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(3,-14);  ctx.lineTo(3-sw*7,0);  ctx.stroke();
+    // robe
+    ctx.fillStyle='#b3243c'; ctx.beginPath();
+    ctx.moveTo(-11,-14); ctx.lineTo(-6,-46); ctx.lineTo(6,-46); ctx.lineTo(11,-14); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='#d4b063'; ctx.fillRect(-9,-24,18,3);
+    // arms
+    ctx.strokeStyle='#e7c9a6'; ctx.lineWidth=3.5;
+    ctx.beginPath(); ctx.moveTo(-6,-42); ctx.lineTo(-11+sw*3,-26); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(6,-42);  ctx.lineTo(11-sw*3,-26); ctx.stroke();
+    // head, hair, crown
+    ctx.fillStyle='#2a1a12'; ctx.beginPath(); ctx.arc(0,-53,10,0,7); ctx.fill();
+    ctx.fillStyle='#f0d3ae'; ctx.beginPath(); ctx.arc(1,-53,7.5,0,7); ctx.fill();
+    ctx.fillStyle='#f5b942';
+    ctx.beginPath(); ctx.moveTo(-8,-61); ctx.lineTo(-8,-67); ctx.lineTo(-4,-63);
+    ctx.lineTo(0,-68); ctx.lineTo(4,-63); ctx.lineTo(8,-67); ctx.lineTo(8,-61); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+  function drawKing(x,dip){
+    ctx.save(); ctx.translate(x,GROUND);
+    // throne
+    ctx.fillStyle='#20203a'; ctx.fillRect(-6,-96,52,96);
+    ctx.fillStyle='#2b2b4d'; ctx.fillRect(-6,-96,52,10);
+    // body
+    ctx.fillStyle='#6b3fa0'; ctx.beginPath();
+    ctx.moveTo(2,-20); ctx.lineTo(6,-62); ctx.lineTo(30,-62); ctx.lineTo(34,-20); ctx.closePath(); ctx.fill();
+    ctx.fillStyle='#f0d3ae'; ctx.beginPath(); ctx.arc(18,-72,10,0,7); ctx.fill();
+    ctx.fillStyle='#8a6a4a'; ctx.beginPath(); ctx.arc(18,-66,9,0,Math.PI); ctx.fill();
+    ctx.fillStyle='#f5b942';
+    ctx.beginPath(); ctx.moveTo(9,-80); ctx.lineTo(9,-87); ctx.lineTo(14,-83);
+    ctx.lineTo(18,-88); ctx.lineTo(22,-83); ctx.lineTo(27,-87); ctx.lineTo(27,-80); ctx.closePath(); ctx.fill();
+    // arm + scepter, dip 0 = fully out, 1 = withdrawn
+    ctx.save(); ctx.translate(6,-56); ctx.rotate(dip*1.25);
+    ctx.strokeStyle='#f0d3ae'; ctx.lineWidth=4; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-16,4); ctx.stroke();
+    ctx.strokeStyle='#f5b942'; ctx.lineWidth=5;
+    ctx.beginPath(); ctx.moveTo(-14,4); ctx.lineTo(-64,4); ctx.stroke();
+    ctx.fillStyle='#ffd980'; ctx.beginPath(); ctx.arc(-68,4,7,0,7); ctx.fill();
+    if(dip<0.25){
+      ctx.shadowBlur=22; ctx.shadowColor='rgba(245,185,66,.95)';
+      ctx.beginPath(); ctx.arc(-68,4,7,0,7); ctx.fill(); ctx.shadowBlur=0;
+    }
+    ctx.restore(); ctx.restore();
+  }
+  function draw(t){
+    const sx=shake>0?(Math.random()-0.5)*shake:0;
+    ctx.save(); ctx.translate(sx,0);
+
+    // hall background
+    const bg=ctx.createLinearGradient(0,0,0,VH);
+    bg.addColorStop(0,'#101019'); bg.addColorStop(1,'#08080e');
+    ctx.fillStyle=bg; ctx.fillRect(-20,0,VW+40,VH);
+
+    // far wall tiling (parallax)
+    ctx.fillStyle='#12121d';
+    const off=(-camX*0.35)%80;
+    for(let x=off-80;x<VW+80;x+=80){ ctx.fillRect(x,60,74,120); }
+
+    // pillars
+    const p0=Math.floor(camX/150)-1;
+    for(let i=p0;i<p0+8;i++){ pillar(i*150-camX+40, 150); }
+    for(let i=p0;i<p0+8;i++){ torch(i*150-camX+53, 96, t); }
+
+    // floor
+    ctx.fillStyle='#15151f'; ctx.fillRect(0,GROUND,VW,VH-GROUND);
+    ctx.strokeStyle='#1e1e2e'; ctx.lineWidth=1;
+    const fo=(-camX)%56;
+    for(let x=fo;x<VW;x+=56){ ctx.beginPath(); ctx.moveTo(x,GROUND); ctx.lineTo(x-26,VH); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(0,GROUND+0.5); ctx.lineTo(VW,GROUND+0.5); ctx.stroke();
+
+    // carpet to the throne
+    ctx.fillStyle='rgba(140,30,50,.35)';
+    ctx.fillRect(-camX+40, GROUND, hallLen-40, 26);
+
+    // tokens
+    tokens.forEach(tk=>{
+      if(tk.got) return;
+      const x=tk.x-camX; if(x<-40||x>VW+40) return;
+      const y=tk.y+Math.sin(t*2.5+tk.ph)*4;
+      ctx.save(); ctx.translate(x,y);
+      ctx.shadowBlur=14; ctx.shadowColor='rgba(245,185,66,.75)';
+      ctx.fillStyle='#f5b942';
+      ctx.beginPath(); ctx.moveTo(-9,4); ctx.lineTo(-9,-3); ctx.lineTo(-4.5,1);
+      ctx.lineTo(0,-5); ctx.lineTo(4.5,1); ctx.lineTo(9,-3); ctx.lineTo(9,4); ctx.closePath(); ctx.fill();
+      ctx.restore();
+    });
+
+    // sparks
+    sparks.forEach(s=>{
+      ctx.globalAlpha=Math.max(0,s.life/0.6);
+      ctx.fillStyle='#ffd980';
+      ctx.fillRect(s.x-camX-1.5,s.y-1.5,3,3);
+      ctx.globalAlpha=1;
+    });
+
+    // king at the end
+    const dip = phase==='green'?0 : phase==='amber'?0.5 : 1;
+    drawKing(hallLen-camX-10, dip);
+
+    drawEsther(esther.x-camX, GROUND, t);
+
+    // progress bar
+    const pr=Math.max(0,Math.min(1,esther.x/(hallLen-70)));
+    ctx.fillStyle='rgba(255,255,255,.07)'; ctx.fillRect(16,16,VW-32,6);
+    ctx.fillStyle='#a855f7'; ctx.fillRect(16,16,(VW-32)*pr,6);
+
+    // phase banner
+    const label = phase==='green'?'SCEPTER OUT. WALK.' : phase==='amber'?'IT IS DIPPING. STOP.' : 'WITHDRAWN. FREEZE.';
+    const col   = phase==='green'?'#f5b942' : phase==='amber'?'#ff9f45' : '#f87171';
+    ctx.font='700 15px JetBrains Mono, monospace'; ctx.textAlign='center';
+    ctx.fillStyle='rgba(8,8,14,.72)';
+    const w=ctx.measureText(label).width+26;
+    ctx.fillRect(VW/2-w/2,34,w,26);
+    ctx.strokeStyle=col; ctx.lineWidth=1; ctx.strokeRect(VW/2-w/2+.5,34.5,w-1,25);
+    ctx.fillStyle=col; ctx.fillText(label,VW/2,52);
+    ctx.textAlign='left';
+
+    // red wash while withdrawn
+    if(phase==='red'){
+      ctx.fillStyle='rgba(248,113,113,.07)'; ctx.fillRect(0,0,VW,VH);
+    }
+    if(flash>0){
+      ctx.fillStyle='rgba(248,113,113,'+(flash*0.4)+')'; ctx.fillRect(0,0,VW,VH);
+    }
+    ctx.restore();
+  }
+
+  function loop(now){
+    const dt=Math.min(0.05,(now-lastT)/1000); lastT=now;
+    update(dt); draw(now/1000);
+    raf=requestAnimationFrame(loop);
+  }
+
+  /* ---- share ---- */
   function shareText(){
-    return "Esther's Long Walk 👑\nHall "+(level-1)+" · "+totalSteps+" steps\n"+results.join('')+"\n"+URL_SELF;
+    return "Esther's Long Walk 👑\nHall "+level+" · "+score+" pts\n"+results.join('')+"\n"+URL_SELF;
   }
   shareBtn.addEventListener('click',async ()=>{
     const txt=shareText();
     try{
-      if(navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){
-        await navigator.share({text:txt}); return;
-      }
-      await navigator.clipboard.writeText(txt);
-      shareBtn.textContent='✓ Copied';
+      if(navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){ await navigator.share({text:txt}); return; }
+      await navigator.clipboard.writeText(txt); shareBtn.textContent='✓ Copied';
     }catch(e){
       const ta=document.createElement('textarea');
       ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
@@ -949,16 +1143,17 @@
     }
     setTimeout(()=>{ shareBtn.textContent='📋 Copy my score'; },1800);
   });
-  againBtn.addEventListener('click',reset);
-  stepBtn.addEventListener('click',doStep);
-  document.addEventListener('keydown',e=>{
-    if(e.key!==' ' && e.key!=='ArrowRight' && e.key!=='Spacebar') return;
-    const r=hall.getBoundingClientRect();
-    if(r.bottom<0 || r.top>window.innerHeight) return; // only when the game is on screen
-    e.preventDefault(); doStep();
-  });
+  againBtn.addEventListener('click',()=>{ reset(); });
+
+  // expose a tiny hook so the walk can be exercised without a human hand
+  window.__estherGame={
+    hold:v=>{holding=!!v;}, start,
+    tick:(dt)=>{ update(dt); draw(performance.now()/1000); },
+    state:()=>({level,score,hearts,phase,x:esther.x,hallLen,running,dead,results:results.join('')})
+  };
 
   reset();
+  raf=requestAnimationFrame(loop);
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
