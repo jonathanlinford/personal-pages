@@ -189,7 +189,11 @@
   .match:not(.bye):not(.pending){cursor:pointer}
   .match:not(.bye):not(.pending):hover{border-color:var(--border2);background:var(--panel2)}
   .match.live{border-color:var(--lime)}
-  .match.pending{opacity:.42}
+  .match.pending{opacity:.62}
+  .slot.waiting .nm{color:var(--dim)}
+  .slot .wait{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--lime);border:1px solid rgba(200,240,66,.45);border-radius:var(--r-sm);
+    padding:1px 4px;flex:none}
   .match.bye{opacity:.5}
   .m-top{display:flex;justify-content:space-between;align-items:center;gap:8px;
     padding:5px 9px;border-bottom:1px solid var(--hair)}
@@ -620,6 +624,9 @@ function resolve(st){
     };
     const A = look(m.a), B = look(m.b);
     m.aId = A.id; m.bId = B.id;
+    // Per-slot, so a player whose place is already decided shows up even while
+    // the other side of the match is still being played out.
+    m.aReady = A.settled; m.bReady = B.settled;
     m.ready = A.settled && B.settled;
     m.winner = null; m.loser = null; m.settled = false; m.bye = false; m.live = false;
     m.bo = seriesFor(st, m);
@@ -1343,8 +1350,8 @@ function matchCard(built, m){
         (m.bo > 1 && !dead ? `<span class="bochip">BO${m.bo}</span>` : "") +
         (status ? `<span class="st${m.live ? " on" : ""}">${status}</span>` : "") +
       `</span></div>` +
-    slotRow(m, m.aId) +
-    slotRow(m, m.bId);
+    slotRow(m, m.aId, m.aReady) +
+    slotRow(m, m.bId, m.bReady);
 
   if (m.ready && m.aId && m.bId){
     el.addEventListener("click", () => openMatch(m.id));
@@ -1352,9 +1359,18 @@ function matchCard(built, m){
   return el;
 }
 
-function slotRow(m, pid){
-  if (!m.ready) return `<div class="slot empty"><span class="ph"></span><span class="nm">TBD</span></div>`;
+function slotRow(m, pid, slotReady){
+  if (!slotReady) return `<div class="slot empty"><span class="ph"></span><span class="nm">TBD</span></div>`;
   if (!pid) return `<div class="slot empty"><span class="ph"></span><span class="nm">Bye</span></div>`;
+  if (!m.ready){
+    // Waiting on the other side, but this player is already through.
+    const sd0 = seedOf(pid);
+    return `<div class="slot waiting">` +
+      iconTag(pickOf(pid, m.id), 28) +
+      `<span class="nm">${esc(nameOf(pid) || "?")}</span>` +
+      (sd0 ? `<span class="sd num">${sd0}</span>` : "") +
+      `<span class="wait">in</span></div>`;
+  }
   const won = m.settled && m.winner === pid;
   const lost = m.settled && m.winner && m.winner !== pid;
   const sd = seedOf(pid);
