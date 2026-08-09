@@ -60,6 +60,21 @@
     letter-spacing:.04em;display:flex;align-items:baseline;gap:8px}
   .mark s{text-decoration:none;color:var(--lime)}
   .bar .sp{flex:1}
+  .tpick{display:flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid var(--border);
+    border-radius:var(--r);font-size:13px;font-weight:600;color:var(--dim);max-width:34vw;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:border-color .12s,color .12s}
+  .tpick:hover{border-color:var(--border2);color:var(--ink)}
+  .tpick s{text-decoration:none;color:var(--faint);font-size:10px}
+
+  .trow{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--hair)}
+  .trow:last-child{border-bottom:0}
+  .trow .who{flex:1;min-width:0}
+  .trow .who .n{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .trow .who .m{font-size:12.5px;color:var(--faint);margin-top:2px}
+  .trow.on .who .n{color:var(--lime)}
+  .trow .acts{display:flex;gap:6px;flex:none}
+  .trow .champ-tag{color:var(--lime)}
+
   .sync{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.1em;
     text-transform:uppercase;color:var(--faint);white-space:nowrap}
   .sync i{width:6px;height:6px;border-radius:50%;background:var(--lime);flex:none}
@@ -370,6 +385,9 @@
 <header>
   <div class="wrap bar">
     <div class="mark"><span class="long">Bro&#8209;Down</span> <s>&#47;&#47;</s> Bracket</div>
+    <button class="tpick" id="btnTourneys" title="Switch tournament, or start a new one">
+      <span id="tName">&hellip;</span> <s>&#9662;</s>
+    </button>
     <div class="sp"></div>
     <div class="sync" id="sync" title="Connection to the shared board"><i></i><span id="syncTxt">connecting</span></div>
     <button class="btn sm" id="btnShare" title="Show a QR code and a copyable link so everyone can join">Share</button>
@@ -477,6 +495,25 @@
   </div>
 </div></dialog>
 
+<dialog id="tourneyModal"><div class="sheet" style="max-width:540px">
+  <div class="sheet-top">
+    <div><div class="ttl">Tournaments</div><div class="sub">Every bracket you have run</div></div>
+    <button class="btn icon ghost" id="tClose" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="sheet-body">
+    <div id="tList"></div>
+    <div class="grid-wrap">
+      <div class="micro" style="margin-bottom:8px">Start a new one</div>
+      <div class="addrow" style="margin:0">
+        <input id="tNew" type="text" placeholder="Tournament name" autocomplete="off" maxlength="60"
+          title="Name it something you will recognise later">
+        <button class="btn primary" id="tCreate" title="Create an empty bracket and switch to it">Create</button>
+      </div>
+      <p style="color:var(--faint);font-size:12.5px;margin-top:9px">A new tournament starts from an empty roster. The one you are on now keeps its results.</p>
+    </div>
+  </div>
+</div></dialog>
+
 <dialog id="shareModal"><div class="sheet" style="max-width:420px">
   <div class="sheet-top">
     <div><div class="ttl">Get everyone on</div><div class="sub">Scan it or send the link</div></div>
@@ -514,7 +551,14 @@ const ICONS = "assets/smash-bracket/fighters/";
 const SFX = "assets/smash-bracket/sfx/";
 const SHARE_URL = "https://jonathanlinford.github.io/personal-pages/smash-bracket.html";
 const POLL_MS = 2500;
-const LS = { mode: "smash:mode", muted: "smash:muted", state: "smash:state" };
+const LS = { mode: "smash:mode", muted: "smash:muted", state: "smash:state", last: "smash:last" };
+
+/* Which tournament this page is looking at. ?t=<id> wins, then whatever this
+   device had open last, then the newest one on the server. */
+let tourneyId = new URLSearchParams(location.search).get("t") || "";
+let tourneyName = "";
+let tourneys = [];
+const stateUrl = () => `${API}/t/${encodeURIComponent(tourneyId)}/state`;
 
 /* The win stings play for everybody, but only whoever has ?sound=117 on the
    URL gets the controls to reassign them. Keeps twelve people from quietly
@@ -708,7 +752,21 @@ function blankState(){
     series: {},
     picks: {},
     sfx: {},
+    mains: {},
   };
+}
+
+// Denormalised so the tournament list can show a winner without doing the maths.
+function championNameOf(s){
+  try {
+    if (!s.players || s.players.length < 2) return null;
+    const prev = state;
+    state = s;                          // resolve() reads the module-level state
+    const champ = resolve(s).champion;
+    const p = champ ? s.players.find((x) => x.id === champ) : null;
+    state = prev;
+    return p ? p.name : null;
+  } catch (e){ return null; }
 }
 
 /* ---------- sound effects ----------
@@ -820,8 +878,16 @@ function normalize(s){
   if (out.stage !== "bracket") out.stage = "seeding";
   if (out.format !== "double") out.format = "single";
   out.players = Array.isArray(out.players) ? out.players.filter((p) => p && p.id) : [];
-  for (const key of ["results", "scores", "series", "picks", "sfx"]){
+  for (const key of ["results", "scores", "series", "picks", "sfx", "mains"]){
     out[key] = out[key] && typeof out[key] === "object" ? out[key] : {};
+  }
+  // Brackets played before fighters carried forward have picks but no mains.
+  // Seed them from what everybody last used so the feature works retroactively.
+  if (!Object.keys(out.mains).length && Object.keys(out.picks).length){
+    for (const mid of Object.keys(out.picks)){
+      const per = out.picks[mid] || {};
+      for (const pid of Object.keys(per)) out.mains[pid] = per[pid];
+    }
   }
   return out;
 }
@@ -850,14 +916,14 @@ setInterval(setSync, 1000);
    everybody crowds around it. */
 function readLocal(){
   try {
-    const raw = localStorage.getItem(LS.state);
+    const raw = localStorage.getItem(LS.state + ":" + tourneyId);
     if (!raw) return null;
     const d = JSON.parse(raw);
     return typeof d.rev === "number" && d.state ? d : null;
   } catch (e){ return null; }
 }
 function writeLocal(r, s){
-  try { localStorage.setItem(LS.state, JSON.stringify({ rev: r, state: s })); }
+  try { localStorage.setItem(LS.state + ":" + tourneyId, JSON.stringify({ rev: r, state: s })); }
   catch (e){ toast("This device is out of storage.", true); }
 }
 
@@ -912,7 +978,7 @@ function openSocket(){
     url = new URL(API);
   } catch (e){ return; }
   url.protocol = url.protocol === "http:" ? "ws:" : "wss:";
-  url.pathname = "/ws";
+  url.pathname = `/t/${encodeURIComponent(tourneyId)}/ws`;
   try {
     ws = new WebSocket(url.toString());
   } catch (e){ ws = null; return; }
@@ -960,7 +1026,7 @@ async function pull(){
     return;
   }
   try {
-    const r = await fetch(`${API}/state`, { cache: "no-store" });
+    const r = await fetch(stateUrl(), { cache: "no-store" });
     if (!r.ok) throw new Error(r.status);
     const d = await r.json();
     syncBad = false;
@@ -989,6 +1055,7 @@ async function commit(mutate, label){
   for (let attempt = 0; attempt < 4; attempt++){
     const base = JSON.parse(JSON.stringify(state));
     const next = normalize(mutate(base) || base);
+    next.championName = championNameOf(next);
 
     if (localMode){
       rev += 1;
@@ -1005,7 +1072,7 @@ async function commit(mutate, label){
     render();
     inFlight = true; setSync();
     try {
-      const r = await fetch(`${API}/state`, {
+      const r = await fetch(stateUrl(), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rev, state: next }),
@@ -1308,18 +1375,16 @@ function drawWires(built){
   }
 }
 
+/* Whatever you picked last sticks. A match with no explicit pick falls back
+   to the player's running main, so nobody re-picks Fox nine times. */
 function pickOf(playerId, matchId){
   if (!playerId) return null;
   if (matchId){
     const p = state.picks[matchId];
-    return p && p[playerId] ? p[playerId] : null;
-  }
-  const ids = Object.keys(state.picks);
-  for (let i = ids.length - 1; i >= 0; i--){
-    const p = state.picks[ids[i]];
     if (p && p[playerId]) return p[playerId];
   }
-  return null;
+  const main = state.mains ? state.mains[playerId] : null;
+  return main || null;
 }
 
 function iconTag(slug, size){
@@ -1391,8 +1456,16 @@ function openMatch(id){
   const m = built.byId[id];
   if (!m) return;
   openMatchId = id;
+  // Pre-fill with each player's current main so the common case is one tap.
+  const picks = { ...(state.picks[id] || {}) };
+  for (const pid of [m.aId, m.bId]){
+    if (!picks[pid]){
+      const main = state.mains ? state.mains[pid] : null;
+      if (main) picks[pid] = main;
+    }
+  }
   draft = {
-    picks: { ...(state.picks[id] || {}) },
+    picks,
     scores: { ...(state.scores[id] || {}) },
     winner: state.results[id] || null,
     focus: m.aId,
@@ -1474,6 +1547,9 @@ function saveMatch(){
     const prev = s.results[id] || null;
     if (d.winner) s.results[id] = d.winner; else delete s.results[id];
     if (Object.keys(d.picks).length) s.picks[id] = { ...d.picks }; else delete s.picks[id];
+    // Last pick wins becomes the default for later matches.
+    s.mains = s.mains || {};
+    for (const pid of Object.keys(d.picks)) s.mains[pid] = d.picks[pid];
     const sc = {};
     for (const k of Object.keys(d.scores)) if (d.scores[k]) sc[k] = d.scores[k];
     if (Object.keys(sc).length) s.scores[id] = sc; else delete s.scores[id];
@@ -1801,12 +1877,151 @@ $("btnFighters").addEventListener("click", () => {
 });
 $("uClose").addEventListener("click", () => $("usedModal").close());
 
+/* ---------- tournaments ---------- */
+async function loadTourneys(){
+  try {
+    const r = await fetch(`${API}/tournaments`, { cache: "no-store" });
+    const d = await r.json();
+    tourneys = Array.isArray(d.tournaments) ? d.tournaments : [];
+  } catch (e){ tourneys = []; }
+
+  // Rooms that predate the summary line have none until somebody writes to
+  // them. Work it out once from their state and save it back.
+  const stale = tourneys.filter((t) => !t.summary).slice(0, 10);
+  await Promise.all(stale.map(async (t) => {
+    try {
+      const r = await fetch(`${API}/t/${encodeURIComponent(t.id)}/state`, { cache: "no-store" });
+      const d = await r.json();
+      if (!d.state) return;
+      const s = normalize(d.state);
+      t.summary = {
+        stage: s.stage,
+        format: s.format,
+        players: s.players.length,
+        results: Object.keys(s.results).length,
+        champion: championNameOf(s),
+      };
+      await fetch(`${API}/tournaments/${encodeURIComponent(t.id)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ summary: t.summary }),
+      });
+    } catch (e){ /* the list still renders without it */ }
+  }));
+
+  return tourneys;
+}
+
+function paintTourneyName(){
+  const t = tourneys.find((x) => x.id === tourneyId);
+  tourneyName = t ? t.name : (tourneyId || "Tournament");
+  $("tName").textContent = tourneyName;
+  document.title = `${tourneyName} :: Bro-Down Bracket`;
+}
+
+function switchTo(id){
+  if (!id || id === tourneyId) return;
+  localStorage.setItem(LS.last, id);
+  const u = new URL(location.href);
+  u.searchParams.set("t", id);
+  location.href = u.toString();          // clean re-init: new room, new socket
+}
+
+function renderTourneyList(){
+  const rows = tourneys.map((t) => {
+    const s = t.summary || {};
+    const bits = [];
+    if (s.players) bits.push(`${s.players} players`);
+    if (s.format) bits.push(s.format === "double" ? "double elim" : "single elim");
+    if (s.champion) bits.push(`<span class="champ-tag">${esc(s.champion)} won</span>`);
+    else if (s.stage === "bracket") bits.push("in progress");
+    else if (s.stage) bits.push("seeding");
+    const when = t.updatedAt || t.createdAt;
+    if (when) bits.push(new Date(when).toLocaleDateString(undefined, { month: "short", day: "numeric" }));
+    const here = t.id === tourneyId;
+    return `<div class="trow ${here ? "on" : ""}">
+      <div class="who">
+        <div class="n">${esc(t.name)}${here ? " (open)" : ""}</div>
+        <div class="m">${bits.join(" &middot; ") || "empty"}</div>
+      </div>
+      <div class="acts">
+        ${here ? "" : `<button class="btn sm" data-open="${esc(t.id)}" title="Switch to this tournament">Open</button>`}
+        <button class="btn sm ghost" data-rename="${esc(t.id)}" title="Rename it">Rename</button>
+        <button class="btn sm ghost danger" data-del="${esc(t.id)}" title="Delete it and its results for good">Delete</button>
+      </div>
+    </div>`;
+  }).join("");
+  $("tList").innerHTML = rows || `<p style="color:var(--faint);font-size:13.5px">Nothing yet.</p>`;
+}
+
+$("btnTourneys").addEventListener("click", async () => {
+  $("tList").innerHTML = `<p style="color:var(--faint);font-size:13.5px">Loading&hellip;</p>`;
+  $("tourneyModal").showModal();
+  await loadTourneys();
+  renderTourneyList();
+});
+$("tClose").addEventListener("click", () => $("tourneyModal").close());
+
+$("tList").addEventListener("click", async (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.open) return switchTo(b.dataset.open);
+
+  if (b.dataset.rename){
+    const t = tourneys.find((x) => x.id === b.dataset.rename);
+    const name = prompt("Rename this tournament", t ? t.name : "");
+    if (!name || !name.trim()) return;
+    await fetch(`${API}/tournaments/${encodeURIComponent(b.dataset.rename)}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name.trim() }),
+    }).catch(() => {});
+    await loadTourneys();
+    renderTourneyList();
+    paintTourneyName();
+    toast("Renamed.");
+    return;
+  }
+
+  if (b.dataset.del){
+    const t = tourneys.find((x) => x.id === b.dataset.del);
+    if (!confirm(`Delete "${t ? t.name : "this tournament"}" and its results? This cannot be undone.`)) return;
+    await fetch(`${API}/tournaments/${encodeURIComponent(b.dataset.del)}`, { method: "DELETE" }).catch(() => {});
+    await loadTourneys();
+    if (b.dataset.del === tourneyId && tourneys.length){
+      return switchTo(tourneys[tourneys.length - 1].id);
+    }
+    renderTourneyList();
+    toast("Deleted.");
+  }
+});
+
+$("tCreate").addEventListener("click", async () => {
+  const name = $("tNew").value.trim();
+  if (!name){ toast("Give it a name first."); return; }
+  try {
+    const r = await fetch(`${API}/tournaments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    });
+    const d = await r.json();
+    if (!d.tournament) throw new Error("no id");
+    switchTo(d.tournament.id);
+  } catch (e){
+    toast("Could not create that one.", true);
+  }
+});
+$("tNew").addEventListener("keydown", (e) => { if (e.key === "Enter") $("tCreate").click(); });
+
 /* ---------- share sheet ---------- */
 function currentUrl(){
-  // Always drop the query so the ?sound=117 unlock never rides along in a
-  // shared link or QR code.
-  if (location.protocol === "https:") return SHARE_URL;
-  return location.origin + location.pathname;
+  // Keep the tournament, drop everything else, so the ?sound=117 unlock never
+  // rides along in a shared link or QR code.
+  const base = location.protocol === "https:"
+    ? SHARE_URL
+    : location.origin + location.pathname;
+  return tourneyId ? `${base}?t=${encodeURIComponent(tourneyId)}` : base;
 }
 function drawQR(text){
   const cv = $("qr");
@@ -1939,6 +2154,17 @@ function fireConfetti(){
   fighters.forEach((f) => { fighterBySlug[f.slug] = f; });
   paintSoundBtn();
   $("btnMode").innerHTML = localMode ? "&#9743;" : "&#9729;";
+
+  // Work out which tournament we are on before touching any state.
+  await loadTourneys();
+  if (!tourneyId || !tourneys.some((t) => t.id === tourneyId)){
+    const last = localStorage.getItem(LS.last);
+    tourneyId = tourneys.some((t) => t.id === last)
+      ? last
+      : (tourneys.length ? tourneys[tourneys.length - 1].id : "bro-down");
+  }
+  localStorage.setItem(LS.last, tourneyId);
+  paintTourneyName();
 
   await pull();
   firstPaint = false;

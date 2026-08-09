@@ -2,13 +2,21 @@ name = "smash-bracket"
 main = "src/index.js"
 compatibility_date = "2026-05-01"
 
-# Single Durable Object holds the whole tournament. A DO gives us strongly
-# consistent reads and serialized writes, which KV cannot promise -- important
-# when several people report match results at the same time.
+# One Durable Object per tournament, plus one registry object holding the list.
+# A DO gives us strongly consistent reads and serialized writes, which KV cannot
+# promise -- important when several people report match results at the same time.
 [[durable_objects.bindings]]
 name = "BRACKET"
 class_name = "BracketRoom"
 
+[[durable_objects.bindings]]
+name = "REGISTRY"
+class_name = "Registry"
+
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["BracketRoom"]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["Registry"]
