@@ -234,9 +234,52 @@
   .lightbox .lb-close{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(18,18,26,.85);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer}
   body.lb-open{overflow:hidden}
 
+  /* ---------- game: Esther's Long Walk ---------- */
+  .game-wrap{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
+  .game-wrap h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .gm{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px;overflow:hidden}
+  .gm h4{font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px}
+  .gm .gm-sub{font-size:14px;color:var(--text-dim);margin-bottom:16px}
+  .gm-hud{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .gm-stat{flex:1 1 92px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;padding:9px 10px;text-align:center}
+  .gm-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.8px;display:block}
+  .gm-stat .v{font-size:17px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace}
+
+  .hall{position:relative;height:96px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,#14141d,#0d0d14);overflow:hidden;margin:6px 0 4px}
+  .hall .floor{position:absolute;left:0;right:0;bottom:22px;height:1px;background:var(--border-bright)}
+  .hall .throne{position:absolute;right:8px;bottom:16px;font-size:30px;line-height:1;transition:filter .18s}
+  .hall .throne.open{filter:drop-shadow(0 0 10px rgba(245,185,66,.95))}
+  .hall .esther{position:absolute;bottom:16px;font-size:26px;line-height:1;transition:left .22s cubic-bezier(.2,.9,.3,1)}
+  .hall .esther.hit{animation:shake .34s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .hall .sc{position:absolute;bottom:44px;height:5px;border-radius:99px;background:linear-gradient(90deg,rgba(245,185,66,0),var(--gold));transition:width .12s linear,opacity .12s}
+  .hall .marks{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:space-between;padding:0 10px}
+  .hall .marks i{width:2px;height:5px;background:var(--border-bright);border-radius:2px}
+
+  .gate{margin:12px 0 4px;border-radius:10px;padding:10px 14px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.5px;border:1px solid var(--border-bright);background:var(--card-soft);color:var(--text-faint);transition:background .12s,color .12s,border-color .12s}
+  .gate.open{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,.18),rgba(168,85,247,.06));color:var(--gold)}
+  .gate.shut{border-color:rgba(248,113,113,.4);color:#f8a1a1}
+
+  .gm-step{width:100%;font-family:'Inter',sans-serif;font-size:17px;font-weight:800;border:none;border-radius:12px;padding:16px;cursor:pointer;background:linear-gradient(135deg,#7c3aed,var(--royal));color:#fff;transition:transform .1s,filter .2s,opacity .2s;touch-action:manipulation}
+  .gm-step:hover:not(:disabled){filter:brightness(1.12)}
+  .gm-step:active:not(:disabled){transform:scale(.98)}
+  .gm-step:disabled{opacity:.45;cursor:default}
+  .gm-hint{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:8px}
+  .gm-msg{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-dim);text-align:center;min-height:20px;margin:10px 0}
+  .gm-msg.good{color:var(--gold)}
+  .gm-msg.bad{color:var(--red)}
+  .gm-tape{font-size:19px;letter-spacing:2px;text-align:center;margin:10px 0;min-height:24px;word-break:break-all}
+  .gm-over{display:none;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
+  .gm-over.show{display:block;animation:fadeIn .4s ease}
+  .gm-over p{font-size:14.5px;color:var(--text-dim);margin-bottom:12px;text-align:center}
+  .gm-btns{display:flex;gap:10px;flex-wrap:wrap}
+  .gm-btns .btn{flex:1 1 140px}
+  .gm-verse{margin-top:14px;font-size:13px;color:var(--text-faint);font-style:italic;text-align:center}
+
   @media (max-width:600px){
     header h1{font-size:31px}
     .paths{grid-template-columns:1fr}
+    .gm-tape{font-size:16px;letter-spacing:1px}
   }
 </style>
 </head>
@@ -571,6 +614,46 @@
       <li>The six scenario cartoons are drawn from photos of the kids in this class (Alyda, Braxton, Cole, Dannie, Lexi, Zalea), one apiece, so each of them shows up in the lesson.</li>
     </ul>
   </div>
+
+  <!-- ---------- game ---------- -->
+  <div class="game-wrap fx">
+    <h3>One more thing</h3>
+    <div class="gm">
+      <h4>Esther's Long Walk 👑</h4>
+      <p class="gm-sub">In Persia, walking into the king's inner court uninvited meant death. The one exception: if he held out the golden scepter, you lived. <strong>Step only while the scepter is out.</strong> Each hall is longer than the last, and the king gets harder to read.</p>
+
+      <div class="gm-hud">
+        <div class="gm-stat"><span class="k">Hall</span><span class="v" id="gmLevel">1</span></div>
+        <div class="gm-stat"><span class="k">Steps left</span><span class="v" id="gmLeft">5</span></div>
+        <div class="gm-stat"><span class="k">Courage</span><span class="v" id="gmHearts">♥♥♥</span></div>
+      </div>
+
+      <div class="hall" id="gmHall">
+        <div class="floor"></div>
+        <div class="sc" id="gmSc"></div>
+        <div class="throne" id="gmThrone">🤴</div>
+        <div class="esther" id="gmEsther">👸</div>
+        <div class="marks" id="gmMarks"></div>
+      </div>
+
+      <div class="gate" id="gmGate">Press start</div>
+      <div class="gm-msg" id="gmMsg" role="status" aria-live="polite">Thirty days since he called for her.</div>
+
+      <button class="gm-step" id="gmStep">▶ Start the walk</button>
+      <p class="gm-hint">Tap the button, or press <strong>space</strong> / <strong>→</strong></p>
+
+      <div class="gm-tape" id="gmTape"></div>
+
+      <div class="gm-over" id="gmOver">
+        <p id="gmOverText"></p>
+        <div class="gm-btns">
+          <button class="btn btn-gold" id="gmShare">📋 Copy my score</button>
+          <button class="btn btn-ghost" id="gmAgain">↺ Walk again</button>
+        </div>
+        <p class="gm-verse">"and so will I go in unto the king, which is not according to the law: and if I perish, I perish."</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- lightbox -->
@@ -709,6 +792,173 @@
     entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
   },{threshold:0, rootMargin:'200px 0px 200px 0px'});
   document.querySelectorAll('.fx').forEach(el=>io.observe(el));
+})();
+</script>
+<script>
+/* ---------- Esther's Long Walk ---------- */
+(() => {
+  const $ = id => document.getElementById(id);
+  const hall=$('gmHall'), esther=$('gmEsther'), throne=$('gmThrone'), sc=$('gmSc'),
+        marks=$('gmMarks'), gate=$('gmGate'), msg=$('gmMsg'), stepBtn=$('gmStep'),
+        tape=$('gmTape'), over=$('gmOver'), overText=$('gmOverText'),
+        shareBtn=$('gmShare'), againBtn=$('gmAgain'),
+        elLevel=$('gmLevel'), elLeft=$('gmLeft'), elHearts=$('gmHearts');
+  if(!hall) return;
+
+  const URL_SELF='https://jonathanlinford.github.io/personal-pages/esther-lesson.html';
+  const MAX_HEARTS=3;
+
+  // small self-contained beeps that honor the page's sound toggle
+  let actx=null;
+  const muted=()=>{ try{ return localStorage.getItem('jhSound')==='off'; }catch(e){ return false; } };
+  const beep=(f,d,type,g,slide)=>{
+    if(muted()) return;
+    try{
+      if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+      if(actx.state==='suspended') actx.resume();
+      const t0=actx.currentTime, o=actx.createOscillator(), gn=actx.createGain();
+      o.type=type||'triangle'; o.frequency.setValueAtTime(f,t0);
+      if(slide) o.frequency.exponentialRampToValueAtTime(slide,t0+d);
+      gn.gain.setValueAtTime(0.0001,t0);
+      gn.gain.exponentialRampToValueAtTime(g||0.12,t0+0.01);
+      gn.gain.exponentialRampToValueAtTime(0.0001,t0+d);
+      o.connect(gn).connect(actx.destination); o.start(t0); o.stop(t0+d+0.03);
+    }catch(e){}
+  };
+  const sfxStep =()=>beep(620,0.09,'triangle',0.11);
+  const sfxMiss =()=>{ beep(200,0.26,'sawtooth',0.13,140); };
+  const sfxClear=()=>{ beep(523,0.14,'triangle',0.12); setTimeout(()=>beep(784,0.3,'triangle',0.12),110); };
+  const sfxDead =()=>{ beep(300,0.5,'sine',0.12,110); };
+
+  let level=1, pos=0, need=5, hearts=MAX_HEARTS, misses=0,
+      totalSteps=0, results=[], running=false, open=false, timer=null, best=0;
+
+  const stepsFor = L => Math.min(14, 4+L);
+  const openMs   = L => Math.max(300, Math.round(1500*Math.pow(0.88,L-1)));
+  const shutMs   = L => Math.max(430, Math.round(950 *Math.pow(0.95,L-1)));
+  const jitter   = L => L<4 ? 1 : (0.72+Math.random()*0.56);
+
+  function drawMarks(){
+    marks.innerHTML='';
+    for(let i=0;i<=need;i++) marks.appendChild(document.createElement('i'));
+  }
+  function placeEsther(){
+    const pct = need? (pos/need)*78 : 0;
+    esther.style.left = 'calc(8px + '+pct+'%)';
+  }
+  function paintHud(){
+    elLevel.textContent=level;
+    elLeft.textContent=Math.max(0,need-pos);
+    elHearts.textContent='♥'.repeat(hearts)+'♡'.repeat(MAX_HEARTS-hearts);
+  }
+  function paintGate(){
+    gate.classList.toggle('open',open);
+    gate.classList.toggle('shut',!open);
+    gate.textContent = open ? '🪄 THE SCEPTER IS OUT. GO.' : '✋ WITHDRAWN. WAIT.';
+    throne.classList.toggle('open',open);
+    sc.style.right='46px';
+    sc.style.width = open ? '32%' : '0%';
+    sc.style.opacity = open ? '1' : '0';
+  }
+  function cycle(){
+    if(!running) return;
+    open=!open;
+    paintGate();
+    const base = open ? openMs(level) : shutMs(level);
+    timer=setTimeout(cycle, Math.round(base*jitter(level)));
+  }
+  function startCycle(){ clearTimeout(timer); open=false; paintGate(); timer=setTimeout(cycle, 700); }
+
+  function beginLevel(){
+    need=stepsFor(level); pos=0; misses=0;
+    drawMarks(); placeEsther(); paintHud();
+    msg.className='gm-msg';
+    msg.textContent = level===1 ? 'Thirty days since he called for her.' : 'Hall '+level+'. Longer, and he is harder to read.';
+    startCycle();
+  }
+  function levelCleared(){
+    running=false; clearTimeout(timer);
+    results.push(misses===0?'🟩':(misses<=2?'🟨':'🟧'));
+    tape.textContent=results.join('');
+    sfxClear();
+    msg.className='gm-msg good';
+    msg.textContent='The scepter went out. She lived. Hall '+level+' cleared.';
+    if(level%3===0 && hearts<MAX_HEARTS){ hearts++; msg.textContent+=' (+1 courage)'; }
+    level++; best=Math.max(best,level-1);
+    stepBtn.disabled=true;
+    stepBtn.textContent='▶ Walk into hall '+level;
+    setTimeout(()=>{ stepBtn.disabled=false; paintHud(); },900);
+  }
+  function gameOver(){
+    running=false; clearTimeout(timer); open=false; paintGate();
+    results.push('🟥'); tape.textContent=results.join('');
+    sfxDead();
+    msg.className='gm-msg bad';
+    msg.textContent='Guards. The walk ends here.';
+    stepBtn.disabled=true; stepBtn.textContent='✕ Out of courage';
+    overText.textContent='You made it through '+(level-1)+' hall'+(level-1===1?'':'s')+' and took '+totalSteps+' steps.';
+    over.classList.add('show');
+  }
+  function doStep(){
+    if(over.classList.contains('show')) return;
+    if(!running){
+      running=true; over.classList.remove('show');
+      stepBtn.textContent='👣 Step';
+      beginLevel();
+      return;
+    }
+    if(open){
+      pos++; totalSteps++; sfxStep(); placeEsther(); paintHud();
+      if(pos>=need) levelCleared();
+    } else {
+      hearts--; misses++; sfxMiss();
+      esther.classList.remove('hit'); void esther.offsetWidth; esther.classList.add('hit');
+      paintHud();
+      msg.className='gm-msg bad';
+      msg.textContent='You moved while it was withdrawn.';
+      if(hearts<=0) gameOver();
+    }
+  }
+  function reset(){
+    level=1; pos=0; hearts=MAX_HEARTS; misses=0; totalSteps=0;
+    results=[]; running=false; open=false; clearTimeout(timer);
+    tape.textContent=''; over.classList.remove('show');
+    stepBtn.disabled=false; stepBtn.textContent='▶ Start the walk';
+    need=stepsFor(1); drawMarks(); placeEsther(); paintHud(); paintGate();
+    msg.className='gm-msg'; msg.textContent='Thirty days since he called for her.';
+  }
+
+  function shareText(){
+    return "Esther's Long Walk 👑\nHall "+(level-1)+" · "+totalSteps+" steps\n"+results.join('')+"\n"+URL_SELF;
+  }
+  shareBtn.addEventListener('click',async ()=>{
+    const txt=shareText();
+    try{
+      if(navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){
+        await navigator.share({text:txt}); return;
+      }
+      await navigator.clipboard.writeText(txt);
+      shareBtn.textContent='✓ Copied';
+    }catch(e){
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); shareBtn.textContent='✓ Copied'; }
+      catch(e2){ shareBtn.textContent='Copy failed'; }
+      document.body.removeChild(ta);
+    }
+    setTimeout(()=>{ shareBtn.textContent='📋 Copy my score'; },1800);
+  });
+  againBtn.addEventListener('click',reset);
+  stepBtn.addEventListener('click',doStep);
+  document.addEventListener('keydown',e=>{
+    if(e.key!==' ' && e.key!=='ArrowRight' && e.key!=='Spacebar') return;
+    const r=hall.getBoundingClientRect();
+    if(r.bottom<0 || r.top>window.innerHeight) return; // only when the game is on screen
+    e.preventDefault(); doStep();
+  });
+
+  reset();
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script><!-- End Cloudflare Web Analytics -->
