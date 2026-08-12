@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Habit Tracker</title>
+<meta name="description" content="GitHub-style habit heatmaps for the rest of 2026: nutrition, training, sleep and reading.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Habit Tracker">
+<meta property="og:description" content="GitHub-style habit heatmaps for the rest of 2026.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟩</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --charcoal: #111111;
+    --slate: #1F2937;
+    --accent: #3B82F6;
+    --accent-hover: #2563EB;
+    --gold: #FBBF24;
+    --green: #10B981;
+    --purple: #8B5CF6;
+
+    --bg: #0b0d12;
+    --surface: #14161d;
+    --surface-2: #191c25;
+    --ink: #f2f4f8;
+    --ink-2: #b9c0cd;
+    --muted: #6f7789;
+    --hairline: rgba(255, 255, 255, 0.07);
+    --grid-empty: #1b1f29;
+
+    --radius: 16px;
+    --gap: 20px;
+    --cell: 13px;
+    --cell-gap: 3px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { max-width: 100%; overflow-x: hidden; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1100px 600px at 12% -8%, rgba(59, 130, 246, 0.16), transparent 60%),
+      radial-gradient(900px 520px at 88% 0%, rgba(139, 92, 246, 0.14), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 22px 80px; }
+
+  /* ------------------------------------------------------------ header */
+  header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap; margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 48px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; margin: 0;
+    background: linear-gradient(100deg, #ffffff 10%, #a5c4ff 60%, #c4b1ff 95%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .sub { color: var(--ink-2); font-size: 15px; margin-top: 10px; max-width: 62ch; }
+  .stamp {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted);
+    text-align: right; line-height: 1.7;
+  }
+
+  /* -------------------------------------------------------------- cards */
+  .card {
+    position: relative; background: var(--surface); border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 52%, var(--green) 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude; opacity: 0.4; pointer-events: none;
+  }
+
+  /* -------------------------------------------------------- stat banner */
+  .banner { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 14px; margin-bottom: var(--gap); }
+  .stat {
+    position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 14px; padding: 15px 17px 16px;
+  }
+  .stat::after {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent);
+  }
+  .stat.gold::after { background: var(--gold); }
+  .stat.green::after { background: var(--green); }
+  .stat.purple::after { background: var(--purple); }
+  .stat-k {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--muted); display: block; margin-bottom: 7px;
+  }
+  .stat-v {
+    font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 600;
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .stat.gold .stat-v { color: var(--gold); }
+  .stat.green .stat-v { color: var(--green); }
+  .stat.purple .stat-v { color: var(--purple); }
+  .stat-v small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+  .stat-n { font-size: 12px; color: var(--ink-2); margin-top: 7px; }
+  .flame { position: absolute; right: 12px; top: 12px; font-size: 18px; opacity: 0.85; }
+
+  /* ------------------------------------------------------------ layout */
+  section { margin-bottom: 34px; }
+  .sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  h2 {
+    font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0;
+    display: flex; align-items: center; gap: 9px;
+  }
+  h2 .ico { font-size: 18px; }
+  .sec-note { color: var(--muted); font-size: 13px; }
+
+  /* ---------------------------------------------------------- controls */
+  .controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: var(--gap); }
+  .seg { display: inline-flex; background: var(--surface); border: 1px solid var(--hairline); border-radius: 11px; padding: 3px; }
+  .seg button {
+    font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+    background: none; border: 0; border-radius: 8px; padding: 7px 14px; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .seg button:hover { color: var(--ink); }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .seg button.on:hover { background: var(--accent-hover); }
+
+  /* ---------------------------------------------------------- heatmaps */
+  .hm-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .hm { display: inline-flex; gap: 8px; min-width: min-content; }
+  .hm-days {
+    display: grid; grid-template-rows: repeat(7, var(--cell)); gap: var(--cell-gap);
+    padding-top: 18px; font-size: 9.5px; color: var(--muted); flex: none;
+  }
+  .hm-days span { line-height: var(--cell); height: var(--cell); text-align: right; padding-right: 2px; }
+  .hm-body { display: flex; flex-direction: column; gap: 3px; }
+  .hm-months {
+    display: grid; gap: var(--cell-gap); height: 15px;
+    font-size: 10.5px; font-weight: 600; color: var(--ink-2); letter-spacing: 0.03em;
+  }
+  .hm-months span { white-space: nowrap; }
+  .hm-grid {
+    display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, var(--cell));
+    gap: var(--cell-gap);
+  }
+  .sq {
+    width: var(--cell); height: var(--cell); border-radius: 3px;
+    background: var(--grid-empty); cursor: default; transition: transform 0.08s;
+  }
+  .sq.void { background: transparent; }
+  .sq.future { background: rgba(255, 255, 255, 0.035); }
+  .sq.today { box-shadow: 0 0 0 1.5px var(--accent); }
+  .sq.miss { background: rgba(239, 68, 68, 0.28); }
+  .sq.close { background: rgba(251, 191, 36, 0.55); }
+  .sq.rest { background: var(--purple); opacity: 0.75; }
+  .sq.met-1 { background: rgba(16, 185, 129, 0.35); }
+  .sq.met-2 { background: rgba(16, 185, 129, 0.55); }
+  .sq.met-3 { background: rgba(16, 185, 129, 0.78); }
+  .sq.met-4 { background: var(--green); }
+  .sq.milestone { box-shadow: 0 0 0 1.5px var(--gold); }
+  .sq.hot:hover { transform: scale(1.35); }
+  .sq.sheet { position: relative; }
+
+  /* --------------------------------------------------- habit row block */
+  .habit { padding: 16px 0; border-top: 1px solid var(--hairline); }
+  .habit:first-child { border-top: 0; padding-top: 4px; }
+  .habit-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 11px; }
+  .habit-name { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500;
+    color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--hairline);
+    border-radius: 20px; padding: 2px 9px;
+  }
+  .habit-mini { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+  .habit-mini b { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink); font-size: 13px; }
+  .habit-note { font-size: 12.5px; color: var(--muted); margin: 0 0 11px; }
+
+  /* ----------------------------------------------------------- legend */
+  .legend { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 11.5px; color: var(--muted); margin-top: 14px; }
+  .legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; vertical-align: -1px; margin-right: 5px; }
+  .scale { display: inline-flex; align-items: center; gap: 3px; }
+
+  /* ---------------------------------------------------------- tooltip */
+  .tip {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.09s;
+    background: var(--surface-2); color: var(--ink); border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 10px; padding: 8px 11px; font-size: 12px; line-height: 1.5;
+    white-space: nowrap; z-index: 40; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+  }
+  .tip.on { opacity: 1; }
+  .tip .t-d { display: block; color: var(--muted); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 3px; }
+  .tip b { font-family: 'JetBrains Mono', monospace; }
+
+  /* ------------------------------------------------------ cross-check */
+  .xrow { display: flex; align-items: center; gap: 12px; font-size: 13px; padding: 9px 0; border-top: 1px solid var(--hairline); flex-wrap: wrap; }
+  .xrow:first-of-type { border-top: 0; }
+  .xdate { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-width: 82px; }
+  .xtag {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 5px; padding: 2px 7px;
+  }
+  .xtag.differs { background: rgba(251, 191, 36, 0.16); color: var(--gold); }
+  .xtag.only-page { background: rgba(59, 130, 246, 0.16); color: #93b8ff; }
+  .xtag.only-sheet { background: rgba(139, 92, 246, 0.18); color: #c3aeff; }
+  .xok { color: var(--green); font-size: 13px; }
+
+  /* ------------------------------------------------------------ table */
+  details { margin-top: 8px; }
+  summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-2); padding: 7px 0; }
+  summary:hover { color: var(--ink); }
+  .scroll { overflow-x: auto; margin-top: 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 7px 11px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  thead th { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.hit { color: var(--green); font-weight: 600; }
+  td.no { color: #f87171; }
+  td.rst { color: var(--purple); }
+  td.na { color: var(--muted); }
+
+  .empty { color: var(--muted); font-size: 14px; padding: 6px 0; }
+  footer { margin-top: 60px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 18px; line-height: 1.8; }
+  footer code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
+  footer a { color: #93b8ff; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 28px 15px 60px; }
+    h1 { font-size: 34px; }
+    .card { padding: 18px 15px; }
+    header { align-items: flex-start; }
+    .stamp { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Personal</div>
+      <h1>Habit Tracker</h1>
+      <p class="sub">Consistency is key. Every square is one day between August 12 and December 31, 2026.</p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <section class="banner" id="banner"></section>
+
+  <section>
+    <div class="sec-head">
+      <h2><span class="ico">🟩</span> Every goal, every day</h2>
+      <span class="sec-note">A square fills only when every habit below is hit or resting.</span>
+    </div>
+    <div class="card">
+      <div class="hm-scroll" id="hm-overall"></div>
+      <div class="legend">
+        <span><i style="background: var(--grid-empty)"></i>No data</span>
+        <span><i class="sq miss" style="background: rgba(239,68,68,0.28)"></i>Missed</span>
+        <span><i style="background: rgba(251,191,36,0.55)"></i>Close</span>
+        <span><i style="background: var(--purple); opacity: .75"></i>Rest day</span>
+        <span class="scale">Goals hit
+          <i style="background: rgba(16,185,129,0.35)"></i>
+          <i style="background: rgba(16,185,129,0.55)"></i>
+          <i style="background: rgba(16,185,129,0.78)"></i>
+          <i style="background: var(--green)"></i>
+        </span>
+        <span><i style="box-shadow: 0 0 0 1.5px var(--gold); background: var(--green)"></i>7-day streak mark</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="seg" id="range">
+      <button type="button" data-r="all" class="on" id="rangeAll">Full window</button>
+      <button type="button" data-r="90">Last 90 days</button>
+      <button type="button" data-r="30">Last 30 days</button>
+    </div>
+  </div>
+
+  <div id="groups"></div>
+
+  <section>
+    <div class="sec-head">
+      <h2><span class="ico">🔗</span> Cross-check with the Fitness Tracker</h2>
+      <span class="sec-note">This page owns its data. The sheet is read alongside it and disagreements surface here.</span>
+    </div>
+    <div class="card" id="xcheck"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2><span class="ico">📋</span> The log</h2>
+    </div>
+    <div class="card">
+      <details open>
+        <summary>Day by day</summary>
+        <div class="scroll">
+          <table>
+            <thead><tr id="tHead"></tr></thead>
+            <tbody id="tBody"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    Data lives in <code>~/Documents/habit-tracker/entries.json</code> and is the source of truth for this page.
+    Nutrition, training and sleep are cross-checked against the <b>Jonny's Fitness Tracker</b> spreadsheet on every build.
+    Log a day by starting a thread with <code>/habit-log</code>, or rebuild by hand with <code>python3 build.py</code>.
+  </footer>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script type="application/json" id="data">{"generated":"2026-08-11 22:13","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-12","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{},"sheet":{},"sheet_read_at":"2026-08-11 22:13"}</script>
+<script>
+(function () {
+  "use strict";
+
+  var D = JSON.parse(document.getElementById("data").textContent);
+  var CFG = D.config;
+  var ENTRIES = D.entries;
+  var SHEET = D.sheet || {};
+  var HABITS = [];
+  CFG.groups.forEach(function (g) {
+    g.habits.forEach(function (h) { h.group = g.id; HABITS.push(h); });
+  });
+
+  var MS = 86400000;
+  var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function parse(iso) {
+    var p = iso.split("-");
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  }
+  function iso(d) {
+    var m = d.getMonth() + 1, day = d.getDate();
+    return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+  }
+  function pretty(isoStr) {
+    var d = parse(isoStr);
+    return DOW[d.getDay()] + ", " + MON[d.getMonth()] + " " + d.getDate();
+  }
+
+  var START = CFG.start_date;
+  var END = CFG.end_date;
+  var TODAY = D.today;
+
+  /* Every date in the tracked window, in order. */
+  var ALL = [];
+  for (var c = parse(START); c <= parse(END); c = new Date(c.getTime() + MS)) ALL.push(iso(c));
+
+  /* Days that are done: in the window and not in the future. */
+  function past() {
+    return ALL.filter(function (d) { return d <= TODAY; });
+  }
+
+  /* ------------------------------------------------------------ scoring */
+
+  /** Score one habit on one day.
+   *  Returns {state, value, ratio} where state is one of
+   *  none | future | rest | met | close | miss. */
+  function score(habit, date) {
+    if (date > TODAY) return { state: "future" };
+    var day = ENTRIES[date];
+    if (!day) return { state: "none" };
+    var v = day[habit.id];
+    if (v === undefined || v === null || v === "") return { state: "none" };
+    if (v === "rest") return { state: "rest" };
+
+    if (habit.type === "bool") {
+      var truthy = v === true || v === 1 || v === "yes" || v === "true";
+      return { state: truthy ? "met" : "miss", value: truthy, ratio: truthy ? 1 : 0 };
+    }
+
+    var num = Number(v);
+    if (isNaN(num)) return { state: "none" };
+    var t = habit.target;
+    var ok, ratio;
+    if (habit.direction === "max") {
+      ok = num <= t;
+      /* Under the ceiling scores higher the further under it you are, capped. */
+      ratio = t > 0 ? (t - num) / t : 0;
+    } else {
+      ok = num >= t;
+      ratio = t > 0 ? num / t : 0;
+    }
+    if (ok) return { state: "met", value: num, ratio: ratio };
+    var near = habit.direction === "max" ? num <= t * 1.1 : num >= t * 0.9;
+    return { state: near ? "close" : "miss", value: num, ratio: ratio };
+  }
+
+  /** Intensity bucket 1 to 4 for a met day. */
+  function level(habit, res) {
+    if (habit.type === "bool") return 4;
+    var r = res.ratio;
+    if (habit.direction === "max") {
+      /* 0 means exactly at the ceiling, 0.25+ means a quarter under it. */
+      if (r >= 0.2) return 4;
+      if (r >= 0.12) return 3;
+      if (r >= 0.05) return 2;
+      return 1;
+    }
+    if (r >= 1.5) return 4;
+    if (r >= 1.25) return 3;
+    if (r >= 1.1) return 2;
+    return 1;
+  }
+
+  /** Score the whole day across every habit. */
+  function scoreDay(date) {
+    if (date > TODAY) return { state: "future" };
+    var hit = 0, rest = 0, miss = 0, close = 0, none = 0;
+    HABITS.forEach(function (h) {
+      var s = score(h, date).state;
+      if (s === "met") hit++;
+      else if (s === "rest") rest++;
+      else if (s === "close") close++;
+      else if (s === "miss") miss++;
+      else none++;
+    });
+    if (none === HABITS.length) return { state: "none", hit: 0, of: HABITS.length };
+    var counted = HABITS.length - rest;
+    var perfect = miss === 0 && close === 0 && none === 0;
+    var state;
+    if (perfect) state = "met";
+    else if (miss === 0 && none === 0) state = "close";
+    else state = "miss";
+    return {
+      state: state, hit: hit, rest: rest, miss: miss, close: close, none: none,
+      of: HABITS.length, counted: counted,
+      ratio: counted > 0 ? hit / counted : 0
+    };
+  }
+
+  function dayLevel(res) {
+    var r = res.ratio || 0;
+    if (r >= 1) return 4;
+    if (r >= 0.75) return 3;
+    if (r >= 0.5) return 2;
+    return 1;
+  }
+
+  /* ---------------------------------------------------------- streaks */
+
+  /** Current streak counting back from today. A day with no data ends it,
+   *  except today itself, which is still in progress. Rest days pass through. */
+  function currentStreak(isMet) {
+    var days = past();
+    var n = 0;
+    for (var i = days.length - 1; i >= 0; i--) {
+      var v = isMet(days[i]);
+      if (v === "rest") continue;
+      if (v === "met") { n++; continue; }
+      if (v === "none" && days[i] === TODAY) continue;
+      break;
+    }
+    return n;
+  }
+
+  function longestStreak(isMet) {
+    var best = 0, run = 0;
+    past().forEach(function (d) {
+      var v = isMet(d);
+      if (v === "rest") return;
+      if (v === "met") { run++; if (run > best) best = run; }
+      else run = 0;
+    });
+    return best;
+  }
+
+  /** Hit rate over logged, non-rest days. */
+  function rate(isMet, window) {
+    var days = past();
+    if (window) days = days.slice(-window);
+    var hit = 0, total = 0;
+    days.forEach(function (d) {
+      var v = isMet(d);
+      if (v === "rest" || v === "none") return;
+      total++;
+      if (v === "met") hit++;
+    });
+    return { hit: hit, total: total, pct: total ? Math.round((100 * hit) / total) : null };
+  }
+
+  var habitState = function (h) {
+    return function (d) { return score(h, d).state; };
+  };
+  var dayState = function (d) { return scoreDay(d).state; };
+
+  /* --------------------------------------------------------- heatmaps */
+
+  function startOfWeek(d) {
+    var x = new Date(d.getTime());
+    x.setDate(x.getDate() - x.getDay());
+    return x;
+  }
+
+  /** Build a heatmap into `host` over `dates`, classing each square via `cls`
+   *  and tooltipping via `tipFor`. Milestone rings mark each 7th day of the
+   *  active streak so long runs are visible at a glance. */
+  function heatmap(host, dates, cls, tipFor) {
+    host.innerHTML = "";
+    var first = parse(dates[0]);
+    var last = parse(dates[dates.length - 1]);
+    var gridStart = startOfWeek(first);
+    var weeks = Math.ceil((last - gridStart) / (7 * MS)) + 1;
+
+    var hm = document.createElement("div");
+    hm.className = "hm";
+
+    var labels = document.createElement("div");
+    labels.className = "hm-days";
+    DOW.forEach(function (name, i) {
+      var s = document.createElement("span");
+      s.textContent = i % 2 === 1 ? name : "";
+      labels.appendChild(s);
+    });
+    hm.appendChild(labels);
+
+    var body = document.createElement("div");
+    body.className = "hm-body";
+
+    var months = document.createElement("div");
+    months.className = "hm-months";
+    months.style.gridTemplateColumns = "repeat(" + weeks + ", var(--cell))";
+
+    var grid = document.createElement("div");
+    grid.className = "hm-grid";
+
+    var inRange = {};
+    dates.forEach(function (d) { inRange[d] = true; });
+
+    /* Track consecutive met days so every 7th gets the gold ring. */
+    var run = 0;
+    var rings = {};
+    dates.forEach(function (d) {
+      var st = cls(d).state;
+      if (st === "rest") return;
+      if (st === "met") { run++; if (run % 7 === 0) rings[d] = true; }
+      else if (st !== "future" && st !== "none") run = 0;
+      else if (st === "none" && d !== TODAY) run = 0;
+    });
+
+    var seenMonth = -1;
+    for (var w = 0; w < weeks; w++) {
+      var weekStart = new Date(gridStart.getTime() + w * 7 * MS);
+      var label = document.createElement("span");
+      /* Label a column when the month of its first in-range day is new. */
+      for (var k = 0; k < 7; k++) {
+        var probe = new Date(weekStart.getTime() + k * MS);
+        if (inRange[iso(probe)]) {
+          if (probe.getMonth() !== seenMonth) {
+            seenMonth = probe.getMonth();
+            label.textContent = MON[seenMonth];
+          }
+          break;
+        }
+      }
+      months.appendChild(label);
+
+      for (var dow = 0; dow < 7; dow++) {
+        var date = iso(new Date(weekStart.getTime() + dow * MS));
+        var sq = document.createElement("div");
+        if (!inRange[date]) {
+          sq.className = "sq void";
+          grid.appendChild(sq);
+          continue;
+        }
+        var res = cls(date);
+        var name = "sq hot " + res.state;
+        if (res.state === "met") name = "sq hot met-" + res.level;
+        if (rings[date]) name += " milestone";
+        if (date === TODAY) name += " today";
+        sq.className = name;
+        sq.dataset.tip = tipFor(date, res);
+        grid.appendChild(sq);
+      }
+    }
+
+    body.appendChild(months);
+    body.appendChild(grid);
+    hm.appendChild(body);
+    host.appendChild(hm);
+  }
+
+  /* ---------------------------------------------------------- tooltip */
+  var tip = document.getElementById("tip");
+  document.addEventListener("mouseover", function (e) {
+    var t = e.target;
+    if (!t.dataset || !t.dataset.tip) { tip.classList.remove("on"); return; }
+    tip.innerHTML = t.dataset.tip;
+    tip.classList.add("on");
+    var r = t.getBoundingClientRect();
+    var w = tip.offsetWidth;
+    var left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+    var top = r.top - tip.offsetHeight - 9;
+    tip.style.left = left + "px";
+    tip.style.top = (top < 8 ? r.bottom + 9 : top) + "px";
+  });
+  document.addEventListener("mouseout", function () { tip.classList.remove("on"); });
+
+  /* ------------------------------------------------------------ render */
+
+  function fmt(habit, v) {
+    if (habit.type === "bool") return v ? "yes" : "no";
+    var n = Number(v);
+    var s = Number.isInteger(n) ? String(n) : n.toFixed(1);
+    return s + (habit.unit ? " " + habit.unit : "");
+  }
+
+  function habitTip(habit) {
+    return function (date, res) {
+      var head = "<span class='t-d'>" + pretty(date) + "</span>";
+      if (res.state === "future") return head + "Not yet";
+      if (res.state === "none") return head + "Nothing logged";
+      if (res.state === "rest") return head + "Rest day";
+      var verdict = res.state === "met" ? "hit" : res.state === "close" ? "close" : "missed";
+      var body = "<b>" + fmt(habit, res.value) + "</b> " + verdict;
+      if (habit.type === "number") {
+        body += " <span style='color:var(--muted)'>(" +
+          (habit.direction === "max" ? "max " : "min ") + habit.target + ")</span>";
+      }
+      var src = (ENTRIES[date] && ENTRIES[date].source && ENTRIES[date].source[habit.id]) || null;
+      if (src === "sheet") body += "<br><span style='color:var(--muted);font-size:11px'>from the Fitness Tracker</span>";
+      return head + body;
+    };
+  }
+
+  function dayTip(date, res) {
+    var head = "<span class='t-d'>" + pretty(date) + "</span>";
+    if (res.state === "future") return head + "Not yet";
+    if (res.state === "none") return head + "Nothing logged";
+    var line = "<b>" + res.hit + "/" + res.counted + "</b> goals hit";
+    if (res.rest) line += " <span style='color:var(--purple)'>+" + res.rest + " rest</span>";
+    if (res.none) line += "<br><span style='color:var(--muted);font-size:11px'>" + res.none + " not logged</span>";
+    return head + line;
+  }
+
+  function dayCls(date) {
+    var res = scoreDay(date);
+    if (res.state === "met") res.level = dayLevel(res);
+    else if (res.state === "close") res.level = dayLevel(res);
+    return res;
+  }
+
+  function habitCls(habit) {
+    return function (date) {
+      var res = score(habit, date);
+      if (res.state === "met") res.level = level(habit, res);
+      return res;
+    };
+  }
+
+  /* -------- banner */
+  function banner() {
+    var host = document.getElementById("banner");
+    var cur = currentStreak(dayState);
+    var lng = longestStreak(dayState);
+    var all = rate(dayState);
+    var r30 = rate(dayState, 30);
+    var logged = past().filter(function (d) { return scoreDay(d).state !== "none"; }).length;
+    var left = ALL.filter(function (d) { return d > TODAY; }).length;
+
+    /* Total individual goal hits across every habit, the "contributions" number. */
+    var hits = 0, possible = 0;
+    past().forEach(function (d) {
+      HABITS.forEach(function (h) {
+        var s = score(h, d).state;
+        if (s === "met") hits++;
+        if (s === "met" || s === "miss" || s === "close") possible++;
+      });
+    });
+
+    var tiles = [
+      {
+        k: "Current perfect streak", v: cur, u: cur === 1 ? "day" : "days",
+        n: cur >= 3 ? "On a run. Do not break the chain." : "A perfect day is every goal hit.",
+        c: cur > 0 ? "gold" : "", flame: cur >= 3 ? "🔥" : ""
+      },
+      { k: "Longest streak", v: lng, u: lng === 1 ? "day" : "days", n: "Best run so far", c: "purple" },
+      {
+        k: "Perfect day rate", v: all.pct === null ? "0" : all.pct, u: "%",
+        n: all.hit + " of " + all.total + " logged days", c: "green"
+      },
+      {
+        k: "Goals hit", v: hits, u: possible ? "/ " + possible : "",
+        n: possible ? Math.round((100 * hits) / possible) + "% of every goal scored" : "Nothing scored yet", c: ""
+      },
+      {
+        k: "Last 30 days", v: r30.pct === null ? "0" : r30.pct, u: "%",
+        n: "Perfect days in the recent window", c: r30.pct !== null && r30.pct >= 70 ? "green" : "gold"
+      },
+      { k: "Days logged", v: logged, u: "/ " + past().length, n: left + " days left in 2026", c: "" }
+    ];
+
+    host.innerHTML = tiles.map(function (t) {
+      return "<div class='stat " + t.c + "'>" +
+        (t.flame ? "<span class='flame'>" + t.flame + "</span>" : "") +
+        "<span class='stat-k'>" + t.k + "</span>" +
+        "<div class='stat-v'>" + t.v + (t.u ? "<small>" + t.u + "</small>" : "") + "</div>" +
+        "<div class='stat-n'>" + t.n + "</div>" +
+        "</div>";
+    }).join("");
+  }
+
+  /* -------- groups */
+  function groups(window) {
+    var host = document.getElementById("groups");
+    host.innerHTML = "";
+    var dates = window ? past().slice(-window) : ALL;
+    if (!dates.length) dates = ALL;
+
+    CFG.groups.forEach(function (g) {
+      var sec = document.createElement("section");
+      sec.innerHTML =
+        "<div class='sec-head'><h2><span class='ico'>" + g.icon + "</span>" + g.label + "</h2>" +
+        (g.note ? "<span class='sec-note'>" + g.note + "</span>" : "") + "</div>";
+
+      var card = document.createElement("div");
+      card.className = "card";
+
+      g.habits.forEach(function (h) {
+        var stateOf = habitState(h);
+        var cur = currentStreak(stateOf);
+        var lng = longestStreak(stateOf);
+        var r = rate(stateOf);
+        var vals = past().map(function (d) { return score(h, d); })
+          .filter(function (s) { return s.state !== "none" && s.state !== "rest" && s.state !== "future"; });
+        var avg = null;
+        if (h.type === "number" && vals.length) {
+          avg = vals.reduce(function (a, s) { return a + s.value; }, 0) / vals.length;
+        }
+        var lastLogged = null;
+        for (var i = past().length - 1; i >= 0; i--) {
+          var s = score(h, past()[i]);
+          if (s.state !== "none" && s.state !== "future") { lastLogged = { date: past()[i], s: s }; break; }
+        }
+
+        var block = document.createElement("div");
+        block.className = "habit";
+        var target = h.type === "bool"
+          ? "daily"
+          : (h.direction === "max" ? "at or under " : "at least ") + h.target + (h.unit ? " " + h.unit : "");
+
+        var mini = [
+          "<span>streak <b" + (cur >= 3 ? " style='color:var(--gold)'" : "") + ">" + cur + "</b></span>",
+          "<span>best <b>" + lng + "</b></span>",
+          "<span>hit rate <b>" + (r.pct === null ? "-" : r.pct + "%") + "</b></span>"
+        ];
+        if (avg !== null) mini.push("<span>avg <b>" + (Number.isInteger(avg) ? avg : avg.toFixed(1)) + "</b></span>");
+        if (lastLogged) {
+          mini.push("<span>latest <b>" +
+            (lastLogged.s.state === "rest" ? "rest" : fmt(h, lastLogged.s.value)) + "</b></span>");
+        }
+
+        block.innerHTML =
+          "<div class='habit-head'>" +
+            "<div class='habit-name'>" + h.label + " <span class='pill'>" + target + "</span></div>" +
+            "<div class='habit-mini'>" + mini.join("") + "</div>" +
+          "</div>" +
+          (h.note ? "<p class='habit-note'>" + h.note + "</p>" : "") +
+          "<div class='hm-scroll'></div>";
+
+        card.appendChild(block);
+        heatmap(block.querySelector(".hm-scroll"), dates, habitCls(h), habitTip(h));
+      });
+
+      sec.appendChild(card);
+      host.appendChild(sec);
+    });
+  }
+
+  /* -------- cross-check against the sheet
+   *  Only two things need eyes on them: values the two records disagree about,
+   *  and values the sheet has that this page never got. Values this page has and
+   *  the sheet is missing are just an unpushed backlog, so they get a count. */
+  function xcheck() {
+    var host = document.getElementById("xcheck");
+    var tracked = HABITS.filter(function (h) { return h.sheet_column; });
+    var rows = [];
+    var agree = 0, pageOnly = 0;
+
+    past().forEach(function (date) {
+      var sheetDay = SHEET[date];
+      var pageDay = ENTRIES[date];
+      tracked.forEach(function (h) {
+        var sv = sheetDay ? sheetDay[h.id] : undefined;
+        var pv = pageDay ? pageDay[h.id] : undefined;
+        var hasS = sv !== undefined && sv !== null && sv !== "";
+        var hasP = pv !== undefined && pv !== null && pv !== "" && pv !== "rest";
+        if (!hasS && !hasP) return;
+        if (hasS && hasP) {
+          if (Math.abs(Number(sv) - Number(pv)) > 0.05) {
+            rows.push({ date: date, h: h, tag: "differs",
+              text: "page has <b>" + fmt(h, pv) + "</b>, sheet has <b>" + fmt(h, sv) + "</b>" });
+          } else {
+            agree++;
+          }
+        } else if (hasP) {
+          pageOnly++;
+        } else {
+          rows.push({ date: date, h: h, tag: "only-sheet",
+            text: "sheet has <b>" + fmt(h, sv) + "</b>, nothing logged here" });
+        }
+      });
+    });
+
+    var chips = [
+      { n: agree, label: "values agree", cls: "green" },
+      { n: rows.filter(function (r) { return r.tag === "differs"; }).length, label: "disagree", cls: "gold" },
+      { n: rows.filter(function (r) { return r.tag === "only-sheet"; }).length, label: "only in the sheet", cls: "purple" },
+      { n: pageOnly, label: "only here", cls: "blue" }
+    ];
+    var colorOf = { green: "var(--green)", gold: "var(--gold)", purple: "var(--purple)", blue: "#93b8ff" };
+
+    var head =
+      "<div style='display:flex;gap:22px;flex-wrap:wrap;margin-bottom:14px'>" +
+      chips.map(function (c) {
+        return "<div><div style=\"font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:" +
+          colorOf[c.cls] + "\">" + c.n + "</div>" +
+          "<div style='font-size:11.5px;color:var(--muted)'>" + c.label + "</div></div>";
+      }).join("") + "</div>" +
+      "<div style='font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.7'>" +
+      tracked.map(function (h) {
+        return "<code style=\"font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-2);" +
+          "background:var(--surface-2);border-radius:5px;padding:1px 6px\">" + h.sheet_column + "</code>";
+      }).join(" &middot; ") +
+      " on the <b style='color:var(--ink-2)'>Daily Log</b> tab. Sheet last read " + (D.sheet_read_at || "never") + "." +
+      (pageOnly ? " Fill the sheet's blanks with <code style=\"font-family:'JetBrains Mono',monospace;color:var(--ink-2)\">build.py --push</code>." : "") +
+      "</div>";
+
+    if (!rows.length) {
+      host.innerHTML = head +
+        "<div class='xok'>Nothing to reconcile. Where both records have a number, they match.</div>";
+      return;
+    }
+
+    rows.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var shown = rows.slice(0, 25);
+    host.innerHTML = head + shown.map(function (r) {
+      return "<div class='xrow'>" +
+        "<span class='xdate'>" + r.date + "</span>" +
+        "<span class='xtag " + r.tag + "'>" + (r.tag === "differs" ? "differs" : "sheet only") + "</span>" +
+        "<span style='color:var(--ink-2)'>" + r.h.label + ": " + r.text + "</span>" +
+      "</div>";
+    }).join("") +
+    (rows.length > shown.length
+      ? "<div class='empty' style='padding-top:12px'>and " + (rows.length - shown.length) + " more.</div>"
+      : "");
+  }
+
+  /* -------- table */
+  function table() {
+    var head = document.getElementById("tHead");
+    var body = document.getElementById("tBody");
+    head.innerHTML = "<th>Date</th>" +
+      HABITS.map(function (h) { return "<th>" + h.label + "</th>"; }).join("") +
+      "<th>Goals</th><th>Notes</th>";
+
+    var logged = past().filter(function (d) { return ENTRIES[d]; }).reverse();
+    var rows = logged.slice(0, 90);
+    if (!rows.length) {
+      body.innerHTML = "<tr><td colspan='" + (HABITS.length + 3) + "' class='na'>" +
+        "Nothing logged yet. Tell Claude about your day and it lands here.</td></tr>";
+      return;
+    }
+
+    body.innerHTML = rows.map(function (date) {
+      var day = scoreDay(date);
+      var cells = HABITS.map(function (h) {
+        var s = score(h, date);
+        if (s.state === "none") return "<td class='na'>-</td>";
+        if (s.state === "rest") return "<td class='rst'>rest</td>";
+        var cl = s.state === "met" ? "hit" : s.state === "close" ? "" : "no";
+        return "<td class='" + cl + "'>" + fmt(h, s.value) + "</td>";
+      }).join("");
+      var note = (ENTRIES[date] && ENTRIES[date].note) || "";
+      return "<tr><td>" + date + "</td>" + cells +
+        "<td class='" + (day.state === "met" ? "hit" : "") + "'>" + day.hit + "/" + day.counted + "</td>" +
+        "<td style='text-align:left;white-space:normal;color:var(--ink-2);max-width:320px'>" + note + "</td></tr>";
+    }).join("") +
+    (logged.length > rows.length
+      ? "<tr><td colspan='" + (HABITS.length + 3) + "' class='na'>and " +
+        (logged.length - rows.length) + " earlier day(s) in entries.json</td></tr>"
+      : "");
+  }
+
+  /* -------- boot */
+  function span(a, b) {
+    var s = parse(a), e = parse(b);
+    return MON[s.getMonth()] + " " + s.getDate() + " to " + MON[e.getMonth()] + " " + e.getDate();
+  }
+  document.getElementById("rangeAll").textContent = span(START, END);
+  document.querySelector("header .sub").textContent =
+    "Consistency is key. Every square is one day from " + span(START, END) + ", " +
+    parse(END).getFullYear() + ".";
+
+  document.getElementById("stamp").innerHTML =
+    "built " + D.generated + "<br>today " + TODAY + "<br>" + ALL.length + " day window";
+
+  banner();
+  heatmap(document.getElementById("hm-overall"), ALL, dayCls, dayTip);
+  groups(null);
+  xcheck();
+  table();
+
+  var seg = document.getElementById("range");
+  seg.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    Array.prototype.forEach.call(seg.querySelectorAll("button"), function (x) { x.classList.remove("on"); });
+    b.classList.add("on");
+    groups(b.dataset.r === "all" ? null : Number(b.dataset.r));
+  });
+})();
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script>
+</body>
+</html>
