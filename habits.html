@@ -32,8 +32,11 @@
 
     --radius: 16px;
     --gap: 20px;
-    --cell: 13px;
-    --cell-gap: 3px;
+    /* Two square sizes: the hero grid is the page's centrepiece, the per-habit
+       grids sit two-up in narrower columns. Both shrink on small screens. */
+    --cell: 15px;
+    --cell-hero: 26px;
+    --cell-gap: 4px;
   }
 
   * { box-sizing: border-box; }
@@ -53,7 +56,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 22px 80px; }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 40px 26px 80px; }
 
   /* ------------------------------------------------------------ header */
   header {
@@ -118,6 +121,43 @@
 
   /* ------------------------------------------------------------ layout */
   section { margin-bottom: 34px; }
+
+  /* Hero: the all-goals grid, with today's checklist beside it rather than a
+     column of dead space. Collapses to one column when it stops fitting. */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--gap); align-items: start; }
+  @media (max-width: 1080px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+
+  .today-h {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 3px;
+  }
+  .today-d { font-size: 17px; font-weight: 600; margin-bottom: 15px; }
+  .today-row {
+    display: flex; align-items: center; gap: 10px; padding: 8px 0;
+    border-top: 1px solid var(--hairline); font-size: 13.5px;
+  }
+  .today-row:first-of-type { border-top: 0; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; background: var(--grid-empty); }
+  .dot.met { background: var(--green); }
+  .dot.close { background: var(--gold); }
+  .dot.miss { background: #ef4444; }
+  .dot.rest { background: var(--purple); }
+  .today-row .lab { flex: 1; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .today-row .val { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--ink); }
+  .today-row .val.none { color: var(--muted); }
+  .today-foot {
+    margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--hairline);
+    font-size: 12.5px; color: var(--muted);
+  }
+  .today-foot b { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-size: 15px; }
+
+  /* Group cards sit two-up on wide screens, each keeping its own height. */
+  .group-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(470px, 1fr));
+    gap: var(--gap) 22px; align-items: start;
+  }
+  @media (max-width: 700px) { .group-grid { grid-template-columns: minmax(0, 1fr); } }
+  .group-grid > section { margin-bottom: 0; }
   .sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
   h2 {
     font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0;
@@ -127,7 +167,7 @@
   .sec-note { color: var(--muted); font-size: 13px; }
 
   /* ---------------------------------------------------------- controls */
-  .controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: var(--gap); }
+  .controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: -8px 0 var(--gap); }
   .seg { display: inline-flex; background: var(--surface); border: 1px solid var(--hairline); border-radius: 11px; padding: 3px; }
   .seg button {
     font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
@@ -140,6 +180,7 @@
 
   /* ---------------------------------------------------------- heatmaps */
   .hm-scroll { overflow-x: auto; padding-bottom: 4px; }
+  .hm-scroll.lg { --cell: var(--cell-hero); --cell-gap: 5px; }
   .hm { display: inline-flex; gap: 8px; min-width: min-content; }
   .hm-days {
     display: grid; grid-template-rows: repeat(7, var(--cell)); gap: var(--cell-gap);
@@ -147,6 +188,16 @@
   }
   .hm-days span { line-height: var(--cell); height: var(--cell); text-align: right; padding-right: 2px; }
   .hm-body { display: flex; flex-direction: column; gap: 3px; }
+
+  /* Fluid mode: squares stretch to fill the card instead of leaving a gutter,
+     up to a per-cell ceiling so a wide screen does not blow them up. */
+  .hm-scroll.fluid { overflow-x: visible; }
+  .hm-scroll.fluid .hm { display: flex; width: 100%; }
+  .hm-scroll.fluid .hm-body { flex: 1; min-width: 0; }
+  .hm-scroll.fluid .hm-days { grid-template-rows: repeat(7, 1fr); }
+  .hm-scroll.fluid .hm-days span { height: auto; line-height: 1; align-self: center; }
+  .hm-scroll.fluid .hm-grid { grid-template-rows: repeat(7, auto); }
+  .hm-scroll.fluid .sq { width: 100%; height: auto; aspect-ratio: 1; }
   .hm-months {
     display: grid; gap: var(--cell-gap); height: 15px;
     font-size: 10.5px; font-weight: 600; color: var(--ink-2); letter-spacing: 0.03em;
@@ -237,12 +288,48 @@
   footer code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
   footer a { color: #93b8ff; }
 
-  @media (max-width: 640px) {
-    .wrap { padding: 28px 15px 60px; }
-    h1 { font-size: 34px; }
-    .card { padding: 18px 15px; }
-    header { align-items: flex-start; }
+  /* Between one and two columns the hero grid has less room, so ease the hero
+     squares down before they force a scrollbar. */
+  @media (max-width: 1280px) { :root { --cell-hero: 22px; } }
+  @media (max-width: 1180px) { :root { --cell-hero: 19px; --cell: 14px; } }
+
+  @media (max-width: 760px) {
+    :root { --cell-hero: 17px; --cell: 15px; --cell-gap: 3px; --gap: 14px; }
+    /* Stretching 142 days across a phone leaves 9px squares, too small to tap.
+       Keep them finger-sized and let the grid scroll inside its card instead. */
+    .hm-scroll.fluid { overflow-x: auto; }
+    .hm-scroll.fluid .hm { width: max-content; min-width: 100%; }
+    .hm-scroll.fluid .hm-body { max-width: none !important; flex: none; }
+    .hm-scroll.fluid .hm-days { grid-template-rows: repeat(7, var(--cell)); }
+    .hm-scroll.fluid .hm-days span { height: var(--cell); line-height: var(--cell); }
+    .hm-scroll.fluid .hm-grid { grid-template-rows: repeat(7, var(--cell)); }
+    .hm-scroll.fluid .sq { width: var(--cell); height: var(--cell); aspect-ratio: auto; }
+    .wrap { padding: 26px 14px 60px; }
+    h1 { font-size: 33px; }
+    .sub { font-size: 14px; }
+    .card { padding: 17px 14px; }
+    header { align-items: flex-start; gap: 12px; }
     .stamp { text-align: left; }
+    .banner { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .stat { padding: 12px 13px 13px; }
+    .stat-v { font-size: 25px; }
+    .stat-n { font-size: 11.5px; }
+    h2 { font-size: 18px; }
+    .sec-head { gap: 6px; margin-bottom: 11px; }
+    .seg { width: 100%; }
+    .seg button { flex: 1; padding: 8px 6px; font-size: 12px; }
+    /* Stat rows wrap under the habit name instead of squeezing it. */
+    .habit-head { gap: 6px; }
+    .habit-mini { gap: 13px; font-size: 11.5px; }
+    .legend { gap: 10px; font-size: 11px; }
+    .xrow { gap: 8px; }
+    .xdate { min-width: 74px; }
+    footer { margin-top: 42px; }
+  }
+
+  /* Narrow phones: keep the six banner tiles readable rather than square. */
+  @media (max-width: 380px) {
+    .banner { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 </head>
@@ -265,8 +352,9 @@
       <h2><span class="ico">🟩</span> Every goal, every day</h2>
       <span class="sec-note">A square fills only when every habit below is hit or resting.</span>
     </div>
+    <div class="hero">
     <div class="card">
-      <div class="hm-scroll" id="hm-overall"></div>
+      <div class="hm-scroll lg fluid" id="hm-overall"></div>
       <div class="legend">
         <span><i style="background: var(--grid-empty)"></i>No data</span>
         <span><i class="sq miss" style="background: rgba(239,68,68,0.28)"></i>Missed</span>
@@ -281,6 +369,8 @@
         <span><i style="box-shadow: 0 0 0 1.5px var(--gold); background: var(--green)"></i>7-day streak mark</span>
       </div>
     </div>
+    <div class="card" id="todayCard"></div>
+    </div>
   </section>
 
   <div class="controls">
@@ -291,7 +381,7 @@
     </div>
   </div>
 
-  <div id="groups"></div>
+  <div id="groups" class="group-grid"></div>
 
   <section>
     <div class="sec-head">
@@ -327,7 +417,7 @@
 
 <div class="tip" id="tip"></div>
 
-<script type="application/json" id="data">{"generated":"2026-08-11 22:13","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-12","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{},"sheet":{},"sheet_read_at":"2026-08-11 22:13"}</script>
+<script type="application/json" id="data">{"generated":"2026-08-11 22:31","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-12","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{},"sheet":{},"sheet_read_at":"2026-08-11 22:31"}</script>
 <script>
 (function () {
   "use strict";
@@ -515,7 +605,8 @@
   /** Build a heatmap into `host` over `dates`, classing each square via `cls`
    *  and tooltipping via `tipFor`. Milestone rings mark each 7th day of the
    *  active streak so long runs are visible at a glance. */
-  function heatmap(host, dates, cls, tipFor) {
+  function heatmap(host, dates, cls, tipFor, opts) {
+    opts = opts || {};
     host.innerHTML = "";
     var first = parse(dates[0]);
     var last = parse(dates[dates.length - 1]);
@@ -537,12 +628,21 @@
     var body = document.createElement("div");
     body.className = "hm-body";
 
+    var columns = opts.fluid
+      ? "repeat(" + weeks + ", minmax(0, 1fr))"
+      : "repeat(" + weeks + ", var(--cell))";
+    if (opts.fluid) {
+      /* Cap the stretch so a very wide screen does not turn days into tiles. */
+      body.style.maxWidth = weeks * ((opts.maxCell || 32) + 5) + "px";
+    }
+
     var months = document.createElement("div");
     months.className = "hm-months";
-    months.style.gridTemplateColumns = "repeat(" + weeks + ", var(--cell))";
+    months.style.gridTemplateColumns = columns;
 
     var grid = document.createElement("div");
     grid.className = "hm-grid";
+    grid.style.gridTemplateColumns = columns;
 
     var inRange = {};
     dates.forEach(function (d) { inRange[d] = true; });
@@ -602,19 +702,31 @@
 
   /* ---------------------------------------------------------- tooltip */
   var tip = document.getElementById("tip");
-  document.addEventListener("mouseover", function (e) {
-    var t = e.target;
-    if (!t.dataset || !t.dataset.tip) { tip.classList.remove("on"); return; }
-    tip.innerHTML = t.dataset.tip;
+
+  function showTip(target) {
+    tip.innerHTML = target.dataset.tip;
     tip.classList.add("on");
-    var r = t.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
     var w = tip.offsetWidth;
     var left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
     var top = r.top - tip.offsetHeight - 9;
     tip.style.left = left + "px";
     tip.style.top = (top < 8 ? r.bottom + 9 : top) + "px";
+  }
+
+  document.addEventListener("mouseover", function (e) {
+    var t = e.target;
+    if (!t.dataset || !t.dataset.tip) { tip.classList.remove("on"); return; }
+    showTip(t);
   });
   document.addEventListener("mouseout", function () { tip.classList.remove("on"); });
+
+  /* Touch has no hover, so a tap on a square reads it out instead. */
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    if (t.dataset && t.dataset.tip) showTip(t);
+    else tip.classList.remove("on");
+  });
 
   /* ------------------------------------------------------------ render */
 
@@ -720,6 +832,45 @@
     }).join("");
   }
 
+  /* -------- today's checklist, so the hero row carries something on its right */
+  function todayCard() {
+    var host = document.getElementById("todayCard");
+    var before = TODAY < START;
+    var after = TODAY > END;
+    var date = before ? START : after ? END : TODAY;
+
+    var rows = HABITS.map(function (h) {
+      var res = score(h, date);
+      var value = res.state === "future" || res.state === "none"
+        ? "not logged"
+        : res.state === "rest" ? "rest" : fmt(h, res.value);
+      var dotState = res.state === "future" ? "" : res.state;
+      return "<div class='today-row'>" +
+        "<i class='dot " + dotState + "'></i>" +
+        "<span class='lab'>" + h.label + "</span>" +
+        "<span class='val" + (value === "not logged" ? " none" : "") + "'>" + value + "</span>" +
+      "</div>";
+    }).join("");
+
+    var day = scoreDay(date);
+    var foot;
+    if (before) {
+      foot = "Tracking starts " + pretty(START) + ". Nothing to log until then.";
+    } else if (day.state === "none") {
+      foot = "Nothing logged yet. Tell Claude about your day.";
+    } else {
+      foot = "<b>" + day.hit + "/" + day.counted + "</b> goals hit" +
+        (day.rest ? ", " + day.rest + " resting" : "") +
+        (day.none ? ", " + day.none + " still open" : "");
+    }
+
+    host.innerHTML =
+      "<div class='today-h'>" + (before ? "First day" : after ? "Final day" : "Today") + "</div>" +
+      "<div class='today-d'>" + pretty(date) + "</div>" +
+      rows +
+      "<div class='today-foot'>" + foot + "</div>";
+  }
+
   /* -------- groups */
   function groups(window) {
     var host = document.getElementById("groups");
@@ -776,10 +927,11 @@
             "<div class='habit-mini'>" + mini.join("") + "</div>" +
           "</div>" +
           (h.note ? "<p class='habit-note'>" + h.note + "</p>" : "") +
-          "<div class='hm-scroll'></div>";
+          "<div class='hm-scroll fluid'></div>";
 
         card.appendChild(block);
-        heatmap(block.querySelector(".hm-scroll"), dates, habitCls(h), habitTip(h));
+        heatmap(block.querySelector(".hm-scroll"), dates, habitCls(h), habitTip(h),
+          { fluid: true, maxCell: 20 });
       });
 
       sec.appendChild(card);
@@ -916,7 +1068,8 @@
     "built " + D.generated + "<br>today " + TODAY + "<br>" + ALL.length + " day window";
 
   banner();
-  heatmap(document.getElementById("hm-overall"), ALL, dayCls, dayTip);
+  heatmap(document.getElementById("hm-overall"), ALL, dayCls, dayTip, { fluid: true, maxCell: 36 });
+  todayCard();
   groups(null);
   xcheck();
   table();
