@@ -22,8 +22,17 @@
 <meta name="twitter:description" content="GitHub-style habit heatmaps for the rest of 2026: nutrition, training, sleep and reading.">
 <meta name="twitter:image" content="https://jonathanlinford.github.io/personal-pages/habits-og.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟩</text></svg>">
+
+<!-- Inter for headings and Satoshi for running text, the pairing the style
+     guide calls for. Satoshi comes from Fontshare, which is its only host.
+     Preconnects because both faces are on the critical paint path. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
   /* Dark is the design's home key, so it holds the base tokens. Light is a full
      re-tint further down, chosen by the system theme. Every colour on the page
@@ -72,6 +81,12 @@
     --card-edge: 0.4;
     --tip-shadow: rgba(0, 0, 0, 0.55);
     --tip-border: rgba(255, 255, 255, 0.13);
+
+    /* Satoshi carries the running text, Inter the headings and the big figures,
+       JetBrains Mono the dates and small tabular labels. */
+    --font-body: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-display: 'Inter', 'Satoshi', -apple-system, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
     --radius: 16px;
     --gap: 20px;
@@ -141,10 +156,13 @@
       radial-gradient(900px 520px at 88% 0%, var(--glow-purple), transparent 60%),
       var(--bg);
     color: var(--ink);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 16px;
-    line-height: 1.55;
+    line-height: 1.6;
+    font-feature-settings: "tnum" 1;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   .wrap { max-width: 1360px; margin: 0 auto; padding: 40px 26px 80px; }
@@ -159,13 +177,14 @@
     color: var(--muted); margin-bottom: 6px;
   }
   h1 {
-    font-size: 48px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; margin: 0;
+    font-family: var(--font-display);
+    font-size: 48px; font-weight: 600; letter-spacing: -0.028em; line-height: 1.04; margin: 0;
     background: linear-gradient(100deg, var(--h1-from) 10%, var(--h1-mid) 60%, var(--h1-to) 95%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
   .sub { color: var(--ink-2); font-size: 15px; margin-top: 10px; max-width: 62ch; }
   .stamp {
-    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted);
+    font-family: var(--font-mono); font-size: 11px; color: var(--muted);
     text-align: right; line-height: 1.7;
   }
 
@@ -200,8 +219,8 @@
     color: var(--muted); display: block; margin-bottom: 7px;
   }
   .stat-v {
-    font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 600;
-    letter-spacing: -0.02em; line-height: 1;
+    font-family: var(--font-display); font-size: 32px; font-weight: 600;
+    letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums;
   }
   .stat.gold .stat-v { color: var(--gold); }
   .stat.green .stat-v { color: var(--green); }
@@ -222,7 +241,7 @@
     font-size: 11px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
     color: var(--muted); margin-bottom: 3px;
   }
-  .today-d { font-size: 17px; font-weight: 600; margin-bottom: 15px; }
+  .today-d { font-family: var(--font-display); font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 15px; }
   .today-row {
     display: flex; align-items: center; gap: 10px; padding: 8px 0;
     border-top: 1px solid var(--hairline); font-size: 13.5px;
@@ -234,13 +253,13 @@
   .dot.miss { background: var(--dot-miss); }
   .dot.rest { background: var(--sq-rest); }
   .today-row .lab { flex: 1; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .today-row .val { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--ink); }
+  .today-row .val { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); }
   .today-row .val.none { color: var(--muted); }
   .today-foot {
     margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--hairline);
     font-size: 12.5px; color: var(--muted);
   }
-  .today-foot b { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-size: 15px; }
+  .today-foot b { font-family: var(--font-display); font-weight: 600; color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
 
   /* Group cards sit two-up on wide screens, each keeping its own height. */
   .group-grid {
@@ -251,7 +270,8 @@
   .group-grid > section { margin-bottom: 0; }
   .sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
   h2 {
-    font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 0;
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 600; letter-spacing: -0.015em; margin: 0;
     display: flex; align-items: center; gap: 9px;
   }
   h2 .ico { font-size: 18px; }
@@ -320,14 +340,17 @@
   .habit { padding: 16px 0; border-top: 1px solid var(--hairline); }
   .habit:first-child { border-top: 0; padding-top: 4px; }
   .habit-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 11px; }
-  .habit-name { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .habit-name {
+    font-family: var(--font-display); font-size: 15.5px; font-weight: 600;
+    letter-spacing: -0.012em; display: flex; align-items: center; gap: 8px;
+  }
   .pill {
-    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
     color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--hairline);
     border-radius: 20px; padding: 2px 9px;
   }
   .habit-mini { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
-  .habit-mini b { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink); font-size: 13px; }
+  .habit-mini b { font-family: var(--font-display); font-weight: 600; color: var(--ink); font-size: 13.5px; font-variant-numeric: tabular-nums; }
   .habit-note { font-size: 12.5px; color: var(--muted); margin: 0 0 11px; }
 
   /* ----------------------------------------------------------- legend */
@@ -362,12 +385,12 @@
   }
   .tip.on { opacity: 1; }
   .tip .t-d { display: block; color: var(--muted); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 3px; }
-  .tip b { font-family: 'JetBrains Mono', monospace; }
+  .tip b { font-family: var(--font-mono); }
 
   /* ------------------------------------------------------ cross-check */
   .xrow { display: flex; align-items: center; gap: 12px; font-size: 13px; padding: 9px 0; border-top: 1px solid var(--hairline); flex-wrap: wrap; }
   .xrow:first-of-type { border-top: 0; }
-  .xdate { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); min-width: 82px; }
+  .xdate { font-family: var(--font-mono); font-size: 12px; color: var(--muted); min-width: 82px; }
   .xtag {
     font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
     border-radius: 5px; padding: 2px 7px;
@@ -384,7 +407,7 @@
   .scroll { overflow-x: auto; margin-top: 10px; }
   table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
   th, td { text-align: right; padding: 7px 11px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
-  th:first-child, td:first-child { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  th:first-child, td:first-child { text-align: left; font-family: var(--font-mono); font-size: 12px; }
   thead th { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
   tbody tr:hover { background: var(--surface-2); }
   td.hit { color: var(--green); font-weight: 600; }
@@ -394,7 +417,7 @@
 
   .empty { color: var(--muted); font-size: 14px; padding: 6px 0; }
   footer { margin-top: 60px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 18px; line-height: 1.8; }
-  footer code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
+  footer code { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
   footer a { color: var(--link); }
 
   /* Between one and two columns the hero grid has less room, so ease the hero
@@ -546,7 +569,7 @@
 
 <div class="tip" id="tip"></div>
 
-<script type="application/json" id="data">{"generated":"2026-08-11 23:01","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-11","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{"2026-08-11":{"source":{"calories":"logged","protein":"logged","workout":"logged","sleep":"logged","reading_kids":"logged","scriptures":"logged"},"calories":2050,"protein":165,"workout":45,"sleep":7,"reading_kids":true,"scriptures":true,"note":"Everything hit: hard 45 on the bike, read with Luke and Sally, scriptures with Lauren."}},"sheet":{},"sheet_read_at":"2026-08-11 23:01"}</script>
+<script type="application/json" id="data">{"generated":"2026-08-11 23:16","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-11","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{"2026-08-11":{"source":{"calories":"logged","protein":"logged","workout":"logged","sleep":"logged","reading_kids":"logged","scriptures":"logged"},"calories":2050,"protein":165,"workout":45,"sleep":7,"reading_kids":true,"scriptures":true,"note":"Everything hit: hard 45 on the bike, read with Luke and Sally, scriptures with Lauren."}},"sheet":{},"sheet_read_at":"2026-08-11 23:16"}</script>
 <script>
 (function () {
   "use strict";
@@ -1114,17 +1137,17 @@
     var head =
       "<div style='display:flex;gap:22px;flex-wrap:wrap;margin-bottom:14px'>" +
       chips.map(function (c) {
-        return "<div><div style=\"font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;color:" +
+        return "<div><div style=\"font-family:var(--font-mono);font-size:22px;font-weight:600;color:" +
           colorOf[c.cls] + "\">" + c.n + "</div>" +
           "<div style='font-size:11.5px;color:var(--muted)'>" + c.label + "</div></div>";
       }).join("") + "</div>" +
       "<div style='font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.7'>" +
       tracked.map(function (h) {
-        return "<code style=\"font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-2);" +
+        return "<code style=\"font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);" +
           "background:var(--surface-2);border-radius:5px;padding:1px 6px\">" + h.sheet_column + "</code>";
       }).join(" &middot; ") +
       " on the <b style='color:var(--ink-2)'>Daily Log</b> tab. Sheet last read " + (D.sheet_read_at || "never") + "." +
-      (pageOnly ? " Fill the sheet's blanks with <code style=\"font-family:'JetBrains Mono',monospace;color:var(--ink-2)\">build.py --push</code>." : "") +
+      (pageOnly ? " Fill the sheet's blanks with <code style=\"font-family:var(--font-mono);color:var(--ink-2)\">build.py --push</code>." : "") +
       "</div>";
 
     if (!rows.length) {
