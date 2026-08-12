@@ -25,6 +25,9 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+  /* Dark is the design's home key, so it holds the base tokens. Light is a full
+     re-tint further down, chosen by the system theme. Every colour on the page
+     is a token so neither theme has a hardcoded value hiding in a rule. */
   :root {
     --charcoal: #111111;
     --slate: #1F2937;
@@ -42,6 +45,33 @@
     --muted: #6f7789;
     --hairline: rgba(255, 255, 255, 0.07);
     --grid-empty: #1b1f29;
+    --link: #93b8ff;
+
+    /* Heatmap states */
+    --sq-future: rgba(255, 255, 255, 0.035);
+    --sq-miss: rgba(239, 68, 68, 0.28);
+    --sq-close: rgba(251, 191, 36, 0.55);
+    --sq-rest: var(--purple);
+    --sq-rest-op: 0.75;
+    --met-1: rgba(16, 185, 129, 0.35);
+    --met-2: rgba(16, 185, 129, 0.55);
+    --met-3: rgba(16, 185, 129, 0.78);
+    --met-4: #10B981;
+
+    --dot-miss: #ef4444;
+    --ink-miss: #f87171;
+    --tag-gold-bg: rgba(251, 191, 36, 0.16);
+    --tag-blue-bg: rgba(59, 130, 246, 0.16);
+    --tag-purple-bg: rgba(139, 92, 246, 0.18);
+    --tag-purple-ink: #c3aeff;
+    --glow-blue: rgba(59, 130, 246, 0.16);
+    --glow-purple: rgba(139, 92, 246, 0.14);
+    --h1-from: #ffffff;
+    --h1-mid: #a5c4ff;
+    --h1-to: #c4b1ff;
+    --card-edge: 0.4;
+    --tip-shadow: rgba(0, 0, 0, 0.55);
+    --tip-border: rgba(255, 255, 255, 0.13);
 
     --radius: 16px;
     --gap: 20px;
@@ -52,6 +82,54 @@
     --cell-gap: 4px;
   }
 
+  @media (prefers-color-scheme: light) {
+    :root {
+      /* Accents darken so they still carry text weight on white. */
+      --gold: #B45309;
+      --green: #047857;
+      --purple: #6D28D9;
+
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-2: #eef1f7;
+      --ink: #10131a;
+      --ink-2: #414a5c;
+      --muted: #6b7488;
+      --hairline: rgba(16, 19, 26, 0.11);
+      --grid-empty: #e4e8f0;
+      --link: #1d4ed8;
+
+      /* Squares stay vivid rather than washing out, the way GitHub's light
+         contribution scale does. */
+      --sq-future: rgba(16, 19, 26, 0.035);
+      /* A miss should read as "logged and blown" without shouting over the
+         greens, so it sits just above the empty tone rather than full red. */
+      --sq-miss: #f3cdcd;
+      --sq-close: #fbe0a0;
+      --sq-rest: #c4b5fd;
+      --sq-rest-op: 1;
+      --met-1: #a7f3d0;
+      --met-2: #6ee7b7;
+      --met-3: #34d399;
+      --met-4: #059669;
+
+      --dot-miss: #dc2626;
+      --ink-miss: #b91c1c;
+      --tag-gold-bg: rgba(180, 83, 9, 0.13);
+      --tag-blue-bg: rgba(59, 130, 246, 0.14);
+      --tag-purple-bg: rgba(109, 40, 217, 0.13);
+      --tag-purple-ink: #5b21b6;
+      --glow-blue: rgba(59, 130, 246, 0.13);
+      --glow-purple: rgba(139, 92, 246, 0.13);
+      --h1-from: #10131a;
+      --h1-mid: #2b5fd0;
+      --h1-to: #6d28d9;
+      --card-edge: 0.55;
+      --tip-shadow: rgba(16, 19, 26, 0.18);
+      --tip-border: rgba(16, 19, 26, 0.12);
+    }
+  }
+
   * { box-sizing: border-box; }
 
   html, body { max-width: 100%; overflow-x: hidden; }
@@ -59,8 +137,8 @@
   body {
     margin: 0;
     background:
-      radial-gradient(1100px 600px at 12% -8%, rgba(59, 130, 246, 0.16), transparent 60%),
-      radial-gradient(900px 520px at 88% 0%, rgba(139, 92, 246, 0.14), transparent 60%),
+      radial-gradient(1100px 600px at 12% -8%, var(--glow-blue), transparent 60%),
+      radial-gradient(900px 520px at 88% 0%, var(--glow-purple), transparent 60%),
       var(--bg);
     color: var(--ink);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -82,7 +160,7 @@
   }
   h1 {
     font-size: 48px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; margin: 0;
-    background: linear-gradient(100deg, #ffffff 10%, #a5c4ff 60%, #c4b1ff 95%);
+    background: linear-gradient(100deg, var(--h1-from) 10%, var(--h1-mid) 60%, var(--h1-to) 95%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
   .sub { color: var(--ink-2); font-size: 15px; margin-top: 10px; max-width: 62ch; }
@@ -101,7 +179,7 @@
     background: linear-gradient(135deg, var(--accent) 0%, var(--purple) 52%, var(--green) 100%);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude; opacity: 0.4; pointer-events: none;
+    mask-composite: exclude; opacity: var(--card-edge); pointer-events: none;
   }
 
   /* -------------------------------------------------------- stat banner */
@@ -151,10 +229,10 @@
   }
   .today-row:first-of-type { border-top: 0; }
   .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; background: var(--grid-empty); }
-  .dot.met { background: var(--green); }
-  .dot.close { background: var(--gold); }
-  .dot.miss { background: #ef4444; }
-  .dot.rest { background: var(--purple); }
+  .dot.met { background: var(--met-4); }
+  .dot.close { background: var(--sq-close); }
+  .dot.miss { background: var(--dot-miss); }
+  .dot.rest { background: var(--sq-rest); }
   .today-row .lab { flex: 1; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .today-row .val { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--ink); }
   .today-row .val.none { color: var(--muted); }
@@ -225,15 +303,15 @@
     background: var(--grid-empty); cursor: default; transition: transform 0.08s;
   }
   .sq.void { background: transparent; }
-  .sq.future { background: rgba(255, 255, 255, 0.035); }
+  .sq.future { background: var(--sq-future); }
   .sq.today { box-shadow: 0 0 0 1.5px var(--accent); }
-  .sq.miss { background: rgba(239, 68, 68, 0.28); }
-  .sq.close { background: rgba(251, 191, 36, 0.55); }
-  .sq.rest { background: var(--purple); opacity: 0.75; }
-  .sq.met-1 { background: rgba(16, 185, 129, 0.35); }
-  .sq.met-2 { background: rgba(16, 185, 129, 0.55); }
-  .sq.met-3 { background: rgba(16, 185, 129, 0.78); }
-  .sq.met-4 { background: var(--green); }
+  .sq.miss { background: var(--sq-miss); }
+  .sq.close { background: var(--sq-close); }
+  .sq.rest { background: var(--sq-rest); opacity: var(--sq-rest-op); }
+  .sq.met-1 { background: var(--met-1); }
+  .sq.met-2 { background: var(--met-2); }
+  .sq.met-3 { background: var(--met-3); }
+  .sq.met-4 { background: var(--met-4); }
   .sq.milestone { box-shadow: 0 0 0 1.5px var(--gold); }
   .sq.hot:hover { transform: scale(1.35); }
   .sq.sheet { position: relative; }
@@ -257,12 +335,30 @@
   .legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; vertical-align: -1px; margin-right: 5px; }
   .scale { display: inline-flex; align-items: center; gap: 3px; }
 
+  /* Fade the edge of a scrollable grid so it reads as "there is more this way".
+     JS toggles can-scroll / at-start / at-end as the container scrolls. */
+  .hm-scroll.can-scroll, .scroll.can-scroll {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18px, #000 calc(100% - 22px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 18px, #000 calc(100% - 22px), transparent 100%);
+  }
+  .hm-scroll.can-scroll.at-start, .scroll.can-scroll.at-start {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 calc(100% - 22px), transparent 100%);
+  }
+  .hm-scroll.can-scroll.at-end, .scroll.can-scroll.at-end {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18px);
+    mask-image: linear-gradient(to right, transparent 0, #000 18px);
+  }
+  .hm-scroll.can-scroll.at-start.at-end, .scroll.can-scroll.at-start.at-end {
+    -webkit-mask-image: none; mask-image: none;
+  }
+
   /* ---------------------------------------------------------- tooltip */
   .tip {
     position: fixed; pointer-events: none; opacity: 0; transition: opacity 0.09s;
-    background: var(--surface-2); color: var(--ink); border: 1px solid rgba(255, 255, 255, 0.13);
+    background: var(--surface-2); color: var(--ink); border: 1px solid var(--tip-border);
     border-radius: 10px; padding: 8px 11px; font-size: 12px; line-height: 1.5;
-    white-space: nowrap; z-index: 40; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    white-space: nowrap; z-index: 40; box-shadow: 0 12px 30px var(--tip-shadow);
   }
   .tip.on { opacity: 1; }
   .tip .t-d { display: block; color: var(--muted); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 3px; }
@@ -276,9 +372,9 @@
     font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
     border-radius: 5px; padding: 2px 7px;
   }
-  .xtag.differs { background: rgba(251, 191, 36, 0.16); color: var(--gold); }
-  .xtag.only-page { background: rgba(59, 130, 246, 0.16); color: #93b8ff; }
-  .xtag.only-sheet { background: rgba(139, 92, 246, 0.18); color: #c3aeff; }
+  .xtag.differs { background: var(--tag-gold-bg); color: var(--gold); }
+  .xtag.only-page { background: var(--tag-blue-bg); color: var(--link); }
+  .xtag.only-sheet { background: var(--tag-purple-bg); color: var(--tag-purple-ink); }
   .xok { color: var(--green); font-size: 13px; }
 
   /* ------------------------------------------------------------ table */
@@ -292,14 +388,14 @@
   thead th { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
   tbody tr:hover { background: var(--surface-2); }
   td.hit { color: var(--green); font-weight: 600; }
-  td.no { color: #f87171; }
+  td.no { color: var(--ink-miss); }
   td.rst { color: var(--purple); }
   td.na { color: var(--muted); }
 
   .empty { color: var(--muted); font-size: 14px; padding: 6px 0; }
   footer { margin-top: 60px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 18px; line-height: 1.8; }
   footer code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-2); background: var(--surface-2); padding: 1px 6px; border-radius: 5px; }
-  footer a { color: #93b8ff; }
+  footer a { color: var(--link); }
 
   /* Between one and two columns the hero grid has less room, so ease the hero
      squares down before they force a scrollbar. */
@@ -308,6 +404,15 @@
 
   @media (max-width: 760px) {
     :root { --cell-hero: 17px; --cell: 15px; --cell-gap: 3px; --gap: 14px; }
+    /* Touch targets: 31px buttons and a 34px summary are both under the 44px
+       guideline, and these are the only things on the page you have to hit. */
+    summary { padding: 12px 0; }
+    .tip { max-width: calc(100vw - 20px); white-space: normal; }
+    /* A wrapping note made table rows three times taller than their neighbours
+       with the text itself scrolled off-screen. Truncate instead. */
+    td:last-child { max-width: 190px; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+    .hm-days span { font-size: 10.5px; }
+    .today-d { font-size: 16px; }
     /* Stretching 142 days across a phone leaves 9px squares, too small to tap.
        Keep them finger-sized and let the grid scroll inside its card instead. */
     .hm-scroll.fluid { overflow-x: auto; }
@@ -330,18 +435,29 @@
     h2 { font-size: 18px; }
     .sec-head { gap: 6px; margin-bottom: 11px; }
     .seg { width: 100%; }
-    .seg button { flex: 1; padding: 8px 6px; font-size: 12px; }
+    .seg button { flex: 1; padding: 12px 6px; font-size: 12.5px; }
     /* Stat rows wrap under the habit name instead of squeezing it. */
     .habit-head { gap: 6px; }
-    .habit-mini { gap: 13px; font-size: 11.5px; }
-    .legend { gap: 10px; font-size: 11px; }
+    /* Five stats wrapping as flex left an orphan on its own line. A three-up
+       grid splits them 3 and 2 and keeps the columns aligned. */
+    .habit-mini {
+      display: grid; grid-template-columns: repeat(3, auto); justify-content: start;
+      gap: 3px 16px; font-size: 11.5px;
+    }
+    .legend { gap: 10px; font-size: 11.5px; }
+    /* One compact line rather than three lines and a gap under the intro. */
+    header { display: block; }
+    .stamp { margin-top: 10px; font-size: 10.5px; }
+    .stamp br { display: none; }
+    .stamp span::before { content: " \00b7  "; color: var(--hairline); }
     .xrow { gap: 8px; }
     .xdate { min-width: 74px; }
     footer { margin-top: 42px; }
   }
 
-  /* Narrow phones: keep the six banner tiles readable rather than square. */
-  @media (max-width: 380px) {
+  /* Only the very narrowest phones drop to a single tile per row. At 360px a
+     one-column banner pushed the grid two screens down. */
+  @media (max-width: 330px) {
     .banner { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
@@ -370,16 +486,16 @@
       <div class="hm-scroll lg fluid" id="hm-overall"></div>
       <div class="legend">
         <span><i style="background: var(--grid-empty)"></i>No data</span>
-        <span><i class="sq miss" style="background: rgba(239,68,68,0.28)"></i>Missed</span>
-        <span><i style="background: rgba(251,191,36,0.55)"></i>Close</span>
-        <span><i style="background: var(--purple); opacity: .75"></i>Rest day</span>
+        <span><i style="background: var(--sq-miss)"></i>Missed</span>
+        <span><i style="background: var(--sq-close)"></i>Close</span>
+        <span><i style="background: var(--sq-rest); opacity: var(--sq-rest-op)"></i>Rest day</span>
         <span class="scale">Goals hit
-          <i style="background: rgba(16,185,129,0.35)"></i>
-          <i style="background: rgba(16,185,129,0.55)"></i>
-          <i style="background: rgba(16,185,129,0.78)"></i>
-          <i style="background: var(--green)"></i>
+          <i style="background: var(--met-1)"></i>
+          <i style="background: var(--met-2)"></i>
+          <i style="background: var(--met-3)"></i>
+          <i style="background: var(--met-4)"></i>
         </span>
-        <span><i style="box-shadow: 0 0 0 1.5px var(--gold); background: var(--green)"></i>7-day streak mark</span>
+        <span><i style="box-shadow: 0 0 0 1.5px var(--gold); background: var(--met-4)"></i>7-day streak mark</span>
       </div>
     </div>
     <div class="card" id="todayCard"></div>
@@ -409,7 +525,7 @@
       <h2><span class="ico">📋</span> The log</h2>
     </div>
     <div class="card">
-      <details open>
+      <details id="logDetails">
         <summary>Day by day</summary>
         <div class="scroll">
           <table>
@@ -430,7 +546,7 @@
 
 <div class="tip" id="tip"></div>
 
-<script type="application/json" id="data">{"generated":"2026-08-11 22:50","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-11","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{"2026-08-11":{"source":{"calories":"logged","protein":"logged","workout":"logged","sleep":"logged","reading_kids":"logged","scriptures":"logged"},"calories":2050,"protein":165,"workout":45,"sleep":7,"reading_kids":true,"scriptures":true,"note":"Everything hit: hard 45 on the bike, read with Luke and Sally, scriptures with Lauren."}},"sheet":{},"sheet_read_at":"2026-08-11 22:50"}</script>
+<script type="application/json" id="data">{"generated":"2026-08-11 23:01","today":"2026-08-11","config":{"page_title":"Habit Tracker","start_date":"2026-08-11","end_date":"2026-12-31","week_start":"sunday","groups":[{"id":"nutrition","label":"Nutrition","icon":"\ud83e\udd57","note":"Fuel targets. Calories are a ceiling, protein is a floor.","habits":[{"id":"calories","label":"Calories","type":"number","unit":"cal","target":2200,"direction":"max","note":"At or under the daily ceiling.","sheet_column":"Calories In"},{"id":"protein","label":"Protein","type":"number","unit":"g","target":150,"direction":"min","note":"At least 150g a day.","sheet_column":"Protein (g)"}]},{"id":"training","label":"Training","icon":"\ud83c\udfcb\ufe0f","note":"Hard effort only. Walking the dog is not a workout.","habits":[{"id":"workout","label":"30 min HARD","type":"number","unit":"min","target":30,"direction":"min","note":"Thirty minutes of genuinely hard work. Rest days are marked, not missed.","sheet_column":"Exercise (min)"}]},{"id":"sleep","label":"Sleep","icon":"\ud83d\ude34","note":"Attributed to the wake-up date, so a square is the night before that day.","habits":[{"id":"sleep","label":"Sleep the night before","type":"number","unit":"hrs","target":6,"direction":"min","note":"At least six hours before this day started.","sheet_column":"Sleep (hrs)"}]},{"id":"reading","label":"Reading","icon":"\ud83d\udcd6","note":"Two reads a day, one with the kids and one in the scriptures.","habits":[{"id":"reading_kids","label":"Book with Luke & Sally","type":"bool","note":"Read the current book with Luke and Sally."},{"id":"scriptures","label":"Scriptures","type":"bool","note":"Personal or family scripture study."}]}]},"entries":{"2026-08-11":{"source":{"calories":"logged","protein":"logged","workout":"logged","sleep":"logged","reading_kids":"logged","scriptures":"logged"},"calories":2050,"protein":165,"workout":45,"sleep":7,"reading_kids":true,"scriptures":true,"note":"Everything hit: hard 45 on the bike, read with Luke and Sally, scriptures with Lauren."}},"sheet":{},"sheet_read_at":"2026-08-11 23:01"}</script>
 <script>
 (function () {
   "use strict";
@@ -815,7 +931,7 @@
 
     var tiles = [
       {
-        k: "Current perfect streak", v: cur, u: cur === 1 ? "day" : "days",
+        k: "Current streak", v: cur, u: cur === 1 ? "day" : "days",
         n: cur >= 3 ? "On a run. Do not break the chain." : "A perfect day is every goal hit.",
         c: cur > 0 ? "gold" : "", flame: cur >= 3 ? "🔥" : ""
       },
@@ -993,7 +1109,7 @@
       { n: rows.filter(function (r) { return r.tag === "only-sheet"; }).length, label: "only in the sheet", cls: "purple" },
       { n: pageOnly, label: "only here", cls: "blue" }
     ];
-    var colorOf = { green: "var(--green)", gold: "var(--gold)", purple: "var(--purple)", blue: "#93b8ff" };
+    var colorOf = { green: "var(--green)", gold: "var(--gold)", purple: "var(--purple)", blue: "var(--link)" };
 
     var head =
       "<div style='display:flex;gap:22px;flex-wrap:wrap;margin-bottom:14px'>" +
@@ -1019,16 +1135,21 @@
 
     rows.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     var shown = rows.slice(0, 25);
-    host.innerHTML = head + shown.map(function (r) {
-      return "<div class='xrow'>" +
-        "<span class='xdate'>" + r.date + "</span>" +
-        "<span class='xtag " + r.tag + "'>" + (r.tag === "differs" ? "differs" : "sheet only") + "</span>" +
-        "<span style='color:var(--ink-2)'>" + r.h.label + ": " + r.text + "</span>" +
-      "</div>";
-    }).join("") +
-    (rows.length > shown.length
-      ? "<div class='empty' style='padding-top:12px'>and " + (rows.length - shown.length) + " more.</div>"
-      : "");
+    /* Twenty-five two-line rows is a wall of text on a phone, so the detail
+       folds away behind the counts and opens on demand. */
+    host.innerHTML = head +
+      "<details><summary>" + rows.length + " to reconcile</summary><div style='margin-top:6px'>" +
+      shown.map(function (r) {
+        return "<div class='xrow'>" +
+          "<span class='xdate'>" + r.date + "</span>" +
+          "<span class='xtag " + r.tag + "'>" + (r.tag === "differs" ? "differs" : "sheet only") + "</span>" +
+          "<span style='color:var(--ink-2)'>" + r.h.label + ": " + r.text + "</span>" +
+        "</div>";
+      }).join("") +
+      (rows.length > shown.length
+        ? "<div class='empty' style='padding-top:12px'>and " + (rows.length - shown.length) + " more.</div>"
+        : "") +
+      "</div></details>";
   }
 
   /* -------- table */
@@ -1067,6 +1188,28 @@
       : "");
   }
 
+  /* -------- scroll affordance
+   *  A clipped grid with no visual cue reads as a rendering bug rather than
+   *  something you can swipe, so mark every overflowing scroller and keep its
+   *  edge fades in sync with where it currently sits. */
+  function markScrollers() {
+    var nodes = document.querySelectorAll(".hm-scroll, .scroll");
+    Array.prototype.forEach.call(nodes, function (el) {
+      var over = el.scrollWidth > el.clientWidth + 2;
+      el.classList.toggle("can-scroll", over);
+      if (!over) { el.classList.remove("at-start", "at-end"); return; }
+      var sync = function () {
+        el.classList.toggle("at-start", el.scrollLeft <= 2);
+        el.classList.toggle("at-end", el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+      };
+      sync();
+      if (!el.dataset.synced) {
+        el.addEventListener("scroll", sync, { passive: true });
+        el.dataset.synced = "1";
+      }
+    });
+  }
+
   /* -------- boot */
   function span(a, b) {
     var s = parse(a), e = parse(b);
@@ -1077,8 +1220,10 @@
     "Consistency is key. Every square is one day from " + span(START, END) + ", " +
     parse(END).getFullYear() + ".";
 
+  /* Wrapped in spans so mobile can collapse this to one dot-separated line. */
   document.getElementById("stamp").innerHTML =
-    "built " + D.generated + "<br>today " + TODAY + "<br>" + ALL.length + " day window";
+    "built " + D.generated + "<br><span>today " + TODAY +
+    "</span><br><span>" + ALL.length + " day window</span>";
 
   banner();
   heatmap(document.getElementById("hm-overall"), ALL, dayCls, dayTip, { fluid: true, maxCell: 36 });
@@ -1087,6 +1232,15 @@
   xcheck();
   table();
 
+  /* The 90-row log is most of the page's height on a phone, so it starts folded
+     there and stays open on a screen with room for it. */
+  var logDetails = document.getElementById("logDetails");
+  if (window.innerWidth > 760) logDetails.open = true;
+  logDetails.addEventListener("toggle", markScrollers);
+
+  markScrollers();
+  window.addEventListener("resize", markScrollers);
+
   var seg = document.getElementById("range");
   seg.addEventListener("click", function (e) {
     var b = e.target.closest("button");
@@ -1094,6 +1248,7 @@
     Array.prototype.forEach.call(seg.querySelectorAll("button"), function (x) { x.classList.remove("on"); });
     b.classList.add("on");
     groups(b.dataset.r === "all" ? null : Number(b.dataset.r));
+    markScrollers();
   });
 })();
 </script>
