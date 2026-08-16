@@ -270,6 +270,35 @@
     .gm-tape{font-size:16px;letter-spacing:1px}
   }
 
+
+  /* --- job-lesson additions --- */
+  header .sub{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-faint);margin-bottom:14px}
+  .path.open{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-glow),transparent)}
+  .path.open .plabel{color:var(--accent-light)}
+  .figure img{max-width:100%}
+
+  @media (max-width:600px){
+    .container{padding:28px 16px 80px}
+    header h1{font-size:28px}
+    .timeline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tl-arrow{display:none}
+    .choice{flex:1 1 100%}
+    .game{padding:6px 14px 14px}
+    .act{padding:16px 14px}
+    .read{padding:16px 16px}
+    .objective{padding:16px 16px}
+    .qa{padding:12px 14px}
+    .step-head{gap:10px}
+    .step-head h2{font-size:22px;line-height:1.2}
+    .timing{margin-left:auto}
+    .figure figcaption{padding:12px 14px}
+  }
+  @media (max-width:400px){
+    .container{padding:24px 12px 76px}
+    header h1{font-size:25px}
+    .timeline{grid-template-columns:1fr}
+  }
+
 </style>
 </head>
 <body>
@@ -278,7 +307,7 @@
 
 <div class="container">
 
-  <header class="hero fx">
+  <header class="fx">
     <span class="eyebrow">Come Follow Me, Old Testament 2026, August 10 to 16</span>
     <h1>Yet Will I&nbsp;Trust in&nbsp;Him</h1>
     <p class="sub">Job 1&ndash;3; 12&ndash;14; 19; 21&ndash;24; 38&ndash;40; 42 &middot; August 16, 2026</p>
@@ -343,10 +372,10 @@
     <div class="act" id="msgAct">
       <div class="act-status" id="msgStatus">Tap to let the first messenger in.</div>
       <div class="paths" id="msgs">
-        <button class="path" data-m="0"><span class="plabel">Messenger 1</span><span class="psub">The oxen and donkeys are gone. The servants are dead.</span></button>
-        <button class="path" data-m="1"><span class="plabel">Messenger 2</span><span class="psub">Fire fell. The sheep are gone. The shepherds are dead.</span></button>
-        <button class="path" data-m="2"><span class="plabel">Messenger 3</span><span class="psub">Raiders took the camels. Those servants are dead too.</span></button>
-        <button class="path" data-m="3"><span class="plabel">Messenger 4</span><span class="psub">The house fell on your children. All ten of them.</span></button>
+        <button class="path" data-m="0"><div class="plabel">Messenger 1</div><div class="psub">The oxen and donkeys are gone. The servants are dead.</div></button>
+        <button class="path" data-m="1"><div class="plabel">Messenger 2</div><div class="psub">Fire fell. The sheep are gone. The shepherds are dead.</div></button>
+        <button class="path" data-m="2"><div class="plabel">Messenger 3</div><div class="psub">Raiders took the camels. Those servants are dead too.</div></button>
+        <button class="path" data-m="3"><div class="plabel">Messenger 4</div><div class="psub">The house fell on your children. All ten of them.</div></button>
       </div>
       <div class="act-reveal" id="msgReveal">
         <p>Four times the scripture says the same six words: <em>while he was yet speaking, there came also another</em>. Nobody even finishes a sentence. Job does not get a single minute between them.</p>
@@ -434,10 +463,10 @@
     <div class="act" id="qAct">
       <div class="act-status" id="qStatus">Tap a question. See if you can answer it.</div>
       <div class="paths" id="qList">
-        <button class="path" data-q="0"><span class="plabel">Job 38:4</span><span class="psub">Where were you when I laid the foundations of the earth?</span></button>
-        <button class="path" data-q="1"><span class="plabel">Job 38:22</span><span class="psub">Have you been into the storehouses of the snow?</span></button>
-        <button class="path" data-q="2"><span class="plabel">Job 38:31</span><span class="psub">Can you tie up the Pleiades, or loosen Orion's belt?</span></button>
-        <button class="path" data-q="3"><span class="plabel">Job 39:19</span><span class="psub">Did you give the horse his strength, and the thunder in his neck?</span></button>
+        <button class="path" data-q="0"><div class="plabel">Job 38:4</div><div class="psub">Where were you when I laid the foundations of the earth?</div></button>
+        <button class="path" data-q="1"><div class="plabel">Job 38:22</div><div class="psub">Have you been into the storehouses of the snow?</div></button>
+        <button class="path" data-q="2"><div class="plabel">Job 38:31</div><div class="psub">Can you tie up the Pleiades, or loosen Orion's belt?</div></button>
+        <button class="path" data-q="3"><div class="plabel">Job 39:19</div><div class="psub">Did you give the horse his strength, and the thunder in his neck?</div></button>
       </div>
       <div class="act-reveal" id="qReveal">
         <p>Nobody can answer any of them. That is the answer. God does not tell Job why he suffered. He shows Job who is holding the whole world together, and Job decides that is enough.</p>
