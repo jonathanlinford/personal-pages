@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<title>Yet Will I Trust in Him · Primary Lesson, August 16, 2026</title>
+<meta name="description" content="Primary lesson for August 16, 2026. The book of Job. The best man alive loses everything in one morning, three friends sit with him in silence for a week and then ruin it by talking, and God answers out of a whirlwind with questions nobody can answer. Interactive, no supplies needed, for 9-year-olds.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;
+    --card:#12121a;
+    --card-soft:#16161f;
+    --border:#1e1e2e;
+    --border-bright:#2a2a40;
+    --text:#e7e7f0;
+    --text-dim:#9090a8;
+    --text-faint:#6a6a82;
+    --accent:#6366f1;
+    --accent-light:#818cf8;
+    --accent-glow:rgba(99,102,241,0.15);
+    --gold:#f5b942;
+    --gold-glow:rgba(245,185,66,0.18);
+    --green:#34d399;
+    --red:#f87171;
+    --royal:#a855f7;
+    --royal-glow:rgba(168,85,247,0.16);
+  }
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+    background-image:
+      linear-gradient(rgba(168,85,247,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(168,85,247,0.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    overflow-x:hidden;
+  }
+  .container{max-width:820px;margin:0 auto;padding:40px 24px 90px}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-dim);text-decoration:none;font-size:13px;margin-bottom:28px;transition:color .15s}
+  .back:hover{color:var(--accent-light)}
+
+  .hero{border-radius:16px;overflow:hidden;border:1px solid var(--border-bright);margin-bottom:30px;position:relative}
+  .hero img{display:block;width:100%;height:auto}
+  .hero .hero-fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,10,15,0.85) 100%)}
+
+  header{margin-bottom:36px;border-bottom:1px solid var(--border);padding-bottom:30px}
+  header .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--royal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  header h1{
+    font-size:40px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;
+    background:linear-gradient(115deg,var(--text) 20%,var(--royal) 50%,var(--gold) 85%);
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:shimmer 8s ease-in-out infinite;margin-bottom:12px;
+  }
+  @keyframes shimmer{0%,100%{background-position:0% center}50%{background-position:100% center}}
+  header .verse{font-size:16px;color:var(--text-dim);font-style:italic;border-left:3px solid var(--gold);padding-left:16px;margin-top:18px}
+  header .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--text-faint);margin-top:18px}
+
+  .objective{background:var(--card-soft);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px;padding:18px 22px;margin-bottom:24px;font-size:15px;color:var(--text-dim)}
+  .objective strong{color:var(--text);font-weight:600}
+
+  .bridge{background:linear-gradient(135deg,rgba(168,85,247,0.10),rgba(245,185,66,0.06));border:1px solid var(--border-bright);border-radius:12px;padding:18px 22px;margin-bottom:34px;font-size:14.5px;color:var(--text-dim)}
+  .bridge .label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px}
+  .bridge a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4)}
+  .bridge a:hover{color:#a5b0ff}
+
+  .timeline{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .tl-node{flex:1 1 74px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
+  .tl-node .era{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-node .who{font-size:13px;font-weight:600;color:var(--text)}
+  .tl-node.now{border-color:var(--gold);background:var(--gold-glow)}
+  .tl-node.now .who{color:var(--gold)}
+  .tl-node.last{border-color:var(--border-bright)}
+  .tl-node.dark{border-color:rgba(248,113,113,0.35);background:rgba(248,113,113,0.07)}
+  .tl-node.dark .who{color:#f8a1a1}
+  .tl-arrow{align-self:center;color:var(--text-faint);font-size:15px}
+  .tl-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);text-align:center;margin-top:10px}
+  .tl-cap span{color:var(--gold)}
+
+  section{margin-bottom:48px}
+  .step-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--royal);background:var(--royal-glow);padding:4px 10px;border-radius:6px;font-weight:600}
+  section h2{font-size:24px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
+  .timing{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);margin-left:auto}
+  .lead{color:var(--text-dim);font-size:15.5px;margin-bottom:8px}
+
+  ul.beats{list-style:none;padding:0;margin:10px 0}
+  ul.beats > li{padding:9px 0;color:var(--text);font-size:15.5px;padding-left:24px;position:relative}
+  ul.beats > li:before{content:"›";position:absolute;left:6px;color:var(--royal);font-weight:700}
+  ul.beats > li + li{border-top:1px solid var(--border)}
+
+  .read{background:var(--card);border:1px solid var(--border-bright);border-radius:14px;padding:20px 22px;margin:18px 0}
+  .read .read-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:inline-block;margin-bottom:10px}
+  .read .vref{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .read .vref a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.45)}
+  .read .vtext{font-size:17px;font-style:italic;color:var(--text);line-height:1.6}
+  .read .focus{margin-top:16px;background:linear-gradient(135deg,rgba(245,185,66,0.10),rgba(168,85,247,0.05));border:1px solid rgba(245,185,66,0.28);border-radius:10px;padding:14px 16px}
+  .read .focus .flabel{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .read .focus p{font-size:15px;color:var(--text);font-weight:500}
+
+  .figure{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+  .figure img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .figure figcaption{padding:10px 14px;font-size:13px;color:var(--text-dim);font-style:italic;border-top:1px solid var(--border);background:var(--card-soft)}
+  .figure.kid{max-width:420px;margin:18px auto;border-color:var(--border-bright)}
+  .figure.kid figcaption{font-style:normal}
+  .figure.kid .tag{font-family:'JetBrains Mono',monospace;font-style:normal;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;background:var(--gold-glow);padding:2px 7px;border-radius:5px;margin-right:8px;white-space:nowrap}
+
+  .qa{margin:14px 0;padding:14px 18px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px}
+  .qa .q{color:var(--accent-light);font-weight:600;font-size:14px;margin-bottom:4px}
+  .qa .a{color:var(--text-dim);font-size:14.5px}
+
+  .btn{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;transition:transform .12s,filter .2s,background .2s,opacity .2s}
+  .btn:active{transform:scale(.96)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .btn-gold{background:linear-gradient(135deg,#b45309,var(--gold));color:#3a2a00}
+  .btn-gold:hover:not(:disabled){filter:brightness(1.08)}
+  .btn-royal{background:linear-gradient(135deg,#7c3aed,var(--royal));color:#fff}
+  .btn-royal:hover:not(:disabled){filter:brightness(1.12)}
+  .btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--border-bright)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--accent)}
+
+  .act{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px;margin:18px 0}
+  .act .rf-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:10px}
+  .act h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .act .sub{font-size:14px;color:var(--text-dim);margin-bottom:14px}
+  .act-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .act-status{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-faint);min-height:18px;text-align:center;margin:10px 0;transition:color .3s}
+  .act-status.win{color:var(--gold)}
+  .act-status.bad{color:var(--red)}
+  .act-reveal{margin-top:14px;border-left:3px solid var(--gold);background:var(--card-soft);border-radius:0 10px 10px 0;padding:12px 16px;font-size:14.5px;color:var(--text-dim);display:none}
+  .act-reveal.show{display:block;animation:fadeIn .5s ease}
+  .act-reveal b{color:var(--text)}
+
+  /* ---------- the chain of coincidences ---------- */
+  .chain{display:flex;flex-direction:column;gap:8px;margin:10px 0 4px}
+  .link{position:relative;border:1px solid var(--border);background:var(--card-soft);border-radius:12px;padding:13px 16px 13px 46px;cursor:pointer;transition:border-color .25s,background .35s,transform .15s}
+  .link:hover{transform:translateX(3px);border-color:var(--accent)}
+  .link .lnum{position:absolute;left:14px;top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);border:1px solid var(--border-bright);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+  .link .ltext{font-size:14.5px;color:var(--text)}
+  .link .lref{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.7px;margin-top:6px}
+  .link.open{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.10),rgba(168,85,247,0.05))}
+  .link.open .lnum{color:var(--gold);border-color:var(--gold)}
+  .chain-bar{height:8px;border-radius:99px;background:var(--border);margin:16px 0 4px;overflow:hidden}
+  .chain-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#7c3aed,var(--royal),var(--gold));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+
+  /* ---------- the three-day choice ---------- */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 4px}
+  .path{border-radius:14px;border:1px solid var(--border-bright);background:var(--card-soft);padding:16px 14px;text-align:center;cursor:pointer;transition:border-color .2s,background .3s,transform .15s}
+  .path:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .path .pface{font-size:32px;line-height:1.2}
+  .path .plabel{font-size:14.5px;font-weight:700;color:var(--text);margin-top:6px}
+  .path .psub{font-size:12.5px;color:var(--text-dim);margin-top:5px}
+  .path.picked.good{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.13),transparent)}
+  .path.picked.meh{border-color:var(--red);background:rgba(248,113,113,0.08)}
+  .path.dim{opacity:.4}
+  .days{display:flex;gap:8px;justify-content:center;margin:16px 0 2px}
+  .day{flex:1 1 0;max-width:120px;border-radius:12px;border:1px solid var(--border);background:var(--card-soft);padding:12px 8px;text-align:center;opacity:.3;transition:opacity .5s,border-color .5s,background .5s}
+  .day.on{opacity:1;border-color:var(--royal);background:rgba(168,85,247,0.08)}
+  .day .dn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--royal);text-transform:uppercase;letter-spacing:.8px;display:block}
+  .day .dw{font-size:13px;color:var(--text);font-weight:600;margin-top:4px}
+
+  .game{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:8px 18px 18px;margin:16px 0}
+  .scenario{padding:18px 0;border-top:1px solid var(--border)}
+  .scenario:first-child{border-top:none}
+  .scenario .s-q{font-size:15.5px;color:var(--text);font-weight:600;margin-bottom:12px}
+  .choices{display:flex;gap:10px;flex-wrap:wrap}
+  .choice{flex:1 1 150px;text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--border-bright);background:var(--card-soft);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:border-color .2s,background .2s}
+  .choice:hover{border-color:var(--accent)}
+  .choice.good.picked{border-color:var(--green);background:rgba(52,211,153,0.12)}
+  .choice.bad.picked{border-color:var(--red);background:rgba(248,113,113,0.12)}
+  .choice.dim{opacity:.45}
+  .outcome{margin-top:12px;font-size:14px;color:var(--text-dim);display:none;padding:12px 14px;border-radius:10px;background:var(--card-soft);border:1px solid var(--border)}
+  .outcome.show{display:block;animation:fadeIn .4s ease}
+  .outcome b{color:var(--gold)}
+
+  .scripture{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;font-size:16px;color:var(--text);font-style:italic;line-height:1.6}
+  .scripture .ref{display:block;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:12px;color:var(--accent-light);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
+
+  .prep{background:linear-gradient(135deg,rgba(52,211,153,0.09),rgba(245,185,66,0.06));border:1px solid rgba(52,211,153,0.32);border-radius:16px;padding:20px 22px;margin:20px 0}
+  .prep .prep-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px}
+  .prep h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+  .prep p{font-size:14.5px;color:var(--text-dim);margin-bottom:10px}
+  .prep .need{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:14px 0 6px}
+  .prep ul{list-style:none;padding:0;margin:0}
+  .prep ul li{padding:6px 0 6px 26px;position:relative;color:var(--text);font-size:14.5px;border-top:1px solid rgba(52,211,153,0.14)}
+  .prep ul li:first-child{border-top:none}
+  .prep ul li:before{content:"▢";position:absolute;left:2px;color:var(--green);font-size:13px}
+  .prep .how{margin-top:14px;font-size:14px;color:var(--text-dim);border-left:3px solid var(--green);padding-left:14px}
+  .prep .how b{color:var(--text)}
+
+  .quote{background:var(--card);border:1px solid var(--border-bright);border-left:3px solid var(--royal);border-radius:0 12px 12px 0;padding:18px 22px;margin:18px 0}
+  .quote p{font-size:15.5px;color:var(--text);font-style:italic;margin-bottom:8px}
+  .quote .who{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--royal);text-transform:uppercase;letter-spacing:1px}
+
+  .watch-card{display:flex;align-items:stretch;gap:0;text-decoration:none;border:1px solid var(--border-bright);border-radius:14px;overflow:hidden;background:var(--card-soft);transition:border-color .2s,transform .2s;margin:14px 0}
+  .watch-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .watch-meta{padding:14px 18px;display:flex;flex-direction:column;justify-content:center}
+  .watch-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+  .watch-sub{font-size:13px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+  .watch-ic{flex:0 0 62px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--royal-glow)}
+
+  .sound-toggle{position:fixed;right:16px;bottom:16px;z-index:900;display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);background:rgba(18,18,26,.9);border:1px solid var(--border-bright);border-radius:999px;padding:9px 14px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 18px rgba(0,0,0,.4);transition:border-color .2s,color .2s,transform .12s}
+  .sound-toggle:hover{border-color:var(--accent);color:var(--accent-light)}
+  .sound-toggle:active{transform:scale(.95)}
+  .sound-toggle.off{color:var(--text-faint)}
+
+  .footer-section{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
+  .footer-section h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .footer-section ul{list-style:none;padding:0;color:var(--text-dim);font-size:14px}
+  .footer-section ul li{padding:3px 0}
+  .footer-section a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4)}
+
+  strong{color:var(--text);font-weight:600}
+  em{color:var(--text);font-style:italic}
+  a.s{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s;white-space:nowrap}
+  a.s:hover{color:#a5b0ff}
+  .footer-section a.s,.bridge a.s,.objective a.s{white-space:normal;overflow-wrap:anywhere}
+
+  .fx{opacity:1}
+  .fx.in{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fadeUp{from{opacity:.2;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.fx.in{animation:none}header h1{animation:none}}
+
+  .lightbox{position:fixed;inset:0;background:rgba(5,5,10,0.96);display:none;align-items:center;justify-content:center;z-index:1000;user-select:none}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:94vw;max-height:86vh;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .lightbox .lb-close{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(18,18,26,.85);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer}
+  body.lb-open{overflow:hidden}
+
+  /* ---------- game: Esther's Long Walk ---------- */
+  .game-wrap{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
+  .game-wrap h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .gm{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px;overflow:hidden}
+  .gm h4{font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px}
+  .gm .gm-sub{font-size:14px;color:var(--text-dim);margin-bottom:16px}
+  .gm-hud{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .gm-stat{flex:1 1 92px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;padding:9px 10px;text-align:center}
+  .gm-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.8px;display:block}
+  .gm-stat .v{font-size:17px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace}
+
+  .stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#0b0b12;touch-action:none;user-select:none;-webkit-user-select:none}
+  .stage canvas{display:block;width:100%;height:auto;cursor:pointer}
+  .stage .veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(8,8,14,.82);backdrop-filter:blur(3px);text-align:center;padding:20px}
+  .stage .veil.hide{display:none}
+  .stage .veil h5{font-size:19px;font-weight:800;color:var(--text)}
+  .stage .veil p{font-size:14px;color:var(--text-dim);max-width:420px}
+  .stage .veil .big{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:1px}
+
+  .gm-hint{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:10px;line-height:1.9}
+  .gm-hint kbd{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--card-soft);border:1px solid var(--border-bright);border-bottom-width:2px;border-radius:5px;padding:2px 6px;color:var(--text);margin:0 2px}
+  .gm-tape{font-size:19px;letter-spacing:2px;text-align:center;margin:12px 0 0;min-height:24px;word-break:break-all}
+  .gm-over{display:none;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
+  .gm-over.show{display:block;animation:fadeIn .4s ease}
+  .gm-over p{font-size:14.5px;color:var(--text-dim);margin-bottom:12px;text-align:center}
+  .gm-btns{display:flex;gap:10px;flex-wrap:wrap}
+  .gm-btns .btn{flex:1 1 140px}
+  .gm-verse{margin-top:14px;font-size:13px;color:var(--text-faint);font-style:italic;text-align:center}
+
+  @media (max-width:600px){
+    header h1{font-size:31px}
+    .paths{grid-template-columns:1fr}
+    .gm-tape{font-size:16px;letter-spacing:1px}
+  }
+
+</style>
+</head>
+<body>
+<div class="veil"></div>
+<button id="soundToggle" class="sound-toggle">🔊 Sound on</button>
+
+<div class="container">
+
+  <header class="hero fx">
+    <span class="eyebrow">Come Follow Me, Old Testament 2026, August 10 to 16</span>
+    <h1>Yet Will I&nbsp;Trust in&nbsp;Him</h1>
+    <p class="sub">Job 1&ndash;3; 12&ndash;14; 19; 21&ndash;24; 38&ndash;40; 42 &middot; August 16, 2026</p>
+    <p class="lead">Last week a whole nation got rescued and nobody saw it coming. This week a good man loses everything and never finds out why. Both stories are in the same book. That is the point.</p>
+  </header>
+
+  <div class="timeline fx">
+    <div class="tl-node"><span class="era">Chapter 1</span><span class="who">Job has everything</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node"><span class="era">One day</span><span class="who">All of it gone</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node"><span class="era">Chapters 3&ndash;37</span><span class="who">Friends talk</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node now"><span class="era">Chapter 38</span><span class="who">God answers</span></div>
+  </div>
+  <p class="tl-cap fx">Job asks why for thirty five chapters. <span>God never tells him.</span></p>
+
+  <!-- Step 1 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">01</span>
+      <h2>Last week, quickly</h2>
+      <span class="timing">~2 min</span>
+    </div>
+    <p class="lead"><strong>Warm-up:</strong> Two questions about Esther. Tap the one you think is right.</p>
+    <div class="game" id="reviewGame">
+      <div class="scenario" data-good="c">
+        <div class="s-q">1. There is one word the entire book of Esther never uses. What is it?</div>
+        <div class="choices">
+          <button class="choice bad" data-c="a">King</button>
+          <button class="choice bad" data-c="b">Israel</button>
+          <button class="choice good" data-c="c">God</button>
+        </div>
+        <div class="outcome"><b>God.</b> Ten chapters, not one mention. He is doing the whole rescue and never signs his name to it.</div>
+      </div>
+      <div class="scenario" data-good="b">
+        <div class="s-q">2. Esther walked in to see the king knowing it could get her killed. What did she say first?</div>
+        <div class="choices">
+          <button class="choice bad" data-c="a">"Send somebody else"</button>
+          <button class="choice good" data-c="b">"If I perish, I perish"</button>
+          <button class="choice bad" data-c="c">"Only if you promise I will be safe"</button>
+        </div>
+        <div class="outcome"><b>She went anyway.</b> She did not get a guarantee first. Hold onto that, because today nobody gets one either.</div>
+      </div>
+    </div>
+    <div class="qa">
+      <div class="q">Bridge into today</div>
+      <div class="a">Esther could not see God working, and it turned out fine. Job cannot see God working either. His story goes the other way for a very long time.</div>
+    </div>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">02</span>
+      <h2>The worst day anyone has ever had</h2>
+      <span class="timing">~5 min</span>
+    </div>
+    <p>Job is the best man alive. The book says so in the first sentence. He is rich, he has ten kids, and he prays for his children just in case they messed up when he was not watching. Nobody is doing better than Job.</p>
+    <p>Then four messengers show up. Watch how they arrive.</p>
+
+    <div class="act" id="msgAct">
+      <div class="act-status" id="msgStatus">Tap to let the first messenger in.</div>
+      <div class="paths" id="msgs">
+        <button class="path" data-m="0"><span class="plabel">Messenger 1</span><span class="psub">The oxen and donkeys are gone. The servants are dead.</span></button>
+        <button class="path" data-m="1"><span class="plabel">Messenger 2</span><span class="psub">Fire fell. The sheep are gone. The shepherds are dead.</span></button>
+        <button class="path" data-m="2"><span class="plabel">Messenger 3</span><span class="psub">Raiders took the camels. Those servants are dead too.</span></button>
+        <button class="path" data-m="3"><span class="plabel">Messenger 4</span><span class="psub">The house fell on your children. All ten of them.</span></button>
+      </div>
+      <div class="act-reveal" id="msgReveal">
+        <p>Four times the scripture says the same six words: <em>while he was yet speaking, there came also another</em>. Nobody even finishes a sentence. Job does not get a single minute between them.</p>
+      </div>
+    </div>
+
+    <div class="read fx">
+      <span class="read-tag">Read together</span>
+      <a class="link" href="https://www.churchofjesuschrist.org/study/scriptures/ot/job/1?lang=eng&amp;id=p21#p21" target="_blank" rel="noopener"><span class="vref">Job 1:21</span></a>
+      <p class="vtext">"The Lord gave, and the Lord hath taken away; blessed be the name of the Lord."</p>
+    </div>
+
+    <p class="lead">Ask them straight out: <strong>if that happened to you before breakfast, what would come out of your mouth?</strong> Let them answer honestly. Most of us would not say what Job said.</p>
+
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-braxton-handshake.png" alt="Cartoon of Braxton shaking hands with a player on the other team after losing a game, looking disappointed but sincere">
+      <figcaption><span class="tag">Braxton</span>Losing and still being decent about it is a small version of the same muscle. Job just had to use it on the worst possible day.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">03</span>
+      <h2>His friends were perfect for one week</h2>
+      <span class="timing">~6 min</span>
+    </div>
+    <p>Three friends hear what happened and travel a long way to find him. When they see him they do not recognize him. Then they do something remarkable.</p>
+
+    <div class="read fx">
+      <span class="read-tag">Read together</span>
+      <a class="link" href="https://www.churchofjesuschrist.org/study/scriptures/ot/job/2?lang=eng&amp;id=p13#p13" target="_blank" rel="noopener"><span class="vref">Job 2:13</span></a>
+      <p class="vtext">"So they sat down with him upon the ground seven days and seven nights, and none spake a word unto him: for they saw that his grief was very great."</p>
+    </div>
+
+    <div class="objective">
+      <span class="prep-tag">Object lesson, nothing needed</span>
+      <p><strong>The silent minute.</strong> Everybody sit still and say nothing for sixty seconds. No phones, no whispering. Watch the clock together.</p>
+      <p>Then tell them: Job's friends did that for <strong>ten thousand and eighty minutes</strong>. Seven days and seven nights, sitting on the ground next to him, saying nothing at all. It is the best thing anybody does for Job in the entire book.</p>
+    </div>
+
+    <p>Then they open their mouths, and they spend twenty five chapters explaining to Job that this is probably his own fault. Every one of them is wrong. At the end God tells them so.</p>
+
+    <div class="game" id="comfortGame">
+      <p class="lead"><strong>Comfort or crush?</strong> Somebody in your class is having a terrible week. Tap what you would say.</p>
+      <div class="scenario" data-good="b">
+        <div class="s-q">Your friend's dog died yesterday.</div>
+        <div class="choices">
+          <button class="choice bad" data-c="a">"At least you have another pet"</button>
+          <button class="choice good" data-c="b">"I am so sorry. Can I sit by you?"</button>
+          <button class="choice bad" data-c="c">"Everything happens for a reason"</button>
+        </div>
+        <div class="outcome"><b>Sitting beats explaining.</b> The two wrong answers both try to fix the feeling. The right one just shows up.</div>
+      </div>
+      <div class="scenario" data-good="a">
+        <div class="s-q">Your friend did not make the team.</div>
+        <div class="choices">
+          <button class="choice good" data-c="a">"That really stinks. Want to shoot hoops anyway?"</button>
+          <button class="choice bad" data-c="b">"You probably needed to practice more"</button>
+          <button class="choice bad" data-c="c">"God must have a plan"</button>
+        </div>
+        <div class="outcome"><b>That middle one is what Job's friends said,</b> just in nicer clothes. They decided his pain must be his own fault.</div>
+      </div>
+    </div>
+
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-cole-sits.png" alt="Cartoon of Cole sitting quietly on a curb next to a sad friend, not talking, just there">
+      <figcaption><span class="tag">Cole</span>You do not need the right words. Job's friends proved you can help most with none.</figcaption>
+    </figure>
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-dannie-recess.png" alt="Cartoon of Dannie kneeling next to a classmate crying on the playground, one hand on their shoulder">
+      <figcaption><span class="tag">Dannie</span>Nobody remembers what you said at recess. They remember that you came over.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 4 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">04</span>
+      <h2>God finally speaks, and asks seventy questions</h2>
+      <span class="timing">~5 min</span>
+    </div>
+    <p>Job has been asking one question the whole book. Why. When God finally answers out of a whirlwind, he does not explain anything. He asks Job questions instead.</p>
+
+    <div class="act" id="qAct">
+      <div class="act-status" id="qStatus">Tap a question. See if you can answer it.</div>
+      <div class="paths" id="qList">
+        <button class="path" data-q="0"><span class="plabel">Job 38:4</span><span class="psub">Where were you when I laid the foundations of the earth?</span></button>
+        <button class="path" data-q="1"><span class="plabel">Job 38:22</span><span class="psub">Have you been into the storehouses of the snow?</span></button>
+        <button class="path" data-q="2"><span class="plabel">Job 38:31</span><span class="psub">Can you tie up the Pleiades, or loosen Orion's belt?</span></button>
+        <button class="path" data-q="3"><span class="plabel">Job 39:19</span><span class="psub">Did you give the horse his strength, and the thunder in his neck?</span></button>
+      </div>
+      <div class="act-reveal" id="qReveal">
+        <p>Nobody can answer any of them. That is the answer. God does not tell Job why he suffered. He shows Job who is holding the whole world together, and Job decides that is enough.</p>
+        <p>Somewhere in chapter 38 God mentions that when he built the earth, <em>the morning stars sang together</em>. Job was not there. Neither were we.</p>
+      </div>
+    </div>
+
+    <div class="read fx">
+      <span class="read-tag">Three verses from the middle of it</span>
+      <a class="link" href="https://www.churchofjesuschrist.org/study/scriptures/ot/job/13?lang=eng&amp;id=p15#p15" target="_blank" rel="noopener"><span class="vref">Job 13:15</span></a>
+      <p class="vtext">"Though he slay me, yet will I trust in him."</p>
+      <a class="link" href="https://www.churchofjesuschrist.org/study/scriptures/ot/job/19?lang=eng&amp;id=p25#p25" target="_blank" rel="noopener"><span class="vref">Job 19:25</span></a>
+      <p class="vtext">"I know that my redeemer liveth."</p>
+      <a class="link" href="https://www.churchofjesuschrist.org/study/scriptures/ot/job/23?lang=eng&amp;id=p10#p10" target="_blank" rel="noopener"><span class="vref">Job 23:10</span></a>
+      <p class="vtext">"When he hath tried me, I shall come forth as gold."</p>
+    </div>
+
+    <p class="lead">Job says all three of those while he still has no idea why any of it happened. He is not trusting God because things worked out. Things have not worked out yet.</p>
+
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-alyda-stars.png" alt="Cartoon of Alyda in pajamas looking up at a huge night sky full of stars from her back porch">
+      <figcaption><span class="tag">Alyda</span>God's whole answer was basically: look at the sky, and remember which one of us made it.</figcaption>
+    </figure>
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-zalea-waiting.png" alt="Cartoon of Zalea sitting on her bed with hands open in her lap, waiting patiently, a calm look on her face">
+      <figcaption><span class="tag">Zalea</span>Trusting God is easy after you find out how the story ends. Job did it before.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 5 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">05</span>
+      <h2>Take it home</h2>
+      <span class="timing">~3 min</span>
+    </div>
+    <p>At the very end Job gets more than he started with. That is not the moral. Plenty of people never get their ending in this life, and the book knows it. What Job gets in chapter 42 is not an explanation. It is God, in person.</p>
+
+    <div class="focus">
+      <span class="flabel">🔎 Focus question</span>
+      <p>Who do you know that is having a hard week right now? Not to fix it. Just to sit by them, the way Job's friends did before they ruined it.</p>
+    </div>
+
+    <div class="qa">
+      <div class="q">One thing to try this week</div>
+      <div class="a">Find that person and go sit by them. Say almost nothing. You are allowed to say "that stinks, I am sorry." You are not allowed to explain why it happened.</div>
+    </div>
+
+    <figure class="figure kid">
+      <img src="assets/job-lesson/kid-lexi-quiet.png" alt="Cartoon of Lexi with her mouth closed and a thoughtful look, holding back from saying something, sitting beside a friend">
+      <figcaption><span class="tag">Lexi</span>The hardest part is not saying the thing you already thought of.</figcaption>
+    </figure>
+
+    <div class="read fx">
+      <span class="read-tag">Song</span>
+      <a class="link" href="https://www.churchofjesuschrist.org/music/library/childrens-songbook/i-feel-my-saviors-love?lang=eng" target="_blank" rel="noopener"><span class="vref">I Feel My Savior's Love</span></a>
+      <p class="vtext">Children's Songbook 74. Fits the day better than anything triumphant would.</p>
+    </div>
+  </section>
+
+  <div class="footer-section fx">
+    <a class="back" href="esther-lesson.html">&larr; Last week: Esther</a>
+    <a class="back" href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/33?lang=eng" target="_blank" rel="noopener">Come Follow Me, August 10 to 16 &rarr;</a>
+    <a class="back" href="index.html">All pages</a>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox"><button class="lb-close" id="lbClose">&times;</button><img id="lbImg" alt=""></div>
+
+<script>
+(() => {
+  const SFX = (() => {
+    let ctx=null, muted=false;
+    const ensure=()=>{ try{ if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); }catch(e){} return ctx; };
+    const noiseBuf=(c,dur)=>{ const n=Math.max(1,Math.floor(c.sampleRate*dur)); const b=c.createBuffer(1,n,c.sampleRate); const d=b.getChannelData(0); for(let i=0;i<n;i++) d[i]=Math.random()*2-1; return b; };
+    const tone=(freq,dur,type,gain,slideTo,delay)=>{ const c=ensure(); if(!c||muted) return; type=type||'sine'; gain=gain||0.2; delay=delay||0; const t0=c.currentTime+delay; const o=c.createOscillator(); const g=c.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t0); if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,t0+dur); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gain,t0+0.012); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); o.connect(g).connect(c.destination); o.start(t0); o.stop(t0+dur+0.03); };
+    const noise=(dur,o)=>{ const c=ensure(); if(!c||muted) return; o=o||{}; const t0=c.currentTime+(o.delay||0); const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur); const f=c.createBiquadFilter(); f.type=o.type||'bandpass'; f.frequency.setValueAtTime(o.freq||1000,t0); if(o.slideTo) f.frequency.exponentialRampToValueAtTime(o.slideTo,t0+dur); f.Q.value=o.q||1; const g=c.createGain(); const gv=o.gain||0.2; g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gv,t0+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); src.connect(f).connect(g).connect(c.destination); src.start(t0); src.stop(t0+dur+0.03); };
+    return {
+      setMuted:m=>{muted=m;}, isMuted:()=>muted, resume:ensure,
+      link(){ tone(520+Math.random()*40,0.10,'triangle',0.09); tone(880,0.16,'sine',0.05,null,0.05); },
+      chainDone(){ tone(523,0.18,'triangle',0.13); tone(659,0.18,'triangle',0.12,null,0.12); tone(784,0.22,'triangle',0.12,null,0.24); tone(1046,0.8,'sine',0.1,null,0.36); },
+      scepter(){ tone(392,0.2,'sine',0.14); tone(587,0.22,'sine',0.13,null,0.13); tone(784,0.26,'sine',0.12,null,0.26); tone(1175,0.9,'sine',0.09,null,0.4); },
+      day(){ tone(330,0.5,'sine',0.075); tone(494,0.6,'sine',0.05,null,0.1); },
+      wrong(){ tone(210,0.28,'sawtooth',0.11,150); },
+      correct(){ tone(523,0.15,'triangle',0.14); tone(659,0.15,'triangle',0.14,null,0.1); tone(784,0.32,'triangle',0.14,null,0.2); }
+    };
+  })();
+
+  // sound on/off toggle (classroom-friendly)
+  (()=>{
+    const btn=document.getElementById('soundToggle'); if(!btn) return;
+    let on=true;
+    try{ if(localStorage.getItem('jhSound')==='off') on=false; }catch(e){}
+    const paint=()=>{ SFX.setMuted(!on); btn.textContent=on?'🔊 Sound on':'🔇 Sound off'; btn.classList.toggle('off',!on); };
+    paint();
+    btn.addEventListener('click',()=>{ on=!on; if(on) SFX.resume(); try{localStorage.setItem('jhSound',on?'on':'off');}catch(e){} paint(); });
+  })();
+
+  
+  // ---------- review game ----------
+  document.querySelectorAll('.game .scenario').forEach(sc=>{
+    const choices=sc.querySelectorAll('.choice');
+    const outcome=sc.querySelector('.outcome');
+    choices.forEach(ch=>{
+      ch.addEventListener('click',()=>{
+        if(sc.dataset.answered) return;
+        sc.dataset.answered='1';
+        choices.forEach(c=>{c.classList.add('dim');});
+        ch.classList.remove('dim');ch.classList.add('picked');
+        outcome.classList.add('show');
+        if(ch.classList.contains('good')) SFX.correct(); else SFX.wrong();
+      });
+    });
+  });
+
+  
+  
+  // ---------- four messengers ----------
+  (()=>{
+    const wrap=document.getElementById('msgs'); if(!wrap) return;
+    const items=[...wrap.querySelectorAll('.path')];
+    const status=document.getElementById('msgStatus');
+    const reveal=document.getElementById('msgReveal');
+    let n=0;
+    items.forEach((el,idx)=>{
+      el.addEventListener('click',()=>{
+        if(el.classList.contains('open')) return;
+        if(idx!==n){ status.textContent='They come in order. Tap messenger '+(n+1)+'.'; return; }
+        el.classList.add('open'); n++;
+        if(n<items.length){
+          SFX.wrong();
+          status.textContent='While he was yet speaking, there came also another. ('+n+' of 4)';
+        } else {
+          SFX.day();
+          status.textContent='Four messengers. Not one of them finished before the next arrived.';
+          status.classList.add('bad');
+          setTimeout(()=>reveal.classList.add('show'),600);
+        }
+      });
+    });
+  })();
+
+  // ---------- God's questions ----------
+  (()=>{
+    const wrap=document.getElementById('qList'); if(!wrap) return;
+    const items=[...wrap.querySelectorAll('.path')];
+    const status=document.getElementById('qStatus');
+    const reveal=document.getElementById('qReveal');
+    const misses=['Nobody knows.','Still nobody.','Nope.','Not one person in the room.'];
+    let n=0;
+    items.forEach(el=>{
+      el.addEventListener('click',()=>{
+        if(el.classList.contains('open')) return;
+        el.classList.add('open'); 
+        status.textContent=misses[Math.min(n,misses.length-1)];
+        SFX.link(); n++;
+        if(n===items.length){
+          status.textContent='Four for four. Job could not answer them either.';
+          status.classList.add('win');
+          SFX.chainDone();
+          setTimeout(()=>reveal.classList.add('show'),600);
+        }
+      });
+    });
+  })();
+
+  // ---------- lightbox ----------
+  const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg');
+  function openLb(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.classList.add('lb-open');}
+  function closeLb(){lb.classList.remove('open');document.body.classList.remove('lb-open');}
+  document.querySelectorAll('.figure img').forEach(img=>img.addEventListener('click',()=>openLb(img.src,img.alt)));
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+  // ---------- scroll reveal ----------
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0, rootMargin:'200px 0px 200px 0px'});
+  document.querySelectorAll('.fx').forEach(el=>io.observe(el));
+})();
+
+})();
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script>
+</body>
+</html>
