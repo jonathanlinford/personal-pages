@@ -271,6 +271,25 @@
   }
 
 
+  /* ---------- game: Twice As Much ---------- */
+  .mm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px;min-height:300px}
+  .mm-card{position:relative;aspect-ratio:3/4;border-radius:12px;border:1px solid var(--border-bright);background:var(--card-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:34px;transition:transform .18s,border-color .2s,background .3s;user-select:none}
+  .mm-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .mm-card .mm-face{opacity:0;transition:opacity .15s}
+  .mm-card.up .mm-face,.mm-card.done .mm-face{opacity:1}
+  .mm-card.up{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-glow),transparent)}
+  .mm-card.done{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.16),transparent);cursor:default}
+  .mm-card.done:hover{transform:none}
+  .mm-card .mm-back{position:absolute;font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--text-faint);transition:opacity .15s}
+  .mm-card.up .mm-back,.mm-card.done .mm-back{opacity:0}
+  .mm-log{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  .mm-log div{font-size:13.5px;color:var(--text-dim);background:var(--card-soft);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:8px 12px}
+  .mm-log b{color:var(--gold);font-family:'JetBrains Mono',monospace}
+  @media (max-width:600px){
+    .mm-grid{grid-template-columns:repeat(3,1fr);gap:8px;padding:10px;min-height:0}
+    .mm-card{font-size:28px}
+  }
+
   /* --- job-lesson additions --- */
   header .sub{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-faint);margin-bottom:14px}
   .path.open{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-glow),transparent)}
@@ -302,7 +321,6 @@
 </style>
 </head>
 <body>
-<div class="veil"></div>
 <button id="soundToggle" class="sound-toggle">🔊 Sound on</button>
 
 <div class="container">
@@ -549,6 +567,44 @@
     </div>
   </section>
 
+
+  <div class="game-wrap fx">
+    <h3>One more thing</h3>
+    <div class="gm">
+      <h4>Twice As Much 🐑</h4>
+      <p class="gm-sub">At the very end, after everything, the Lord gave Job twice as much as he had before. <strong>Flip two cards at a time and find the pairs.</strong> Every pair you match comes back doubled, the way Job's did. Six pairs, and the fewer flips it takes you, the better.</p>
+
+      <div class="gm-hud">
+        <div class="gm-stat"><span class="k">Pairs</span><span class="v" id="mmPairs">0 / 6</span></div>
+        <div class="gm-stat"><span class="k">Flips</span><span class="v" id="mmFlips">0</span></div>
+        <div class="gm-stat"><span class="k">Best</span><span class="v" id="mmBest">&ndash;</span></div>
+      </div>
+
+      <div class="stage" id="mmStage">
+        <div class="mm-grid" id="mmGrid"></div>
+        <div class="veil" id="mmVeil">
+          <h5>Twice As Much</h5>
+          <p>Find all six pairs. Watch what each one turns into.</p>
+          <p class="big" id="mmVeilCta">Click or tap to begin</p>
+        </div>
+      </div>
+
+      <div class="mm-log" id="mmLog"></div>
+
+      <p class="gm-hint">
+        Tap a card to turn it over, then tap another to look for its match.<br>
+        Job lost all of it in one morning. Getting it back takes a while.
+      </p>
+
+      <div class="gm-over" id="mmOver">
+        <p id="mmOverText"></p>
+        <div class="gm-btns">
+          <button class="btn btn-gold" id="mmAgain">Play again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer-section fx">
     <a class="back" href="esther-lesson.html">&larr; Last week: Esther</a>
     <a class="back" href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/33?lang=eng" target="_blank" rel="noopener">Come Follow Me, August 10 to 16 &rarr;</a>
@@ -655,6 +711,77 @@
     });
   })();
 
+
+  // ---------- game: Twice As Much (memory match) ----------
+  (()=>{
+    const grid=document.getElementById('mmGrid'); if(!grid) return;
+    const veil=document.getElementById('mmVeil'), log=document.getElementById('mmLog');
+    const elPairs=document.getElementById('mmPairs'), elFlips=document.getElementById('mmFlips'), elBest=document.getElementById('mmBest');
+    const over=document.getElementById('mmOver'), overText=document.getElementById('mmOverText'), again=document.getElementById('mmAgain');
+    const ITEMS=[
+      {k:'sheep',   f:'🐑', line:'Seven thousand sheep became <b>fourteen thousand</b>.'},
+      {k:'camels',  f:'🐫', line:'Three thousand camels became <b>six thousand</b>.'},
+      {k:'oxen',    f:'🐂', line:'Five hundred yoke of oxen became <b>a thousand</b>.'},
+      {k:'donkeys', f:'🐴', line:'Five hundred donkeys became <b>a thousand</b>.'},
+      {k:'sons',    f:'👦', line:'Seven sons again, and their names are not even written down.'},
+      {k:'daughters',f:'👧',line:'Three daughters again, and <b>their</b> names are.'}
+    ];
+    let deck=[], first=null, lock=false, flips=0, found=0, started=false;
+    let best=null; try{ best=localStorage.getItem('jobMMBest'); }catch(e){}
+    if(best) elBest.textContent=best;
+
+    const shuffle=a=>{ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+    function build(){
+      grid.innerHTML=''; log.innerHTML=''; over.classList.remove('show');
+      first=null; lock=false; flips=0; found=0;
+      elFlips.textContent='0'; elPairs.textContent='0 / 6';
+      deck=shuffle(ITEMS.concat(ITEMS).map((it,i)=>({...it,id:i})));
+      deck.forEach(card=>{
+        const el=document.createElement('div');
+        el.className='mm-card';
+        el.innerHTML='<span class="mm-back">?</span><span class="mm-face">'+card.f+'</span>';
+        el.addEventListener('click',()=>flip(el,card));
+        grid.appendChild(el);
+      });
+    }
+
+    function flip(el,card){
+      if(lock || el.classList.contains('up') || el.classList.contains('done')) return;
+      el.classList.add('up');
+      flips++; elFlips.textContent=flips;
+      SFX.link();
+      if(!first){ first={el,card}; return; }
+      if(first.card.k===card.k){
+        first.el.classList.add('done'); el.classList.add('done');
+        first=null; found++;
+        elPairs.textContent=found+' / 6';
+        SFX.correct();
+        const d=document.createElement('div'); d.innerHTML=card.line; log.appendChild(d);
+        if(found===ITEMS.length) win();
+      } else {
+        lock=true; SFX.wrong();
+        const a=first; first=null;
+        setTimeout(()=>{ a.el.classList.remove('up'); el.classList.remove('up'); lock=false; },700);
+      }
+    }
+
+    function win(){
+      SFX.chainDone();
+      let msg='All six, in <b>'+flips+'</b> flips. ';
+      if(best===null || flips<parseInt(best,10)){
+        best=String(flips); try{ localStorage.setItem('jobMMBest',best); }catch(e){}
+        elBest.textContent=best; msg+='That is your new best.';
+      } else { msg+='Your best is still '+best+'.'; }
+      overText.innerHTML=msg+'<br><br>"So the Lord blessed the latter end of Job more than his beginning." Job 42:12. He still never got told why.';
+      setTimeout(()=>over.classList.add('show'),500);
+    }
+
+    veil.addEventListener('click',()=>{ if(started) return; started=true; veil.classList.add('hide'); SFX.resume(); build(); });
+    again.addEventListener('click',build);
+    build();
+  })();
+
   // ---------- lightbox ----------
   const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg');
   function openLb(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.classList.add('lb-open');}
@@ -669,8 +796,6 @@
     entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
   },{threshold:0, rootMargin:'200px 0px 200px 0px'});
   document.querySelectorAll('.fx').forEach(el=>io.observe(el));
-})();
-
 })();
 </script>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script>
