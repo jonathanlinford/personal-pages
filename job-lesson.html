@@ -271,6 +271,23 @@
   }
 
 
+  /* ---------- slow drift on the artwork (Ken Burns) ---------- */
+  .hero img,.figure img,.loss img{transform-origin:center center;will-change:transform}
+  @keyframes kbA{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.07) translate(-1.2%,-0.8%)}}
+  @keyframes kbB{0%{transform:scale(1.07) translate(1%,0.6%)}100%{transform:scale(1) translate(0,0)}}
+  @keyframes kbC{0%{transform:scale(1.02) translate(-0.8%,0.5%)}100%{transform:scale(1.08) translate(0.8%,-0.5%)}}
+  .hero img{animation:kbA 26s ease-in-out infinite alternate}
+  .figure img{animation:kbB 22s ease-in-out infinite alternate}
+  .figure:nth-of-type(even) img{animation-name:kbC;animation-duration:25s}
+  .losses .loss img{animation:none}
+  .losses .loss:nth-child(3n+1) img{animation:kbA 24s ease-in-out infinite alternate}
+  .losses .loss:nth-child(3n+2) img{animation:kbC 27s ease-in-out infinite alternate}
+  .losses .loss:nth-child(3n+3) img{animation:kbB 21s ease-in-out infinite alternate}
+  .loss img,.figure img,.hero img{backface-visibility:hidden}
+  @media (prefers-reduced-motion:reduce){
+    .hero img,.figure img,.losses .loss img{animation:none !important}
+  }
+
   /* ---------- everything he lost ---------- */
   .loss-h{font-size:15px;font-weight:700;color:var(--text);margin-top:22px}
   .losses{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
@@ -435,7 +452,7 @@
 
     <h3 class="loss-h">Everything he lost, in order</h3>
     <p class="lead">Four of these arrive the same morning, one on top of another. The last three come after.</p>
-    <div class="losses">
+    <div class="losses fx">
       <figure class="loss">
         <img src="assets/job-lesson/loss-1-oxen.png" alt="An empty livestock pen with a broken gate and dust rising from the trail where the animals were driven away">
         <div class="lbody">
@@ -489,7 +506,7 @@
 
     <p class="lead">Ask them straight out: <strong>if that happened to you before breakfast, what would come out of your mouth?</strong> Let them answer honestly. Most of us would not say what Job said.</p>
 
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-braxton-handshake.png" alt="Cartoon of Braxton shaking hands with a player on the other team after losing a game, looking disappointed but sincere">
       <figcaption><span class="tag">Braxton</span>Losing and still being decent about it is a small version of the same muscle. Job just had to use it on the worst possible day.</figcaption>
     </figure>
@@ -545,11 +562,11 @@
       </div>
     </div>
 
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-cole-sits.png" alt="Cartoon of Cole sitting quietly on a curb next to a sad friend, not talking, just there">
       <figcaption><span class="tag">Cole</span>You do not need the right words. Job's friends proved you can help most with none.</figcaption>
     </figure>
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-dannie-recess.png" alt="Cartoon of Dannie kneeling next to a classmate crying on the playground, one hand on their shoulder">
       <figcaption><span class="tag">Dannie</span>Nobody remembers what you said at recess. They remember that you came over.</figcaption>
     </figure>
@@ -595,11 +612,11 @@
 
     <p class="lead">Job says all three of those while he still has no idea why any of it happened. He is not trusting God because things worked out. Things have not worked out yet.</p>
 
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-alyda-stars.png" alt="Cartoon of Alyda in pajamas looking up at a huge night sky full of stars from her back porch">
       <figcaption><span class="tag">Alyda</span>God's whole answer was basically: look at the sky, and remember which one of us made it.</figcaption>
     </figure>
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-zalea-waiting.png" alt="Cartoon of Zalea sitting on her bed with hands open in her lap, waiting patiently, a calm look on her face">
       <figcaption><span class="tag">Zalea</span>Trusting God is easy after you find out how the story ends. Job did it before.</figcaption>
     </figure>
@@ -624,7 +641,7 @@
       <div class="a">Find that person and go sit by them. Say almost nothing. You are allowed to say "that stinks, I am sorry." You are not allowed to explain why it happened.</div>
     </div>
 
-    <figure class="figure kid">
+    <figure class="figure kid fx">
       <img src="assets/job-lesson/kid-lexi-quiet.png" alt="Cartoon of Lexi with her mouth closed and a thoughtful look, holding back from saying something, sitting beside a friend">
       <figcaption><span class="tag">Lexi</span>The hardest part is not saying the thing you already thought of.</figcaption>
     </figure>
