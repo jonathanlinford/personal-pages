@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<title>The Lord Is My Shepherd · Primary Lesson, August 23, 2026</title>
+<meta name="description" content="Primary lesson for August 23, 2026. Psalms 1-2; 8; 19-33; 40; 46. The shepherd boy grew up to be king and wrote songs about God being his shepherd. Psalm 23 one line at a time, the valley you go through instead of around, and thirty seconds of being completely still. Interactive, no supplies needed, for 9-year-olds.">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f;
+    --card:#12121a;
+    --card-soft:#16161f;
+    --border:#1e1e2e;
+    --border-bright:#2a2a40;
+    --text:#e7e7f0;
+    --text-dim:#9090a8;
+    --text-faint:#6a6a82;
+    --accent:#6366f1;
+    --accent-light:#818cf8;
+    --accent-glow:rgba(99,102,241,0.15);
+    --gold:#f5b942;
+    --gold-glow:rgba(245,185,66,0.18);
+    --green:#34d399;
+    --red:#f87171;
+    --royal:#a855f7;
+    --royal-glow:rgba(168,85,247,0.16);
+  }
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',-apple-system,sans-serif;
+    line-height:1.65;
+    min-height:100vh;
+    background-image:
+      linear-gradient(rgba(168,85,247,0.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(168,85,247,0.025) 1px,transparent 1px);
+    background-size:60px 60px;
+    overflow-x:hidden;
+  }
+  .container{max-width:820px;margin:0 auto;padding:40px 24px 90px}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-dim);text-decoration:none;font-size:13px;margin-bottom:28px;transition:color .15s}
+  .back:hover{color:var(--accent-light)}
+
+  .hero{border-radius:16px;overflow:hidden;border:1px solid var(--border-bright);margin-bottom:30px;position:relative}
+  .hero img{display:block;width:100%;height:auto}
+  .hero .hero-fade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,10,15,0.85) 100%)}
+
+  header{margin-bottom:36px;border-bottom:1px solid var(--border);padding-bottom:30px}
+  header .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--royal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  header h1{
+    font-size:40px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;
+    background:linear-gradient(115deg,var(--text) 20%,var(--royal) 50%,var(--gold) 85%);
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    animation:shimmer 8s ease-in-out infinite;margin-bottom:12px;
+  }
+  @keyframes shimmer{0%,100%{background-position:0% center}50%{background-position:100% center}}
+  header .verse{font-size:16px;color:var(--text-dim);font-style:italic;border-left:3px solid var(--gold);padding-left:16px;margin-top:18px}
+  header .meta{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--text-faint);margin-top:18px}
+
+  .objective{background:var(--card-soft);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px;padding:18px 22px;margin-bottom:24px;font-size:15px;color:var(--text-dim)}
+  .objective strong{color:var(--text);font-weight:600}
+
+  .bridge{background:linear-gradient(135deg,rgba(168,85,247,0.10),rgba(245,185,66,0.06));border:1px solid var(--border-bright);border-radius:12px;padding:18px 22px;margin-bottom:34px;font-size:14.5px;color:var(--text-dim)}
+  .bridge .label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px}
+  .bridge a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4)}
+  .bridge a:hover{color:#a5b0ff}
+
+  .timeline{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:8px 0}
+  .tl-node{flex:1 1 74px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
+  .tl-node .era{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .tl-node .who{font-size:13px;font-weight:600;color:var(--text)}
+  .tl-node.now{border-color:var(--gold);background:var(--gold-glow)}
+  .tl-node.now .who{color:var(--gold)}
+  .tl-node.last{border-color:var(--border-bright)}
+  .tl-node.dark{border-color:rgba(248,113,113,0.35);background:rgba(248,113,113,0.07)}
+  .tl-node.dark .who{color:#f8a1a1}
+  .tl-arrow{align-self:center;color:var(--text-faint);font-size:15px}
+  .tl-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);text-align:center;margin-top:10px}
+  .tl-cap span{color:var(--gold)}
+
+  section{margin-bottom:48px}
+  .step-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+  .step-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--royal);background:var(--royal-glow);padding:4px 10px;border-radius:6px;font-weight:600}
+  section h2{font-size:24px;font-weight:700;letter-spacing:-0.01em;color:var(--text)}
+  .timing{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);margin-left:auto}
+  .lead{color:var(--text-dim);font-size:15.5px;margin-bottom:8px}
+
+  ul.beats{list-style:none;padding:0;margin:10px 0}
+  ul.beats > li{padding:9px 0;color:var(--text);font-size:15.5px;padding-left:24px;position:relative}
+  ul.beats > li:before{content:"›";position:absolute;left:6px;color:var(--royal);font-weight:700}
+  ul.beats > li + li{border-top:1px solid var(--border)}
+
+  .read{background:var(--card);border:1px solid var(--border-bright);border-radius:14px;padding:20px 22px;margin:18px 0}
+  .read .read-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:inline-block;margin-bottom:10px}
+  .read .vref{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .read .vref a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.45)}
+  .read .vtext{font-size:17px;font-style:italic;color:var(--text);line-height:1.6}
+  .read .focus{margin-top:16px;background:linear-gradient(135deg,rgba(245,185,66,0.10),rgba(168,85,247,0.05));border:1px solid rgba(245,185,66,0.28);border-radius:10px;padding:14px 16px}
+  .read .focus .flabel{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .read .focus p{font-size:15px;color:var(--text);font-weight:500}
+
+  .figure{margin:18px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+  .figure img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .figure figcaption{padding:10px 14px;font-size:13px;color:var(--text-dim);font-style:italic;border-top:1px solid var(--border);background:var(--card-soft)}
+  .figure.kid{max-width:420px;margin:18px auto;border-color:var(--border-bright)}
+  .figure.kid figcaption{font-style:normal}
+  .figure.kid .tag{font-family:'JetBrains Mono',monospace;font-style:normal;font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;background:var(--gold-glow);padding:2px 7px;border-radius:5px;margin-right:8px;white-space:nowrap}
+
+  .qa{margin:14px 0;padding:14px 18px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px}
+  .qa .q{color:var(--accent-light);font-weight:600;font-size:14px;margin-bottom:4px}
+  .qa .a{color:var(--text-dim);font-size:14.5px}
+
+  .btn{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;transition:transform .12s,filter .2s,background .2s,opacity .2s}
+  .btn:active{transform:scale(.96)}
+  .btn:disabled{opacity:.4;cursor:default}
+  .btn-gold{background:linear-gradient(135deg,#b45309,var(--gold));color:#3a2a00}
+  .btn-gold:hover:not(:disabled){filter:brightness(1.08)}
+  .btn-royal{background:linear-gradient(135deg,#7c3aed,var(--royal));color:#fff}
+  .btn-royal:hover:not(:disabled){filter:brightness(1.12)}
+  .btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--border-bright)}
+  .btn-ghost:hover{color:var(--text);border-color:var(--accent)}
+
+  .act{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px;margin:18px 0}
+  .act .rf-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:10px}
+  .act h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+  .act .sub{font-size:14px;color:var(--text-dim);margin-bottom:14px}
+  .act-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .act-status{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-faint);min-height:18px;text-align:center;margin:10px 0;transition:color .3s}
+  .act-status.win{color:var(--gold)}
+  .act-status.bad{color:var(--red)}
+  .act-reveal{margin-top:14px;border-left:3px solid var(--gold);background:var(--card-soft);border-radius:0 10px 10px 0;padding:12px 16px;font-size:14.5px;color:var(--text-dim);display:none}
+  .act-reveal.show{display:block;animation:fadeIn .5s ease}
+  .act-reveal b{color:var(--text)}
+
+  /* ---------- the chain of coincidences ---------- */
+  .chain{display:flex;flex-direction:column;gap:8px;margin:10px 0 4px}
+  .link{position:relative;border:1px solid var(--border);background:var(--card-soft);border-radius:12px;padding:13px 16px 13px 46px;cursor:pointer;transition:border-color .25s,background .35s,transform .15s}
+  .link:hover{transform:translateX(3px);border-color:var(--accent)}
+  .link .lnum{position:absolute;left:14px;top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint);border:1px solid var(--border-bright);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+  .link .ltext{font-size:14.5px;color:var(--text)}
+  .link .lref{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.7px;margin-top:6px}
+  .link.open{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.10),rgba(168,85,247,0.05))}
+  .link.open .lnum{color:var(--gold);border-color:var(--gold)}
+  .chain-bar{height:8px;border-radius:99px;background:var(--border);margin:16px 0 4px;overflow:hidden}
+  .chain-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#7c3aed,var(--royal),var(--gold));transition:width .6s cubic-bezier(.2,.8,.2,1)}
+
+  /* ---------- the three-day choice ---------- */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 4px}
+  .path{border-radius:14px;border:1px solid var(--border-bright);background:var(--card-soft);padding:16px 14px;text-align:center;cursor:pointer;transition:border-color .2s,background .3s,transform .15s}
+  .path:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .path .pface{font-size:32px;line-height:1.2}
+  .path .plabel{font-size:14.5px;font-weight:700;color:var(--text);margin-top:6px}
+  .path .psub{font-size:12.5px;color:var(--text-dim);margin-top:5px}
+  .path.picked.good{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.13),transparent)}
+  .path.picked.meh{border-color:var(--red);background:rgba(248,113,113,0.08)}
+  .path.dim{opacity:.4}
+  .days{display:flex;gap:8px;justify-content:center;margin:16px 0 2px}
+  .day{flex:1 1 0;max-width:120px;border-radius:12px;border:1px solid var(--border);background:var(--card-soft);padding:12px 8px;text-align:center;opacity:.3;transition:opacity .5s,border-color .5s,background .5s}
+  .day.on{opacity:1;border-color:var(--royal);background:rgba(168,85,247,0.08)}
+  .day .dn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--royal);text-transform:uppercase;letter-spacing:.8px;display:block}
+  .day .dw{font-size:13px;color:var(--text);font-weight:600;margin-top:4px}
+
+  .game{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:8px 18px 18px;margin:16px 0}
+  .scenario{padding:18px 0;border-top:1px solid var(--border)}
+  .scenario:first-child{border-top:none}
+  .scenario .s-q{font-size:15.5px;color:var(--text);font-weight:600;margin-bottom:12px}
+  .choices{display:flex;gap:10px;flex-wrap:wrap}
+  .choice{flex:1 1 150px;text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--border-bright);background:var(--card-soft);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;transition:border-color .2s,background .2s}
+  .choice:hover{border-color:var(--accent)}
+  .choice.good.picked{border-color:var(--green);background:rgba(52,211,153,0.12)}
+  .choice.bad.picked{border-color:var(--red);background:rgba(248,113,113,0.12)}
+  .choice.dim{opacity:.45}
+  .outcome{margin-top:12px;font-size:14px;color:var(--text-dim);display:none;padding:12px 14px;border-radius:10px;background:var(--card-soft);border:1px solid var(--border)}
+  .outcome.show{display:block;animation:fadeIn .4s ease}
+  .outcome b{color:var(--gold)}
+
+  .scripture{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin:18px 0;font-size:16px;color:var(--text);font-style:italic;line-height:1.6}
+  .scripture .ref{display:block;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:12px;color:var(--accent-light);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
+
+  .prep{background:linear-gradient(135deg,rgba(52,211,153,0.09),rgba(245,185,66,0.06));border:1px solid rgba(52,211,153,0.32);border-radius:16px;padding:20px 22px;margin:20px 0}
+  .prep .prep-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:1.3px;display:block;margin-bottom:8px}
+  .prep h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+  .prep p{font-size:14.5px;color:var(--text-dim);margin-bottom:10px}
+  .prep .need{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:14px 0 6px}
+  .prep ul{list-style:none;padding:0;margin:0}
+  .prep ul li{padding:6px 0 6px 26px;position:relative;color:var(--text);font-size:14.5px;border-top:1px solid rgba(52,211,153,0.14)}
+  .prep ul li:first-child{border-top:none}
+  .prep ul li:before{content:"▢";position:absolute;left:2px;color:var(--green);font-size:13px}
+  .prep .how{margin-top:14px;font-size:14px;color:var(--text-dim);border-left:3px solid var(--green);padding-left:14px}
+  .prep .how b{color:var(--text)}
+
+  .quote{background:var(--card);border:1px solid var(--border-bright);border-left:3px solid var(--royal);border-radius:0 12px 12px 0;padding:18px 22px;margin:18px 0}
+  .quote p{font-size:15.5px;color:var(--text);font-style:italic;margin-bottom:8px}
+  .quote .who{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--royal);text-transform:uppercase;letter-spacing:1px}
+
+  .watch-card{display:flex;align-items:stretch;gap:0;text-decoration:none;border:1px solid var(--border-bright);border-radius:14px;overflow:hidden;background:var(--card-soft);transition:border-color .2s,transform .2s;margin:14px 0}
+  .watch-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .watch-meta{padding:14px 18px;display:flex;flex-direction:column;justify-content:center}
+  .watch-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+  .watch-sub{font-size:13px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+  .watch-ic{flex:0 0 62px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--royal-glow)}
+
+  .sound-toggle{position:fixed;right:16px;bottom:16px;z-index:900;display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);background:rgba(18,18,26,.9);border:1px solid var(--border-bright);border-radius:999px;padding:9px 14px;cursor:pointer;backdrop-filter:blur(6px);box-shadow:0 4px 18px rgba(0,0,0,.4);transition:border-color .2s,color .2s,transform .12s}
+  .sound-toggle:hover{border-color:var(--accent);color:var(--accent-light)}
+  .sound-toggle:active{transform:scale(.95)}
+  .sound-toggle.off{color:var(--text-faint)}
+
+  .footer-section{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
+  .footer-section h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .footer-section ul{list-style:none;padding:0;color:var(--text-dim);font-size:14px}
+  .footer-section ul li{padding:3px 0}
+  .footer-section a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4)}
+
+  strong{color:var(--text);font-weight:600}
+  em{color:var(--text);font-style:italic}
+  a.s{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,0.4);transition:color .15s;white-space:nowrap}
+  a.s:hover{color:#a5b0ff}
+  .footer-section a.s,.bridge a.s,.objective a.s{white-space:normal;overflow-wrap:anywhere}
+
+  .fx{opacity:1}
+  .fx.in{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fadeUp{from{opacity:.2;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.fx.in{animation:none}header h1{animation:none}}
+
+  .lightbox{position:fixed;inset:0;background:rgba(5,5,10,0.96);display:none;align-items:center;justify-content:center;z-index:1000;user-select:none}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:94vw;max-height:86vh;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .lightbox .lb-close{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(18,18,26,.85);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer}
+  body.lb-open{overflow:hidden}
+
+  /* ---------- game: Esther's Long Walk ---------- */
+  .game-wrap{margin-top:60px;padding-top:30px;border-top:1px solid var(--border)}
+  .game-wrap h3{font-size:14px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
+  .gm{background:var(--card);border:1px solid var(--border-bright);border-radius:16px;padding:20px;overflow:hidden}
+  .gm h4{font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px}
+  .gm .gm-sub{font-size:14px;color:var(--text-dim);margin-bottom:16px}
+  .gm-hud{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .gm-stat{flex:1 1 92px;background:var(--card-soft);border:1px solid var(--border);border-radius:10px;padding:9px 10px;text-align:center}
+  .gm-stat .k{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.8px;display:block}
+  .gm-stat .v{font-size:17px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace}
+
+  .stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#0b0b12;touch-action:none;user-select:none;-webkit-user-select:none}
+  .stage canvas{display:block;width:100%;height:auto;cursor:pointer}
+  .stage .veil{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(8,8,14,.82);backdrop-filter:blur(3px);text-align:center;padding:20px}
+  .stage .veil.hide{display:none}
+  .stage .veil h5{font-size:19px;font-weight:800;color:var(--text)}
+  .stage .veil p{font-size:14px;color:var(--text-dim);max-width:420px}
+  .stage .veil .big{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:1px}
+
+  .gm-hint{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:10px;line-height:1.9}
+  .gm-hint kbd{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--card-soft);border:1px solid var(--border-bright);border-bottom-width:2px;border-radius:5px;padding:2px 6px;color:var(--text);margin:0 2px}
+  .gm-tape{font-size:19px;letter-spacing:2px;text-align:center;margin:12px 0 0;min-height:24px;word-break:break-all}
+  .gm-over{display:none;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
+  .gm-over.show{display:block;animation:fadeIn .4s ease}
+  .gm-over p{font-size:14.5px;color:var(--text-dim);margin-bottom:12px;text-align:center}
+  .gm-btns{display:flex;gap:10px;flex-wrap:wrap}
+  .gm-btns .btn{flex:1 1 140px}
+  .gm-verse{margin-top:14px;font-size:13px;color:var(--text-faint);font-style:italic;text-align:center}
+
+  @media (max-width:600px){
+    header h1{font-size:31px}
+    .paths{grid-template-columns:1fr}
+    .gm-tape{font-size:16px;letter-spacing:1px}
+  }
+
+
+  .hero .hero-vid{display:block;width:100%;height:auto}
+  @media (prefers-reduced-motion:reduce){ .hero .hero-vid{display:none} }
+  .watch-embed{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--border-bright);background:#000;margin:14px 0 8px}
+  .watch-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .watch-note{font-size:12.5px;color:var(--text-faint);margin-bottom:18px}
+  .watch-note a{color:var(--accent-light);text-decoration:none;border-bottom:1px dashed rgba(129,140,248,.45)}
+
+  /* ---------- slow drift on the artwork (Ken Burns) ---------- */
+  .hero img,.figure img,.loss img{transform-origin:center center;will-change:transform}
+  @keyframes kbA{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.07) translate(-1.2%,-0.8%)}}
+  @keyframes kbB{0%{transform:scale(1.07) translate(1%,0.6%)}100%{transform:scale(1) translate(0,0)}}
+  @keyframes kbC{0%{transform:scale(1.02) translate(-0.8%,0.5%)}100%{transform:scale(1.08) translate(0.8%,-0.5%)}}
+  .hero img{animation:kbA 26s ease-in-out infinite alternate}
+  .figure img{animation:kbB 22s ease-in-out infinite alternate}
+  .figure:nth-of-type(even) img{animation-name:kbC;animation-duration:25s}
+  .losses .loss img{animation:none}
+  .losses .loss:nth-child(3n+1) img{animation:kbA 24s ease-in-out infinite alternate}
+  .losses .loss:nth-child(3n+2) img{animation:kbC 27s ease-in-out infinite alternate}
+  .losses .loss:nth-child(3n+3) img{animation:kbB 21s ease-in-out infinite alternate}
+  .loss img,.figure img,.hero img{backface-visibility:hidden}
+  @media (prefers-reduced-motion:reduce){
+    .hero img,.figure img,.losses .loss img{animation:none !important}
+  }
+
+  /* ---------- everything he lost ---------- */
+  .loss-h{font-size:15px;font-weight:700;color:var(--text);margin-top:22px}
+  .losses{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}
+  .loss{background:var(--card-soft);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .loss img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .loss .lbody{padding:12px 14px 14px}
+  .loss .lhead{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+  .loss .ln{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);border:1px solid var(--border-bright);border-radius:5px;padding:1px 6px}
+  .loss .lcite{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.7px}
+  .loss .lcite a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(144,144,168,.5)}
+  .loss p{font-size:14px;color:var(--text-dim);line-height:1.55}
+  .loss.body-blow{border-color:rgba(245,185,66,.4)}
+  @media (max-width:600px){ .losses{grid-template-columns:1fr;gap:12px} }
+
+  /* ---------- game: Twice As Much ---------- */
+  .mm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px;min-height:300px}
+  .mm-card{position:relative;aspect-ratio:3/4;border-radius:12px;border:1px solid var(--border-bright);background:var(--card-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:34px;transition:transform .18s,border-color .2s,background .3s;user-select:none}
+  .mm-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .mm-card .mm-face{opacity:0;transition:opacity .15s}
+  .mm-card.up .mm-face,.mm-card.done .mm-face{opacity:1}
+  .mm-card.up{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-glow),transparent)}
+  .mm-card.done{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,185,66,0.16),transparent);cursor:default}
+  .mm-card.done:hover{transform:none}
+  .mm-card .mm-back{position:absolute;font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--text-faint);transition:opacity .15s}
+  .mm-card.up .mm-back,.mm-card.done .mm-back{opacity:0}
+  .mm-log{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  .mm-log div{font-size:13.5px;color:var(--text-dim);background:var(--card-soft);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:8px 12px}
+  .mm-log b{color:var(--gold);font-family:'JetBrains Mono',monospace}
+  @media (max-width:600px){
+    .mm-grid{grid-template-columns:repeat(3,1fr);gap:8px;padding:10px;min-height:0}
+    .mm-card{font-size:28px}
+  }
+
+  /* --- job-lesson additions --- */
+  header .sub{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text-faint);margin-bottom:14px}
+  .path.open{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-glow),transparent)}
+  .path.open .plabel{color:var(--accent-light)}
+  .figure img{max-width:100%}
+
+  @media (max-width:600px){
+    .container{padding:28px 16px 80px}
+    header h1{font-size:28px}
+    .timeline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .tl-arrow{display:none}
+    .choice{flex:1 1 100%}
+    .game{padding:6px 14px 14px}
+    .act{padding:16px 14px}
+    .read{padding:16px 16px}
+    .objective{padding:16px 16px}
+    .qa{padding:12px 14px}
+    .step-head{gap:10px}
+    .step-head h2{font-size:22px;line-height:1.2}
+    .timing{margin-left:auto}
+    .figure figcaption{padding:12px 14px}
+  }
+  @media (max-width:400px){
+    .container{padding:24px 12px 76px}
+    header h1{font-size:25px}
+    .timeline{grid-template-columns:1fr}
+  }
+
+
+  /* --- psalms-lesson additions --- */
+  .focus{margin:18px 0;background:linear-gradient(135deg,rgba(245,185,66,0.10),rgba(168,85,247,0.05));border:1px solid rgba(245,185,66,0.28);border-radius:10px;padding:14px 16px}
+  .focus .flabel{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .focus p{font-size:15px;color:var(--text);font-weight:500}
+
+  /* the stillness timer */
+  .still{display:flex;flex-direction:column;align-items:center;gap:15px;margin:20px 0 6px}
+  .still-ring{width:168px;height:168px;border-radius:50%;border:2px solid var(--border-bright);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:46px;font-weight:600;color:var(--text-faint);background:var(--card-soft);transition:border-color .5s,color .5s,background .8s;text-align:center;line-height:1.1}
+  .still-ring.run{border-color:var(--royal);color:var(--royal);background:radial-gradient(circle,rgba(168,85,247,0.14),transparent 72%)}
+  .still-ring.done{border-color:var(--gold);color:var(--gold);font-size:26px;background:radial-gradient(circle,rgba(245,185,66,0.13),transparent 72%)}
+
+  /* say it in order */
+  .ord-line{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;min-height:46px;padding:12px;border-radius:12px;border:1px dashed var(--border-bright);background:var(--card-soft);margin-bottom:14px}
+  .ord-line:empty:before{content:"Tap the phrases below, in order, from the beginning of the psalm.";font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-faint)}
+  .ord-line span{font-size:13.5px;background:rgba(245,185,66,0.12);border:1px solid rgba(245,185,66,0.34);color:var(--text);border-radius:8px;padding:5px 9px;animation:fadeIn .3s ease}
+  .ord-bank{display:flex;flex-wrap:wrap;gap:9px}
+  .ord-bank button{font-family:'Inter',sans-serif;font-size:13.5px;text-align:left;color:var(--text);background:var(--card-soft);border:1px solid var(--border-bright);border-radius:9px;padding:9px 12px;cursor:pointer;transition:border-color .2s,transform .12s}
+  .ord-bank button:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .ord-bank button.used{display:none}
+  .ord-bank button.shake{animation:shk .32s;border-color:var(--red)}
+  @keyframes shk{20%{transform:translateX(-5px)}60%{transform:translateX(5px)}100%{transform:none}}
+
+  /* one-line verse strips inside the chain reveals */
+  .link .lwhy{font-size:14px;color:var(--text-dim);margin-top:8px;display:none}
+  .link.open .lwhy{display:block;animation:fadeIn .35s ease}
+  .footer-section .back{display:block;width:fit-content;margin-bottom:10px}
+  .link.valley{border-style:dashed}
+  .link.valley.open{border-color:var(--gold)}
+
+</style>
+<body>
+<button id="soundToggle" class="sound-toggle">&#128266; Sound on</button>
+
+<div class="container">
+
+  <a class="back" href="index.html">&larr; Back to Jonny's Pages</a>
+
+  <div class="hero fx">
+    <img src="assets/psalms-lesson/hero.png" alt="A shepherd leading a small flock of sheep along a narrow path into a deep shadowed canyon at dusk, with warm golden light glowing at the far end of the valley">
+    <div class="hero-fade"></div>
+  </div>
+
+  <header class="fx">
+    <span class="eyebrow">Come Follow Me, Old Testament 2026, August 17 to 23</span>
+    <h1>The Lord Is My&nbsp;Shepherd</h1>
+    <p class="sub">Psalms 1&ndash;2; 8; 19&ndash;33; 40; 46 &middot; August 23, 2026</p>
+    <p class="lead">Every other week this year we have read a story. This week there is no story. This week is the songbook, and the most famous song in it was written by a boy who used to smell like sheep.</p>
+  </header>
+
+  <div class="timeline fx">
+    <div class="tl-node"><span class="era">First job</span><span class="who">A boy keeps sheep</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node"><span class="era">Later</span><span class="who">That boy is king</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node last"><span class="era">His whole life</span><span class="who">He writes songs</span></div>
+    <span class="tl-arrow">&rarr;</span>
+    <div class="tl-node now"><span class="era">Psalm 23</span><span class="who">The one everybody knows</span></div>
+  </div>
+  <p class="tl-cap fx">A king could have written about thrones or armies. <span>He wrote about sheep.</span></p>
+
+  <!-- Step 1 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">01</span>
+      <h2>Last week, quickly</h2>
+      <span class="timing">~2 min</span>
+    </div>
+    <p class="lead"><strong>Warm-up:</strong> Two questions about Job. Tap the one you think is right.</p>
+    <div class="game" id="reviewGame">
+      <div class="scenario" data-good="b">
+        <div class="s-q">1. God finally answered Job out of the whirlwind. What did the answer sound like?</div>
+        <div class="choices">
+          <button class="choice bad" data-c="a">A list of reasons</button>
+          <button class="choice good" data-c="b">About seventy questions</button>
+          <button class="choice bad" data-c="c">An apology</button>
+        </div>
+        <div class="outcome"><b>Questions.</b> Not one explanation in the whole speech. God did not tell Job why. He showed Job who was holding the world together.</div>
+      </div>
+      <div class="scenario" data-good="c">
+        <div class="s-q">2. Job said one famous line while he still had nothing and still had no answer. Which one?</div>
+        <div class="choices">
+          <button class="choice bad" data-c="a">"Now it all makes sense"</button>
+          <button class="choice bad" data-c="b">"I will trust him once he explains"</button>
+          <button class="choice good" data-c="c">"Though he slay me, yet will I trust in him"</button>
+        </div>
+        <div class="outcome"><b>He said it in the dark.</b> Before the ending. Before anything got better.</div>
+      </div>
+    </div>
+    <div class="qa">
+      <div class="q">Bridge into today</div>
+      <div class="a">Job trusted God without getting an explanation. Fine. But what do you actually <em>say</em> to God on a day like that? That is what this whole book is. Psalms is 150 sets of words for people who need some.</div>
+    </div>
+  </section>
+
+  <!-- Step 2 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">02</span>
+      <h2>A book with no story in it</h2>
+      <span class="timing">~4 min</span>
+    </div>
+    <p>Psalms is the Bible's songbook. One hundred fifty songs, collected over hundreds of years. They were written to be sung out loud with instruments, and the tunes are all lost. We only have the words.</p>
+    <p>Ask the class: what is a song you know by heart? Why do people sing when they are happy, and <em>also</em> sing when they are sad?</p>
+
+    <div class="act" id="feelAct">
+      <div class="act-status" id="feelStatus">Tap a line. Guess what the person writing it was feeling.</div>
+      <div class="paths" id="feelList">
+        <button class="path" data-f="0"><div class="plabel">Psalm 22:1</div><div class="psub">"My God, my God, why hast thou forsaken me?"</div></button>
+        <button class="path" data-f="1"><div class="plabel">Psalm 32:5</div><div class="psub">"I acknowledged my sin unto thee... and thou forgavest."</div></button>
+        <button class="path" data-f="2"><div class="plabel">Psalm 40:2</div><div class="psub">"He brought me up out of an horrible pit, out of the miry clay."</div></button>
+        <button class="path" data-f="3"><div class="plabel">Psalm 30:11</div><div class="psub">"Thou hast turned for me my mourning into dancing."</div></button>
+      </div>
+      <div class="act-reveal" id="feelReveal">
+        <p>Abandoned. Guilty. Rescued. So happy you cannot sit down. <b>All four are in the same book</b>, and sometimes on the same page.</p>
+        <p>That is the point worth landing. God is not only interested in your good days. There is a psalm for the bad ones and He kept those too.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 3 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">03</span>
+      <h2>The shepherd boy grew up</h2>
+      <span class="timing">~5 min</span>
+    </div>
+    <p>You already know this kid. Back in June we met him: the youngest of eight brothers, out with the sheep while everybody else got looked at, the one the Lord picked because <em>the Lord looketh on the heart</em>. Then the sling, then the giant.</p>
+    <p>Before any of that, his job was keeping sheep alive. Finding water. Finding grass. Chasing off a lion and a bear. Carrying the hurt ones. Counting them every single night.</p>
+
+    <figure class="figure fx">
+      <img src="assets/psalms-lesson/david-shepherd.png" alt="Cartoon of a boy shepherd with reddish brown hair sitting on a green hillside at golden hour with a small harp in his lap and sheep grazing around him">
+      <figcaption>First a shepherd, then a king. He kept the shepherd part.</figcaption>
+    </figure>
+
+    <p>Then he became king of the whole nation. And when King David sat down to write about God, out of every picture he could have used, he reached for the one job he knew best.</p>
+
+    <div class="qa">
+      <div class="q">Ask them</div>
+      <div class="a">If David is the shepherd, and God is <em>David's</em> shepherd, then what does that make David? A sheep. And he is completely fine with that. He is not embarrassed about it. He wrote it down and let people sing it for three thousand years.</div>
+    </div>
+
+    <div class="read fx">
+      <span class="read-tag">&#128214; Read together</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/23?lang=eng&amp;id=p1#p1">Psalm 23:1</a></div>
+      <p class="vtext">"The Lord is my shepherd; I shall not want."</p>
+      <div class="focus">
+        <span class="flabel">&#128269; One word</span>
+        <p>Not "a shepherd." <em>My</em> shepherd. A shepherd with a whole flock still knows which one is yours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 4 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">04</span>
+      <h2>Psalm 23, one line at a time</h2>
+      <span class="timing">~9 min</span>
+    </div>
+    <p class="lead">Six verses. Tap each line and walk the psalm end to end. Do not rush verse four.</p>
+
+    <div class="chain" id="psChain">
+      <div class="link" data-i="0">
+        <span class="lnum">1</span>
+        <div class="ltext">"The Lord is my shepherd; I shall not want."</div>
+        <div class="lref">Psalm 23:1</div>
+        <div class="lwhy">"I shall not want" does not mean you get everything you ask for. It means there is nothing you are missing.</div>
+      </div>
+      <div class="link" data-i="1">
+        <span class="lnum">2</span>
+        <div class="ltext">"He maketh me to lie down in green pastures."</div>
+        <div class="lref">Psalm 23:2</div>
+        <div class="lwhy">A scared sheep will not lie down. It stands there watching. So a sheep lying down in the grass is a sheep that feels safe.</div>
+      </div>
+      <div class="link" data-i="2">
+        <span class="lnum">3</span>
+        <div class="ltext">"He leadeth me beside the still waters."</div>
+        <div class="lref">Psalm 23:2</div>
+        <div class="lwhy">Sheep will not drink from fast water. It scares them. The shepherd's job is to go find the calm spot first.</div>
+      </div>
+      <div class="link" data-i="3">
+        <span class="lnum">4</span>
+        <div class="ltext">"He restoreth my soul."</div>
+        <div class="lref">Psalm 23:3</div>
+        <div class="lwhy">Ask them: what do you do with a sheep that is worn out? You do not yell at it and you do not make it walk faster. You let it rest.</div>
+      </div>
+      <div class="link valley" data-i="4">
+        <span class="lnum">5</span>
+        <div class="ltext">"Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me."</div>
+        <div class="lref">Psalm 23:4 &middot; stop here</div>
+        <div class="lwhy">Read it again slowly. He does not say the shepherd takes him <em>around</em> the valley. He says <b>through</b>. Nobody is promised there will not be a dark valley. What you are promised is who is walking in it next to you.</div>
+      </div>
+      <div class="link" data-i="5">
+        <span class="lnum">6</span>
+        <div class="ltext">"Thy rod and thy staff they comfort me."</div>
+        <div class="lref">Psalm 23:4</div>
+        <div class="lwhy">Two different tools. The rod is a club, for whatever is out there hunting the sheep. The staff is the long one with the hook, for pulling a stuck sheep out of a hole. Ask which one they have needed lately.</div>
+      </div>
+      <div class="link" data-i="6">
+        <span class="lnum">7</span>
+        <div class="ltext">"Thou anointest my head with oil; my cup runneth over."</div>
+        <div class="lref">Psalm 23:5</div>
+        <div class="lwhy">Not "my cup is full." Full is enough. Running over is spilling down the sides onto the table.</div>
+      </div>
+      <div class="link" data-i="7">
+        <span class="lnum">8</span>
+        <div class="ltext">"And I will dwell in the house of the Lord for ever."</div>
+        <div class="lref">Psalm 23:6</div>
+        <div class="lwhy">The psalm starts in a field and ends in the house of the Lord. And the last word of the whole thing is <em>forever</em>.</div>
+      </div>
+    </div>
+    <div class="chain-bar"><i id="psBar"></i></div>
+    <div class="act-status" id="psStatus">Eight lines. Tap the first one.</div>
+    <div class="act-reveal" id="psReveal">
+      <p>Six verses, and four of them are about being taken care of by somebody who knows what he is doing. One is about a dark valley. And the last word is forever.</p>
+      <p>David wrote this after he had been hunted, betrayed by his own son, and had wrecked things badly himself. He is not saying life is gentle. He is saying he knows who is walking with him.</p>
+    </div>
+
+    <figure class="figure fx">
+      <img src="assets/psalms-lesson/still-waters.png" alt="Cartoon of sheep drinking from a calm glassy pool in a green meadow while a shepherd sits on a rock nearby and one lamb rests in the grass">
+      <figcaption>Green pastures and still waters. Both of them had to be found by somebody first.</figcaption>
+    </figure>
+
+    <figure class="figure fx">
+      <img src="assets/psalms-lesson/valley.png" alt="Cartoon of a shepherd carrying a small lamb on his shoulders through a dark narrow rocky valley at night with a warm glow of light around them">
+      <figcaption>Through the valley. Not around it.</figcaption>
+    </figure>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-braxton-hallway.png" alt="Cartoon of Braxton walking down a dim hallway at night holding a grown-up's hand and looking up at them, calm instead of scared">
+      <figcaption><span class="tag">Braxton</span>The hall is still dark. That is not the part that changed.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 5 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">05</span>
+      <h2>The shepherd's voice</h2>
+      <span class="timing">~5 min</span>
+    </div>
+    <p>Sheep are not smart, but they are very good at one thing: they know their own shepherd's voice. A stranger can stand in the same field and call them and they will not move.</p>
+
+    <div class="prep">
+      <span class="prep-tag">&#9654; Do this in the room</span>
+      <h3>Find the shepherd</h3>
+      <p>Nothing to bring. This works with an empty classroom and six kids.</p>
+      <p class="need">How it runs</p>
+      <ul>
+        <li>Pick one kid to be the shepherd. Send them to the far side of the room.</li>
+        <li>Everybody else is a sheep. Eyes closed, no peeking.</li>
+        <li>The shepherd calls the sheep by name, <em>quietly</em>, one at a time. Each sheep walks toward the voice with eyes still shut.</li>
+        <li>Round two: pick a second kid to call at the same time, using a silly loud voice. The sheep have to keep following the right one.</li>
+      </ul>
+      <p class="how"><b>Then ask:</b> how did you know which voice to follow? Not because it was the loudest. Because you already knew it. That is the whole reason we practice hearing the Spirit on ordinary days, so we can pick it out on the loud ones.</p>
+    </div>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-cole-listening.png" alt="Cartoon of Cole standing in a busy school hallway with his eyes shut and a hand cupped behind his ear, listening for one quiet voice">
+      <figcaption><span class="tag">Cole</span>The quiet voice does not win by being louder. It wins because you know it.</figcaption>
+    </figure>
+
+    <a class="watch-card" target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/media/music/songs/the-lords-my-shepherd?lang=eng">
+      <div class="watch-ic">&#127925;</div>
+      <div class="watch-meta">
+        <div class="watch-title">"The Lord Is My Shepherd," Hymn 108</div>
+        <div class="watch-sub">Sing a verse of it here, or save it for the end</div>
+      </div>
+    </a>
+  </section>
+
+  <!-- Step 6 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">06</span>
+      <h2>The sky is talking</h2>
+      <span class="timing">~4 min</span>
+    </div>
+    <p>David spent a lot of nights outside with nothing to look at but the sky. Two of his psalms come straight out of that.</p>
+
+    <div class="read fx">
+      <span class="read-tag">&#128214; Read together</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/19?lang=eng&amp;id=p1#p1">Psalm 19:1</a></div>
+      <p class="vtext">"The heavens declare the glory of God; and the firmament sheweth his handywork."</p>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/8?lang=eng&amp;id=p3-p4#p3">Psalm 8:3&ndash;4</a></div>
+      <p class="vtext">"When I consider thy heavens, the work of thy fingers, the moon and the stars... what is man, that thou art mindful of him?"</p>
+    </div>
+
+    <figure class="figure fx">
+      <img src="assets/psalms-lesson/starry-sky.png" alt="Cartoon of a man in ancient robes standing small on a bare hilltop at night looking up at an enormous sky full of stars">
+      <figcaption>"The work of thy fingers." He is looking at the whole galaxy and calling it finger-work.</figcaption>
+    </figure>
+
+    <div class="qa">
+      <div class="q">Go around the class</div>
+      <div class="a">One thing each. What is something God made that makes you think He is really there? Take every answer, including the funny ones.</div>
+    </div>
+
+    <p>Then make the turn, because David does. He looks at all of that and asks the honest question: if you built <em>that</em>, why would you bother remembering <em>me</em>? He does not answer it in Psalm 8. He answers it in Psalm 23. The shepherd counts every single sheep, every single night, and notices when one is missing.</p>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-dannie-stars.png" alt="Cartoon of Dannie lying on her back on a grassy lawn at night with her hands behind her head, looking up at a huge sky full of stars">
+      <figcaption><span class="tag">Dannie</span>Small under a big sky is not the same as forgotten.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 7 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">07</span>
+      <h2>Clean hands and a pure heart</h2>
+      <span class="timing">~3 min</span>
+    </div>
+    <p>Psalm 24 asks a question you would ask outside a temple, because that is probably where people sang it.</p>
+
+    <div class="read fx">
+      <span class="read-tag">&#128214; Read together</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/24?lang=eng&amp;id=p3-p4#p3">Psalm 24:3&ndash;4</a></div>
+      <p class="vtext">"Who shall ascend into the hill of the Lord? or who shall stand in his holy place? He that hath clean hands, and a pure heart."</p>
+    </div>
+
+    <figure class="figure fx">
+      <img src="assets/psalms-lesson/clean-hands.png" alt="Cartoon of a person in ancient robes washing their hands in a stone basin at the foot of wide steps leading up to a bright ancient temple with tall pillars">
+      <figcaption>Clean hands is the easy half. The pure heart is the part that takes a while.</figcaption>
+    </figure>
+
+    <p>Have everybody hold up their hands and look at them. Then the important part, said out loud, because 9-year-olds get this one wrong in a way that follows them for years: <strong>a pure heart does not mean never messing up.</strong> Nobody in the room qualifies on that plan, and nobody ever has.</p>
+    <p>Here is the proof, from the same songbook, by the same guy. David wrote Psalm 32 <em>after</em> he did something genuinely terrible.</p>
+
+    <div class="read fx">
+      <span class="read-tag">&#128214; The one to notice</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/32?lang=eng&amp;id=p5#p5">Psalm 32:5</a></div>
+      <p class="vtext">"I acknowledged my sin unto thee... and thou forgavest the iniquity of my sin."</p>
+      <div class="focus">
+        <span class="flabel">&#128269; Focus</span>
+        <p>The shepherd does not write off the sheep that wandered. He goes and gets it. Every time.</p>
+      </div>
+    </div>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-alyda-hands.png" alt="Cartoon of Alyda washing her hands carefully at a bathroom sink with soap bubbles, looking down at them thoughtfully">
+      <figcaption><span class="tag">Alyda</span>You wash your hands because they got dirty. That is what washing is for.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 8 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">08</span>
+      <h2>Be still</h2>
+      <span class="timing">~3 min</span>
+    </div>
+    <p>One more line, six words long, and it is an instruction rather than a description.</p>
+
+    <div class="read fx">
+      <span class="read-tag">&#128214; Read together</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/study/scriptures/ot/ps/46?lang=eng&amp;id=p10#p10">Psalm 46:10</a></div>
+      <p class="vtext">"Be still, and know that I am God."</p>
+    </div>
+
+    <div class="act" id="stillAct">
+      <p class="sub">Everybody completely still and completely silent until the circle turns gold. No talking, no fidgeting, no laughing. Hardest thirty seconds of Primary.</p>
+      <div class="still">
+        <div class="still-ring" id="stillRing">30</div>
+        <button class="btn btn-royal" id="stillBtn">Start the thirty seconds</button>
+      </div>
+      <div class="act-reveal" id="stillReveal">
+        <p>Ask what they noticed. Somebody will say "it was so long," and somebody will say they heard something they had not heard before. Both are the right answer.</p>
+        <p>God almost never shouts over the noise. Sometimes the stillness is not the warm-up. It is the whole instruction.</p>
+      </div>
+    </div>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-lexi-still.png" alt="Cartoon of Lexi sitting perfectly still on a chair in a quiet empty classroom with her eyes closed and hands folded in her lap">
+      <figcaption><span class="tag">Lexi</span>Thirty seconds. It feels like nine minutes.</figcaption>
+    </figure>
+  </section>
+
+  <!-- Step 9 -->
+  <section class="fx">
+    <div class="step-head">
+      <span class="step-num">09</span>
+      <h2>Take it home</h2>
+      <span class="timing">~2 min</span>
+    </div>
+    <p>Nobody wrote these psalms as an assignment. Somebody was scared, or sorry, or so relieved they could not sit down, and they reached for words. Then other people kept the words because they needed them too.</p>
+
+    <div class="focus">
+      <span class="flabel">&#128269; One thing to try this week</span>
+      <p>Write your own psalm. One line to God about something real, good or hard. It does not have to rhyme, nobody has to read it, and you are allowed to complain in it. David did, constantly.</p>
+    </div>
+
+    <figure class="figure kid fx">
+      <img src="assets/psalms-lesson/kid-zalea-writing.png" alt="Cartoon of Zalea sitting at a desk writing in an open blank notebook with a pencil, concentrating happily">
+      <figcaption><span class="tag">Zalea</span>One line counts. Some psalms are two verses long.</figcaption>
+    </figure>
+
+    <div class="read fx">
+      <span class="read-tag">&#127925; Song</span>
+      <div class="vref"><a target="_blank" rel="noopener" href="https://www.churchofjesuschrist.org/music/library/childrens-songbook/the-lord-is-my-light?lang=eng">The Lord Is My Light</a></div>
+      <p class="vtext">Children's Songbook 62, straight out of Psalm 27:1. Or Hymn 108 if you want the shepherd one.</p>
+    </div>
+
+    <div class="qa">
+      <div class="q">If you only get one sentence in</div>
+      <div class="a">The Lord is a shepherd who knows which sheep is yours, walks with you <em>through</em> the dark part instead of steering around it, and goes back for the one that wandered off.</div>
+    </div>
+  </section>
+
+  <div class="game-wrap fx">
+    <h3>One more thing</h3>
+    <div class="gm">
+      <h4>Say It in Order &#128017;</h4>
+      <p class="gm-sub">All eight lines of Psalm 23, shuffled. <strong>Tap them in order, from the beginning.</strong> Get one wrong and it shakes at you and you try again. Fewer mistakes is better.</p>
+
+      <div class="gm-hud">
+        <div class="gm-stat"><span class="k">In place</span><span class="v" id="ordDone">0 / 8</span></div>
+        <div class="gm-stat"><span class="k">Mistakes</span><span class="v" id="ordMiss">0</span></div>
+        <div class="gm-stat"><span class="k">Best</span><span class="v" id="ordBest">&ndash;</span></div>
+      </div>
+
+      <div class="ord-line" id="ordLine"></div>
+      <div class="ord-bank" id="ordBank"></div>
+
+      <p class="gm-hint">
+        The order is the order David wrote it in.<br>
+        Field, then grass, then water, then rest, then the valley.
+      </p>
+
+      <div class="gm-over" id="ordOver">
+        <p id="ordOverText"></p>
+        <div class="gm-btns">
+          <button class="btn btn-gold" id="ordAgain">Shuffle and play again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-section fx">
+    <a class="back" href="job-lesson.html">&larr; Last week: Job</a>
+    <a class="back" href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/34?lang=eng" target="_blank" rel="noopener">Come Follow Me, August 17 to 23 &rarr;</a>
+    <a class="back" href="index.html">All pages</a>
+  </div>
+
+  <div class="footer-section fx">
+    <h3>Teacher notes</h3>
+    <ul>
+      <li>Total runs about 37 minutes with all nine steps. If you are short, cut step 6 (the sky) and keep the valley and the stillness.</li>
+      <li>Nothing to print, buy, or carry in. The only two activities need an empty room and a class that can shut its eyes.</li>
+      <li>Put the stillness late, after they have moved. It does not work cold.</li>
+      <li>Do not try to get all six verses memorized. Psalm 23:1 and Psalm 46:10 are the two worth repeating out loud.</li>
+      <li>Say the "pure heart does not mean never messing up" line even if you are running behind. That is the one somebody in the room needs.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox"><button class="lb-close" id="lbClose">&times;</button><img id="lbImg" alt=""></div>
+<script>
+(() => {
+  const SFX = (() => {
+    let ctx=null, muted=false;
+    const ensure=()=>{ try{ if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==='suspended') ctx.resume(); }catch(e){} return ctx; };
+    const noiseBuf=(c,dur)=>{ const n=Math.max(1,Math.floor(c.sampleRate*dur)); const b=c.createBuffer(1,n,c.sampleRate); const d=b.getChannelData(0); for(let i=0;i<n;i++) d[i]=Math.random()*2-1; return b; };
+    const tone=(freq,dur,type,gain,slideTo,delay)=>{ const c=ensure(); if(!c||muted) return; type=type||'sine'; gain=gain||0.2; delay=delay||0; const t0=c.currentTime+delay; const o=c.createOscillator(); const g=c.createGain(); o.type=type; o.frequency.setValueAtTime(freq,t0); if(slideTo) o.frequency.exponentialRampToValueAtTime(slideTo,t0+dur); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gain,t0+0.012); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); o.connect(g).connect(c.destination); o.start(t0); o.stop(t0+dur+0.03); };
+    const noise=(dur,o)=>{ const c=ensure(); if(!c||muted) return; o=o||{}; const t0=c.currentTime+(o.delay||0); const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur); const f=c.createBiquadFilter(); f.type=o.type||'bandpass'; f.frequency.setValueAtTime(o.freq||1000,t0); if(o.slideTo) f.frequency.exponentialRampToValueAtTime(o.slideTo,t0+dur); f.Q.value=o.q||1; const g=c.createGain(); const gv=o.gain||0.2; g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(gv,t0+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur); src.connect(f).connect(g).connect(c.destination); src.start(t0); src.stop(t0+dur+0.03); };
+    return {
+      setMuted:m=>{muted=m;}, isMuted:()=>muted, resume:ensure,
+      link(){ tone(520+Math.random()*40,0.10,'triangle',0.09); tone(880,0.16,'sine',0.05,null,0.05); },
+      chainDone(){ tone(523,0.18,'triangle',0.13); tone(659,0.18,'triangle',0.12,null,0.12); tone(784,0.22,'triangle',0.12,null,0.24); tone(1046,0.8,'sine',0.1,null,0.36); },
+      scepter(){ tone(392,0.2,'sine',0.14); tone(587,0.22,'sine',0.13,null,0.13); tone(784,0.26,'sine',0.12,null,0.26); tone(1175,0.9,'sine',0.09,null,0.4); },
+      day(){ tone(330,0.5,'sine',0.075); tone(494,0.6,'sine',0.05,null,0.1); },
+      wrong(){ tone(210,0.28,'sawtooth',0.11,150); },
+      correct(){ tone(523,0.15,'triangle',0.14); tone(659,0.15,'triangle',0.14,null,0.1); tone(784,0.32,'triangle',0.14,null,0.2); }
+    };
+  })();
+
+  // sound on/off toggle (classroom-friendly)
+  (()=>{
+    const btn=document.getElementById('soundToggle'); if(!btn) return;
+    let on=true;
+    try{ if(localStorage.getItem('jhSound')==='off') on=false; }catch(e){}
+    const paint=()=>{ SFX.setMuted(!on); btn.textContent=on?'🔊 Sound on':'🔇 Sound off'; btn.classList.toggle('off',!on); };
+    paint();
+    btn.addEventListener('click',()=>{ on=!on; if(on) SFX.resume(); try{localStorage.setItem('jhSound',on?'on':'off');}catch(e){} paint(); });
+  })();
+
+
+  // ---------- review game ----------
+  document.querySelectorAll('.game .scenario').forEach(sc=>{
+    const choices=sc.querySelectorAll('.choice');
+    const outcome=sc.querySelector('.outcome');
+    choices.forEach(ch=>{
+      ch.addEventListener('click',()=>{
+        if(sc.dataset.answered) return;
+        sc.dataset.answered='1';
+        choices.forEach(c=>{c.classList.add('dim');});
+        ch.classList.remove('dim');ch.classList.add('picked');
+        outcome.classList.add('show');
+        if(ch.classList.contains('good')) SFX.correct(); else SFX.wrong();
+      });
+    });
+  });
+
+  // ---------- what is this feeling ----------
+  (()=>{
+    const wrap=document.getElementById('feelList'); if(!wrap) return;
+    const items=[...wrap.querySelectorAll('.path')];
+    const status=document.getElementById('feelStatus');
+    const reveal=document.getElementById('feelReveal');
+    const words=['Abandoned. That is the loneliest verse in the book, and Jesus quoted it on the cross.',
+                 'Guilty, and then forgiven. He wrote it down after he was the one who wrecked things.',
+                 'Rescued. Stuck in the mud, and somebody reached down.',
+                 'So happy he cannot sit still. Same book. Same guy.'];
+    let n=0;
+    items.forEach((el,idx)=>{
+      el.addEventListener('click',()=>{
+        if(el.classList.contains('open')) return;
+        el.classList.add('open');
+        status.textContent=words[idx];
+        SFX.link(); n++;
+        if(n===items.length){
+          status.textContent='Abandoned, guilty, rescued, overjoyed. One songbook.';
+          status.classList.add('win');
+          SFX.chainDone();
+          setTimeout(()=>reveal.classList.add('show'),600);
+        }
+      });
+    });
+  })();
+
+  // ---------- Psalm 23, line at a time ----------
+  (()=>{
+    const chain=document.getElementById('psChain'); if(!chain) return;
+    const links=[...chain.querySelectorAll('.link')];
+    const bar=document.getElementById('psBar');
+    const status=document.getElementById('psStatus');
+    const reveal=document.getElementById('psReveal');
+    let n=0;
+    links.forEach((el,idx)=>{
+      el.addEventListener('click',()=>{
+        if(el.classList.contains('open')) return;
+        if(idx!==n){ status.textContent='In order. Tap line '+(n+1)+'.'; return; }
+        el.classList.add('open'); n++;
+        bar.style.width=Math.round(n/links.length*100)+'%';
+        if(idx===4){ SFX.day(); status.textContent='Through the valley. Read that one twice.'; return; }
+        if(n<links.length){
+          SFX.link();
+          status.textContent=n+' of '+links.length+' lines.';
+        } else {
+          SFX.scepter();
+          status.textContent='All six verses. The last word is forever.';
+          status.classList.add('win');
+          setTimeout(()=>reveal.classList.add('show'),600);
+        }
+      });
+    });
+  })();
+
+  // ---------- thirty seconds of stillness ----------
+  (()=>{
+    const btn=document.getElementById('stillBtn'); if(!btn) return;
+    const ring=document.getElementById('stillRing');
+    const reveal=document.getElementById('stillReveal');
+    let timer=null;
+    const reset=()=>{ ring.className='still-ring'; ring.textContent='30'; btn.textContent='Start the thirty seconds'; btn.disabled=false; };
+    btn.addEventListener('click',()=>{
+      if(timer) return;
+      SFX.resume();
+      let left=30;
+      ring.className='still-ring run'; ring.textContent=left;
+      btn.disabled=true; btn.textContent='Shhh';
+      timer=setInterval(()=>{
+        left--;
+        if(left>0){ ring.textContent=left; if(left<=3) SFX.link(); return; }
+        clearInterval(timer); timer=null;
+        ring.className='still-ring done'; ring.textContent='Be still';
+        SFX.chainDone();
+        reveal.classList.add('show');
+        btn.disabled=false; btn.textContent='Again';
+        setTimeout(()=>{ if(!timer && ring.classList.contains('done')) { ring.textContent='Be still'; } },1200);
+      },1000);
+    });
+    reset();
+  })();
+
+  // ---------- game: Say It in Order ----------
+  (()=>{
+    const bank=document.getElementById('ordBank'); if(!bank) return;
+    const line=document.getElementById('ordLine');
+    const elDone=document.getElementById('ordDone'), elMiss=document.getElementById('ordMiss'), elBest=document.getElementById('ordBest');
+    const over=document.getElementById('ordOver'), overText=document.getElementById('ordOverText'), again=document.getElementById('ordAgain');
+    const LINES=[
+      'The Lord is my shepherd',
+      'I shall not want',
+      'He maketh me to lie down in green pastures',
+      'He leadeth me beside the still waters',
+      'He restoreth my soul',
+      'Though I walk through the valley, I will fear no evil',
+      'My cup runneth over',
+      'I will dwell in the house of the Lord for ever'
+    ];
+    let next=0, miss=0;
+    let best=null; try{ best=localStorage.getItem('psalmOrdBest'); }catch(e){}
+    if(best!==null) elBest.textContent=best;
+    const shuffle=a=>{ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+    function build(){
+      bank.innerHTML=''; line.innerHTML=''; over.classList.remove('show');
+      next=0; miss=0; elDone.textContent='0 / '+LINES.length; elMiss.textContent='0';
+      shuffle(LINES.map((t,i)=>({t,i}))).forEach(item=>{
+        const b=document.createElement('button');
+        b.textContent=item.t;
+        b.addEventListener('click',()=>pick(b,item));
+        bank.appendChild(b);
+      });
+    }
+
+    function pick(b,item){
+      if(b.classList.contains('used')) return;
+      if(item.i!==next){
+        miss++; elMiss.textContent=miss; SFX.wrong();
+        b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),340);
+        return;
+      }
+      b.classList.add('used'); next++;
+      const s=document.createElement('span'); s.textContent=item.t; line.appendChild(s);
+      elDone.textContent=next+' / '+LINES.length;
+      if(next===LINES.length) win(); else SFX.correct();
+    }
+
+    function win(){
+      SFX.scepter();
+      let msg='All eight lines, in order, with <b>'+miss+'</b> mistake'+(miss===1?'':'s')+'. ';
+      if(best===null || miss<parseInt(best,10)){
+        best=String(miss); try{ localStorage.setItem('psalmOrdBest',best); }catch(e){}
+        elBest.textContent=best; msg+='That is your new best.';
+      } else { msg+='Your best is still '+best+'.'; }
+      overText.innerHTML=msg+'<br><br>Three thousand years old, and people still know it by heart. Now you are a little closer.';
+      setTimeout(()=>over.classList.add('show'),450);
+    }
+
+    again.addEventListener('click',build);
+    build();
+  })();
+
+  // ---------- lightbox ----------
+  const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg');
+  function openLb(src,alt){lbImg.src=src;lbImg.alt=alt||'';lb.classList.add('open');document.body.classList.add('lb-open');}
+  function closeLb(){lb.classList.remove('open');document.body.classList.remove('lb-open');}
+  document.querySelectorAll('.figure img').forEach(img=>img.addEventListener('click',()=>openLb(img.src,img.alt)));
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+
+  // ---------- scroll reveal ----------
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0, rootMargin:'200px 0px 200px 0px'});
+  document.querySelectorAll('.fx').forEach(el=>io.observe(el));
+})();
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "82ef02eed12943daa4119c47faab7e5b"}'></script>
+</body>
+</html>
