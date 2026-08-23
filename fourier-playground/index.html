@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#10121a" />
+    <meta name="description" content="An interactive, audible introduction to Fourier transforms." />
+    <meta property="og:title" content="Fourier Playground" />
+    <meta property="og:description" content="Draw a signal, discover its frequencies, and hear the math." />
+    <title>Fourier Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Fourier Playground home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span>Fourier<br />Playground</span>
+      </a>
+      <div class="header-note">A hands-on signal lab</div>
+      <button class="about-button" type="button" data-open-about aria-haspopup="dialog">What is this?</button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <p class="eyebrow">EVERY SOUND IS A RECIPE</p>
+        <h1>See what<br /><em>sound is made of.</em></h1>
+        <p class="hero-copy">Mix simple waves into complex signals, pull them apart again, and hear exactly what the Fourier transform sees.</p>
+        <a class="start-link" href="#lab">Start experimenting <span aria-hidden="true">↓</span></a>
+      </section>
+
+      <section class="lab" id="lab" aria-label="Interactive Fourier lab">
+        <div class="lab-topbar">
+          <div class="mode-tabs" role="tablist" aria-label="Signal source">
+            <button class="mode-tab active" type="button" role="tab" aria-selected="true" data-mode="build">Build</button>
+            <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode="draw">Draw</button>
+            <button class="mode-tab" type="button" role="tab" aria-selected="false" data-mode="import">Import</button>
+          </div>
+          <button class="reset-button" type="button" data-reset>Reset signal</button>
+        </div>
+
+        <div class="lab-grid">
+          <aside class="controls-panel">
+            <div class="mode-panel active" data-panel="build">
+              <span class="step-label">01 / COMPOSE</span>
+              <h2>Build a wave</h2>
+              <p>Every slider adds one pure tone. Together, they become a new shape and sound.</p>
+
+              <div class="preset-row" aria-label="Wave presets">
+                <button type="button" class="preset active" data-preset="sine">Sine</button>
+                <button type="button" class="preset" data-preset="square">Square</button>
+                <button type="button" class="preset" data-preset="saw">Saw</button>
+                <button type="button" class="preset" data-preset="triangle">Triangle</button>
+              </div>
+
+              <label class="control-heading" for="fundamental">
+                <span>Fundamental pitch</span><output id="frequency-value">220 Hz</output>
+              </label>
+              <input id="fundamental" class="range" type="range" min="80" max="520" value="220" step="1" />
+
+              <div class="harmonic-heading">
+                <span>Harmonics</span>
+                <span>AMPLITUDE</span>
+              </div>
+              <div id="harmonic-controls" class="harmonic-controls"></div>
+            </div>
+
+            <div class="mode-panel" data-panel="draw">
+              <span class="step-label">01 / SKETCH</span>
+              <h2>Draw any signal</h2>
+              <p>Drag across the waveform plot. Your drawing repeats like one cycle of a sound.</p>
+              <div class="draw-instructions">
+                <span class="gesture-icon" aria-hidden="true">↝</span>
+                <div><strong>Touch & drag</strong><small>Draw left to right for the cleanest loop.</small></div>
+              </div>
+              <button class="secondary-button" type="button" data-smooth>Smooth my drawing</button>
+              <button class="secondary-button" type="button" data-random>Surprise me</button>
+            </div>
+
+            <div class="mode-panel" data-panel="import">
+              <span class="step-label">01 / SAMPLE</span>
+              <h2>Use a real sound</h2>
+              <p>Choose an audio file or record two seconds. We’ll inspect a short slice of it on your device.</p>
+              <label class="upload-button" for="audio-file">
+                <span>Choose audio file</span><small>MP3, WAV, M4A, or OGG</small>
+              </label>
+              <input id="audio-file" type="file" accept="audio/*" hidden />
+              <button class="record-button" type="button" data-record><span class="record-dot"></span><span data-record-label>Record 2 seconds</span></button>
+              <p class="privacy-note">Audio stays in your browser. Nothing is uploaded.</p>
+              <div class="file-status" id="file-status" role="status">No sample loaded yet.</div>
+            </div>
+          </aside>
+
+          <div class="visual-panel">
+            <section class="plot-section waveform-section">
+              <div class="plot-heading">
+                <div><span class="plot-number">A</span><h3>Signal over time</h3></div>
+                <div class="plot-legend"><span class="original-key">Original</span><span class="rebuild-key">Rebuilt</span></div>
+              </div>
+              <div class="canvas-wrap draw-target" id="waveform-wrap">
+                <canvas id="waveform" aria-label="Waveform showing amplitude over one repeating cycle"></canvas>
+                <div class="axis-label y-axis">AMPLITUDE</div>
+                <div class="axis-label x-axis">ONE CYCLE → TIME</div>
+                <div class="draw-hint" data-draw-hint>Draw here</div>
+              </div>
+            </section>
+
+            <section class="plot-section spectrum-section">
+              <div class="plot-heading">
+                <div><span class="plot-number">B</span><h3>Frequency recipe</h3></div>
+                <div class="selected-bin" id="selected-bin">1 × 220 Hz</div>
+              </div>
+              <div class="canvas-wrap spectrum-wrap">
+                <canvas id="spectrum" aria-label="Frequency spectrum showing the strength of each frequency"></canvas>
+                <div class="axis-label y-axis">STRENGTH</div>
+                <div class="axis-label x-axis">FREQUENCY →</div>
+              </div>
+            </section>
+
+            <div class="reconstruction-control">
+              <label for="terms"><span>Rebuild using</span><strong><output id="terms-value">8</output> frequencies</strong></label>
+              <input id="terms" class="range range-accent" type="range" min="1" max="24" value="8" step="1" />
+              <div class="accuracy"><span>Match</span><strong id="accuracy-value">100%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-strip" aria-live="polite">
+          <div class="lesson-index" id="lesson-index">01</div>
+          <div class="lesson-copy">
+            <span id="lesson-kicker">THE BIG IDEA</span>
+            <p id="lesson-text">A complicated wave can be built by adding simple sine waves. Move a harmonic and watch both pictures change.</p>
+          </div>
+          <button class="next-lesson" type="button" data-next-lesson>Next idea <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="formula-section">
+        <p class="eyebrow">THE MACHINE UNDERNEATH</p>
+        <h2>From “what happened when?”<br />to <em>“how much of each frequency?”</em></h2>
+        <div class="translation">
+          <div><span>TIME DOMAIN</span><strong>signal(t)</strong><small>The waveform you see and hear</small></div>
+          <div class="transform-arrow"><span>FOURIER<br />TRANSFORM</span><b>→</b></div>
+          <div><span>FREQUENCY DOMAIN</span><strong>F(f)</strong><small>The hidden recipe of frequencies</small></div>
+        </div>
+        <p class="plain-explanation">The transform doesn’t change the signal. It changes our point of view—like seeing the same recipe as a finished cake or as a list of ingredients.</p>
+      </section>
+    </main>
+
+    <div class="transport" aria-label="Audio playback controls">
+      <button class="play-button" type="button" data-play aria-label="Play signal"><span class="play-icon">▶</span></button>
+      <div class="transport-copy"><span data-play-status>HEAR THIS SIGNAL</span><small>Use headphones for the details</small></div>
+      <div class="volume-wrap">
+        <label for="volume">VOL</label>
+        <input id="volume" class="range" type="range" min="0" max="1" value="0.35" step="0.01" />
+      </div>
+    </div>
+
+    <dialog class="about-dialog" id="about-dialog">
+      <button class="dialog-close" type="button" data-close-about aria-label="Close">×</button>
+      <p class="eyebrow">ABOUT THE PLAYGROUND</p>
+      <h2>Fourier transforms are a new way to look at a signal.</h2>
+      <p>A signal can be a sound, an image row, a heartbeat, or any value that changes. The Fourier transform asks which repeating patterns are hiding inside it.</p>
+      <p>This lab uses a discrete Fourier transform—the same core idea used in audio compression, medical imaging, radio, astronomy, and countless other fields.</p>
+      <button class="primary-button" type="button" data-close-about>Let me experiment</button>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
