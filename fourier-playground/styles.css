@@ -137,6 +137,28 @@ body[data-mode="draw"].has-drawing .draw-hint { display: none; }
 .accuracy { text-align: right; }
 .accuracy strong { font: 18px var(--mono); }
 
+.coach { display: grid; grid-template-columns: minmax(280px, .75fr) minmax(420px, 1.25fr); gap: clamp(30px, 6vw, 90px); padding: clamp(42px, 6vw, 88px) clamp(22px, 4.3vw, 72px); color: var(--paper); background: var(--night-2); border-top: 1px solid var(--line-dark); }
+.coach-intro h2 { max-width: 500px; margin: 12px 0 18px; font-size: clamp(34px, 4vw, 58px); line-height: .98; letter-spacing: -.055em; }
+.coach-intro > p { max-width: 470px; color: #b5b5bc; font-size: 14px; line-height: 1.6; }
+.coach-heading-row { display: flex; align-items: center; gap: 10px; }
+.coach-heading-row .step-label { color: var(--acid); margin: 0; }
+.coach-orb { width: 8px; height: 8px; border-radius: 50%; background: var(--acid); box-shadow: 0 0 16px rgba(217,255,82,.7); }
+.coach-intro .coach-privacy { margin-top: 28px; color: #85858e; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .07em; }
+.coach-workspace { min-width: 0; }
+.coach-form label { display: block; margin-bottom: 10px; color: #a5a5ad; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+.coach-input-row { display: grid; grid-template-columns: 1fr auto; border: 1px solid rgba(255,255,255,.22); background: #10121a; }
+.coach-input-row input { min-width: 0; border: 0; outline: 0; padding: 17px 18px; color: var(--paper); background: transparent; font-size: 14px; }
+.coach-input-row input::placeholder { color: #6f7079; }
+.coach-input-row button { border: 0; padding: 0 24px; color: var(--ink); background: var(--acid); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; cursor: pointer; }
+.coach-suggestions, .coach-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.coach-suggestions { margin: 10px 0 22px; }
+.coach-suggestions button, .coach-actions button { border: 1px solid rgba(255,255,255,.18); padding: 9px 12px; color: #b7b7bf; background: transparent; font: 9px var(--mono); text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+.coach-suggestions button:hover, .coach-actions button:hover { border-color: var(--acid); color: var(--acid); }
+.coach-response { min-height: 142px; padding: 24px; background: var(--paper); color: var(--ink); }
+.coach-response span { color: #74756f; font: 9px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+.coach-response p { margin: 12px 0 0; max-width: 720px; font-size: clamp(16px, 1.6vw, 21px); line-height: 1.5; }
+.coach-actions { margin-top: 10px; }
+
 .lesson-strip { display: grid; grid-template-columns: 90px 1fr auto; gap: 25px; align-items: center; min-height: 142px; border-top: 1px solid var(--line-light); padding: 24px clamp(22px, 4.3vw, 72px); }
 .lesson-index { font: 46px Georgia, serif; font-style: italic; }
 .lesson-copy span { color: #777873; }
@@ -181,6 +203,7 @@ body[data-mode="draw"].has-drawing .draw-hint { display: none; }
   .harmonic-controls { display: grid; grid-template-columns: 1fr 1fr; column-gap: 25px; }
   .formula-section { padding-bottom: 140px; }
   .translation { grid-template-columns: 1fr 130px 1fr; }
+  .coach { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
@@ -212,6 +235,11 @@ body[data-mode="draw"].has-drawing .draw-hint { display: none; }
   .translation .transform-arrow { min-height: 105px; border: 0; border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); flex-direction: row; gap: 25px; }
   .transform-arrow b { transform: rotate(90deg); margin: 0; }
   .plain-explanation { font-size: 16px; }
+  .coach { padding: 48px 20px; }
+  .coach-input-row { grid-template-columns: 1fr; }
+  .coach-input-row button { min-height: 46px; }
+  .coach-response { min-height: 170px; padding: 20px; }
+  .coach-actions button { flex: 1 1 120px; }
   .transport { bottom: max(10px, env(safe-area-inset-bottom)); grid-template-columns: 48px 1fr; min-height: 64px; }
   .play-button { width: 48px; height: 48px; }
   .volume-wrap { display: none; }

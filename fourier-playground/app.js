@@ -20,6 +20,8 @@
     source: null,
     gain: null,
     lesson: 0,
+    coachQuiz: null,
+    coachHint: 0,
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -36,6 +38,119 @@
     ["RECONSTRUCTION", "Keep adding frequency ingredients and the rebuilt signal approaches the original. Sharp corners need many high frequencies."],
     ["AMPLITUDE + PHASE", "Each ingredient has a strength and a starting position called phase. Together they preserve the entire signal."],
   ];
+
+  function coachSay(message, label = "COACH") {
+    $("#coach-response-label").textContent = label;
+    $("#coach-response").textContent = message;
+  }
+
+  function signalProfile() {
+    const bins = state.coefficients.slice(1, MAX_BINS + 1);
+    const active = bins.map((c, index) => ({ index: index + 1, amplitude: c.amplitude }))
+      .filter((item) => item.amplitude > .025)
+      .sort((a, b) => b.amplitude - a.amplitude);
+    const total = bins.reduce((sum, c) => sum + c.amplitude, 0) || 1;
+    const centroid = bins.reduce((sum, c, index) => sum + c.amplitude * (index + 1), 0) / total;
+    const odd = bins.reduce((sum, c, index) => sum + ((index + 1) % 2 ? c.amplitude : 0), 0);
+    const even = bins.reduce((sum, c, index) => sum + ((index + 1) % 2 ? 0 : c.amplitude), 0);
+    return { active, strongest: active[0] || { index: 1, amplitude: 0 }, centroid, odd, even, accuracy: Math.round(matchAccuracy(reconstruct())) };
+  }
+
+  function explainSignal() {
+    const p = signalProfile();
+    if (!p.active.length) {
+      coachSay("This signal is flat, so the spectrum has no strong frequency yet. Draw a curve or add a harmonic, then ask again.", "WHAT I SEE");
+      return;
+    }
+    const character = p.centroid < 2.1 ? "Most of its energy sits low in the spectrum" : p.centroid < 4.5 ? "Its energy is spread through the lower harmonics" : "A lot of its energy sits in the higher harmonics";
+    const balance = p.odd > p.even * 2 ? "Odd harmonics dominate." : p.even > p.odd * 1.4 ? "Even harmonics are unusually strong." : "Odd and even harmonics both matter here.";
+    coachSay(`${character}. Harmonic ${p.strongest.index} is strongest, and ${p.active.length} frequencies are clearly active. ${balance} With ${state.terms} frequencies, the rebuild matches ${p.accuracy}% of the original.`, "WHAT I SEE");
+  }
+
+  function startQuiz() {
+    const p = signalProfile();
+    state.coachHint = 0;
+    if (!p.active.length || p.active.length === 1) {
+      state.coachQuiz = "harmonics";
+      coachSay("Before you try it: if you raise the third harmonic, what will change in the top waveform and where will a new bar appear below?", "YOUR TURN");
+    } else if (p.accuracy < 90) {
+      state.coachQuiz = "rebuild";
+      coachSay(`The rebuild is at ${p.accuracy}%. Which end of the spectrum should you include next if you want to recover the small, sharp details? Try your answer with the Rebuild slider.`, "YOUR TURN");
+    } else {
+      state.coachQuiz = "brightness";
+      coachSay("Predict first: what will happen to the sound and waveform if you cut the highest four harmonics? Then try Cut highs and listen.", "YOUR TURN");
+    }
+  }
+
+  function giveHint() {
+    if (!state.coachQuiz) {
+      startQuiz();
+      return;
+    }
+    state.coachHint += 1;
+    const hints = {
+      harmonics: [
+        "Look at the bars as numbered frequency slots. The third control maps to the third slot.",
+        "The new bar appears at three times the fundamental frequency. The top curve gains three smaller bends per cycle.",
+        "Raise 3× and watch the third bar. You are adding a sine wave that completes three cycles while the fundamental completes one.",
+      ],
+      rebuild: [
+        "Fine detail changes quickly, so think about which frequencies can change quickly.",
+        "Higher frequencies carry the smaller and sharper features.",
+        "Move Rebuild using to the right. Each added high-frequency bar restores more detail.",
+      ],
+      brightness: [
+        "Brightness in sound usually follows the amount of energy high in the spectrum.",
+        "Removing high bars smooths fast changes in the waveform.",
+        "The sound becomes duller and the waveform becomes smoother because its quickest changes are gone.",
+      ],
+    };
+    const list = hints[state.coachQuiz];
+    coachSay(list[Math.min(state.coachHint - 1, list.length - 1)], state.coachHint >= 3 ? "ANSWER" : `HINT ${state.coachHint}`);
+  }
+
+  function applyCoachPrompt(rawPrompt) {
+    const prompt = rawPrompt.trim().toLowerCase();
+    if (!prompt) {
+      coachSay("Tell me what you want the signal to sound or look like. For example: make it brighter.", "TRY A REQUEST");
+      return;
+    }
+    setMode("build");
+    let changedShape = false;
+    const includes = (...words) => words.some((word) => prompt.includes(word));
+    if (includes("square", "hollow")) { preset("square"); changedShape = true; }
+    else if (includes("saw", "buzz")) { preset("saw"); changedShape = true; }
+    else if (includes("triangle", "soft", "mellow", "warm")) { preset("triangle"); changedShape = true; }
+    else if (includes("sine", "pure")) { preset("sine"); changedShape = true; }
+
+    if (includes("bass", "lower", "low pitch", "deeper")) state.fundamental = Math.max(80, Math.round(state.fundamental * .55));
+    if (includes("higher", "high pitch")) state.fundamental = Math.min(520, Math.round(state.fundamental * 1.35));
+    if (includes("odd harmonic", "odd frequencies")) {
+      state.amplitudes = state.amplitudes.map((value, index) => index % 2 === 0 ? Math.max(value, .7 / (index + 1)) : 0);
+      changedShape = true;
+    }
+    if (includes("even harmonic", "even frequencies")) {
+      state.amplitudes = state.amplitudes.map((value, index) => index % 2 ? Math.max(value, .55 / (index + 1)) : value);
+      changedShape = true;
+    }
+    if (includes("bright", "sharper", "more high")) {
+      state.amplitudes = state.amplitudes.map((value, index) => Math.min(1, value + (index > 1 ? .08 + index * .015 : 0)));
+      changedShape = true;
+    }
+    if (includes("cut high", "remove high", "less high", "darker", "smoother")) {
+      state.amplitudes = state.amplitudes.map((value, index) => index >= 4 ? 0 : value * (index < 2 ? 1 : .55));
+      changedShape = true;
+    }
+
+    $("#fundamental").value = state.fundamental;
+    if (changedShape) createHarmonicControls();
+    buildSignal();
+    if (changedShape || includes("bass", "lower", "low pitch", "deeper", "higher", "high pitch")) {
+      coachSay(`Done. I changed the signal using “${rawPrompt.trim()}.” Look at the spectrum first, then play it and compare the sound.`, "CHANGED");
+    } else {
+      coachSay("I could not map that request to a control yet. Try words like warm, bright, bass, square, odd harmonics, or cut highs.", "I NEED A CLEARER REQUEST");
+    }
+  }
 
   function createHarmonicControls() {
     harmonicControls.innerHTML = "";
@@ -409,8 +524,14 @@
     event.target.nextElementSibling.textContent = `${Math.round(state.amplitudes[index] * 100)}%`;
     $$(".preset").forEach((button) => button.classList.remove("active"));
     buildSignal();
+    coachSay(`You changed harmonic ${index + 1}. Check bar ${index + 1} in the spectrum, then look for the new detail in the waveform.`, "NOTICE THIS");
   });
-  $("#terms").addEventListener("input", (event) => { state.terms = Number(event.target.value); updateReadouts(); draw(); });
+  $("#terms").addEventListener("input", (event) => {
+    state.terms = Number(event.target.value);
+    updateReadouts();
+    draw();
+    coachSay(`You kept ${state.terms} frequencies, so the rebuild now matches ${Math.round(matchAccuracy(reconstruct()))}%. Watch which details return as you move right.`, "NOTICE THIS");
+  });
   $("#volume").addEventListener("input", (event) => { if (state.gain) state.gain.gain.setTargetAtTime(Number(event.target.value) * .45, state.audioContext.currentTime, .015); });
   $("[data-play]").addEventListener("click", () => state.playing ? stopAudio() : startAudio());
   $("[data-reset]").addEventListener("click", reset);
@@ -424,6 +545,19 @@
     try { await importAudioBuffer(await file.arrayBuffer(), file.name); }
     catch { $("#file-status").textContent = "That file could not be decoded. Try another audio format."; }
   });
+  $("#coach-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    applyCoachPrompt($("#coach-input").value);
+  });
+  $$('[data-coach-prompt]').forEach((button) => button.addEventListener("click", () => {
+    $("#coach-input").value = button.dataset.coachPrompt;
+    applyCoachPrompt(button.dataset.coachPrompt);
+  }));
+  $$('[data-coach-action]').forEach((button) => button.addEventListener("click", () => {
+    if (button.dataset.coachAction === "explain") explainSignal();
+    if (button.dataset.coachAction === "quiz") startQuiz();
+    if (button.dataset.coachAction === "hint") giveHint();
+  }));
   waveformWrap.addEventListener("pointerdown", (event) => {
     if (state.mode !== "draw") return;
     state.drawing = true; previousPoint = null; waveformWrap.setPointerCapture(event.pointerId); drawPointer(event);

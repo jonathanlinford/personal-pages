@@ -26,9 +26,9 @@
 
     <main id="top">
       <section class="hero">
-        <p class="eyebrow">EVERY SOUND IS A RECIPE</p>
-        <h1>See what<br /><em>sound is made of.</em></h1>
-        <p class="hero-copy">Mix simple waves into complex signals, pull them apart again, and hear exactly what the Fourier transform sees.</p>
+        <p class="eyebrow">TIME ON TOP. FREQUENCY BELOW.</p>
+        <h1>Take a sound<br /><em>apart.</em></h1>
+        <p class="hero-copy">Build or draw a signal, then watch its frequencies change. You can hear the result at any point.</p>
         <a class="start-link" href="#lab">Start experimenting <span aria-hidden="true">↓</span></a>
       </section>
 
@@ -128,6 +128,41 @@
           </div>
         </div>
 
+        <section class="coach" aria-labelledby="coach-title">
+          <div class="coach-intro">
+            <div class="coach-heading-row">
+              <span class="coach-orb" aria-hidden="true"></span>
+              <span class="step-label">AI SIGNAL COACH · ON DEVICE</span>
+            </div>
+            <h2 id="coach-title">Ask about the signal you made.</h2>
+            <p>The coach reads the waveform and spectrum on this page. Try a request, ask for an explanation, or let it quiz you.</p>
+            <p class="coach-privacy">Your signal and audio stay on this device.</p>
+          </div>
+          <div class="coach-workspace">
+            <form class="coach-form" id="coach-form">
+              <label for="coach-input">Change the signal with words</label>
+              <div class="coach-input-row">
+                <input id="coach-input" type="text" autocomplete="off" placeholder="Try “make it warmer” or “add odd harmonics”" />
+                <button type="submit">Apply</button>
+              </div>
+            </form>
+            <div class="coach-suggestions" aria-label="Example requests">
+              <button type="button" data-coach-prompt="Make a warm bass tone">Warm bass</button>
+              <button type="button" data-coach-prompt="Make it brighter">Brighter</button>
+              <button type="button" data-coach-prompt="Remove the high frequencies">Cut highs</button>
+            </div>
+            <div class="coach-response" aria-live="polite">
+              <span id="coach-response-label">COACH</span>
+              <p id="coach-response">Start by moving one harmonic. I’ll point out what changed in the waveform and the spectrum.</p>
+            </div>
+            <div class="coach-actions">
+              <button type="button" data-coach-action="explain">Explain this signal</button>
+              <button type="button" data-coach-action="quiz">Quiz me</button>
+              <button type="button" data-coach-action="hint">Give me a hint</button>
+            </div>
+          </div>
+        </section>
+
         <div class="lesson-strip" aria-live="polite">
           <div class="lesson-index" id="lesson-index">01</div>
           <div class="lesson-copy">
@@ -146,7 +181,7 @@
           <div class="transform-arrow"><span>FOURIER<br />TRANSFORM</span><b>→</b></div>
           <div><span>FREQUENCY DOMAIN</span><strong>F(f)</strong><small>The hidden recipe of frequencies</small></div>
         </div>
-        <p class="plain-explanation">The transform doesn’t change the signal. It changes our point of view—like seeing the same recipe as a finished cake or as a list of ingredients.</p>
+        <p class="plain-explanation">The transform keeps the same information but sorts it by frequency instead of time.</p>
       </section>
     </main>
 
@@ -162,9 +197,9 @@
     <dialog class="about-dialog" id="about-dialog">
       <button class="dialog-close" type="button" data-close-about aria-label="Close">×</button>
       <p class="eyebrow">ABOUT THE PLAYGROUND</p>
-      <h2>Fourier transforms are a new way to look at a signal.</h2>
+      <h2>A Fourier transform sorts a signal by frequency.</h2>
       <p>A signal can be a sound, an image row, a heartbeat, or any value that changes. The Fourier transform asks which repeating patterns are hiding inside it.</p>
-      <p>This lab uses a discrete Fourier transform—the same core idea used in audio compression, medical imaging, radio, astronomy, and countless other fields.</p>
+      <p>This lab uses a discrete Fourier transform. The same basic method appears in audio compression, medical imaging, radio, and astronomy.</p>
       <button class="primary-button" type="button" data-close-about>Let me experiment</button>
     </dialog>
 
