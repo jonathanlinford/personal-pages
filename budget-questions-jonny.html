@@ -51,6 +51,17 @@
 </main>
 <script>
 const form=document.querySelector('#questions'),status=document.querySelector('#status');
+for(const [index,question] of [...form.querySelectorAll('.question')].entries()){
+  if(question.querySelector('textarea,input[type=text]'))continue;
+  const prompt=question.querySelector('.prompt')?.textContent.trim()||`Question ${index+1}`;
+  const other=document.createElement('textarea');
+  other.name=`Free response — ${prompt}`;
+  other.placeholder='Optional: answer differently or add context';
+  other.setAttribute('aria-label',`Free response for ${prompt}`);
+  other.style.minHeight='72px';
+  other.style.marginTop='10px';
+  question.append(other);
+}
 function responseText(){const grouped={};for(const el of form.elements){if(!el.name)continue;if((el.type==='radio'||el.type==='checkbox')&&!el.checked)continue;const value=el.value.trim();if(!value)continue;(grouped[el.name]??=[]).push(value)}const lines=['BUDGET RESPONSES — JONNY'];for(const [key,values] of Object.entries(grouped))lines.push(`${key}: ${values.join('; ')}`);return lines.join('\n')}
 document.querySelector('#copy').addEventListener('click',async()=>{const text=responseText();try{await navigator.clipboard.writeText(text);status.textContent='Copied. Paste this into the budget task.'}catch{const area=document.createElement('textarea');area.value=text;document.body.append(area);area.select();document.execCommand('copy');area.remove();status.textContent='Copied. Paste this into the budget task.'}});
 </script>
