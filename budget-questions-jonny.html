@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jonny’s budget questions</title>
+  <style>
+    :root{--ink:#18212f;--muted:#667085;--paper:#fff;--wash:#f3f6f4;--green:#18745a;--line:#d8e1dc;--gold:#d6a23d}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#edf4ef,#f7f2e8);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{width:min(850px,calc(100% - 28px));margin:34px auto 90px}.hero,.card{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(30,50,40,.08)}.hero{padding:32px;margin-bottom:18px;border-top:6px solid var(--green)}h1{font-size:clamp(2rem,6vw,3.25rem);line-height:1.05;margin:.1em 0 .25em}h2{font-size:1.25rem;margin:0 0 12px}.eyebrow{color:var(--green);font-weight:750;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}.note{color:var(--muted);margin:0}.card{padding:24px;margin:14px 0}.question{margin:18px 0 22px}.question:last-child{margin-bottom:0}.prompt{font-weight:700;margin:0 0 9px}label.option{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid var(--line);border-radius:12px;margin:7px 0;background:#fbfcfb;cursor:pointer}input{margin-top:4px;accent-color:var(--green)}textarea,input[type=text],input[type=number]{width:100%;border:1px solid #bfcac4;border-radius:12px;padding:12px;font:inherit;background:white}textarea{min-height:96px;resize:vertical}.copybar{position:sticky;bottom:12px;background:#14231d;color:white;padding:14px;border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 12px 28px rgba(0,0,0,.18)}button{border:0;border-radius:12px;background:var(--gold);color:#1a1a1a;font-weight:800;padding:12px 18px;cursor:pointer;font-size:1rem}#status{font-size:.9rem;color:#d8eee5}@media(max-width:600px){.hero,.card{padding:20px}.copybar{align-items:stretch;flex-direction:column}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Family budget review</div>
+    <h1>Jonny’s questions</h1>
+    <p class="note">About 8–10 minutes. Nothing is submitted or stored on a server; answers stay on this device until you press “Copy for agent.”</p>
+  </section>
+  <form id="questions">
+    <section class="card"><h2>Income and boundaries</h2>
+      <div class="question"><p class="prompt">What monthly household take-home amount should the budget safely assume?</p><input type="number" name="Safe monthly take-home" placeholder="17500"></div>
+      <div class="question"><p class="prompt">How should Lauren’s practice money enter the household budget?</p>
+        <label class="option"><input type="radio" name="Lauren practice treatment" value="Only fixed monthly owner draw"><span>Only a fixed monthly owner draw; keep the rest in the business.</span></label>
+        <label class="option"><input type="radio" name="Lauren practice treatment" value="All net deposits after tax reserve"><span>All net deposits after reserving taxes and business expenses.</span></label>
+        <label class="option"><input type="radio" name="Lauren practice treatment" value="Average recent net income"><span>Use a trailing three-month average of net practice income.</span></label>
+      </div>
+      <div class="question"><p class="prompt">What percentage of practice income should be reserved for taxes?</p><input type="number" name="Practice tax reserve percent" placeholder="Percent"></div>
+    </section>
+    <section class="card"><h2>Priorities</h2>
+      <div class="question"><p class="prompt">Choose the top two uses for money above the monthly income floor.</p>
+        <label class="option"><input type="checkbox" name="Variable income priorities" value="Emergency fund"><span>Emergency fund</span></label>
+        <label class="option"><input type="checkbox" name="Variable income priorities" value="Debt payoff"><span>Debt payoff</span></label>
+        <label class="option"><input type="checkbox" name="Variable income priorities" value="Retirement or investing"><span>Retirement or investing</span></label>
+        <label class="option"><input type="checkbox" name="Variable income priorities" value="Home projects"><span>Home projects</span></label>
+        <label class="option"><input type="checkbox" name="Variable income priorities" value="Travel"><span>Travel</span></label>
+      </div>
+      <div class="question"><p class="prompt">What monthly giving/tithing target should the budget use?</p><input type="number" name="Monthly giving target" placeholder="600"></div>
+      <div class="question"><p class="prompt">What is the current top debt or savings goal, and its target amount/date?</p><textarea name="Top financial goal"></textarea></div>
+    </section>
+    <section class="card"><h2>Transaction clarifications</h2>
+      <div class="question"><p class="prompt">Costco charged $150.40 on April 30 for item code “IPAK 2PC HS.” What was it?</p><input type="text" name="Costco April 30 item"></div>
+      <div class="question"><p class="prompt">Daisy received $150 with memo “gas - groceries - In N Out.” If you know the split, enter the three amounts.</p><textarea name="Daisy 150 split" placeholder="Gas $…; groceries $…; In-N-Out $…"></textarea></div>
+      <div class="question"><p class="prompt">Should sports and recreation fees be tracked with kids’ education or health/wellness?</p>
+        <label class="option"><input type="radio" name="Kids sports category" value="Health and wellness"><span>Health &amp; Wellness</span></label>
+        <label class="option"><input type="radio" name="Kids sports category" value="Education"><span>Education / kids’ activities</span></label>
+      </div>
+      <div class="question"><p class="prompt">Anything else the transaction agent should recognize automatically?</p><textarea name="Jonny agent rules"></textarea></div>
+    </section>
+  </form>
+  <div class="copybar"><span id="status">Ready when you are.</span><button type="button" id="copy">Copy for agent</button></div>
+</main>
+<script>
+const form=document.querySelector('#questions'),status=document.querySelector('#status');
+function responseText(){const grouped={};for(const el of form.elements){if(!el.name)continue;if((el.type==='radio'||el.type==='checkbox')&&!el.checked)continue;const value=el.value.trim();if(!value)continue;(grouped[el.name]??=[]).push(value)}const lines=['BUDGET RESPONSES — JONNY'];for(const [key,values] of Object.entries(grouped))lines.push(`${key}: ${values.join('; ')}`);return lines.join('\n')}
+document.querySelector('#copy').addEventListener('click',async()=>{const text=responseText();try{await navigator.clipboard.writeText(text);status.textContent='Copied. Paste this into the budget task.'}catch{const area=document.createElement('textarea');area.value=text;document.body.append(area);area.select();document.execCommand('copy');area.remove();status.textContent='Copied. Paste this into the budget task.'}});
+</script>
+</body>
+</html>
+

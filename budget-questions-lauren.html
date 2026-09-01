@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lauren’s budget questions</title>
+  <style>
+    :root{--ink:#241c31;--muted:#71677a;--paper:#fff;--wash:#f8f3f8;--plum:#76507c;--line:#e3d9e4;--peach:#f0b48c}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f8edf6,#fff4e9);color:var(--ink);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{width:min(850px,calc(100% - 28px));margin:34px auto 90px}.hero,.card{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:22px;box-shadow:0 12px 30px rgba(65,35,65,.08)}.hero{padding:32px;margin-bottom:18px;border-top:6px solid var(--plum)}h1{font-size:clamp(2rem,6vw,3.25rem);line-height:1.05;margin:.1em 0 .25em}h2{font-size:1.25rem;margin:0 0 12px}.eyebrow{color:var(--plum);font-weight:750;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}.note{color:var(--muted);margin:0}.card{padding:24px;margin:14px 0}.question{margin:18px 0 22px}.question:last-child{margin-bottom:0}.prompt{font-weight:700;margin:0 0 9px}label.option{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid var(--line);border-radius:12px;margin:7px 0;background:#fffafd;cursor:pointer}input{margin-top:4px;accent-color:var(--plum)}textarea,input[type=text],input[type=number]{width:100%;border:1px solid #cfc0d0;border-radius:12px;padding:12px;font:inherit;background:white}textarea{min-height:96px;resize:vertical}.copybar{position:sticky;bottom:12px;background:#2f2334;color:white;padding:14px;border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 12px 28px rgba(0,0,0,.18)}button{border:0;border-radius:12px;background:var(--peach);color:#2b202e;font-weight:800;padding:12px 18px;cursor:pointer;font-size:1rem}#status{font-size:.9rem;color:#f4e9f3}@media(max-width:600px){.hero,.card{padding:20px}.copybar{align-items:stretch;flex-direction:column}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Family budget review</div>
+    <h1>Lauren’s questions</h1>
+    <p class="note">About 8–10 minutes. Nothing is submitted or stored on a server; answers stay on this device until you press “Copy for agent.”</p>
+  </section>
+  <form id="questions">
+    <section class="card"><h2>What daily life needs</h2>
+      <div class="question"><p class="prompt">Which three areas are most important to protect from cuts?</p>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Groceries and easy meals"><span>Groceries and easy meals</span></label>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Childcare"><span>Nanny, babysitting and preschool</span></label>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Kids activities"><span>Kids’ activities and lessons</span></label>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Medical and therapy"><span>Medical care and therapy</span></label>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Date nights"><span>Date nights</span></label>
+        <label class="option"><input type="checkbox" name="Protect from cuts" value="Travel"><span>Travel and family experiences</span></label>
+      </div>
+      <div class="question"><p class="prompt">Which two areas feel easiest to reduce?</p>
+        <label class="option"><input type="checkbox" name="Easiest reductions" value="Dining or delivery"><span>Dining or delivery</span></label>
+        <label class="option"><input type="checkbox" name="Easiest reductions" value="Convenience store snacks and drinks"><span>Convenience-store snacks and drinks</span></label>
+        <label class="option"><input type="checkbox" name="Easiest reductions" value="Shopping or clothing"><span>Shopping or clothing</span></label>
+        <label class="option"><input type="checkbox" name="Easiest reductions" value="Entertainment subscriptions"><span>Entertainment subscriptions</span></label>
+        <label class="option"><input type="checkbox" name="Easiest reductions" value="Travel"><span>Travel</span></label>
+      </div>
+    </section>
+    <section class="card"><h2>Targets that should feel realistic</h2>
+      <div class="question"><p class="prompt">Does $1,600 per month for groceries feel realistic for the family?</p>
+        <label class="option"><input type="radio" name="Grocery target" value="1600 is realistic"><span>Yes</span></label>
+        <label class="option"><input type="radio" name="Grocery target" value="Needs to be higher"><span>It needs to be higher</span></label>
+        <label class="option"><input type="radio" name="Grocery target" value="Could be lower"><span>We could make it lower</span></label>
+      </div>
+      <div class="question"><p class="prompt">What monthly amount should we plan for nanny, babysitting and preschool?</p><input type="number" name="Monthly childcare target" placeholder="1800"></div>
+      <div class="question"><p class="prompt">What medical costs should be treated as recurring rather than unexpected?</p><textarea name="Recurring medical needs" placeholder="Appointments, therapy, prescriptions, dental, ENT, etc."></textarea></div>
+      <div class="question"><p class="prompt">Which kids’ activities or lessons are ongoing, and roughly what do they cost?</p><textarea name="Kids activities"></textarea></div>
+    </section>
+    <section class="card"><h2>Practice income and transaction clues</h2>
+      <div class="question"><p class="prompt">About how much of the practice deposits is normally available for household spending after business expenses and taxes?</p><input type="number" name="Practice household amount" placeholder="Monthly amount"></div>
+      <div class="question"><p class="prompt">Should practice-related deposits and costs be kept in separate Rocket Money categories?</p>
+        <label class="option"><input type="radio" name="Separate practice categories" value="Yes, keep business separate"><span>Yes, keep business income and expenses separate.</span></label>
+        <label class="option"><input type="radio" name="Separate practice categories" value="No, household view is enough"><span>No, a household cash-flow view is enough.</span></label>
+      </div>
+      <div class="question"><p class="prompt">Daisy received $150 with memo “gas - groceries - In N Out.” If you know the split, enter the three amounts.</p><textarea name="Daisy 150 split" placeholder="Gas $…; groceries $…; In-N-Out $…"></textarea></div>
+      <div class="question"><p class="prompt">Are there common Walmart, Costco, Amazon or Maverik purchases the agent could easily misread?</p><textarea name="Lauren merchant clues" placeholder="Examples: formula, work supplies, road-trip snacks, school purchases…"></textarea></div>
+      <div class="question"><p class="prompt">Anything else that would make this budget fit real life better?</p><textarea name="Lauren budget notes"></textarea></div>
+    </section>
+  </form>
+  <div class="copybar"><span id="status">Ready when you are.</span><button type="button" id="copy">Copy for agent</button></div>
+</main>
+<script>
+const form=document.querySelector('#questions'),status=document.querySelector('#status');
+function responseText(){const grouped={};for(const el of form.elements){if(!el.name)continue;if((el.type==='radio'||el.type==='checkbox')&&!el.checked)continue;const value=el.value.trim();if(!value)continue;(grouped[el.name]??=[]).push(value)}const lines=['BUDGET RESPONSES — LAUREN'];for(const [key,values] of Object.entries(grouped))lines.push(`${key}: ${values.join('; ')}`);return lines.join('\n')}
+document.querySelector('#copy').addEventListener('click',async()=>{const text=responseText();try{await navigator.clipboard.writeText(text);status.textContent='Copied. Paste this into the budget task.'}catch{const area=document.createElement('textarea');area.value=text;document.body.append(area);area.select();document.execCommand('copy');area.remove();status.textContent='Copied. Paste this into the budget task.'}});
+</script>
+</body>
+</html>
