@@ -39,6 +39,8 @@
     <section class="card"><h2>Transaction clarifications</h2>
       <div class="question"><p class="prompt">Costco charged $150.40 on April 30 for item code “IPAK 2PC HS.” What was it?</p><input type="text" name="Costco April 30 item"></div>
       <div class="question"><p class="prompt">Daisy received $150 with memo “gas - groceries - In N Out.” If you know the split, enter the three amounts.</p><textarea name="Daisy 150 split" placeholder="Gas $…; groceries $…; In-N-Out $…"></textarea></div>
+      <div class="question"><p class="prompt">These recent Maverik charges did not match the loyalty history within three days. Do you recognize what any were for?</p><textarea name="Unmatched Maverik charges" placeholder="June 18: $4.11 and $6.47 (SLC); June 21: $5.67; June 25: $4.82; June 26: $1.03"></textarea></div>
+      <div class="question"><p class="prompt">Do you recognize the returned items for these Amazon refunds?</p><textarea name="Unmatched Amazon refunds" placeholder="July 5: $161.01; March 18: $27.83; February 8: $16.09 and $10.29; January 30: $13.73"></textarea></div>
       <div class="question"><p class="prompt">Should sports and recreation fees be tracked with kids’ education or health/wellness?</p>
         <label class="option"><input type="radio" name="Kids sports category" value="Health and wellness"><span>Health &amp; Wellness</span></label>
         <label class="option"><input type="radio" name="Kids sports category" value="Education"><span>Education / kids’ activities</span></label>
@@ -55,4 +57,3 @@ document.querySelector('#copy').addEventListener('click',async()=>{const text=re
 </script>
 </body>
 </html>
-
