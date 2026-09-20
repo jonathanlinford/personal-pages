@@ -20,9 +20,52 @@ const lightbox=$('lightbox');let previousFocus;
 document.querySelectorAll('.picture').forEach(button=>button.addEventListener('click',()=>{previousFocus=button;const img=button.querySelector('img');$('lightboxImage').src=img.src;$('lightboxImage').alt=img.alt;$('lightboxCaption').textContent=button.closest('figure').querySelector('figcaption').innerText.replace(/\n+/g, ' — ');lightbox.showModal();document.body.style.overflow='hidden'}));
 $('lightboxClose').addEventListener('click',()=>lightbox.close());lightbox.addEventListener('click',e=>{if(e.target===lightbox)lightbox.close()});lightbox.addEventListener('close',()=>{document.body.style.overflow='';$('lightboxImage').removeAttribute('src');previousFocus?.focus({preventScroll:true})});
 const nav=[...document.querySelectorAll('.path a')],sections=nav.map(a=>document.querySelector(a.getAttribute('href')));function mark(){let active=0;sections.forEach((s,i)=>{if(s.getBoundingClientRect().top<innerHeight*.45)active=i});nav.forEach((a,i)=>{a.classList.toggle('active',i===active);if(i===active)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current')})}addEventListener('scroll',mark,{passive:true});mark();
-const pairs=[['Counsellor','Jesus guides me'],['Prince of Peace','Jesus helps me make peace'],['Immanuel','God with us'],['White as snow','Jesus can make me clean'],['Here am I','I am willing to serve'],['The Lord’s house','Learn His ways in the temple']];const pairPictures=['guidance','peace','immanuel','clean','serve','temple'];let deck=[],picked=[],locked=false,matched=0,turns=0,hideTimer;
-function updateStats(){$('gameStats').textContent=`Pairs ${matched} / 6 · Turns ${turns}`}
-function turnCard(index,show){const b=$('gameGrid').children[index];b.classList.toggle('flipped',show);b.setAttribute('aria-pressed',String(show));b.setAttribute('aria-label',show?deck[index].text:`Card ${index+1}, face down`);b.replaceChildren();if(show){const img=document.createElement('img');img.src='assets/isaiah-matching/'+pairPictures[deck[index].pair]+'.svg';img.alt='';img.width=160;img.height=160;const label=document.createElement('span');label.className='game-phrase';label.textContent=deck[index].text;b.append(img,label)}else{const back=document.createElement('span');back.className='back';back.textContent='?';back.setAttribute('aria-hidden','true');b.append(back)}}
-function pick(index){const b=$('gameGrid').children[index];if(locked||b.disabled||picked.includes(index))return;turnCard(index,true);picked.push(index);if(picked.length<2){$('gameFeedback').textContent='Choose a second card.';return}turns++;const [a,c]=picked;if(deck[a].pair===deck[c].pair){matched++;for(const n of picked){const x=$('gameGrid').children[n];x.classList.add('matched');x.disabled=true}picked=[];chime();$('gameFeedback').textContent=matched===6?'All six promises found. Which one will you remember this week?':'A match! Explain how those two ideas belong together.'}else{locked=true;$('gameFeedback').textContent='Different pairs. Remember where they are and try again.';hideTimer=setTimeout(()=>{picked.forEach(n=>turnCard(n,false));picked=[];locked=false},1500)}updateStats()}
-function resetGame(){clearTimeout(hideTimer);picked=[];locked=false;matched=0;turns=0;deck=pairs.flatMap((pair,i)=>pair.map(text=>({pair:i,text})));for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}$('gameGrid').replaceChildren();deck.forEach((card,i)=>{const b=document.createElement('button');b.type='button';b.className='game-tile';b.addEventListener('click',()=>pick(i));$('gameGrid').append(b);turnCard(i,false)});updateStats();$('gameFeedback').textContent='Turn over two cards.'}
+const pairs=[
+ ['Counsellor','Jesus guides me','guidance'],
+ ['Prince of Peace','Jesus helps me make peace','peace'],
+ ['Immanuel','God with us','immanuel'],
+ ['White as snow','Jesus can make me clean','clean'],
+ ['Here am I','I am willing to serve','serve'],
+ ['The Lord’s house','Learn His ways in the temple','temple'],
+ ['A child is born','Isaiah promised a Savior','immanuel'],
+ ['Learn to do well','Practice doing good','serve'],
+ ['Cease to do evil','Stop doing wrong','clean'],
+ ['Walk in His paths','Follow what God teaches','guidance'],
+ ['God is my salvation','The Lord can save me','immanuel'],
+ ['I will trust','Rely on the Lord','guidance'],
+ ['Make room for someone','Help others feel included','peace'],
+ ['Tell the truth','Be honest about a mistake','clean'],
+ ['Repair what you can','Help make things right','serve'],
+ ['Choose differently','Change a wrong habit','clean'],
+ ['Take turns','Let others have a chance','peace'],
+ ['He will teach us','God helps us learn His ways','temple']
+];
+let deck=[],picked=[],locked=false,matched=0,turns=0,hideTimer,boardSize=4,pairCount=8;
+function updateStats(){$('gameStats').textContent=`Pairs ${matched} / ${pairCount} · Turns ${turns}`}
+function turnCard(index,show){
+ const b=$('gameGrid').children[index],card=deck[index];
+ b.classList.toggle('flipped',show);b.setAttribute('aria-pressed',String(show));
+ b.setAttribute('aria-label',show?card.text:`Card ${index+1}, face down`);b.replaceChildren();
+ if(show){const img=document.createElement('img');img.src='assets/isaiah-matching/'+pairs[card.pair][2]+'.svg';img.alt='';img.width=160;img.height=160;const label=document.createElement('span');label.className='game-phrase';label.textContent=card.text;b.append(img,label)}
+ else{const back=document.createElement('span');back.className='back';back.textContent='?';back.setAttribute('aria-hidden','true');b.append(back)}
+}
+function pick(index){
+ const b=$('gameGrid').children[index];if(locked||b.disabled||picked.includes(index))return;
+ turnCard(index,true);picked.push(index);if(picked.length<2){$('gameFeedback').textContent='Choose a second card.';return}
+ turns++;const [a,c]=picked;
+ if(deck[a].pair===deck[c].pair){matched++;for(const n of picked){const x=$('gameGrid').children[n];x.classList.add('matched');x.disabled=true}picked=[];chime();$('gameFeedback').textContent=matched===pairCount?'All pairs found! Which idea will you remember this week?':'A match! Explain how those two ideas belong together.'}
+ else{locked=true;$('gameFeedback').textContent='Different pairs. Remember where they are and try again.';hideTimer=setTimeout(()=>{picked.forEach(n=>turnCard(n,false));picked=[];locked=false},1500)}updateStats()
+}
+function resetGame(){
+ clearTimeout(hideTimer);picked=[];locked=false;matched=0;turns=0;pairCount=Math.floor(boardSize*boardSize/2);
+ deck=pairs.slice(0,pairCount).flatMap((pair,i)=>pair.slice(0,2).map(text=>({pair:i,text})));
+ for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+ if(boardSize===5)deck.splice(12,0,{free:true});
+ const grid=$('gameGrid');grid.style.setProperty('--board-size',boardSize);grid.replaceChildren();
+ deck.forEach((card,i)=>{const b=document.createElement('button');b.type='button';b.className='game-tile';grid.append(b);if(card.free){b.classList.add('free');b.disabled=true;b.textContent='★ Free space';b.setAttribute('aria-label','Free center space')}else{b.addEventListener('click',()=>pick(i));turnCard(i,false)}});
+ document.querySelectorAll('[data-board-size]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.boardSize)===boardSize)));
+ updateStats();$('gameFeedback').textContent=boardSize===5?'Turn over two cards. The center is a free space.':'Turn over two cards.';
+ $('gameScroll').scrollLeft=0;
+}
+document.querySelectorAll('[data-board-size]').forEach(b=>b.addEventListener('click',()=>{boardSize=Number(b.dataset.boardSize);resetGame()}));
 $('gameReset').addEventListener('click',resetGame);resetGame();
