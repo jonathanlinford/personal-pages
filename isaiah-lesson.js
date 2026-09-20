@@ -64,13 +64,13 @@ function turnCard(index,show){
 }
 function pick(index){
  const b=$('gameGrid').children[index];if(locked||b.disabled||picked.includes(index))return;
- turnCard(index,true);picked.push(index);if(picked.length<2){$('gameFeedback').textContent='Choose a second card.';return}
+ turnCard(index,true);picked.push(index);$('gameReading').replaceChildren();picked.forEach(n=>{const label=document.createElement('span');label.textContent=deck[n].text;$('gameReading').append(label)});if(picked.length<2){$('gameFeedback').textContent='Choose a second card.';return}
  turns++;const [a,c]=picked;
  if(deck[a].pair===deck[c].pair){matched++;for(const n of picked){const x=$('gameGrid').children[n];x.classList.add('matched');x.disabled=true}picked=[];chime();$('gameFeedback').textContent=matched===pairCount?'All pairs found! Which idea will you remember this week?':'A match! Explain how those two ideas belong together.'}
  else{locked=true;$('gameFeedback').textContent='Different pairs. Remember where they are and try again.';hideTimer=setTimeout(()=>{picked.forEach(n=>turnCard(n,false));picked=[];locked=false},1500)}if(matched===pairCount)announceFinish();updateStats()
 }
 function resetGame(){
- clearTimeout(hideTimer);$('gameRecord').hidden=true;$('gameRecord').textContent='';picked=[];locked=false;matched=0;turns=0;pairCount=Math.floor(boardSize*boardSize/2);
+ clearTimeout(hideTimer);$('gameReading').textContent='Tap a card to read its phrase.';$('gameRecord').hidden=true;$('gameRecord').textContent='';picked=[];locked=false;matched=0;turns=0;pairCount=Math.floor(boardSize*boardSize/2);
  deck=pairs.slice(0,pairCount).flatMap((pair,i)=>pair.slice(0,2).map(text=>({pair:i,text})));
  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
  if(boardSize===5)deck.splice(12,0,{free:true});
@@ -82,3 +82,8 @@ function resetGame(){
 }
 document.querySelectorAll('[data-board-size]').forEach(b=>b.addEventListener('click',()=>{boardSize=Number(b.dataset.boardSize);resetGame()}));
 $('gameReset').addEventListener('click',resetGame);resetGame();
+
+const gamePanel=$('game').querySelector('.panel');
+function setGameFocus(open){document.body.classList.toggle('game-focus',open);$('gameClose').hidden=!open;$('gameExpand').hidden=open;if(open){gamePanel.setAttribute('role','dialog');gamePanel.setAttribute('aria-modal','true');gamePanel.setAttribute('aria-label','Find the promise matching game');$('gameClose').focus()}else{gamePanel.removeAttribute('role');gamePanel.removeAttribute('aria-modal');gamePanel.removeAttribute('aria-label');$('gameExpand').focus({preventScroll:true})}}
+$('gameExpand').addEventListener('click',()=>setGameFocus(true));$('gameClose').addEventListener('click',()=>setGameFocus(false));
+document.addEventListener('keydown',e=>{if(!document.body.classList.contains('game-focus'))return;if(e.key==='Escape'){setGameFocus(false);return}if(e.key==='Tab'){const buttons=[...gamePanel.querySelectorAll('button:not(:disabled)')].filter(b=>!b.hidden);const first=buttons[0],last=buttons[buttons.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
