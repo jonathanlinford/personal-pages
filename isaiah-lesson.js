@@ -41,7 +41,20 @@ const pairs=[
  ['He will teach us','God helps us learn His ways','temple']
 ];
 let deck=[],picked=[],locked=false,matched=0,turns=0,hideTimer,boardSize=4,pairCount=8;
-function updateStats(){$('gameStats').textContent=`Pairs ${matched} / ${pairCount} · Turns ${turns}`}
+const bestKey='isaiah-matching-best-v1';
+let bestScores={};
+try{const saved=JSON.parse(localStorage.getItem(bestKey)||'{}');for(const size of [4,5,6]){const n=saved?.[size];if(Number.isInteger(n)&&n>=Math.floor(size*size/2))bestScores[size]=n}}catch{/* Scores still work for this visit when storage is unavailable. */}
+function updateStats(){$('gameStats').textContent=`Pairs ${matched} / ${pairCount} · Turns ${turns}`;$('gameBest').textContent=`Best ${boardSize}×${boardSize}: ${bestScores[boardSize]===undefined?'—':bestScores[boardSize]+' turns'}`}
+function announceFinish(){
+ const previous=bestScores[boardSize],isRecord=previous===undefined||turns<previous;
+ const banner=$('gameRecord');banner.hidden=false;banner.classList.toggle('new-record',isRecord);
+ if(isRecord){bestScores[boardSize]=turns;let saved=true;try{localStorage.setItem(bestKey,JSON.stringify(bestScores))}catch{saved=false}
+ banner.textContent=`★ New best score! ${boardSize}×${boardSize} in ${turns} turns.`+(previous===undefined?' Your first completed score!':` You beat ${previous} turns!`)+(saved?'':' Saved for this visit only.');
+ }else if(turns===previous){banner.textContent=`You tied your best! ${boardSize}×${boardSize} in ${turns} turns.`}
+ else{banner.textContent=`Board complete in ${turns} turns. Your ${boardSize}×${boardSize} best is ${previous} turns. Try again!`}
+ $('gameFeedback').textContent='All pairs found! Which idea will you remember this week?';
+}
+
 function turnCard(index,show){
  const b=$('gameGrid').children[index],card=deck[index];
  b.classList.toggle('flipped',show);b.setAttribute('aria-pressed',String(show));
@@ -54,10 +67,10 @@ function pick(index){
  turnCard(index,true);picked.push(index);if(picked.length<2){$('gameFeedback').textContent='Choose a second card.';return}
  turns++;const [a,c]=picked;
  if(deck[a].pair===deck[c].pair){matched++;for(const n of picked){const x=$('gameGrid').children[n];x.classList.add('matched');x.disabled=true}picked=[];chime();$('gameFeedback').textContent=matched===pairCount?'All pairs found! Which idea will you remember this week?':'A match! Explain how those two ideas belong together.'}
- else{locked=true;$('gameFeedback').textContent='Different pairs. Remember where they are and try again.';hideTimer=setTimeout(()=>{picked.forEach(n=>turnCard(n,false));picked=[];locked=false},1500)}updateStats()
+ else{locked=true;$('gameFeedback').textContent='Different pairs. Remember where they are and try again.';hideTimer=setTimeout(()=>{picked.forEach(n=>turnCard(n,false));picked=[];locked=false},1500)}if(matched===pairCount)announceFinish();updateStats()
 }
 function resetGame(){
- clearTimeout(hideTimer);picked=[];locked=false;matched=0;turns=0;pairCount=Math.floor(boardSize*boardSize/2);
+ clearTimeout(hideTimer);$('gameRecord').hidden=true;$('gameRecord').textContent='';picked=[];locked=false;matched=0;turns=0;pairCount=Math.floor(boardSize*boardSize/2);
  deck=pairs.slice(0,pairCount).flatMap((pair,i)=>pair.slice(0,2).map(text=>({pair:i,text})));
  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
  if(boardSize===5)deck.splice(12,0,{free:true});
