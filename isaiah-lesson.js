@@ -27,18 +27,18 @@ const pairs=[
  ['White as snow','Jesus can make me clean','clean'],
  ['Here am I','I am willing to serve','serve'],
  ['The Lord’s house','Learn His ways in the temple','temple'],
- ['A child is born','Isaiah promised a Savior','immanuel'],
- ['Learn to do well','Practice doing good','serve'],
- ['Cease to do evil','Stop doing wrong','clean'],
- ['Walk in His paths','Follow what God teaches','guidance'],
- ['God is my salvation','The Lord can save me','immanuel'],
- ['I will trust','Rely on the Lord','guidance'],
- ['Make room for someone','Help others feel included','peace'],
- ['Tell the truth','Be honest about a mistake','clean'],
- ['Repair what you can','Help make things right','serve'],
- ['Choose differently','Change a wrong habit','clean'],
- ['Take turns','Let others have a chance','peace'],
- ['He will teach us','God helps us learn His ways','temple']
+ ['A child is born','Isaiah promised a Savior','birth'],
+ ['Learn to do well','Practice doing good','good'],
+ ['Cease to do evil','Stop doing wrong','stop'],
+ ['Walk in His paths','Follow what God teaches','path'],
+ ['God is my salvation','The Lord can save me','save'],
+ ['I will trust','Rely on the Lord','trust'],
+ ['Make room for someone','Help others feel included','include'],
+ ['Tell the truth','Be honest about a mistake','honesty'],
+ ['Repair what you can','Help make things right','repair'],
+ ['Choose differently','Change a wrong habit','change'],
+ ['Take turns','Let others have a chance','turns'],
+ ['He will teach us','God helps us learn His ways','teach']
 ];
 let deck=[],picked=[],locked=false,matched=0,turns=0,hideTimer,boardSize=4,pairCount=8;
 const bestKey='isaiah-matching-best-v1';
