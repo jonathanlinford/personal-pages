@@ -26,3 +26,39 @@ lightbox.addEventListener('close',()=>{document.body.style.overflow='';$('lightb
 const nav=[...document.querySelectorAll('.path a')],sections=nav.map(a=>document.querySelector(a.getAttribute('href')));
 function mark(){let active=0;sections.forEach((section,index)=>{if(section.getBoundingClientRect().top<innerHeight*.45)active=index});nav.forEach((a,index)=>{a.classList.toggle('active',index===active);if(index===active)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current')})}
 addEventListener('scroll',mark,{passive:true});mark();
+
+// Storm Sweeper: a lesson-themed, touch-friendly Minesweeper game.
+const SWEEP_SIZE=8,SWEEP_STORMS=10;
+const sweepGrid=$('sweeperGrid'),sweepStatus=$('sweeperStatus'),sweepFlag=$('sweeperFlag');
+let sweepBoard=[],sweepStarted=false,sweepOver=false,sweepFlagMode=false;
+const sweepNeighbors=index=>{const row=Math.floor(index/SWEEP_SIZE),col=index%SWEEP_SIZE,result=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const r=row+dr,c=col+dc;if((dr||dc)&&r>=0&&r<SWEEP_SIZE&&c>=0&&c<SWEEP_SIZE)result.push(r*SWEEP_SIZE+c)}return result};
+
+function sweepLabel(cell,index){const place=`Row ${Math.floor(index/SWEEP_SIZE)+1}, column ${index%SWEEP_SIZE+1}`;if(cell.flagged)return `${place}, flagged`;if(!cell.revealed)return `${place}, covered`;if(cell.mine)return `${place}, storm cloud`;return cell.near?`${place}, ${cell.near} nearby storm ${cell.near===1?'cloud':'clouds'}`:`${place}, clear ground`}
+function renderSweep(){
+  const flags=sweepBoard.filter(cell=>cell.flagged).length;
+  sweepBoard.forEach((cell,index)=>{const button=sweepGrid.children[index];button.className='sweep-cell';button.textContent='';if(cell.flagged&&!cell.revealed){button.classList.add('flagged');button.textContent='🚩'}else if(cell.revealed){button.classList.add('revealed');if(cell.mine){button.classList.add('storm');button.textContent='🌩️'}else if(cell.near){button.classList.add(`n${Math.min(cell.near,4)}`);button.textContent=cell.near}else button.textContent='🌼'}button.setAttribute('aria-label',sweepLabel(cell,index));button.disabled=sweepOver});
+  if(!sweepOver&&sweepStarted)sweepStatus.textContent=`${SWEEP_STORMS-flags} storm ${SWEEP_STORMS-flags===1?'flag':'flags'} left`;
+}
+function plantStorms(first){
+  const safe=new Set([first,...sweepNeighbors(first)]),spots=[...sweepBoard.keys()].filter(index=>!safe.has(index));
+  for(let i=spots.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[spots[i],spots[j]]=[spots[j],spots[i]]}
+  spots.slice(0,SWEEP_STORMS).forEach(index=>{sweepBoard[index].mine=true});
+  sweepBoard.forEach((cell,index)=>{cell.near=sweepNeighbors(index).filter(next=>sweepBoard[next].mine).length});
+  sweepStarted=true;
+}
+function openSweep(start){
+  if(sweepOver||sweepBoard[start].flagged||sweepBoard[start].revealed)return;
+  if(!sweepStarted)plantStorms(start);
+  if(sweepBoard[start].mine){sweepBoard[start].revealed=true;sweepBoard.forEach(cell=>{if(cell.mine)cell.revealed=true});sweepOver=true;sweepStatus.textContent='A storm cloud! Try a new garden.';renderSweep();return}
+  const queue=[start],seen=new Set();while(queue.length){const index=queue.shift();if(seen.has(index))continue;seen.add(index);const cell=sweepBoard[index];if(cell.flagged||cell.mine)continue;cell.revealed=true;if(cell.near===0)sweepNeighbors(index).forEach(next=>{if(!seen.has(next))queue.push(next)})}
+  if(sweepBoard.filter(cell=>cell.revealed&&!cell.mine).length===SWEEP_SIZE*SWEEP_SIZE-SWEEP_STORMS){sweepOver=true;sweepBoard.forEach(cell=>{if(cell.mine)cell.flagged=true});sweepStatus.textContent='The wilderness is blossoming! You found every safe place.';chime()}
+  renderSweep();
+}
+function flagSweep(index){if(sweepOver||sweepBoard[index].revealed)return;const flags=sweepBoard.filter(cell=>cell.flagged).length;if(!sweepBoard[index].flagged&&flags>=SWEEP_STORMS){sweepStatus.textContent=`You have placed all ${SWEEP_STORMS} flags.`;return}sweepBoard[index].flagged=!sweepBoard[index].flagged;renderSweep()}
+function resetSweep(){
+  sweepBoard=Array.from({length:SWEEP_SIZE*SWEEP_SIZE},()=>({mine:false,near:0,revealed:false,flagged:false}));sweepStarted=false;sweepOver=false;sweepFlagMode=false;sweepFlag.setAttribute('aria-pressed','false');sweepFlag.textContent='🚩 Flag mode: off';sweepStatus.textContent='Choose a square to begin.';sweepGrid.replaceChildren();
+  sweepBoard.forEach((cell,index)=>{const button=document.createElement('button');button.type='button';button.className='sweep-cell';button.dataset.index=index;button.setAttribute('aria-label',sweepLabel(cell,index));button.addEventListener('click',()=>sweepFlagMode?flagSweep(index):openSweep(index));button.addEventListener('contextmenu',event=>{event.preventDefault();flagSweep(index)});sweepGrid.append(button)});
+}
+sweepFlag.addEventListener('click',()=>{sweepFlagMode=!sweepFlagMode;sweepFlag.setAttribute('aria-pressed',String(sweepFlagMode));sweepFlag.textContent=`🚩 Flag mode: ${sweepFlagMode?'on':'off'}`});
+$('sweeperReset').addEventListener('click',resetSweep);
+resetSweep();

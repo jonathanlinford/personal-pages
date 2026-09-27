@@ -46,8 +46,22 @@
     .video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
     .question b { color:#7b412b; }
     .takehome .label { color:var(--cream); }
+    .sweeper { max-width:620px; margin:1.25rem auto 0; padding:clamp(1rem,4vw,1.5rem); border-radius:1.25rem; background:var(--green); color:var(--cream); box-shadow:var(--shadow); }
+    .sweeper-top { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; }
+    .sweeper-status { margin:0; font-weight:700; }
+    .sweeper-controls { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .sweeper-controls button { min-height:44px; border:1px solid #f2cc84; border-radius:2rem; padding:.55rem .9rem; background:transparent; color:var(--cream); font-weight:700; }
+    .sweeper-controls button[aria-pressed="true"], .sweeper-controls button:hover { background:var(--gold); color:#23352c; }
+    .sweeper-grid { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:4px; max-width:520px; margin:auto; }
+    .sweep-cell { display:grid; place-items:center; aspect-ratio:1; min-width:0; min-height:42px; border:0; border-radius:.45rem; background:#e9dfcb; color:#26312a; font:800 clamp(.85rem,3.6vw,1.15rem)/1 'Source Sans 3',sans-serif; box-shadow:inset 0 -3px 0 #b8aa8f; }
+    .sweep-cell:hover, .sweep-cell:focus-visible { background:#f6eddb; }
+    .sweep-cell.revealed { background:var(--cream); box-shadow:none; cursor:default; }
+    .sweep-cell.flagged { background:#f2cc84; color:#432e1d; }
+    .sweep-cell.storm { background:#b74c42; color:white; }
+    .sweep-cell.n1 { color:#155b8a; } .sweep-cell.n2 { color:#28613f; } .sweep-cell.n3, .sweep-cell.n4 { color:#8a392d; }
+    .sweeper-help { margin:.9rem 0 0; color:#e5ece7; font-size:.9rem; }
     .verse.big { font-size:clamp(1.35rem,4vw,2rem); }
-    @media (max-width:650px) { .topbar .official-link { order:3; width:100%; text-align:center; } .storm-actions,.restore-grid,.object-row { grid-template-columns:1fr; } .transform { grid-template-columns:1fr; } .transform-arrow { transform:rotate(90deg); justify-self:center; } }
+    @media (max-width:650px) { .topbar .official-link { order:3; width:100%; text-align:center; } .storm-actions,.restore-grid,.object-row { grid-template-columns:1fr; } .transform { grid-template-columns:1fr; } .transform-arrow { transform:rotate(90deg); justify-self:center; } .sweep-cell { min-height:0; } }
   </style>
   <script src="marvellous-work-lesson.js" defer></script>
 </head>
@@ -137,8 +151,21 @@
     <p class="teacher">Share a brief testimony that Jesus Christ can shelter, save, and restore. Close with prayer.</p>
   </section>
 
+  <section class="step" id="game">
+    <div class="stephead"><span class="number" aria-hidden="true">★</span><h2>Storm Sweeper.</h2><span class="time">Optional game</span></div>
+    <p class="lead">Help Isaiah’s desert bloom. Reveal the safe ground, use the numbers as clues, and mark every hidden storm cloud.</p>
+    <div class="sweeper">
+      <div class="sweeper-top">
+        <p class="sweeper-status" id="sweeperStatus" aria-live="polite">Choose a square to begin.</p>
+        <div class="sweeper-controls"><button id="sweeperFlag" type="button" aria-pressed="false">🚩 Flag mode: off</button><button id="sweeperReset" type="button">New garden</button></div>
+      </div>
+      <div class="sweeper-grid" id="sweeperGrid" aria-label="Storm Sweeper game board"></div>
+      <p class="sweeper-help">A number tells how many storm clouds touch that square. On a computer, you can also right-click to place a flag.</p>
+    </div>
+  </section>
+
   <details class="notes"><summary>Teacher notes, sources &amp; timing</summary>
-    <p>The seven steps total 30 minutes, including opening and closing prayers. If discussion runs long, use the video instead of the tap-each-object activity. No printing, purchases, or supplies are needed.</p>
+    <p>The seven lesson steps total 30 minutes, including opening and closing prayers; the optional Storm Sweeper game is extra. If discussion runs long, use the video instead of the tap-each-object activity. No printing, purchases, or supplies are needed.</p>
     <ul><li>Core path: review 3, desert-to-garden 4, refuge 5, Resurrection 4, restore 4, Restoration video and discussion 8, closing 2.</li><li>Keep death discussion simple and hopeful. Do not ask children to share private grief.</li><li>The class pictures are newly generated, imagined examples based on the children’s reference images—not claims about events in their lives.</li><li>The official children’s outline suggests the shelter comparison, wiping away tears, and identifying latter-day works such as the Book of Mormon, temples, and the First Vision.</li></ul>
     <div class="links"><a href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/39?lang=eng" target="_blank" rel="noopener">Official September 21–27 lesson</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/25?lang=eng" target="_blank" rel="noopener">Isaiah 25</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/29?lang=eng" target="_blank" rel="noopener">Isaiah 29</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/35?lang=eng" target="_blank" rel="noopener">Isaiah 35</a></div>
     <p class="mini">Core readings: Isaiah 25:4, 8–9; 29:14; 35:6–7. Earlier lesson: Isaiah 1:18; 9:6.</p>
