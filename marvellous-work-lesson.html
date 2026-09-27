@@ -30,13 +30,13 @@
     .storm-actions, .restore-grid { display:grid; gap:.75rem; margin-top:1rem; }
     .storm-actions { grid-template-columns:repeat(3,1fr); }
     .restore-grid { grid-template-columns:repeat(2,1fr); }
-    .storm-actions button, .restore-card { border:1px solid rgba(7,94,91,.22); border-radius:.9rem; background:#fff; padding:1rem; color:inherit; font:inherit; text-align:left; }
+    .storm-actions button, .restore-card { border:1px solid rgba(7,94,91,.22); border-radius:.9rem; background:#fff; padding:1rem; color:var(--ink); font:inherit; text-align:left; }
     .storm-actions button { cursor:pointer; font-weight:750; }
     .storm-actions button:hover, .storm-actions button:focus-visible { border-color:var(--accent); transform:translateY(-2px); }
     .storm-actions button.chosen { background:#dff3ef; border-color:var(--accent); }
     .restore-card strong { display:block; color:var(--accent-dark); font-size:1.05rem; margin-bottom:.35rem; }
     .object-row { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin:1rem 0; }
-    .object { border:0; border-radius:1rem; min-height:8rem; padding:1rem; background:#efe7d5; cursor:pointer; color:inherit; font:inherit; }
+    .object { border:0; border-radius:1rem; min-height:8rem; padding:1rem; background:#efe7d5; cursor:pointer; color:var(--ink); font:inherit; }
     .object .icon { display:block; font-size:2.4rem; margin-bottom:.5rem; }
     .object.revealed { background:#dff3ef; box-shadow:inset 0 0 0 2px var(--accent); }
     .object .reveal { display:block; margin-top:.45rem; font-size:.9rem; opacity:.8; }
@@ -44,6 +44,8 @@
     .tears.wiped { background:#fff4d7; transform:rotate(2deg); }
     .video-wrap { position:relative; aspect-ratio:16/9; margin:1.25rem 0; overflow:hidden; border-radius:1rem; background:#102526; box-shadow:0 12px 30px rgba(7,94,91,.16); }
     .video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    .question b { color:#7b412b; }
+    .takehome .label { color:var(--cream); }
     .verse.big { font-size:clamp(1.35rem,4vw,2rem); }
     @media (max-width:650px) { .topbar .official-link { order:3; width:100%; text-align:center; } .storm-actions,.restore-grid,.object-row { grid-template-columns:1fr; } .transform { grid-template-columns:1fr; } .transform-arrow { transform:rotate(90deg); justify-self:center; } }
   </style>
@@ -63,7 +65,7 @@
     <p class="bigidea">Jesus Christ can <strong>shelter me</strong>, <strong>save me</strong>, and <strong>restore what is lost or broken</strong>.</p>
   </header>
 
-  <nav class="path" aria-label="Lesson sections"><a href="#review" aria-label="1. Remember">01</a><a href="#picture" aria-label="2. Isaiah's picture">02</a><a href="#storm" aria-label="3. Refuge">03</a><a href="#tears" aria-label="4. Salvation">04</a><a href="#restore" aria-label="5. Restore">05</a><a href="#wonder" aria-label="6. Marvellous work">06</a><a href="#take" aria-label="7. Take it home">07</a></nav>
+  <nav class="path" aria-label="Lesson sections"><a href="#review" aria-label="01. Remember">01</a><a href="#picture" aria-label="02. Isaiah's picture">02</a><a href="#storm" aria-label="03. Refuge">03</a><a href="#tears" aria-label="04. Salvation">04</a><a href="#restore" aria-label="05. Restore">05</a><a href="#wonder" aria-label="06. Marvellous work">06</a><a href="#take" aria-label="07. Take it home">07</a></nav>
 
   <section class="step" id="review">
     <div class="stephead"><span class="number">01</span><h2>Remember Isaiah?</h2><span class="time">3 minutes</span></div>
