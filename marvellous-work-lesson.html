@@ -42,6 +42,8 @@
     .object .reveal { display:block; margin-top:.45rem; font-size:.9rem; opacity:.8; }
     .tears { width:min(15rem,70vw); aspect-ratio:1; border-radius:50%; margin:1rem auto; display:grid; place-items:center; background:#e8f2f7; font-size:5rem; transition:.5s ease; }
     .tears.wiped { background:#fff4d7; transform:rotate(2deg); }
+    .video-wrap { position:relative; aspect-ratio:16/9; margin:1.25rem 0; overflow:hidden; border-radius:1rem; background:#102526; box-shadow:0 12px 30px rgba(7,94,91,.16); }
+    .video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
     .verse.big { font-size:clamp(1.35rem,4vw,2rem); }
     @media (max-width:650px) { .topbar .official-link { order:3; width:100%; text-align:center; } .storm-actions,.restore-grid,.object-row { grid-template-columns:1fr; } .transform { grid-template-columns:1fr; } .transform-arrow { transform:rotate(90deg); justify-self:center; } }
   </style>
@@ -83,7 +85,7 @@
   </section>
 
   <section class="step" id="storm">
-    <div class="stephead"><span class="number">03</span><h2>“A refuge from the storm.”</h2><span class="time">6 minutes</span></div>
+    <div class="stephead"><span class="number">03</span><h2>“A refuge from the storm.”</h2><span class="time">5 minutes</span></div>
     <p class="lead">Make a rainstorm together: rub hands for wind, pat knees for rain, then clap once for thunder. Freeze and listen.</p>
     <blockquote class="verse">“Thou hast been … a refuge from the storm, a shadow from the heat.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/25?lang=eng&amp;id=p4#p4" target="_blank" rel="noopener">Isaiah 25:4</a></blockquote>
     <p>A refuge is a safe place. Jesus does not promise that no storm will ever come. He promises that we do not have to face storms alone.</p>
@@ -92,7 +94,7 @@
   </section>
 
   <section class="step" id="tears">
-    <div class="stephead"><span class="number">04</span><h2>He will wipe away tears.</h2><span class="time">5 minutes</span></div>
+    <div class="stephead"><span class="number">04</span><h2>He will wipe away tears.</h2><span class="time">4 minutes</span></div>
     <p>Isaiah’s greatest promise is not only that Jesus helps us through hard things. Because Jesus died and rose again, death itself will not win.</p>
     <blockquote class="verse big">“He will swallow up death in victory; and the Lord God will wipe away tears from off all faces.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/25?lang=eng&amp;id=p8-p9#p8" target="_blank" rel="noopener">Isaiah 25:8–9</a></blockquote>
     <div class="panel"><span class="label">Isaiah’s promise</span><div class="tears" id="tearFace" aria-live="polite" aria-label="A crying face">😢</div><button class="action" id="wipeTears" type="button">Wipe away the tears</button><p class="feedback" id="tearFeedback" aria-live="polite">Ask first: Does this verse mean we never feel sad?</p></div>
@@ -101,7 +103,7 @@
   </section>
 
   <section class="step" id="restore">
-    <div class="stephead"><span class="number">05</span><h2>What does it mean to restore?</h2><span class="time">5 minutes</span></div>
+    <div class="stephead"><span class="number">05</span><h2>What does it mean to restore?</h2><span class="time">4 minutes</span></div>
     <p>Hold your hands apart like a broken object. As the class names each step, bring them closer: notice what is wrong, find the missing part, repair it, use it again.</p>
     <figure class="kid-card single"><button class="picture" type="button" aria-label="Enlarge illustration of Cole and Alyda repairing a birdhouse"><img src="assets/marvellous-work-lesson/restoring-birdhouse.jpg?v=2" alt="Cartoon illustration of Cole and Alyda restoring a wooden birdhouse" loading="lazy" width="1256" height="1256"></button><figcaption><b>Cole and Alyda restore a birdhouse</b>They do not pretend it was never broken. They bring the pieces back together and make it useful again.</figcaption></figure>
     <div class="restore-grid"><div class="restore-card"><strong>Restore is more than replace.</strong>The Lord does not throw people away when they are hurt or when they make mistakes.</div><div class="restore-card"><strong>Restoration takes love and work.</strong>Jesus heals, forgives, teaches, and patiently helps us become whole.</div></div>
@@ -109,9 +111,11 @@
   </section>
 
   <section class="step" id="wonder">
-    <div class="stephead"><span class="number">06</span><h2>The gospel was restored.</h2><span class="time">5 minutes</span></div>
+    <div class="stephead"><span class="number">06</span><h2>The gospel was restored.</h2><span class="time">8 minutes</span></div>
     <blockquote class="verse">“I will proceed to do a marvellous work among this people, even a marvellous work and a wonder.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/29?lang=eng&amp;id=p14#p14" target="_blank" rel="noopener">Isaiah 29:14</a></blockquote>
     <p>After Jesus’s Apostles died, important authority and truths were lost from the earth. Heavenly Father did not forget His children. Through Joseph Smith, He began bringing Christ’s gospel back.</p>
+    <div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/lJnN2FkgD-g?rel=0" title="Restoration of Christ’s Church | Now You Know" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <p class="teacher">Watch the 5-minute Church video. Afterward ask: What did Heavenly Father bring back because He loves His children?</p>
     <div class="panel"><span class="label">Tap each object</span><h3>What did the Lord bring back?</h3><div class="object-row">
       <button class="object" type="button" data-object="Heavenly Father and Jesus Christ called Joseph Smith and began the Restoration."><span class="icon" aria-hidden="true">🌳</span><strong>Sacred Grove</strong><span class="reveal">Tap to reveal</span></button>
       <button class="object" type="button" data-object="The Book of Mormon is another witness that Jesus is the Christ."><span class="icon" aria-hidden="true">📖</span><strong>Book of Mormon</strong><span class="reveal">Tap to reveal</span></button>
@@ -132,8 +136,8 @@
   </section>
 
   <details class="notes"><summary>Teacher notes, sources &amp; timing</summary>
-    <p>The seven steps total 30 minutes, including opening and closing prayers. If discussion runs long, shorten section 5 to the picture and one friendship example. No printing, purchases, or supplies are needed.</p>
-    <ul><li>Core path: review 3, desert-to-garden 4, refuge 6, Resurrection 5, restore 5, Restoration 5, closing 2.</li><li>Keep death discussion simple and hopeful. Do not ask children to share private grief.</li><li>The class pictures are newly generated, imagined examples based on the children’s reference images—not claims about events in their lives.</li><li>The official children’s outline suggests the shelter comparison, wiping away tears, and identifying latter-day works such as the Book of Mormon, temples, and the First Vision.</li></ul>
+    <p>The seven steps total 30 minutes, including opening and closing prayers. If discussion runs long, use the video instead of the tap-each-object activity. No printing, purchases, or supplies are needed.</p>
+    <ul><li>Core path: review 3, desert-to-garden 4, refuge 5, Resurrection 4, restore 4, Restoration video and discussion 8, closing 2.</li><li>Keep death discussion simple and hopeful. Do not ask children to share private grief.</li><li>The class pictures are newly generated, imagined examples based on the children’s reference images—not claims about events in their lives.</li><li>The official children’s outline suggests the shelter comparison, wiping away tears, and identifying latter-day works such as the Book of Mormon, temples, and the First Vision.</li></ul>
     <div class="links"><a href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/39?lang=eng" target="_blank" rel="noopener">Official September 21–27 lesson</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/25?lang=eng" target="_blank" rel="noopener">Isaiah 25</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/29?lang=eng" target="_blank" rel="noopener">Isaiah 29</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/35?lang=eng" target="_blank" rel="noopener">Isaiah 35</a></div>
     <p class="mini">Core readings: Isaiah 25:4, 8–9; 29:14; 35:6–7. Earlier lesson: Isaiah 1:18; 9:6.</p>
     <div class="links"><a href="isaiah-lesson.html">God Is My Salvation</a><a href="remember-works-lesson.html">I Will Remember</a><a href="psalms-lesson.html">The Lord Is My Shepherd</a><a href="index.html">All pages</a></div>
