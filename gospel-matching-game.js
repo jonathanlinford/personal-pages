@@ -3,24 +3,24 @@
 const $ = id => document.getElementById(id);
 
 const gospelPairs = [
-  {name:'Jesus Christ', meaning:'Our Savior and the center of the gospel', icon:'✦'},
-  {name:'Faith in Jesus Christ', meaning:'Trust Him enough to follow Him', icon:'⚓'},
-  {name:'Repentance', meaning:'Turn to Christ and choose to change', icon:'↩'},
-  {name:'Baptism', meaning:'Make our first covenant with God', icon:'💧'},
-  {name:'Gift of the Holy Ghost', meaning:'Receive comfort, guidance, and truth', icon:'🔥'},
-  {name:'Prayer', meaning:'Speak with Heavenly Father', icon:'🙏'},
-  {name:'Scriptures', meaning:'Study the word of God', icon:'📖'},
-  {name:'Sacrament', meaning:'Remember Jesus and renew our covenants', icon:'🍞'},
-  {name:'Temple', meaning:'Make sacred covenants and unite families', icon:'🏛'},
-  {name:'Living prophet', meaning:'Hear guidance God gives for our day', icon:'📣'},
-  {name:'Service', meaning:'Follow Jesus by helping someone', icon:'🤝'},
-  {name:'Tithing', meaning:'Give one tenth to the Lord', icon:'⑩'},
-  {name:'Sabbath day', meaning:'Worship God and rest from ordinary work', icon:'☀'},
-  {name:'Word of Wisdom', meaning:'Care for our bodies and avoid harmful things', icon:'🌿'},
-  {name:'Missionary work', meaning:'Invite others to come unto Christ', icon:'🌍'},
-  {name:'Priesthood', meaning:'God’s authority to bless and serve', icon:'🔑'},
-  {name:'Eternal families', meaning:'Family relationships can continue forever', icon:'♥'},
-  {name:'Covenant path', meaning:'Keep making and honoring promises with God', icon:'👣'}
+  {name:'Jesus Christ', meaning:'Our Savior and the center of the gospel', image:'christ.jpg', art:'Christ and Children from around the World'},
+  {name:'Faith in Jesus Christ', meaning:'Trust Him enough to follow Him', image:'faith.jpg', art:'The Lost Lamb'},
+  {name:'Repentance', meaning:'Turn to Christ and choose to change', image:'repentance.jpg', art:'Conversion of Alma the Younger'},
+  {name:'Baptism', meaning:'Make our first covenant with God', image:'baptism.jpg', art:'Girl Being Baptized'},
+  {name:'Gift of the Holy Ghost', meaning:'Receive comfort, guidance, and truth', image:'holy-ghost.jpg', art:'The Gift of the Holy Ghost'},
+  {name:'Prayer', meaning:'Speak with Heavenly Father', image:'prayer.jpg', art:'Family Prayer'},
+  {name:'Scriptures', meaning:'Study the word of God', image:'scriptures.jpg', art:'Joseph Smith Seeks Wisdom in the Bible'},
+  {name:'Sacrament', meaning:'Remember Jesus and renew our covenants', image:'sacrament.jpg', art:'Blessing the Sacrament'},
+  {name:'Temple', meaning:'Make sacred covenants and unite families', image:'temple.jpg', art:'Kirtland Temple'},
+  {name:'Prophets', meaning:'Hear guidance God gives to His people', image:'prophets.jpg', art:'Boy Samuel Called by the Lord'},
+  {name:'Service', meaning:'Follow Jesus by helping someone', image:'service.jpg', art:'Service'},
+  {name:'Tithing', meaning:'Give one tenth to the Lord', image:'tithing.jpg', art:'Payment of Tithing'},
+  {name:'Sabbath day', meaning:'Worship God and rest from ordinary work', image:'sabbath.jpg', art:'Passing the Sacrament'},
+  {name:'Word of Wisdom', meaning:'Care for our bodies and avoid harmful things', image:'word-of-wisdom.jpg', art:'Daniel Refusing the King’s Meat and Wine'},
+  {name:'Missionary work', meaning:'Invite others to come unto Christ', image:'missionary.jpg', art:'Missionaries: Elders'},
+  {name:'Priesthood', meaning:'God’s authority to bless and serve', image:'priesthood.jpg', art:'Ordination to the Priesthood'},
+  {name:'Eternal families', meaning:'Family relationships can continue forever', image:'eternal-families.jpg', art:'Young Couple Going to the Temple'},
+  {name:'Covenant path', meaning:'Keep making and honoring promises with God', image:'covenant-path.jpg', art:'Lehi’s Dream'}
 ];
 
 let soundOn = false;
@@ -94,7 +94,7 @@ function showReading(cards) {
   }
   cards.forEach(card => {
     const text = document.createElement('span');
-    text.textContent = `${card.icon} ${card.text}`;
+    text.textContent = card.text;
     reading.append(text);
   });
 }
@@ -114,13 +114,15 @@ function renderCard(index) {
   inner.className = 'game-card-inner';
   const back = makeFace('card-back');
   const front = makeFace('card-front');
-  const icon = document.createElement('span');
-  icon.className = 'card-icon';
-  icon.textContent = card.icon;
+  const image = document.createElement('img');
+  image.className = 'card-image';
+  image.src = `assets/gospel-matching/${card.image}`;
+  image.alt = '';
+  image.loading = 'eager';
   const text = document.createElement('span');
   text.className = 'card-text';
   text.textContent = card.text;
-  front.append(icon, text);
+  front.append(image, text);
   inner.append(back, front);
   button.append(inner);
 }
@@ -204,8 +206,8 @@ function resetGame() {
   pairCount = Math.floor(boardSize * boardSize / 2);
   const chosenPairs = shuffle(gospelPairs).slice(0, pairCount);
   deck = shuffle(chosenPairs.flatMap((pair, pairId) => [
-    {pairId, text: pair.name, icon: pair.icon},
-    {pairId, text: pair.meaning, icon: pair.icon}
+    {pairId, text: pair.name, image: pair.image, art: pair.art},
+    {pairId, text: pair.meaning, image: pair.image, art: pair.art}
   ]));
 
   if (boardSize === 5) deck.splice(12, 0, {free: true});
@@ -243,11 +245,21 @@ function resetGame() {
   $('gameStage').scrollTo({left: 0, top: 0});
 }
 
-function setClassroomMode(enabled) {
+function setClassroomLayout(enabled) {
   document.body.classList.toggle('classroom', enabled);
   $('focusToggle').setAttribute('aria-pressed', String(enabled));
-  $('focusToggle').textContent = enabled ? 'Back to page' : 'Classroom mode';
+  $('focusToggle').textContent = enabled ? 'Exit full screen' : 'Full screen';
   if (enabled) $('focusToggle').focus();
+}
+
+async function setClassroomMode(enabled) {
+  setClassroomLayout(enabled);
+  try {
+    if (enabled && document.fullscreenEnabled && !document.fullscreenElement) await document.documentElement.requestFullscreen();
+    if (!enabled && document.fullscreenElement) await document.exitFullscreen();
+  } catch {
+    // Keep the fitted classroom layout when a browser declines full screen.
+  }
 }
 
 $('soundToggle').addEventListener('click', () => {
@@ -266,6 +278,9 @@ document.querySelectorAll('[data-board-size]').forEach(button => {
 
 $('gameReset').addEventListener('click', resetGame);
 $('focusToggle').addEventListener('click', () => setClassroomMode(!document.body.classList.contains('classroom')));
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && document.body.classList.contains('classroom')) setClassroomLayout(false);
+});
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && document.body.classList.contains('classroom')) setClassroomMode(false);
 });
