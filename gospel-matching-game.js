@@ -1,6 +1,8 @@
 'use strict';
 
 const $ = id => document.getElementById(id);
+const viewportMeta = document.querySelector('meta[name="viewport"]');
+const standardViewport = viewportMeta.content;
 
 const gospelPairs = [
   {name:'Jesus Christ', meaning:'Our Savior and the center of the gospel', image:'christ.jpg', art:'Christ and Children from around the World'},
@@ -20,7 +22,13 @@ const gospelPairs = [
   {name:'Missionary work', meaning:'Invite others to come unto Christ', image:'missionary.jpg', art:'Missionaries: Elders'},
   {name:'Priesthood', meaning:'God’s authority to bless and serve', image:'priesthood.jpg', art:'Ordination to the Priesthood'},
   {name:'Eternal families', meaning:'Family relationships can continue forever', image:'eternal-families.jpg', art:'Young Couple Going to the Temple'},
-  {name:'Covenant path', meaning:'Keep making and honoring promises with God', image:'covenant-path.jpg', art:'Lehi’s Dream'}
+  {name:'Covenant path', meaning:'Keep making and honoring promises with God', image:'covenant-path.jpg', art:'Lehi’s Dream'},
+  {name:'Charity', meaning:'Love God and care for our neighbors', image:'charity.jpg', art:'The Good Samaritan'},
+  {name:'Resurrection', meaning:'Because of Jesus Christ, everyone will live again', image:'resurrection.jpg', art:'Jesus Shows His Wounds'},
+  {name:'Creation', meaning:'God created the earth and all living things', image:'creation.jpg', art:'The Lord Created All Things'},
+  {name:'Commandments', meaning:'God’s loving directions help us choose the right', image:'commandments.jpg', art:'Moses and the Tablets'},
+  {name:'Book of Mormon', meaning:'Another testament of Jesus Christ', image:'book-of-mormon.jpg', art:'Mormon Abridging the Plates'},
+  {name:'Personal revelation', meaning:'God can speak to our minds and hearts', image:'revelation.jpg', art:'The Brother of Jared Sees the Finger of the Lord'}
 ];
 
 let soundOn = false;
@@ -38,7 +46,7 @@ const scoreKey = 'gospel-matching-best-v1';
 let bestScores = {};
 try {
   const saved = JSON.parse(localStorage.getItem(scoreKey) || '{}');
-  for (const size of [4, 5, 6]) {
+  for (const size of [4, 5, 6, 7]) {
     if (Number.isInteger(saved[size]) && saved[size] >= Math.floor(size * size / 2)) bestScores[size] = saved[size];
   }
 } catch {
@@ -210,7 +218,7 @@ function resetGame() {
     {pairId, text: pair.meaning, image: pair.image, art: pair.art}
   ]));
 
-  if (boardSize === 5) deck.splice(12, 0, {free: true});
+  if (boardSize % 2 === 1) deck.splice(Math.floor(boardSize * boardSize / 2), 0, {free: true});
 
   const board = $('gameBoard');
   board.style.setProperty('--board-size', boardSize);
@@ -239,7 +247,7 @@ function resetGame() {
   });
   $('gameRecord').hidden = true;
   $('gameRecord').textContent = '';
-  $('gameFeedback').textContent = boardSize === 5 ? 'Turn over two cards. The center is a free space.' : 'Turn over two cards.';
+  $('gameFeedback').textContent = boardSize % 2 === 1 ? 'Turn over two cards. The center is a free space.' : 'Turn over two cards.';
   showReading([]);
   updateScore();
   $('gameStage').scrollTo({left: 0, top: 0});
@@ -247,6 +255,9 @@ function resetGame() {
 
 function setClassroomLayout(enabled) {
   document.body.classList.toggle('classroom', enabled);
+  viewportMeta.content = enabled
+    ? `${standardViewport}, maximum-scale=1, user-scalable=no`
+    : standardViewport;
   $('focusToggle').setAttribute('aria-pressed', String(enabled));
   $('focusToggle').textContent = enabled ? 'Exit full screen' : 'Full screen';
   if (enabled) $('focusToggle').focus();
@@ -284,5 +295,11 @@ document.addEventListener('fullscreenchange', () => {
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && document.body.classList.contains('classroom')) setClassroomMode(false);
 });
+document.addEventListener('dblclick', event => {
+  if (document.body.classList.contains('classroom')) event.preventDefault();
+});
+document.addEventListener('touchmove', event => {
+  if (document.body.classList.contains('classroom') && event.touches.length > 1) event.preventDefault();
+}, {passive:false});
 
 resetGame();
