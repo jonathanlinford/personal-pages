@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f3eee4">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>He Hath Borne Our Griefs · Primary Lesson, October 11, 2026</title>
+  <meta name="description" content="A 30-minute interactive Primary lesson on Isaiah 50–57: Jesus Christ carries our griefs, invites us to seek Him, and teaches us to trust His higher ways.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="He Hath Borne Our Griefs">
+  <meta property="og:description" content="Isaiah 50–57 · Primary, October 11, 2026. Jesus Christ understands, carries, heals, and leads us home.">
+  <meta property="og:image" content="https://jonathanlinford.github.io/personal-pages/assets/borne-our-griefs-lesson/hero.jpg">
+  <meta property="og:url" content="https://jonathanlinford.github.io/personal-pages/borne-our-griefs-lesson.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="isaiah-lesson.css">
+  <style>
+    :root { --accent:#236b72; --accent-dark:#194f55; --coral:#8f493b; }
+    .topbar { flex-wrap:wrap; }
+    .topbar .official-link { color:var(--accent-dark); font-weight:750; text-decoration:underline; text-underline-offset:.2em; }
+    .hero h1 { max-width:850px; }
+    .hero h1 em { color:var(--accent); }
+    .motion-row,.burden-grid,.seek-grid,.higher-grid { display:grid; gap:.75rem; margin:1rem 0; }
+    .motion-row { grid-template-columns:repeat(3,1fr); }
+    .burden-grid,.seek-grid { grid-template-columns:repeat(2,1fr); }
+    .motion-row button,.burden-card,.seek-card,.higher-choice { border:1px solid rgba(25,79,85,.28); border-radius:1rem; padding:1rem; background:#fff; color:var(--ink); font:inherit; text-align:left; }
+    .motion-row button,.burden-card,.seek-card,.higher-choice { cursor:pointer; }
+    .motion-row button strong,.burden-card strong,.seek-card strong { display:block; color:var(--accent-dark); font-size:1.05rem; }
+    .motion-row button.done,.burden-card.carried,.seek-card.open { background:#dcefeb; border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); }
+    .burden-card .burden-icon,.seek-card .seek-icon { display:block; font-size:2rem; margin-bottom:.35rem; }
+    .burden-card span:last-child,.seek-card span:last-child { display:block; margin-top:.4rem; font-size:.92rem; color:#4f5e56; }
+    .video-wrap { position:relative; aspect-ratio:16/9; margin:1.25rem 0; overflow:hidden; border-radius:1rem; background:#102526; box-shadow:0 12px 30px rgba(25,79,85,.18); }
+    .video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    .higher-grid { grid-template-columns:1fr; }
+    .higher-card { padding:1rem; border-radius:1rem; background:#e9dfcb; }
+    .higher-card p { margin:.1rem 0 .7rem; font-weight:700; }
+    .higher-choices { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; }
+    .higher-choice { min-height:4rem; }
+    .higher-choice.right { background:#dcefeb; border-color:var(--accent); }
+    .higher-choice.wrong { background:#f2dfd6; border-color:#8f493b; }
+    .perspective { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; margin:1.2rem 0; }
+    .perspective div { min-height:8rem; display:grid; place-items:center; padding:1rem; border-radius:1rem; text-align:center; font-weight:800; }
+    .perspective .ground { background:#ddd0b8; color:#4f3d29; }
+    .perspective .higher { background:#dcefeb; color:var(--accent-dark); }
+    .perspective .arrow { min-height:0; padding:0; background:none; color:var(--accent); font-size:2rem; }
+    .question b { color:#74402e; }
+    .takehome .label { color:var(--cream); }
+    #carryFeedback,#higherFeedback { color:var(--accent-dark); }
+    @media (max-width:650px) { .topbar .official-link { order:3; width:100%; text-align:center; } .motion-row,.burden-grid,.seek-grid { grid-template-columns:1fr; } .perspective { grid-template-columns:1fr; } .perspective .arrow { transform:rotate(90deg); } .higher-choices { grid-template-columns:1fr; } }
+  </style>
+  <script src="borne-our-griefs-lesson.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#review">Skip to the lesson</a>
+<main class="page">
+  <div class="topbar"><a href="index.html">← Jonny’s pages</a><a class="official-link" href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng" target="_blank" rel="noopener">Official Come, Follow Me lesson ↗</a><button class="quiet" id="soundToggle" aria-pressed="false" type="button">Sound off</button></div>
+
+  <header class="hero">
+    <div class="eyebrow">Come, Follow Me · October 5–11, 2026</div>
+    <h1>He hath borne our griefs,<br><em>and carried our sorrows.</em></h1>
+    <p class="dek">Isaiah saw that the Savior would not rescue us from far away. Jesus would come close, carry what is heavy, and lead us in a higher way.</p>
+    <p class="meta">Isaiah 50–57 &nbsp; / &nbsp; Sunday, October 11 &nbsp; / &nbsp; Primary, age 9 &nbsp; / &nbsp; 30 minutes</p>
+    <figure><button class="picture" type="button" aria-label="Enlarge illustration of Jesus helping carry a heavy burden"><img src="assets/borne-our-griefs-lesson/hero.jpg" alt="Reverent illustration of Jesus walking beside a sorrowful traveler and carrying a heavy bundle at sunrise" width="1600" height="1067" fetchpriority="high"></button><figcaption>Jesus does not save us from a distance. He understands every weight we carry and walks with us.</figcaption></figure>
+    <p class="bigidea">Jesus Christ <strong>understands my pain</strong>, <strong>carries my burdens</strong>, and <strong>shows me a higher way</strong>.</p>
+  </header>
+
+  <nav class="path" aria-label="Lesson sections"><a href="#review" aria-label="01. Remember">01</a><a href="#awake" aria-label="02. Awake">02</a><a href="#carry" aria-label="03. Jesus carries">03</a><a href="#seek" aria-label="04. Seek the Lord">04</a><a href="#higher" aria-label="05. Higher ways">05</a><a href="#take" aria-label="06. Take it home">06</a></nav>
+
+  <section class="step" id="review">
+    <div class="stephead"><span class="number">01</span><h2>Remember the marvellous work.</h2><span class="time">3 minutes</span></div>
+    <p class="teacher">Open with prayer. Let the children answer before tapping.</p>
+    <div class="panel"><span class="label">Two quick callbacks</span>
+      <div class="quiz" data-answer="Restore. Jesus can heal, repair, and bring back what is lost."><p><strong>What was last lesson’s important word?</strong></p><div class="choices"><button type="button" data-correct="false">Hide</button><button type="button" data-correct="true">Restore</button><button type="button" data-correct="false">Hurry</button></div><p class="feedback" aria-live="polite"></p></div>
+      <div class="quiz" data-answer="A refuge. Jesus does not promise there will never be storms; He promises we do not face them alone."><p><strong>Isaiah said Jesus is like what during a storm?</strong></p><div class="choices"><button type="button" data-correct="true">A refuge</button><button type="button" data-correct="false">A louder storm</button><button type="button" data-correct="false">A locked door</button></div><p class="feedback" aria-live="polite"></p></div>
+    </div>
+    <p class="land">Last time Isaiah showed what Jesus can restore. Today he shows how close Jesus comes when life feels heavy.</p>
+  </section>
+
+  <section class="step" id="awake">
+    <div class="stephead"><span class="number">02</span><h2>“Awake … put on thy strength.”</h2><span class="time">4 minutes</span></div>
+    <p>Isaiah spoke to people who felt defeated and stuck. The Lord did not tell them to stay down. He invited them to wake up, stand, and use the strength He gives.</p>
+    <blockquote class="verse">“Awake, awake; put on thy strength … shake thyself from the dust; arise.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/52?lang=eng&amp;id=p1-p2#p1" target="_blank" rel="noopener">Isaiah 52:1–2</a></blockquote>
+    <div class="panel"><span class="label">Stand and move</span><h3>Do Isaiah’s three motions.</h3><div class="motion-row"><button type="button" data-strength="Open your eyes and notice what is true."><strong>1 · Awake</strong>Stretch tall and look up.</button><button type="button" data-strength="Stand in a place where you can choose and act."><strong>2 · Arise</strong>Stand up straight.</button><button type="button" data-strength="Christ’s strength can look like courage, honesty, patience, and faith."><strong>3 · Put on strength</strong>Pretend to put on a strong coat.</button></div><p class="feedback" id="strengthFeedback" aria-live="polite">Tap each motion, then do it together.</p></div>
+    <div class="question"><b>Ask the class</b><p>What kind of strength can Jesus give that muscles cannot?</p></div>
+  </section>
+
+  <section class="step" id="carry">
+    <div class="stephead"><span class="number">03</span><h2>Jesus carries what is heavy.</h2><span class="time">9 minutes</span></div>
+    <p class="lead">Pretend to hold a very heavy backpack for ten seconds. What happens when somebody reaches over and helps support it?</p>
+    <blockquote class="verse big">“Surely he hath borne our griefs, and carried our sorrows.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/53?lang=eng&amp;id=p3-p5#p3" target="_blank" rel="noopener">Isaiah 53:4–5</a></blockquote>
+    <p><strong>Grief</strong> is deep sadness. <strong>Sorrow</strong> is pain in the heart. Jesus experienced pain, temptation, loneliness, sickness, and every consequence of sin. He understands perfectly—not by guessing, but by experience.</p>
+    <div class="burden-grid">
+      <button class="burden-card" type="button" data-carry="Jesus understands sadness and can send comfort, even when tears do not stop right away."><span class="burden-icon" aria-hidden="true">💧</span><strong>Sadness</strong><span>Tap: How can Jesus carry this?</span></button>
+      <button class="burden-card" type="button" data-carry="Jesus can forgive sin as we repent, and He helps us repair what we can."><span class="burden-icon" aria-hidden="true">🧩</span><strong>Mistakes and sin</strong><span>Tap: How can Jesus carry this?</span></button>
+      <button class="burden-card" type="button" data-carry="Jesus knows loneliness. He stays near and often sends love through other people."><span class="burden-icon" aria-hidden="true">🌙</span><strong>Loneliness</strong><span>Tap: How can Jesus carry this?</span></button>
+      <button class="burden-card" type="button" data-carry="Jesus can give courage and peace while we do the next right thing."><span class="burden-icon" aria-hidden="true">🌧️</span><strong>Fear and worry</strong><span>Tap: How can Jesus carry this?</span></button>
+    </div>
+    <p class="feedback" id="carryFeedback" aria-live="polite">Choose a burden. Carrying does not always mean making it disappear immediately.</p>
+    <figure class="kid-card single"><button class="picture" type="button" aria-label="Enlarge illustration of Braxton and Cole sharing a heavy backpack"><img src="assets/borne-our-griefs-lesson/braxton-cole-burden.jpg" alt="Illustration of Braxton and Cole working together to carry one heavy hiking backpack" loading="lazy" width="1256" height="1256"></button><figcaption><b>Braxton and Cole share the weight</b>The backpack is still heavy, but neither boy carries it alone. Jesus can strengthen us and send people to help.</figcaption></figure>
+    <div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/CQL1iqOBZxo?rel=0" title="My Kingdom Is Not of This World — official Church video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <p class="teacher">Watch the 5:25 Church video. Before it begins, ask the children to listen for ways Jesus carried grief and sorrow. Afterward, take one or two answers.</p>
+    <p class="land">Jesus was “wounded for our transgressions.” Because of Him, sin and death do not get the final word.</p>
+  </section>
+
+  <section class="step" id="seek">
+    <div class="stephead"><span class="number">04</span><h2>Seek the Lord.</h2><span class="time">4 minutes</span></div>
+    <blockquote class="verse">“Seek ye the Lord while he may be found, call ye upon him while he is near.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/55?lang=eng&amp;id=p6#p6" target="_blank" rel="noopener">Isaiah 55:6</a></blockquote>
+    <p>We do not seek Jesus because He is playing a hiding game. We seek Him by turning our attention and choices toward Him.</p>
+    <div class="panel"><span class="label">Where can I seek Him?</span><h3>Open each doorway.</h3><div class="seek-grid"><button class="seek-card" type="button" data-seek="In prayer, speak honestly and leave quiet space to listen."><span class="seek-icon" aria-hidden="true">🙏</span><strong>Prayer</strong><span>Tap to open</span></button><button class="seek-card" type="button" data-seek="In scripture, look for what Jesus does, promises, and asks."><span class="seek-icon" aria-hidden="true">📖</span><strong>Scripture</strong><span>Tap to open</span></button><button class="seek-card" type="button" data-seek="At the sacrament, remember His body, blood, promises, and name."><span class="seek-icon" aria-hidden="true">🍞</span><strong>Sacrament</strong><span>Tap to open</span></button><button class="seek-card" type="button" data-seek="While serving, notice the people Jesus would notice."><span class="seek-icon" aria-hidden="true">🤝</span><strong>Serving</strong><span>Tap to open</span></button></div><p class="feedback" id="seekFeedback" aria-live="polite">Choose one way you can seek Jesus this week.</p></div>
+    <figure class="kid-card single"><button class="picture" type="button" aria-label="Enlarge illustration of Lexi and Dannie reading scripture"><img src="assets/borne-our-griefs-lesson/lexi-dannie-seek.jpg" alt="Illustration of Lexi and Dannie reading scriptures together beside a bright window at sunrise" loading="lazy" width="1256" height="1256"></button><figcaption><b>Lexi and Dannie seek the Lord early</b>They are not just finishing pages. They are looking for what the words teach about Jesus.</figcaption></figure>
+  </section>
+
+  <section class="step" id="higher">
+    <div class="stephead"><span class="number">05</span><h2>His ways are higher.</h2><span class="time">5 minutes</span></div>
+    <blockquote class="verse big">“As the heavens are higher than the earth, so are my ways higher than your ways.”<a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/55?lang=eng&amp;id=p8-p9#p8" target="_blank" rel="noopener">Isaiah 55:8–9</a></blockquote>
+    <div class="perspective"><div class="ground">From inside a maze<br>“I cannot see the way.”</div><div class="arrow" aria-hidden="true">→</div><div class="higher">From above the maze<br>the whole path is visible.</div></div>
+    <p>God sees what we cannot see. His “higher way” is also a better way to treat people.</p>
+    <div class="higher-grid">
+      <div class="higher-card"><p>Someone makes a mistake. Which is Christ’s higher way?</p><div class="higher-choices"><button class="higher-choice" type="button" data-higher="wrong">Embarrass them so everyone knows</button><button class="higher-choice" type="button" data-higher="right">Tell the truth with kindness and help them try again</button></div></div>
+      <div class="higher-card"><p>You are chosen to lead. Which is Christ’s higher way?</p><div class="higher-choices"><button class="higher-choice" type="button" data-higher="right">Listen, serve, and help everyone contribute</button><button class="higher-choice" type="button" data-higher="wrong">Make sure everyone knows you are the boss</button></div></div>
+    </div>
+    <p class="feedback" id="higherFeedback" aria-live="polite">Jesus’s higher way is merciful, honest, humble, and brave.</p>
+    <figure class="kid-card single"><button class="picture" type="button" aria-label="Enlarge illustration of Zalea and Alyda looking over a maze"><img src="assets/borne-our-griefs-lesson/zalea-alyda-higher.jpg" alt="Illustration of Zalea and Alyda, the same preteen age, looking down at a garden maze from a safe platform" loading="lazy" width="1256" height="1256"></button><figcaption><b>Zalea and Alyda see the path from higher ground</b>They could not understand every turn from inside the maze. We can trust the Lord when He sees more than we do.</figcaption></figure>
+  </section>
+
+  <section class="step" id="take">
+    <div class="stephead"><span class="number">06</span><h2>Give Him one burden.</h2><span class="time">2 minutes</span></div>
+    <p>Choose two or three names. Anyone may pass.</p>
+    <div class="names"><button type="button" aria-pressed="false" data-prompt="One way I can seek Jesus this week is…">Sophie</button><button type="button" aria-pressed="false" data-prompt="Jesus can give me strength when…">Braxton</button><button type="button" aria-pressed="false" data-prompt="One burden I can pray about is…">Dannie</button><button type="button" aria-pressed="false" data-prompt="Christ’s higher way would help me…">Cole</button><button type="button" aria-pressed="false" data-prompt="I know Jesus understands…">Zalea</button><button type="button" aria-pressed="false" data-prompt="One person I can help carry a burden for is…">Lexi</button><button type="button" aria-pressed="false" data-prompt="I can put on spiritual strength by…">Alyda</button></div>
+    <div class="name-prompt" id="namePrompt" aria-live="polite">Choose a sentence starter.</div>
+    <div class="takehome"><span class="label">This week</span><h3>Name it. Give it. Take one step.</h3><p>Tell Jesus what feels heavy. Ask Him to carry it with you. Then take one small step in His higher way.</p><button class="action" id="finish" type="button">I will give Him one burden</button><p id="finishFeedback" aria-live="polite"></p></div>
+    <p class="teacher">Share a brief testimony that Jesus Christ knows each child perfectly and never asks them to carry life alone. Close with prayer.</p>
+  </section>
+
+  <details class="notes"><summary>Teacher notes, sources &amp; timing</summary>
+    <p>The six steps total 27 minutes; use the remaining three minutes for opening and closing prayers and transitions. If discussion runs long, shorten section 5 to one scenario. No printing, purchases, or supplies are needed.</p>
+    <ul><li>Core path: review 3, awake 4, Isaiah 53 and video 9, seek 4, higher ways 5, closing 2.</li><li>Do not invite children to disclose private grief, trauma, or sin. Keep examples general and let anyone pass.</li><li>Do not promise that faith makes pain disappear immediately. Emphasize that Christ understands, strengthens, forgives, heals, and stays near.</li><li>The class pictures are newly generated, imagined examples based on the children’s reference images—not claims about events in their lives.</li><li>The official children’s outline suggests the “awake/stand/strength” motions, a heavy-object comparison for burdens, seeking the Lord, and viewing a situation from higher ground.</li></ul>
+    <div class="links"><a href="https://www.churchofjesuschrist.org/study/manual/come-follow-me-for-home-and-church-old-testament-2026/41?lang=eng" target="_blank" rel="noopener">Official October 5–11 lesson</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/53?lang=eng" target="_blank" rel="noopener">Isaiah 53</a><a href="https://www.churchofjesuschrist.org/study/scriptures/ot/isa/55?lang=eng" target="_blank" rel="noopener">Isaiah 55</a><a href="https://www.youtube.com/watch?v=CQL1iqOBZxo" target="_blank" rel="noopener">Official Church video</a></div>
+    <p class="mini">Core readings: Isaiah 52:1–2; 53:3–5; 55:6, 8–9.</p>
+    <div class="links"><a href="marvellous-work-lesson.html">A Marvellous Work</a><a href="isaiah-lesson.html">God Is My Salvation</a><a href="index.html">All pages</a></div>
+  </details>
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Full-screen illustration"><button type="button" id="lightboxClose">Close ×</button><img id="lightboxImage" alt=""><p id="lightboxCaption"></p></dialog>
+<noscript><p class="page">The scriptures and teaching outline are available above. Enable JavaScript for reveal activities.</p></noscript>
+</body>
+</html>
