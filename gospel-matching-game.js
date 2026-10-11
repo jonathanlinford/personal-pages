@@ -28,7 +28,15 @@ const gospelPairs = [
   {name:'Creation', meaning:'God created the earth and all living things', image:'creation.jpg', art:'The Lord Created All Things'},
   {name:'Commandments', meaning:'God’s loving directions help us choose the right', image:'commandments.jpg', art:'Moses and the Tablets'},
   {name:'Book of Mormon', meaning:'Another testament of Jesus Christ', image:'book-of-mormon.jpg', art:'Mormon Abridging the Plates'},
-  {name:'Personal revelation', meaning:'God can speak to our minds and hearts', image:'revelation.jpg', art:'The Brother of Jared Sees the Finger of the Lord'}
+  {name:'Personal revelation', meaning:'God can speak to our minds and hearts', image:'revelation.jpg', art:'The Brother of Jared Sees the Finger of the Lord'},
+  {name:'Atonement of Jesus Christ', meaning:'Jesus Christ makes repentance and eternal life possible', image:'atonement.jpg', art:'Jesus Praying in Gethsemane'},
+  {name:'Forgiveness', meaning:'Let go of resentment and welcome others back with love', image:'forgiveness.jpg', art:'Jesus Teaches of the Prodigal Son'},
+  {name:'Gratitude', meaning:'Notice God’s blessings and give thanks', image:'gratitude.jpg', art:'The Healing of the Ten Lepers'},
+  {name:'Peace in Christ', meaning:'The Savior can calm our hearts during life’s storms', image:'peace.jpg', art:'Jesus Calms the Storm'},
+  {name:'Fasting', meaning:'Go without food and drink for a time to draw closer to God', image:'fasting.jpg', art:'Esther'},
+  {name:'Restoration', meaning:'Jesus Christ brought back His gospel and priesthood', image:'restoration.jpg', art:'The First Vision'},
+  {name:'Endure to the end', meaning:'Keep following Jesus Christ through every trial', image:'endure.jpg', art:'Three Men in the Fiery Furnace'},
+  {name:'Second Coming', meaning:'Jesus Christ will return to reign on the earth', image:'second-coming.jpg', art:'The Ascension of Jesus'}
 ];
 
 let soundOn = false;
@@ -46,7 +54,7 @@ const scoreKey = 'gospel-matching-best-v1';
 let bestScores = {};
 try {
   const saved = JSON.parse(localStorage.getItem(scoreKey) || '{}');
-  for (const size of [4, 5, 6, 7]) {
+  for (const size of [4, 5, 6, 7, 8]) {
     if (Number.isInteger(saved[size]) && saved[size] >= Math.floor(size * size / 2)) bestScores[size] = saved[size];
   }
 } catch {
