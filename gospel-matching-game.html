@@ -7,11 +7,37 @@
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <title>Gospel Match · LDS Matching Game</title>
   <meta name="description" content="A classroom-friendly LDS matching game about Jesus Christ, ordinances, covenants, and gospel principles.">
-  <link rel="stylesheet" href="gospel-matching-game.css?v=4">
-  <script src="gospel-matching-game.js?v=4" defer></script>
+  <link rel="stylesheet" href="gospel-matching-game.css?v=5">
+  <script src="gospel-matching-game.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#gameBoard">Skip to the cards</a>
+  <dialog class="player-dialog" id="playerDialog" aria-labelledby="playerDialogTitle">
+    <div class="player-dialog-inner">
+      <p class="kicker">Who is playing?</p>
+      <h2 id="playerDialogTitle">Choose your player</h2>
+      <p class="player-dialog-intro">Your completed games and personal bests stay saved on this device.</p>
+      <div class="player-grid">
+        <button class="player-choice" type="button" data-player="Dad">
+          <img src="assets/gospel-matching/players/dad.jpg" alt="" class="player-photo">
+          <strong>Dad</strong><span data-player-summary="Dad">No games yet</span>
+        </button>
+        <button class="player-choice" type="button" data-player="Mom">
+          <img src="assets/gospel-matching/players/mom.jpg" alt="" class="player-photo">
+          <strong>Mom</strong><span data-player-summary="Mom">No games yet</span>
+        </button>
+        <button class="player-choice" type="button" data-player="Luke">
+          <img src="assets/gospel-matching/players/luke.jpg" alt="" class="player-photo">
+          <strong>Luke</strong><span data-player-summary="Luke">No games yet</span>
+        </button>
+        <button class="player-choice" type="button" data-player="Sally">
+          <img src="assets/gospel-matching/players/sally.jpg" alt="" class="player-photo">
+          <strong>Sally</strong><span data-player-summary="Sally">No games yet</span>
+        </button>
+      </div>
+      <p class="player-dialog-note">Fewest turns wins. You can switch players at any time.</p>
+    </div>
+  </dialog>
   <main class="page">
     <nav class="topbar" aria-label="Page controls">
       <a href="index.html">← Jonny’s pages</a>
@@ -38,6 +64,7 @@
           <h2 id="gameTitle">Find all the pairs</h2>
         </div>
         <div class="view-controls">
+          <button class="quiet player-switch" id="changePlayer" type="button">Choose player</button>
           <button class="gold-button" id="focusToggle" type="button" aria-pressed="false">Full screen</button>
         </div>
       </div>
@@ -48,6 +75,12 @@
         <button type="button" data-board-size="6" aria-pressed="false"><strong>6×6</strong><span>18 pairs</span></button>
         <button type="button" data-board-size="7" aria-pressed="false"><strong>7×7</strong><span>24 pairs + free</span></button>
         <button type="button" data-board-size="8" aria-pressed="false"><strong>8×8</strong><span>32 pairs</span></button>
+        <button type="button" data-board-size="9" aria-pressed="false"><strong>9×9</strong><span>40 pairs + free</span></button>
+      </div>
+
+      <div class="active-player" id="activePlayer" aria-live="polite">
+        <span class="mini-avatar player-initial" id="activePlayerAvatar" aria-hidden="true">?</span>
+        <div><strong id="activePlayerName">Choose a player</strong><span id="playerProgress">Select who is playing to begin.</span></div>
       </div>
 
       <div class="score-row">
@@ -55,6 +88,11 @@
         <p id="gameBest">Best 4×4: —</p>
       </div>
       <div class="record" id="gameRecord" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+      <section class="leaderboard" aria-labelledby="leaderboardTitle">
+        <div><p class="kicker" id="leaderboardTitle">Family leaderboard</p><span>Fewest turns for this board</span></div>
+        <ol id="leaderboardList"></ol>
+      </section>
 
       <div class="game-stage" id="gameStage">
         <div class="game-board" id="gameBoard" role="group" aria-label="Matching cards"></div>
@@ -73,7 +111,7 @@
 
     <aside class="teacher-note">
       <strong>Teacher idea</strong>
-      <p>After each match, ask one child for an example: “What could this look like this week?” For a short class, use 4×4. For teams or a longer review, work up through the complete 8×8 board.</p>
+      <p>After each match, ask one child for an example: “What could this look like this week?” For a short class, use 4×4. For teams or a longer review, work up through the complete 9×9 board.</p>
     </aside>
 
     <details class="art-credits">
@@ -112,6 +150,14 @@
         <li><a href="https://www.churchofjesuschrist.org/media/image/the-first-vision-fe5db8d?lang=eng" target="_blank" rel="noopener">The First Vision</a></li>
         <li><a href="https://www.churchofjesuschrist.org/media/image/three-men-in-fiery-furnace-53a6fcb?lang=eng" target="_blank" rel="noopener">Three Men in the Fiery Furnace</a></li>
         <li><a href="https://www.churchofjesuschrist.org/media/image/the-ascension-of-jesus-b54b00f?lang=eng" target="_blank" rel="noopener">The Ascension of Jesus</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/noah-and-animals-ce9b865?lang=eng" target="_blank" rel="noopener">Noah and the Ark with Animals</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/jesus-washing-apostles-feet-5dd1342?lang=eng" target="_blank" rel="noopener">Jesus Washing the Apostles’ Feet</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/woman-man-bible-fda3f8b?lang=eng" target="_blank" rel="noopener">Adam and Eve</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/mormonad-family-history-a0bc40a?lang=eng" target="_blank" rel="noopener">Get into Family History</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/ten-virgins-parable-b85d881?lang=eng" target="_blank" rel="noopener">Five of Them Were Wise</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/mary-and-the-resurrected-christ-1728928?lang=eng" target="_blank" rel="noopener">Mary and the Resurrected Lord</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/christ-doctors-temple-art-lds-ab8563d?lang=eng" target="_blank" rel="noopener">Boy Jesus in the Temple</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/media/image/city-of-zion-taken-up-46d0e9f?lang=eng" target="_blank" rel="noopener">City of Zion Is Taken Up</a></li>
       </ul>
     </details>
 

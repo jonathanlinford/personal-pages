@@ -36,7 +36,22 @@ const gospelPairs = [
   {name:'Fasting', meaning:'Go without food and drink for a time to draw closer to God', image:'fasting.jpg', art:'Esther'},
   {name:'Restoration', meaning:'Jesus Christ brought back His gospel and priesthood', image:'restoration.jpg', art:'The First Vision'},
   {name:'Endure to the end', meaning:'Keep following Jesus Christ through every trial', image:'endure.jpg', art:'Three Men in the Fiery Furnace'},
-  {name:'Second Coming', meaning:'Jesus Christ will return to reign on the earth', image:'second-coming.jpg', art:'The Ascension of Jesus'}
+  {name:'Second Coming', meaning:'Jesus Christ will return to reign on the earth', image:'second-coming.jpg', art:'The Ascension of Jesus'},
+  {name:'Obedience', meaning:'Choose to follow God even when it takes faith', image:'obedience.jpg', art:'Noah and the Ark with Animals'},
+  {name:'Humility', meaning:'Put aside pride and be willing to serve', image:'humility.jpg', art:'Jesus Washing the Apostles’ Feet'},
+  {name:'Agency', meaning:'God lets us choose and learn from our choices', image:'agency.jpg', art:'Adam and Eve'},
+  {name:'Family history', meaning:'Find and remember ancestors so they can receive temple blessings', image:'family-history.jpg', art:'Get into Family History'},
+  {name:'Preparation', meaning:'Build faith now so we are ready when the Lord calls', image:'preparation.jpg', art:'Five of Them Were Wise'},
+  {name:'Hope', meaning:'Trust the Savior and look forward with confidence', image:'hope.jpg', art:'Mary and the Resurrected Lord'},
+  {name:'Learning', meaning:'Seek truth through study, faith, and good questions', image:'learning.jpg', art:'Boy Jesus in the Temple'},
+  {name:'Unity', meaning:'Become one in heart by loving and serving each other', image:'unity.jpg', art:'City of Zion Is Taken Up'}
+];
+
+const players = [
+  {name:'Dad', initial:'D', image:'assets/gospel-matching/players/dad.jpg'},
+  {name:'Mom', initial:'M', image:'assets/gospel-matching/players/mom.jpg'},
+  {name:'Luke', initial:'L', image:'assets/gospel-matching/players/luke.jpg'},
+  {name:'Sally', initial:'S', image:'assets/gospel-matching/players/sally.jpg'}
 ];
 
 let soundOn = false;
@@ -49,16 +64,15 @@ let locked = false;
 let matched = 0;
 let turns = 0;
 let hideTimer;
+let currentPlayer = null;
 
-const scoreKey = 'gospel-matching-best-v1';
-let bestScores = {};
+const historyKey = 'gospel-matching-player-history-v1';
+let playerHistory = {};
 try {
-  const saved = JSON.parse(localStorage.getItem(scoreKey) || '{}');
-  for (const size of [4, 5, 6, 7, 8]) {
-    if (Number.isInteger(saved[size]) && saved[size] >= Math.floor(size * size / 2)) bestScores[size] = saved[size];
-  }
+  const saved = JSON.parse(localStorage.getItem(historyKey) || '{}');
+  if (saved && typeof saved === 'object') playerHistory = saved;
 } catch {
-  // The game still works if private browsing blocks local storage.
+  // Player history simply lasts for this visit if storage is unavailable.
 }
 
 function shuffle(items) {
@@ -68,6 +82,89 @@ function shuffle(items) {
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
+}
+
+function gamesFor(playerName, size = boardSize) {
+  playerHistory[playerName] ??= {};
+  playerHistory[playerName][size] ??= [];
+  return playerHistory[playerName][size];
+}
+
+function bestFor(playerName, size = boardSize) {
+  const scores = gamesFor(playerName, size).map(game => game.turns).filter(Number.isInteger);
+  return scores.length ? Math.min(...scores) : undefined;
+}
+
+function saveHistory() {
+  try { localStorage.setItem(historyKey, JSON.stringify(playerHistory)); } catch { /* Keep it for this visit. */ }
+}
+
+function progressText(playerName, size = boardSize) {
+  const games = gamesFor(playerName, size);
+  if (!games.length) return `No completed ${size}×${size} games yet.`;
+  if (games.length === 1) return `First ${size}×${size} score: ${games[0].turns} turns.`;
+  const latest = games.at(-1).turns;
+  const prior = games.at(-2).turns;
+  if (latest < prior) return `Last game: ${latest} turns · improved by ${prior - latest}.`;
+  if (latest === prior) return `Last game: ${latest} turns · tied the previous game.`;
+  return `Last game: ${latest} turns · ${latest - prior} more than the previous game.`;
+}
+
+function setAvatar(element, player) {
+  element.textContent = player.initial;
+  element.classList.toggle('has-photo', Boolean(player.image));
+  element.style.backgroundImage = player.image ? `url("${player.image}")` : '';
+}
+
+function updatePlayerSummaries() {
+  document.querySelectorAll('[data-player-summary]').forEach(summary => {
+    const name = summary.dataset.playerSummary;
+    const totalGames = Object.values(playerHistory[name] || {}).reduce((sum, games) => sum + (Array.isArray(games) ? games.length : 0), 0);
+    const best = bestFor(name);
+    summary.textContent = best === undefined
+      ? (totalGames ? `${totalGames} completed · no ${boardSize}×${boardSize} score` : 'No games yet')
+      : `Best ${boardSize}×${boardSize}: ${best} turns`;
+  });
+}
+
+function renderLeaderboard() {
+  const list = $('leaderboardList');
+  list.replaceChildren();
+  players
+    .map((player, order) => ({...player, order, best:bestFor(player.name)}))
+    .sort((a, b) => (a.best ?? Infinity) - (b.best ?? Infinity) || a.order - b.order)
+    .forEach((player, index) => {
+      const item = document.createElement('li');
+      if (player.name === currentPlayer) item.className = 'current';
+      const rank = document.createElement('b');
+      rank.textContent = player.best === undefined ? '—' : String(index + 1);
+      const avatar = document.createElement('span');
+      avatar.className = 'leader-avatar player-initial';
+      setAvatar(avatar, player);
+      const name = document.createElement('span');
+      name.textContent = player.name;
+      const score = document.createElement('strong');
+      score.textContent = player.best === undefined ? 'No score' : `${player.best} turns`;
+      item.append(rank, avatar, name, score);
+      list.append(item);
+    });
+}
+
+function updatePlayerUI() {
+  const player = players.find(item => item.name === currentPlayer);
+  $('changePlayer').textContent = player ? `Player: ${player.name}` : 'Choose player';
+  $('activePlayerName').textContent = player ? player.name : 'Choose a player';
+  $('playerProgress').textContent = player ? progressText(player.name) : 'Select who is playing to begin.';
+  if (player) setAvatar($('activePlayerAvatar'), player);
+  updatePlayerSummaries();
+  renderLeaderboard();
+}
+
+function openPlayerDialog() {
+  updatePlayerSummaries();
+  const dialog = $('playerDialog');
+  if (typeof dialog.showModal === 'function') dialog.showModal();
+  else dialog.setAttribute('open', '');
 }
 
 function playNotes(notes) {
@@ -96,7 +193,8 @@ function playNotes(notes) {
 
 function updateScore() {
   $('gameStats').textContent = `Pairs ${matched} / ${pairCount} · Turns ${turns}`;
-  $('gameBest').textContent = `Best ${boardSize}×${boardSize}: ${bestScores[boardSize] === undefined ? '—' : bestScores[boardSize] + ' turns'}`;
+  const best = currentPlayer ? bestFor(currentPlayer) : undefined;
+  $('gameBest').textContent = `Best ${boardSize}×${boardSize}${currentPlayer ? ` for ${currentPlayer}` : ''}: ${best === undefined ? '—' : best + ' turns'}`;
 }
 
 function showReading(cards) {
@@ -151,27 +249,40 @@ function reveal(index, isShown) {
 }
 
 function finishGame() {
-  const prior = bestScores[boardSize];
-  const isRecord = prior === undefined || turns < prior;
+  const games = gamesFor(currentPlayer);
+  const priorGame = games.at(-1);
+  const priorBest = bestFor(currentPlayer);
+  const isRecord = priorBest === undefined || turns < priorBest;
+  games.push({turns, at:new Date().toISOString()});
+  if (games.length > 30) games.splice(0, games.length - 30);
+  saveHistory();
   const record = $('gameRecord');
   record.hidden = false;
   record.classList.toggle('new-record', isRecord);
   if (isRecord) {
-    bestScores[boardSize] = turns;
-    try { localStorage.setItem(scoreKey, JSON.stringify(bestScores)); } catch { /* Keep the score for this visit. */ }
-    record.textContent = `★ New best! You found ${pairCount} pairs in ${turns} turns.`;
+    record.textContent = `★ New best for ${currentPlayer}! You found ${pairCount} pairs in ${turns} turns.`;
     playNotes([523.25, 659.25, 783.99]);
-  } else if (turns === prior) {
+  } else if (turns === priorBest) {
     record.textContent = `You tied your best: ${turns} turns!`;
     playNotes([523.25, 659.25]);
   } else {
-    record.textContent = `Board complete in ${turns} turns. Your best is ${prior}.`;
+    record.textContent = `Board complete in ${turns} turns. Your best is ${priorBest}.`;
     playNotes([523.25, 659.25]);
   }
+  if (priorGame) {
+    const change = priorGame.turns - turns;
+    record.textContent += change > 0 ? ` You improved by ${change} turns.` : change === 0 ? ' You matched your last game.' : ` Last game took ${priorGame.turns} turns.`;
+  }
+  updatePlayerUI();
+  updateScore();
   $('gameFeedback').textContent = 'All pairs found! Which principle will you practice this week?';
 }
 
 function chooseCard(index) {
+  if (!currentPlayer) {
+    openPlayerDialog();
+    return;
+  }
   const button = $('gameBoard').children[index];
   if (locked || button.disabled || selected.includes(index)) return;
   reveal(index, true);
@@ -258,6 +369,7 @@ function resetGame() {
   $('gameFeedback').textContent = boardSize % 2 === 1 ? 'Turn over two cards. The center is a free space.' : 'Turn over two cards.';
   showReading([]);
   updateScore();
+  updatePlayerUI();
   $('gameStage').scrollTo({left: 0, top: 0});
 }
 
@@ -291,11 +403,25 @@ $('soundToggle').addEventListener('click', () => {
 document.querySelectorAll('[data-board-size]').forEach(button => {
   button.addEventListener('click', () => {
     boardSize = Number(button.dataset.boardSize);
+    openPlayerDialog();
+  });
+});
+
+document.querySelectorAll('[data-player]').forEach(button => {
+  button.addEventListener('click', () => {
+    currentPlayer = button.dataset.player;
+    $('playerDialog').close();
     resetGame();
   });
 });
 
-$('gameReset').addEventListener('click', resetGame);
+$('playerDialog').addEventListener('cancel', event => event.preventDefault());
+$('changePlayer').addEventListener('click', async () => {
+  if (document.body.classList.contains('classroom')) await setClassroomMode(false);
+  openPlayerDialog();
+});
+
+$('gameReset').addEventListener('click', openPlayerDialog);
 $('focusToggle').addEventListener('click', () => setClassroomMode(!document.body.classList.contains('classroom')));
 document.addEventListener('fullscreenchange', () => {
   if (!document.fullscreenElement && document.body.classList.contains('classroom')) setClassroomLayout(false);
@@ -311,3 +437,5 @@ document.addEventListener('touchmove', event => {
 }, {passive:false});
 
 resetGame();
+updatePlayerUI();
+openPlayerDialog();
