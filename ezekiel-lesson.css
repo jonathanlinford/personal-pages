@@ -9,3 +9,5 @@
 
 /* Landscape story scenes have room for their visual metaphors. */
 .step .kid-card.single{max-width:740px}
+
+.story-timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.context p{margin:15px 0}.story-extra{font-size:17px;margin:22px 0}.story-extra p{margin:12px 0}@media(max-width:600px){.story-timeline{grid-template-columns:1fr;gap:8px}.story-timeline div{font-size:16px;padding:12px 15px}.story-timeline b{font-size:20px}}
