@@ -8,8 +8,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <!-- og-check-skip: This page plays a private deck and does not use a social preview. -->
   <title>Ward Name Practice</title>
-  <link rel="stylesheet" href="ward-name-practice.css?v=4">
-  <script src="ward-name-practice.js?v=4" defer></script>
+  <link rel="stylesheet" href="ward-name-practice.css?v=5">
+  <script src="ward-name-practice.js?v=5" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -58,7 +58,10 @@
         <button class="got" id="got" type="button">Remembered <span aria-hidden="true">→</span></button>
       </div>
       <p id="feedback" class="feedback" role="status"></p>
-      <button id="undo" class="quiet undo" type="button" hidden>Undo last swipe</button>
+      <div class="practice-tools">
+        <button id="photo-tag" class="quiet" type="button" aria-pressed="false" hidden>Needs better photo</button>
+        <button id="undo" class="quiet" type="button" hidden>Undo last swipe</button>
+      </div>
     </section>
   </main>
 
@@ -72,6 +75,7 @@
         <label>Full name<input name="name" id="member-name" autocomplete="off" maxlength="120" required></label>
         <label>Practice group<select name="group" id="member-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select></label>
         <label class="wide">Individual photo<input id="member-photo" name="photo" type="file" accept="image/*" required></label>
+        <label class="check wide"><input id="member-photo-tag" type="checkbox"> Needs better photo</label>
         <div class="form-actions wide">
           <button class="primary" id="save-member" type="submit">Add card</button>
           <button class="quiet" id="cancel-edit" type="button" hidden>Cancel edit</button>
@@ -116,6 +120,8 @@
         </li>
       </template>
       <label id="search-label" class="search">Find a card<input id="search" type="search" autocomplete="off"></label>
+      <label id="photo-filter-label" class="check" hidden><input id="photo-filter" type="checkbox"> <span id="photo-filter-text">Needs better photo only</span></label>
+      <p id="no-photo-matches" class="deck-status" hidden>No tagged cards match this search.</p>
       <ul id="members" aria-label="Cards in your deck"></ul>
     </section>
   </dialog>

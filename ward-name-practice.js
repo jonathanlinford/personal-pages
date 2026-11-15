@@ -66,6 +66,8 @@ function render() {
   $("meter").hidden = !filtered.length;
   $("shuffle").disabled = remaining < 2;
   $("undo").hidden = !prior;
+  $("photo-tag").hidden = !current;
+  $("photo-tag").setAttribute("aria-pressed", current?.needsBetterPhoto === true);
   $("stage").hidden = $("grading").hidden = !current;
   $("empty").hidden = !!current;
   $("empty-action").hidden = !!current;
@@ -175,6 +177,24 @@ async function undo() {
   }
 }
 
+async function togglePhotoTag() {
+  if (busy || !current) return;
+  const { id, needsBetterPhoto } = current;
+  const tagged = !needsBetterPhoto;
+  const update = card => card.id === id ? { ...card, needsBetterPhoto: tagged } : card;
+  busy = true;
+  try {
+    await save(cards.map(update));
+    if (prior) prior = prior.map(update);
+    $("feedback").textContent = tagged ? "Tagged as needing a better photo." : "Photo tag removed.";
+    render();
+  } catch {
+    $("feedback").textContent = "The photo tag couldn’t be saved. Try again.";
+  } finally {
+    busy = false;
+  }
+}
+
 function clearDrag() {
   drag = undefined;
   $("card").classList.remove("dragging");
@@ -216,6 +236,7 @@ $("again").onclick = () => grade(false);
 $("got").onclick = () => grade(true);
 $("undo").onclick = undo;
 $("shuffle").onclick = shuffleRemaining;
+$("photo-tag").onclick = togglePhotoTag;
 $("filters").onclick = event => {
   const value = event.target.closest("button")?.dataset.filter;
   if (value) setFilter(value);
@@ -247,16 +268,24 @@ $("close-deck").onclick = () => $("deck-dialog").close();
 $("deck-dialog").addEventListener("close", resetForm);
 $("cancel-edit").onclick = resetForm;
 $("search").oninput = renderDeck;
+$("photo-filter").onchange = renderDeck;
 
 function renderDeck() {
   const query = $("search").value.trim().toLocaleLowerCase();
+  const taggedOnly = $("photo-filter").checked;
+  const taggedCount = cards.filter(card => card.needsBetterPhoto).length;
   $("export").disabled = !cards.length;
   $("reset").disabled = !cards.some(card => card.learned);
   $("search-label").hidden = !cards.length;
+  $("photo-filter-label").hidden = !cards.length;
+  $("photo-filter-text").textContent = "Needs better photo only (" + taggedCount + ")";
   $("members").replaceChildren();
+  let matches = 0;
   const sorted = [...cards].sort((a, b) => a.name.localeCompare(b.name));
   for (const card of sorted) {
     if (!card.name.toLocaleLowerCase().includes(query)) continue;
+    if (taggedOnly && !card.needsBetterPhoto) continue;
+    matches++;
     const row = document.createElement("li");
     const label = document.createElement("div");
     label.className = "members-name";
@@ -264,6 +293,12 @@ function renderDeck() {
     const status = document.createElement("small");
     status.textContent = groups[card.group] + " · " + (card.learned ? "Remembered" : "To practice");
     label.append(status);
+    if (card.needsBetterPhoto) {
+      const tag = document.createElement("small");
+      tag.className = "photo-tag-label";
+      tag.textContent = "Needs better photo";
+      label.append(tag);
+    }
     const actions = document.createElement("div");
     actions.className = "members-actions";
     for (const [action, handler] of [["Edit", () => editCard(card)], ["Remove", () => removeCard(card)]]) {
@@ -277,6 +312,7 @@ function renderDeck() {
     row.append(label, actions);
     $("members").append(row);
   }
+  $("no-photo-matches").hidden = !taggedOnly || !!matches || !cards.length;
 }
 
 function editCard(card) {
@@ -284,6 +320,7 @@ function editCard(card) {
   editing = card;
   $("member-name").value = card.name;
   $("member-group").value = card.group;
+  $("member-photo-tag").checked = card.needsBetterPhoto === true;
   $("member-photo").value = "";
   $("member-photo").required = false;
   $("cancel-edit").hidden = false;
@@ -359,6 +396,7 @@ $("member-form").onsubmit = async event => {
   if (busy) return;
   const name = $("member-name").value.trim();
   const group = $("member-group").value;
+  const needsBetterPhoto = $("member-photo-tag").checked;
   if (!name) {
     $("deck-status").textContent = "Enter a name for this card.";
     return;
@@ -374,7 +412,7 @@ $("member-form").onsubmit = async event => {
     const original = editing;
     const photo = file ? await preparePhoto(file) : original?.photo;
     if (!photo) throw new Error("Choose an individual photo.");
-    const updated = { id: original?.id ?? crypto.randomUUID(), name, group, photo, learned: original?.learned ?? false };
+    const updated = { id: original?.id ?? crypto.randomUUID(), name, group, photo, learned: original?.learned ?? false, needsBetterPhoto };
     const next = original ? cards.map(card => card.id === original.id ? updated : card) : [...cards, updated];
     if (shownId === updated.id) shownId = undefined;
     await changeDeck(next, original ? "Card updated." : "Card added.");
@@ -611,7 +649,7 @@ $("import-file").onchange = async event => {
       const normalized = await preparePhoto(photo);
       const id = typeof card.id === "string" && card.id.length <= 100 && card.id && !knownIds.has(card.id) ? card.id : crypto.randomUUID();
       knownIds.add(id);
-      imported.push({ id, name, group: card.group, photo: normalized, learned: card.learned === true });
+      imported.push({ id, name, group: card.group, photo: normalized, learned: card.learned === true, needsBetterPhoto: card.needsBetterPhoto === true });
     }
     if (cards.length && !confirm("Replace this browser’s deck and progress with the imported deck?")) return;
     shownId = undefined;

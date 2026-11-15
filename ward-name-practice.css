@@ -66,7 +66,10 @@ progress::-moz-progress-bar { background: var(--green); border-radius: 8px; }
 .deck-mark::after { content: ""; position: absolute; inset: 2px 7px -3px -8px; border: 1px solid var(--green); background: #324633; border-radius: 7px; transform: rotate(-23deg); }
 .feedback { text-align: center; color: var(--muted); font-size: .85rem; margin-top: .35rem; }
 .feedback:empty { display: none; }
-.undo { display: block; margin: .4rem auto 0; border-color: transparent; min-height: 36px; padding: .35rem .7rem; }
+.practice-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem; margin-top: .4rem; }
+.practice-tools button { padding: .35rem .7rem; }
+.practice-tools #undo { border-color: transparent; }
+#photo-tag[aria-pressed="true"] { color: var(--rose); border-color: var(--rose); background: #392923; }
 dialog { width: min(calc(100% - 1.5rem), 550px); max-height: 90svh; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 0; }
 dialog::backdrop { background: #000a; }
 .deck-panel { padding: clamp(1rem, 4vw, 1.55rem); }
@@ -76,6 +79,8 @@ dialog::backdrop { background: #000a; }
 .wide { grid-column: 1 / -1; }
 label { display: grid; gap: .25rem; color: var(--muted); font-size: .86rem; min-width: 0; }
 input, select { color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 9px; width: 100%; min-height: 43px; padding: .4rem .55rem; }
+.check { display: flex; align-items: center; gap: .5rem; min-height: 44px; width: fit-content; cursor: pointer; }
+.check input { width: 1.1rem; min-height: 0; height: 1.1rem; accent-color: var(--green); }
 .form-actions, .deck-tools { display: flex; flex-wrap: wrap; gap: .45rem; }
 .deck-tools { padding-top: .8rem; border-top: 1px solid var(--line); }
 .deck-tools button, .members-actions button { font-size: .84rem; }
@@ -101,6 +106,7 @@ input, select { color: var(--text); background: var(--surface); border: 1px soli
 #members li { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .45rem 0; border-top: 1px solid var(--line); }
 #members li:first-child { border-top: 0; }
 #members small { display: block; color: var(--muted); }
+#members .photo-tag-label { color: var(--rose); }
 .members-actions { display: flex; gap: .3rem; }
 .members-name { overflow-wrap: anywhere; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
