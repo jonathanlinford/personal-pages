@@ -364,6 +364,7 @@ function photoLabel(filename) {
 function updateBatch() {
   $("batch-form").hidden = !batch.size;
   $("batch-submit").textContent = "Add " + batch.size + (batch.size === 1 ? " card" : " cards");
+  $("batch-hint").hidden = Array.from(batch.values()).some(selection => selection.id);
 }
 
 function discardPhoto(key) {
@@ -377,6 +378,25 @@ $("choose-photos").onclick = () => {
   if (!busy) $("batch-files").click();
 };
 
+function queuePhoto(key, file, { name, group, label, id }) {
+  const row = $("batch-row").content.firstElementChild.cloneNode(true);
+  const url = URL.createObjectURL(file);
+  const nameField = row.querySelector(".batch-name");
+  const groupField = row.querySelector(".batch-person-group");
+  nameField.value = name;
+  groupField.value = group;
+  row.querySelector("img").src = url;
+  const remove = row.querySelector(".batch-remove");
+  remove.setAttribute("aria-label", "Remove " + label + " from batch");
+  remove.onclick = () => {
+    discardPhoto(key);
+    updateBatch();
+    if (!batch.size) $("choose-photos").focus();
+  };
+  $("batch-rows").append(row);
+  batch.set(key, { file, row, url, nameField, groupField, id });
+}
+
 $("batch-files").onchange = event => {
   const files = [...event.target.files];
   event.target.value = "";
@@ -389,27 +409,55 @@ $("batch-files").onchange = event => {
       skipped++;
       continue;
     }
-    const row = $("batch-row").content.firstElementChild.cloneNode(true);
-    const url = URL.createObjectURL(file);
-    const { name, group } = photoLabel(file.name);
-    $("batch-rows").append(row);
-    const nameField = row.querySelector(".batch-name");
-    const groupField = row.querySelector(".batch-person-group");
-    nameField.value = name;
-    groupField.value = group;
-    row.querySelector("img").src = url;
-    const remove = row.querySelector(".batch-remove");
-    remove.setAttribute("aria-label", "Remove " + file.name + " from batch");
-    remove.onclick = () => {
-      discardPhoto(key);
-      updateBatch();
-      if (!batch.size) $("choose-photos").focus();
-    };
-    batch.set(key, { file, row, url, nameField, groupField });
+    queuePhoto(key, file, { ...photoLabel(file.name), label: file.name });
   }
   $("deck-status").textContent = skipped ? "The deck holds up to " + maxCards + " cards. " + skipped + " photos couldn’t be queued." : "";
   $("batch-status").textContent = "";
   updateBatch();
+};
+
+$("choose-directory").onclick = () => {
+  if (!busy) $("directory-file").click();
+};
+
+$("directory-file").onchange = async event => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  if (busy || !file) return;
+  busy = true;
+  $("close-deck").disabled = $("batch-fields").disabled = true;
+  $("deck-status").textContent = "Opening directory PDF…";
+  try {
+    const { readWardDirectory } = await import("./ward-directory-import.mjs");
+    const result = await readWardDirectory(file, (page, total) => {
+      $("deck-status").textContent = "Reading PDF page " + page + " of " + total + "…";
+    });
+    const savedIds = new Set(cards.map(card => card.id));
+    let queued = 0;
+    let duplicates = 0;
+    let skipped = 0;
+    for (const { id, name, photo } of result.cards) {
+      if (savedIds.has(id) || batch.has(id)) duplicates++;
+      else if (cards.length + batch.size >= maxCards) skipped++;
+      else {
+        queuePhoto(id, photo, { name, id, group: "unlisted", label: name });
+        queued++;
+      }
+    }
+    const summary = [queued + (queued === 1 ? " photo card ready to review." : " photo cards ready to review.")];
+    if (result.missingPhotos) summary.push(result.missingPhotos + " names without a matched photo were skipped.");
+    if (duplicates) summary.push(duplicates + " cards from this PDF were already saved or queued.");
+    if (skipped) summary.push(skipped + " cards would exceed the deck limit.");
+    if (queued) summary.push("Review the names and assign groups as needed.");
+    $("deck-status").textContent = summary.join(" ");
+    $("batch-status").textContent = "";
+    updateBatch();
+  } catch (error) {
+    $("deck-status").textContent = error?.message || "This directory PDF couldn’t be read.";
+  } finally {
+    busy = false;
+    $("close-deck").disabled = $("batch-fields").disabled = false;
+  }
 };
 
 $("batch-apply-group").onclick = () => {
@@ -442,13 +490,13 @@ $("batch-form").onsubmit = async event => {
   const prepared = [];
   try {
     let processed = 0;
-    for (const [key, { file, row, nameField, groupField }] of batch) {
+    for (const [key, { file, row, nameField, groupField, id }] of batch) {
       const error = row.querySelector(".batch-error");
       error.hidden = true;
       $("batch-status").textContent = "Preparing photo " + ++processed + " of " + batch.size + "…";
       try {
-        const photo = await preparePhoto(file);
-        prepared.push({ key, card: { id: crypto.randomUUID(), name: nameField.value.trim(), group: groupField.value, photo, learned: false } });
+        const photo = id && file.size <= maxPhotoSize ? file : await preparePhoto(file);
+        prepared.push({ key, card: { id: id ?? crypto.randomUUID(), name: nameField.value.trim(), group: groupField.value, photo, learned: false } });
       } catch {
         error.textContent = "Couldn’t read this photo. Try a JPEG or PNG under 25 MB.";
         error.hidden = false;

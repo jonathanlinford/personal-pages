@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Practice putting names to faces with your own private photo deck.">
   <meta name="robots" content="noindex">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <!-- og-check-skip: This page plays a private deck and does not use a social preview. -->
   <title>Ward Name Practice</title>
   <link rel="stylesheet" href="ward-name-practice.css?v=2">
-  <script src="ward-name-practice.js?v=2" defer></script>
+  <script src="ward-name-practice.js?v=3" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -80,6 +80,8 @@
       <div class="deck-tools">
         <button id="choose-photos" class="primary" type="button">Add photos in bulk</button>
         <input id="batch-files" type="file" accept="image/*" multiple hidden>
+        <button id="choose-directory" class="primary" type="button">Import directory PDF</button>
+        <input id="directory-file" type="file" accept=".pdf,application/pdf" hidden>
         <button id="import" type="button">Import deck</button>
         <input id="import-file" type="file" accept=".json,application/json" hidden>
         <button id="export" type="button">Export backup</button>
@@ -88,7 +90,7 @@
       <form id="batch-form" hidden>
         <fieldset id="batch-fields">
           <legend>Review your batch</legend>
-          <p>Names come from filenames, like <strong>Jane Doe.jpg</strong>. Use <strong>women - Jane Doe.jpg</strong> or <strong>men - John Doe.jpg</strong> to set the group in advance.</p>
+          <p id="batch-hint">For photos, use filenames like <strong>Jane Doe.jpg</strong> or <strong>women - Jane Doe.jpg</strong> to fill in a name or group.</p>
           <div class="batch-toolbar">
             <label>Set group for all
               <select id="batch-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select>
