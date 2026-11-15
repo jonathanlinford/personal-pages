@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice putting names to faces with your own private photo deck.">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <!-- og-check-skip: This page plays a private deck and does not use a social preview. -->
+  <title>Ward Name Practice</title>
+  <link rel="stylesheet" href="ward-name-practice.css">
+  <script src="ward-name-practice.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <nav><a href="./">← Personal Pages</a><button id="manage" class="quiet" type="button">Manage deck</button></nav>
+      <h1>Ward Name Practice</h1>
+      <p class="intro">See the face. Remember the name.</p>
+    </header>
+
+    <section class="practice" aria-label="Practice">
+      <div class="practice-top">
+        <div id="filters" class="filters" role="group" aria-label="People to practice">
+          <button type="button" data-filter="all" aria-pressed="true">Everyone</button>
+          <button type="button" data-filter="men" aria-pressed="false">Men</button>
+          <button type="button" data-filter="women" aria-pressed="false">Women</button>
+        </div>
+        <p id="progress" class="progress" aria-live="polite"></p>
+        <progress id="meter" value="0" max="1" aria-label="Names remembered"></progress>
+      </div>
+
+      <div id="stage" class="stage" hidden>
+        <button id="card" class="card" type="button" aria-pressed="false" aria-label="Reveal name">
+          <span class="face front" id="front">
+            <img id="portrait" alt="Portrait to identify" draggable="false">
+            <span class="photo-label">Tap to reveal</span>
+          </span>
+          <span class="face back" id="back" aria-hidden="true">
+            <span class="caption">Their name is</span>
+            <strong id="answer"></strong>
+            <span class="back-note">Tap for photo</span>
+          </span>
+          <span class="swipe-label" id="swipe-label" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div id="empty" class="empty">
+        <span class="deck-mark" aria-hidden="true"></span>
+        <h2 id="empty-title">Loading your deck…</h2>
+        <p id="empty-text"></p>
+        <button id="empty-action" class="primary" type="button" hidden></button>
+      </div>
+
+      <div id="grading" class="grading" hidden>
+        <button class="again" id="again" type="button"><span aria-hidden="true">←</span> Try again</button>
+        <button class="got" id="got" type="button">Remembered <span aria-hidden="true">→</span></button>
+      </div>
+      <p id="feedback" class="feedback" role="status"></p>
+      <button id="undo" class="quiet undo" type="button" hidden>Undo last swipe</button>
+    </section>
+  </main>
+
+  <dialog id="deck-dialog" aria-labelledby="deck-title">
+    <section class="deck-panel">
+      <header class="dialog-header">
+        <div><h2 id="deck-title">Your photo deck</h2><p>Photos, names, and progress stay in this browser.</p></div>
+        <button id="close-deck" class="quiet" type="button">Close</button>
+      </header>
+      <form id="member-form">
+        <label>Full name<input name="name" id="member-name" autocomplete="off" maxlength="120" required></label>
+        <label>Practice group<select name="group" id="member-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select></label>
+        <label class="wide">Individual photo<input id="member-photo" name="photo" type="file" accept="image/*" required></label>
+        <div class="form-actions wide">
+          <button class="primary" id="save-member" type="submit">Add card</button>
+          <button class="quiet" id="cancel-edit" type="button" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <p id="deck-status" class="deck-status" role="status"></p>
+      <div class="deck-tools">
+        <button id="import" type="button">Import deck</button>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+        <button id="export" type="button">Export backup</button>
+        <button id="reset" type="button">Reset progress</button>
+      </div>
+      <label id="search-label" class="search">Find a card<input id="search" type="search" autocomplete="off"></label>
+      <ul id="members" aria-label="Cards in your deck"></ul>
+    </section>
+  </dialog>
+</body>
+</html>
