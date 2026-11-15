@@ -8,8 +8,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <!-- og-check-skip: This page plays a private deck and does not use a social preview. -->
   <title>Ward Name Practice</title>
-  <link rel="stylesheet" href="ward-name-practice.css?v=5">
-  <script src="ward-name-practice.js?v=5" defer></script>
+  <link rel="stylesheet" href="ward-name-practice.css?v=6">
+  <script src="ward-name-practice.js?v=6" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -25,6 +25,7 @@
           <button type="button" data-filter="all" aria-pressed="true">Everyone</button>
           <button type="button" data-filter="men" aria-pressed="false">Men</button>
           <button type="button" data-filter="women" aria-pressed="false">Women</button>
+          <button type="button" data-filter="children" aria-pressed="false">Children</button>
         </div>
         <button id="shuffle" class="quiet" type="button" disabled>Shuffle</button>
         <p id="progress" class="progress" aria-live="polite"></p>
@@ -73,7 +74,7 @@
       </header>
       <form id="member-form">
         <label>Full name<input name="name" id="member-name" autocomplete="off" maxlength="120" required></label>
-        <label>Practice group<select name="group" id="member-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select></label>
+        <label>Practice group<select name="group" id="member-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option><option value="children">Children</option></select></label>
         <label class="wide">Individual photo<input id="member-photo" name="photo" type="file" accept="image/*" required></label>
         <label class="check wide"><input id="member-photo-tag" type="checkbox"> Needs better photo</label>
         <div class="form-actions wide">
@@ -91,6 +92,7 @@
         <input id="import-file" type="file" accept=".json,application/json" hidden>
         <button id="export" type="button">Export backup</button>
         <button id="reset" type="button">Reset progress</button>
+        <button id="clear-deck" class="danger" type="button" disabled>Clear deck</button>
       </div>
       <form id="batch-form" hidden>
         <fieldset id="batch-fields">
@@ -98,7 +100,7 @@
           <p id="batch-hint">For photos, use filenames like <strong>Jane Doe.jpg</strong> or <strong>women - Jane Doe.jpg</strong> to fill in a name or group.</p>
           <div class="batch-toolbar">
             <label>Set group for all
-              <select id="batch-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select>
+              <select id="batch-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option><option value="children">Children</option></select>
             </label>
             <button id="batch-apply-group" type="button">Apply to all</button>
           </div>
@@ -114,7 +116,7 @@
         <li class="batch-row">
           <img class="batch-thumb" alt="" loading="lazy">
           <label>Full name<input class="batch-name" maxlength="120" required></label>
-          <label>Group<select class="batch-person-group" aria-label="Group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select></label>
+          <label>Group<select class="batch-person-group" aria-label="Group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option><option value="children">Children</option></select></label>
           <button class="batch-remove quiet" type="button" title="Remove from batch">Remove</button>
           <p class="batch-error" hidden></p>
         </li>

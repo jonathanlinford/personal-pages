@@ -8,6 +8,12 @@ const columns = [
   { photo: 345, name: 377.2 },
   { photo: 430, name: 462.7 },
 ];
+const printLayouts = {
+  "photo directory": { centers: [103.5, 238.5, 373.5, 508.5], rows: 4, rowStep: 170, photoSize: 108, nameSize: 10.5, labelGap: 14, lineStep: 12.5, scale: 2 },
+  "large print photo directory": { centers: [171, 441], rows: 2, rowStep: 335, photoSize: 216, nameSize: 17, labelGap: 18, lineStep: 20, scale: 1 },
+};
+const printGroups = { man: "men", woman: "women", child: "children", unassigned: "unlisted" };
+const firstRowTop = 723;
 const identity = [1, 0, 0, 1, 0, 0];
 const near = (actual, expected, tolerance) => Math.abs(actual - expected) <= tolerance;
 
@@ -26,16 +32,13 @@ function locatePortraits({ fnArray, argsArray }) {
 
     const [width, skewY, skewX, height, x, y] = matrix;
     if (!width || !height || skewX || skewY) continue;
-    const centerX = x + width / 2;
-    const centerY = y + height / 2;
-    const column = columns.find(entry => near(centerX, entry.photo, 10));
-    if (!column || Math.min(Math.abs(width), Math.abs(height)) < 35 || Math.max(Math.abs(width), Math.abs(height)) > 155) continue;
-    portraits.push({ column, centerY, box: [x, y, x + width, y + height] });
+    if (width < 0 || height < 0) continue;
+    portraits.push({ width, height, centerX: x + width / 2, centerY: y + height / 2, box: [x, y, x + width, y + height] });
   }
   return portraits;
 }
 
-function matchNames(items, portraits) {
+function matchChurchNames(items, portraits) {
   const names = [];
   const households = [];
   for (const item of items) {
@@ -53,8 +56,10 @@ function matchNames(items, portraits) {
   const matches = [];
   const used = new Set();
   for (const portrait of portraits) {
+    const column = columns.find(entry => near(portrait.centerX, entry.photo, 10));
+    if (!column || Math.min(portrait.width, portrait.height) < 35 || Math.max(portrait.width, portrait.height) > 155) continue;
     const match = names
-      .filter(name => near(name.x, portrait.column.name, 3) && near(name.y, portrait.centerY, 12))
+      .filter(name => near(name.x, column.name, 3) && near(name.y, portrait.centerY, 12))
       .sort((a, b) => Math.abs(a.y - portrait.centerY) - Math.abs(b.y - portrait.centerY))[0];
     if (!match || used.has(match)) continue;
     const household = households.find(header => header.y > match.y);
@@ -66,7 +71,45 @@ function matchNames(items, portraits) {
       : match.value + " " + suffix;
     matches.push({ name, box: portrait.box });
   }
-  return { matches, nameCount: names.length };
+  return { matches, nameCount: names.length, scale: 4 };
+}
+
+function matchPrintNames(items, portraits, layout) {
+  const matches = [];
+  const names = items.filter(item => near(item.height, layout.nameSize, .2) && /\p{L}/u.test(item.str ?? ""));
+  const halfCell = 270 / layout.centers.length - 3;
+  let nameCount = 0;
+  for (let row = 0; row < layout.rows; row++) {
+    const top = firstRowTop - row * layout.rowStep;
+    const baseline = top - layout.photoSize - layout.labelGap;
+    for (const center of layout.centers) {
+      const lines = names.filter(item => {
+        const [,,,, x, y] = item.transform;
+        return x >= center - halfCell && x + item.width <= center + halfCell && y <= baseline + .3 && y >= baseline - 2 * layout.lineStep - .3;
+      });
+      if (!lines.some(item => near(item.transform[5], baseline, .3))) continue;
+      nameCount++;
+      const portrait = portraits.find(photo => near(photo.centerX, center, .5) && near(photo.centerY, top - layout.photoSize / 2, .5)
+        && near(Math.max(photo.width, photo.height), layout.photoSize, .5));
+      if (!portrait) continue;
+      lines.sort((a, b) => b.transform[5] - a.transform[5] || a.transform[4] - b.transform[4]);
+      const tag = layout.photoSize === 216 && items.find(item => [18, 38, 58].some(offset => near(item.transform[5], baseline - offset, .3))
+        && item.transform[4] >= center - halfCell && item.transform[4] + item.width <= center + halfCell
+        && /^Group: (Man|Woman|Child|Unassigned)$/i.test(item.str?.trim() ?? ""));
+      const group = tag ? printGroups[tag.str.trim().slice(7).toLowerCase()] : "unlisted";
+      matches.push({ name: lines.map(line => line.str.trim()).join(" ").replace(/\s+/g, " "), box: portrait.box, group });
+    }
+  }
+  return { matches, nameCount, scale: layout.scale };
+}
+
+function matchNames(items, portraits) {
+  const headers = items.filter(item => near(item.transform[5], 749, .3));
+  for (const header of headers) {
+    const label = header.str?.trim().toLowerCase();
+    if (Object.hasOwn(printLayouts, label)) return matchPrintNames(items, portraits, printLayouts[label]);
+  }
+  return matchChurchNames(items, portraits);
 }
 
 async function cropPortrait(source, viewport, box, crop) {
@@ -109,24 +152,24 @@ export async function readWardDirectory(file, onPage) {
         const original = page.getViewport({ scale: 1 });
         if (!near(original.width, 612, 3) || !near(original.height, 792, 3) || page.rotate !== 0) continue;
         const [text, operations] = await Promise.all([page.getTextContent(), page.getOperatorList()]);
-        const { matches, nameCount: onPageCount } = matchNames(text.items, locatePortraits(operations));
+        const { matches, nameCount: onPageCount, scale } = matchNames(text.items, locatePortraits(operations));
         nameCount += onPageCount;
         if (!matches.length) continue;
 
-        const viewport = page.getViewport({ scale: 4 });
+        const viewport = page.getViewport({ scale });
         source.width = Math.ceil(viewport.width);
         source.height = Math.ceil(viewport.height);
         await page.render({ canvas: source, viewport }).promise;
         for (const [index, match] of matches.entries()) {
           const photo = await cropPortrait(source, viewport, match.box, crop);
           if (!photo) continue;
-          cards.push({ id: "ward-pdf:" + fingerprint + ":" + number + ":" + index, name: match.name.slice(0, 120), photo });
+          cards.push({ id: "ward-pdf:" + fingerprint + ":" + number + ":" + index, name: match.name.slice(0, 120), photo, group: match.group ?? "unlisted" });
         }
       } finally {
         page.cleanup();
       }
     }
-    if (!cards.length) throw new Error("No individual portraits were found. Use a Ward Directory and Map PDF that includes photos.");
+    if (!cards.length) throw new Error("No named portraits were found. Use a Ward Directory and Map export with photos or a Ward Name Practice print PDF.");
     return { cards, missingPhotos: Math.max(0, nameCount - cards.length) };
   } finally {
     source.width = source.height = crop.width = crop.height = 0;

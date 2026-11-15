@@ -2,7 +2,7 @@
 
 const $ = id => document.getElementById(id);
 const database = indexedDB.open("personal-pages-ward-names", 1);
-const groups = { unlisted: "Everyone only", men: "Men", women: "Women" };
+const groups = { unlisted: "Everyone only", men: "Men", women: "Women", children: "Children" };
 const maxCards = 750;
 const maxPhotoSize = 128 * 1024;
 let db;
@@ -276,6 +276,7 @@ function renderDeck() {
   const taggedCount = cards.filter(card => card.needsBetterPhoto).length;
   $("export").disabled = !cards.length;
   $("reset").disabled = !cards.some(card => card.learned);
+  $("clear-deck").disabled = !cards.length;
   $("search-label").hidden = !cards.length;
   $("photo-filter-label").hidden = !cards.length;
   $("photo-filter-text").textContent = "Needs better photo only (" + taggedCount + ")";
@@ -363,6 +364,26 @@ async function resetProgress(group) {
 }
 
 $("reset").onclick = () => resetProgress("all");
+$("clear-deck").onclick = async () => {
+  if (busy || !cards.length) return;
+  const count = cards.length;
+  const label = count === 1 ? "1 saved card" : count + " saved cards";
+  if (!confirm("Clear " + label + "? This removes their photos, tags, and progress from this browser and discards any pending import.")) return;
+  busy = true;
+  try {
+    await changeDeck([], "Deck cleared.");
+    clearBatch();
+    resetForm();
+    $("search").value = "";
+    $("photo-filter").checked = false;
+    setFilter("all");
+    $("choose-directory").focus();
+  } catch {
+    $("deck-status").textContent = "The deck couldn’t be cleared. Try again.";
+  } finally {
+    busy = false;
+  }
+};
 
 async function preparePhoto(file) {
   if (!file || file.size > 25 * 1024 * 1024 || file.type === "image/svg+xml") {
@@ -500,7 +521,7 @@ $("directory-file").onchange = async event => {
   $("close-deck").disabled = $("batch-fields").disabled = true;
   $("deck-status").textContent = "Opening directory PDF…";
   try {
-    const { readWardDirectory } = await import("./ward-directory-import.mjs");
+    const { readWardDirectory } = await import("./ward-directory-import.mjs?v=2");
     const result = await readWardDirectory(file, (page, total) => {
       $("deck-status").textContent = "Reading PDF page " + page + " of " + total + "…";
     });
@@ -508,11 +529,11 @@ $("directory-file").onchange = async event => {
     let queued = 0;
     let duplicates = 0;
     let skipped = 0;
-    for (const { id, name, photo } of result.cards) {
+    for (const { id, name, photo, group } of result.cards) {
       if (savedIds.has(id) || batch.has(id)) duplicates++;
       else if (cards.length + batch.size >= maxCards) skipped++;
       else {
-        queuePhoto(id, photo, { name, id, group: "unlisted", label: name });
+        queuePhoto(id, photo, { name, id, group, label: name });
         queued++;
       }
     }
@@ -536,10 +557,14 @@ $("batch-apply-group").onclick = () => {
   for (const selection of batch.values()) selection.groupField.value = $("batch-group").value;
 };
 
-$("batch-clear").onclick = () => {
+function clearBatch() {
   for (const key of batch.keys()) discardPhoto(key);
   $("batch-status").textContent = "";
   updateBatch();
+}
+
+$("batch-clear").onclick = () => {
+  clearBatch();
   $("choose-photos").focus();
 };
 

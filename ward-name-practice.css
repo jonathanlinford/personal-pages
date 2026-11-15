@@ -27,8 +27,8 @@ h1, h2, p { margin: 0; }
 h1 { font-family: "DM Serif Text", Georgia, serif; font-weight: 400; font-size: clamp(2.1rem, 8.1vw, 3.25rem); line-height: 1.12; letter-spacing: -.045em; }
 .intro { color: var(--muted); margin-top: .35rem; }
 .practice { margin-top: 1.25rem; }
-.practice-top { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .75rem; }
-.filters { display: flex; gap: .22rem; border-radius: 15px; padding: .22rem; background: #101613; width: max-content; }
+.practice-top { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: .75rem; }
+.filters { display: flex; flex-wrap: wrap; gap: .22rem; border-radius: 15px; padding: .22rem; background: #101613; width: max-content; max-width: 100%; }
 .filters button { min-height: 36px; background: transparent; border-color: transparent; padding: .35rem clamp(.45rem, 2vw, .7rem); font-size: .84rem; color: var(--muted); }
 .filters [aria-pressed="true"] { background: #394b38; color: var(--text); }
 #shuffle { justify-self: end; }
@@ -84,6 +84,7 @@ input, select { color: var(--text); background: var(--surface); border: 1px soli
 .form-actions, .deck-tools { display: flex; flex-wrap: wrap; gap: .45rem; }
 .deck-tools { padding-top: .8rem; border-top: 1px solid var(--line); }
 .deck-tools button, .members-actions button { font-size: .84rem; }
+.danger { color: var(--rose); border-color: #956454; }
 #batch-form { margin: .8rem 0; padding: .8rem; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; }
 #batch-fields { min-width: 0; border: 0; margin: 0; padding: 0; }
 #batch-fields legend { color: var(--text); font-weight: 700; }
