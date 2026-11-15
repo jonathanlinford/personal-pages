@@ -24,8 +24,17 @@ database.onsuccess = () => {
   db = database.result;
   const read = db.transaction("deck").objectStore("deck").get("cards");
   read.onerror = showStorageError;
-  read.onsuccess = () => {
+  read.onsuccess = async () => {
     cards = read.result ?? [];
+    window.addEventListener("hashchange", async () => {
+      const key = new URLSearchParams(location.hash.slice(1)).get("deck");
+      if (!busy && key !== null) {
+        await loadPrivateDeck(key);
+        render();
+      }
+    });
+    const key = new URLSearchParams(location.hash.slice(1)).get("deck");
+    if (key !== null) await loadPrivateDeck(key);
     render();
   };
 };
@@ -44,6 +53,29 @@ async function save(next) {
     transaction.objectStore("deck").put(next, "cards");
   });
   cards = next;
+}
+
+async function loadPrivateDeck(key) {
+  busy = true;
+  $("empty-title").textContent = "Opening your private deck…";
+  try {
+    const { readPrivateDeck, addMissingCards } = await import("./ward-private-deck.mjs");
+    const unlocked = await readPrivateDeck(key);
+    const next = addMissingCards(cards, unlocked);
+    if (next.length > maxCards) throw new Error("This deck would exceed the card limit. Export a backup or remove cards before trying again.");
+    if (next.length > cards.length) {
+      const added = next.length - cards.length;
+      await save(next);
+      $("feedback").textContent = "Loaded " + added + (added === 1 ? " ward photo card." : " ward photo cards.");
+    } else {
+      $("feedback").textContent = "Your ward deck is already loaded.";
+    }
+    history.replaceState(history.state, "", location.pathname + location.search);
+  } catch (error) {
+    $("feedback").textContent = error?.message || "The private deck couldn’t be opened. Try the original link again.";
+  } finally {
+    busy = false;
+  }
 }
 
 function reveal(flipped) {
@@ -81,7 +113,7 @@ function render() {
   }
   if (!cards.length) {
     $("empty-title").textContent = "Start with a familiar face";
-    $("empty-text").textContent = "Add individual photos and names to build your ward deck.";
+    $("empty-text").textContent = "Open your private ward deck link or add a photo and name to start.";
     $("empty-action").textContent = "Add your first card";
     $("empty-action").onclick = openDeck;
   } else if (!filtered.length) {
