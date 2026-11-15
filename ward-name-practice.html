@@ -8,8 +8,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src blob: data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
   <!-- og-check-skip: This page plays a private deck and does not use a social preview. -->
   <title>Ward Name Practice</title>
-  <link rel="stylesheet" href="ward-name-practice.css">
-  <script src="ward-name-practice.js" defer></script>
+  <link rel="stylesheet" href="ward-name-practice.css?v=2">
+  <script src="ward-name-practice.js?v=2" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -78,11 +78,40 @@
       </form>
       <p id="deck-status" class="deck-status" role="status"></p>
       <div class="deck-tools">
+        <button id="choose-photos" class="primary" type="button">Add photos in bulk</button>
+        <input id="batch-files" type="file" accept="image/*" multiple hidden>
         <button id="import" type="button">Import deck</button>
         <input id="import-file" type="file" accept=".json,application/json" hidden>
         <button id="export" type="button">Export backup</button>
         <button id="reset" type="button">Reset progress</button>
       </div>
+      <form id="batch-form" hidden>
+        <fieldset id="batch-fields">
+          <legend>Review your batch</legend>
+          <p>Names come from filenames, like <strong>Jane Doe.jpg</strong>. Use <strong>women - Jane Doe.jpg</strong> or <strong>men - John Doe.jpg</strong> to set the group in advance.</p>
+          <div class="batch-toolbar">
+            <label>Set group for all
+              <select id="batch-group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select>
+            </label>
+            <button id="batch-apply-group" type="button">Apply to all</button>
+          </div>
+          <ol id="batch-rows" aria-label="Selected photos"></ol>
+          <div class="form-actions">
+            <button id="batch-submit" class="primary" type="submit">Add cards</button>
+            <button id="batch-clear" class="quiet" type="button">Clear selection</button>
+          </div>
+        </fieldset>
+        <p id="batch-status" class="deck-status" role="status"></p>
+      </form>
+      <template id="batch-row">
+        <li class="batch-row">
+          <img class="batch-thumb" alt="" loading="lazy">
+          <label>Full name<input class="batch-name" maxlength="120" required></label>
+          <label>Group<select class="batch-person-group" aria-label="Group"><option value="unlisted">Everyone only</option><option value="men">Men</option><option value="women">Women</option></select></label>
+          <button class="batch-remove quiet" type="button" title="Remove from batch">Remove</button>
+          <p class="batch-error" hidden></p>
+        </li>
+      </template>
       <label id="search-label" class="search">Find a card<input id="search" type="search" autocomplete="off"></label>
       <ul id="members" aria-label="Cards in your deck"></ul>
     </section>

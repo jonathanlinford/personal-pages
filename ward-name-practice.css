@@ -78,6 +78,21 @@ input, select { color: var(--text); background: var(--surface); border: 1px soli
 .form-actions, .deck-tools { display: flex; flex-wrap: wrap; gap: .45rem; }
 .deck-tools { padding-top: .8rem; border-top: 1px solid var(--line); }
 .deck-tools button, .members-actions button { font-size: .84rem; }
+#batch-form { margin: .8rem 0; padding: .8rem; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; }
+#batch-fields { min-width: 0; border: 0; margin: 0; padding: 0; }
+#batch-fields legend { color: var(--text); font-weight: 700; }
+#batch-fields > p { color: var(--muted); font-size: .84rem; }
+.batch-toolbar { display: flex; align-items: end; gap: .45rem; margin: .65rem 0; }
+.batch-toolbar button, .batch-remove { font-size: .8rem; }
+#batch-rows { list-style: none; display: grid; gap: .45rem; max-height: min(18rem, 42svh); overflow-y: auto; margin: 0 0 .65rem; padding: 0 .25rem 0 0; }
+.batch-row { display: grid; grid-template-columns: 2.55rem minmax(0, 1fr) minmax(7.2rem, .7fr) auto; gap: .4rem; align-items: end; padding: .35rem 0; }
+.batch-thumb { width: 2.55rem; height: 2.55rem; object-fit: cover; border-radius: 6px; background: var(--line); }
+.batch-error { grid-column: 2 / -1; color: var(--rose); font-size: .78rem; }
+@media (max-width: 460px) {
+  .batch-row { grid-template-columns: 2.55rem minmax(0, 1fr) auto; }
+  .batch-row label:first-of-type { grid-column: 2 / -1; }
+  .batch-row label:nth-of-type(2) { grid-column: 2; }
+}
 .deck-status { color: var(--green); font-size: .85rem; margin: .55rem 0; }
 .deck-status:empty { margin: .7rem 0; }
 .search { margin: .75rem 0 .35rem; }

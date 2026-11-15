@@ -16,6 +16,7 @@ let editing;
 let drag;
 let skipClick = false;
 let busy = false;
+const batch = new Map();
 
 database.onupgradeneeded = () => database.result.createObjectStore("deck");
 database.onerror = () => showStorageError();
@@ -352,6 +353,127 @@ $("member-form").onsubmit = async event => {
     $("save-member").disabled = false;
   }
 };
+
+function photoLabel(filename) {
+  const stem = filename.replace(/\.[^.]+$/, "");
+  const prefix = stem.match(/^(women|men)\s*[-_]\s*/i);
+  const name = stem.slice(prefix?.[0].length ?? 0).replace(/_+/g, " ").trim();
+  return { name: name.slice(0, 120), group: prefix?.[1].toLowerCase() ?? "unlisted" };
+}
+
+function updateBatch() {
+  $("batch-form").hidden = !batch.size;
+  $("batch-submit").textContent = "Add " + batch.size + (batch.size === 1 ? " card" : " cards");
+}
+
+function discardPhoto(key) {
+  const selection = batch.get(key);
+  URL.revokeObjectURL(selection.url);
+  selection.row.remove();
+  batch.delete(key);
+}
+
+$("choose-photos").onclick = () => {
+  if (!busy) $("batch-files").click();
+};
+
+$("batch-files").onchange = event => {
+  const files = [...event.target.files];
+  event.target.value = "";
+  if (busy || !files.length) return;
+  let skipped = 0;
+  for (const file of files) {
+    const key = JSON.stringify([file.name, file.size, file.lastModified]);
+    if (batch.has(key)) continue;
+    if (cards.length + batch.size >= maxCards) {
+      skipped++;
+      continue;
+    }
+    const row = $("batch-row").content.firstElementChild.cloneNode(true);
+    const url = URL.createObjectURL(file);
+    const { name, group } = photoLabel(file.name);
+    $("batch-rows").append(row);
+    const nameField = row.querySelector(".batch-name");
+    const groupField = row.querySelector(".batch-person-group");
+    nameField.value = name;
+    groupField.value = group;
+    row.querySelector("img").src = url;
+    const remove = row.querySelector(".batch-remove");
+    remove.setAttribute("aria-label", "Remove " + file.name + " from batch");
+    remove.onclick = () => {
+      discardPhoto(key);
+      updateBatch();
+      if (!batch.size) $("choose-photos").focus();
+    };
+    batch.set(key, { file, row, url, nameField, groupField });
+  }
+  $("deck-status").textContent = skipped ? "The deck holds up to " + maxCards + " cards. " + skipped + " photos couldn’t be queued." : "";
+  $("batch-status").textContent = "";
+  updateBatch();
+};
+
+$("batch-apply-group").onclick = () => {
+  for (const selection of batch.values()) selection.groupField.value = $("batch-group").value;
+};
+
+$("batch-clear").onclick = () => {
+  for (const key of batch.keys()) discardPhoto(key);
+  $("batch-status").textContent = "";
+  updateBatch();
+  $("choose-photos").focus();
+};
+
+$("batch-form").onsubmit = async event => {
+  event.preventDefault();
+  if (busy || !batch.size) return;
+  for (const { nameField } of batch.values()) {
+    if (nameField.value.trim()) continue;
+    nameField.value = "";
+    nameField.reportValidity();
+    return;
+  }
+  if (cards.length + batch.size > maxCards) {
+    $("batch-status").textContent = "Remove some cards or photos to stay within the " + maxCards + " card limit.";
+    return;
+  }
+  busy = true;
+  $("batch-fields").disabled = true;
+  $("close-deck").disabled = true;
+  const prepared = [];
+  try {
+    let processed = 0;
+    for (const [key, { file, row, nameField, groupField }] of batch) {
+      const error = row.querySelector(".batch-error");
+      error.hidden = true;
+      $("batch-status").textContent = "Preparing photo " + ++processed + " of " + batch.size + "…";
+      try {
+        const photo = await preparePhoto(file);
+        prepared.push({ key, card: { id: crypto.randomUUID(), name: nameField.value.trim(), group: groupField.value, photo, learned: false } });
+      } catch {
+        error.textContent = "Couldn’t read this photo. Try a JPEG or PNG under 25 MB.";
+        error.hidden = false;
+      }
+    }
+    if (prepared.length) {
+      const added = prepared.map(entry => entry.card);
+      await changeDeck([...cards, ...added], "Added " + added.length + (added.length === 1 ? " card." : " cards."));
+      for (const { key } of prepared) discardPhoto(key);
+    }
+    $("batch-status").textContent = batch.size ? "Some photos couldn’t be added. Check the remaining rows." : "";
+    updateBatch();
+    if (!batch.size) $("choose-photos").focus();
+  } catch {
+    $("batch-status").textContent = "The batch couldn’t be saved. Your selection is still here.";
+  } finally {
+    busy = false;
+    $("batch-fields").disabled = false;
+    $("close-deck").disabled = false;
+  }
+};
+
+$("deck-dialog").addEventListener("cancel", event => {
+  if ($("batch-fields").disabled) event.preventDefault();
+});
 
 function asDataUrl(blob) {
   return new Promise((resolve, reject) => {
