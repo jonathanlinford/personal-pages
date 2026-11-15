@@ -64,6 +64,7 @@ function render() {
   $("meter").max = filtered.length || 1;
   $("meter").value = learned;
   $("meter").hidden = !filtered.length;
+  $("shuffle").disabled = remaining < 2;
   $("undo").hidden = !prior;
   $("stage").hidden = $("grading").hidden = !current;
   $("empty").hidden = !!current;
@@ -103,6 +104,38 @@ function setFilter(value) {
   $("feedback").textContent = "";
   reveal(false);
   render();
+}
+
+async function shuffleRemaining() {
+  if (busy) return;
+  const positions = [];
+  cards.forEach((card, index) => {
+    if (!card.learned && (filter === "all" || card.group === filter)) positions.push(index);
+  });
+  if (positions.length < 2) return;
+  const shuffled = positions.map(index => cards[index]);
+  const first = shuffled[0];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  if (shuffled[0] === first) {
+    const j = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+    [shuffled[0], shuffled[j]] = [shuffled[j], shuffled[0]];
+  }
+  const next = [...cards];
+  positions.forEach((position, index) => { next[position] = shuffled[index]; });
+  busy = true;
+  try {
+    await save(next);
+    prior = undefined;
+    $("feedback").textContent = "Shuffled the remaining cards.";
+    render();
+  } catch {
+    $("feedback").textContent = "The shuffle couldn’t be saved. Try again.";
+  } finally {
+    busy = false;
+  }
 }
 
 async function grade(remembered) {
@@ -182,6 +215,7 @@ $("card").addEventListener("click", event => {
 $("again").onclick = () => grade(false);
 $("got").onclick = () => grade(true);
 $("undo").onclick = undo;
+$("shuffle").onclick = shuffleRemaining;
 $("filters").onclick = event => {
   const value = event.target.closest("button")?.dataset.filter;
   if (value) setFilter(value);
